@@ -1,0 +1,106 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - refs/tags/*
+  paths:
+    exclude: # no need to rebuild on changes in documentation
+      - README.md
+      - LICENSE.md
+      - RELEASENOTES.md
+      - CHANGELOG.md
+      - doc/**/*
+
+pr:
+  branches:
+    include:
+      - master
+  paths:
+    exclude: # no need to rebuild on changes in documentation
+      - README.md
+      - LICENSE.md
+      - RELEASENOTES.md
+      - CHANGELOG.md
+      - docs/**/*
+
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+    pool:
+      vmImage: 'windows-latest'
+
+    variables:
+      solution: '**/*.sln'
+      buildConfiguration: 'Release'
+
+    steps:
+    - task: GitVersion@5
+      displayName: GitVersion
+
+    - task: NuGetToolInstaller@1
+      displayName: 'Install NuGet'
+
+    - task: NuGetCommand@2
+      displayName: 'Nuget restore'
+      inputs:
+        restoreSolution: '$(solution)'
+        vstsFeed: 'tingle'
+
+    - task: VSBuild@1
+      displayName: 'Build solution'
+      inputs:
+        solution: '$(solution)'
+        platform: 'Any CPU'
+        configuration: '$(buildConfiguration)'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet test'
+      inputs:
+        command: test
+        projects: '**/*[Tt]ests*.csproj'
+        arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet pack'
+      inputs:
+        command: pack
+        nobuild: true
+        versioningScheme: byEnvVar
+        versionEnvVar: 'GITVERSION_NUGETVERSION'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact'
+      inputs:
+        pathtoPublish: '$(build.artifactstagingdirectory)'
+        artifactName: 'drop'
+
+- stage: Release
+  dependsOn: Build
+  # only release from the master branch and skip pull requests
+  condition: |
+    and
+    (
+      succeeded(),
+      not(startsWith(variables['Build.SourceBranch'], 'refs/pull/'))
+    )
+  jobs:
+  - deployment: AzureArtifacts
+    environment: Azure Artifacts (Nuget)
+    pool:
+      vmImage: 'windows-latest'
+
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: drop
+
+          - task: NuGetCommand@2
+            displayName: 'NuGet push'
+            inputs:
+              command: push
+              packagesToPush: '$(Pipeline.Workspace)/drop/**/*.nupkg'
+              publishVstsFeed: 'tingle'
+              allowPackageConflicts: true

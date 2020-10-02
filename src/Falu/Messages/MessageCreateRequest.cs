@@ -3,7 +3,7 @@
     /// <summary>
     /// Information for creating and sending message.
     /// </summary>
-    public class MessageCreateModel : MessagePatchModel
+    public class MessageCreateRequest : MessagePatchModel
     {
         /// <summary>
         /// Destination phone number in <see href="https://en.wikipedia.org/wiki/E.164">E.164 format</see>.

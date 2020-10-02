@@ -51,7 +51,7 @@ namespace Falu
         /// <param name="message"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<Message>> SendMessageAsync(MessageCreateModel message,
+        public async Task<ResourceResponse<Message>> SendMessageAsync(MessageCreateRequest message,
                                                                       CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, "/v1/messages");
@@ -79,7 +79,7 @@ namespace Falu
         /// <param name="messages"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<List<Message>>> SendMessagesBatchAsync(IEnumerable<MessageCreateModel> messages,
+        public async Task<ResourceResponse<List<Message>>> SendMessagesBatchAsync(IEnumerable<MessageCreateRequest> messages,
                                                                                   CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, "/v1/messages/bulk");

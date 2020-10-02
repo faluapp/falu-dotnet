@@ -73,8 +73,8 @@ namespace Falu
         /// <param name="evaluation"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<Evaluation>> InitiateEvaluationAsync(EvaluationInitiateModel evaluation,
-                                                                                CancellationToken cancellationToken = default)
+        public async Task<ResourceResponse<Evaluation>> RequestEvaluationAsync(EvaluationRequest evaluation,
+                                                                               CancellationToken cancellationToken = default)
         {
             var content = new MultipartFormDataContent
             {

@@ -5,7 +5,7 @@ namespace Falu.Evaluations
     /// <summary>
     /// Information for initiating and performing and evaluation.
     /// </summary>
-    public class EvaluationInitiateModel : EvaluationPatchModel
+    public class EvaluationRequest : EvaluationPatchModel
     {
         /// <summary>
         /// Three-letter <see href="https://www.iso.org/iso-4217-currency-codes.html">ISO currency code</see>,

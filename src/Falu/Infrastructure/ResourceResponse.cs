@@ -79,7 +79,8 @@ namespace Falu.Infrastructure
             // do not bother with successful requests
             if (IsSuccessful) return;
 
-            throw new FaluException(statusCode: StatusCode, error: Error, message: Error.Detail ?? Error.Title)
+            var message = Error?.Detail ?? Error?.Title ?? $"The HTTP request failed with code {StatusCode} ({(int)StatusCode})";
+            throw new FaluException(statusCode: StatusCode, error: Error, message: message)
             {
                 Response = Response,
             };

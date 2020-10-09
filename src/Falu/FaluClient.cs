@@ -8,7 +8,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,8 +19,6 @@ namespace Falu
     public sealed partial class FaluClient
     {
         private readonly string JsonContentType = System.Net.Mime.MediaTypeNames.Application.Json;
-
-        private readonly JsonSerializerOptions serializerOptions;
 
         private readonly HttpClient backChannel;
         private readonly FaluClientOptions options;
@@ -35,17 +32,6 @@ namespace Falu
         {
             this.backChannel = backChannel ?? throw new ArgumentNullException(nameof(backChannel));
             options = optionsAccessor.Value ?? throw new ArgumentNullException(nameof(optionsAccessor));
-
-            serializerOptions = new JsonSerializerOptions()
-            {
-                IgnoreNullValues = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                PropertyNameCaseInsensitive = true,
-                AllowTrailingCommas = true,
-                ReadCommentHandling = JsonCommentHandling.Skip,
-            };
-
-            serializerOptions.Converters.Add(new JsonStringEnumConverter(serializerOptions?.PropertyNamingPolicy));
         }
 
         private Uri BaseAddress => backChannel.BaseAddress;
@@ -164,7 +150,7 @@ namespace Falu
                 if (stream.Length == 0) return default;
 
                 return await JsonSerializer.DeserializeAsync<T>(utf8Json: stream,
-                                                                options: serializerOptions,
+                                                                options: options.SerializerOptions,
                                                                 cancellationToken: cancellationToken);
             }
         }
@@ -174,7 +160,7 @@ namespace Falu
             var payload = new MemoryStream();
             await JsonSerializer.SerializeAsync<T>(utf8Json: payload,
                                                    value: input,
-                                                   options: serializerOptions,
+                                                   options: options.SerializerOptions,
                                                    cancellationToken: cancellationToken);
 
             // make the produced payload readable

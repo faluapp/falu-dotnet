@@ -9,6 +9,12 @@ namespace Falu
     public class FaluClientOptions
     {
         /// <summary>
+        /// The ApiVersion that the SDK conforms to.
+        /// For internal-use only.
+        /// </summary>
+        public const string ApiVersion = "2020-09-08";
+
+        /// <summary>
         /// Serialization options.
         /// For internal-use only;
         /// </summary>

@@ -124,7 +124,7 @@ namespace Falu
             // ensure request is not null
             if (request == null) throw new ArgumentNullException(nameof(request));
 
-            request.Headers.Add("X-Falu-Version", "2020-09-08");
+            request.Headers.Add("X-Falu-Version", FaluClientOptions.ApiVersion);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", options.ApiKey);
 
             // execute the request

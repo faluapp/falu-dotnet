@@ -24,63 +24,34 @@ namespace Falu.Events
         /// <param name="secret">The webhook endpoint's signing secret.</param>
         /// <param name="tolerance">The time tolerance, in seconds. Defaults to 300 seconds.</param>
         /// <param name="utcNow">The timestamp to use for the current time. Defaults to curent time.</param>
-        /// <param name="throwOnApiVersionMismatch">
-        /// If <c>true</c> (default), the method will throw a <see cref="FaluException"/> if the
-        /// API version of the event doesn't match the SDK's default API version (see
-        /// <see cref="FaluClientOptions.ApiVersion"/>).
-        /// </param>
         /// <returns>The deserialized <see cref="WebhookEvent{TObject}"/>.</returns>
         /// <exception cref="FaluException">
-        /// Thrown if the signature verification fails for any reason, of if the API version of the
-        /// event doesn't match the SDK's default API version.
+        /// Thrown if the signature verification fails for any reason.
         /// </exception>
         public static WebhookEvent<T> ConstructEvent<T>(string json,
                                                         string signature,
                                                         string secret,
                                                         long? tolerance = null,
-                                                        long? utcNow = null,
-                                                        bool throwOnApiVersionMismatch = true)
+                                                        long? utcNow = null)
         {
             ValidateSignature(json, signature, secret, tolerance, utcNow);
-            return ParseEvent<T>(json, throwOnApiVersionMismatch);
+            return ParseEvent<T>(json);
         }
 
         /// <summary>
         /// Parses a JSON string from a webhook into a <see cref="WebhookEvent{TObject}"/> object.
         /// </summary>
         /// <param name="json">The JSON string to parse.</param>
-        /// <param name="throwOnApiVersionMismatch">
-        /// If <c>true</c> (default), the method will throw a <see cref="WebhookEvent{TObject}"/> if the
-        /// API version of the event doesn't match the SDK's default API version (see
-        /// <see cref="FaluClientOptions.ApiVersion"/>).
-        /// </param>
         /// <returns>The deserialized <see cref="WebhookEvent{TObject}"/>.</returns>
-        /// <exception cref="FaluException">
-        /// Thrown if the API version of the event doesn't match the SDK's default API version.
-        /// </exception>
         /// <remarks>
         /// This method doesn't verify <a href="https://docs.falu.io/webhooks/signatures">webhook
         /// signatures</a>. It's recommended that you use
-        /// <see cref="ConstructEvent(string, string, string, long?, long?, bool)"/> instead.
+        /// <see cref="ConstructEvent(string, string, string, long?, long?)"/> instead.
         /// </remarks>
-        public static WebhookEvent<T> ParseEvent<T>(string json, bool throwOnApiVersionMismatch = true)
+        public static WebhookEvent<T> ParseEvent<T>(string json)
         {
             var options = FaluClientOptions.CreateSerializerOptions();
-            var @event = System.Text.Json.JsonSerializer.Deserialize<WebhookEvent<T>>(json, options);
-
-            if (throwOnApiVersionMismatch && @event.ApiVersion != FaluClientOptions.ApiVersion)
-            {
-                var sdk_ver = typeof(EventUtility).Assembly.GetName().Version.ToString(3);
-                throw new FaluException($"Received event with API version {@event.ApiVersion}, but the SDK "
-                                      + $"{sdk_ver} expects API version "
-                                      + $"{FaluClientOptions.ApiVersion}. We recommend that you create a "
-                                      + "WebhookEndpoint with this API version. Otherwise, you can disable this "
-                                      + $"exception by passing `{nameof(throwOnApiVersionMismatch)}: false` to "
-                                      + $"`{nameof(ParseEvent)}` or `{nameof(ConstructEvent)}`, "
-                                      + "but be wary that objects may be incorrectly deserialized.");
-            }
-
-            return @event;
+            return System.Text.Json.JsonSerializer.Deserialize<WebhookEvent<T>>(json, options);
         }
 
         /// <summary>

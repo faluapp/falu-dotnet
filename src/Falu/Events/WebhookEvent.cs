@@ -27,11 +27,6 @@ namespace Falu.Events
         public WebhookEventRequest Request { get; set; }
 
         /// <summary>
-        /// The API version used to render <see cref="Data"/>.
-        /// </summary>
-        public string ApiVersion { get; set; }
-
-        /// <summary>
         /// Object containing data associated with the event.
         /// </summary>
         public WebhookEventData<TObject> Data { get; set; }

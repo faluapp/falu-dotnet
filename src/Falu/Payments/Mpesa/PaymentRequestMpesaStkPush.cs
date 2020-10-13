@@ -7,7 +7,6 @@
     {
         /// <summary>
         /// The phone number representing the account to be charged.
-        /// This should be in MSISDN format
         /// </summary>
         public string PhoneNumber { get; set; }
 
@@ -25,7 +24,10 @@
         /// <summary>
         /// The shortcode of the receiver.
         /// When not provided, it defaults to the default recepient.
-        /// This value is usually required and different from the business short code when using TillNumbers.
+        /// When not provided, either the default incoming business code
+        /// or the first business code for the workspace is used depending on the <c>Kind</c>.
+        /// <br/>
+        /// This value is usually required and different from the business short code when using BuyGoods.
         /// </summary>
         public string Destination { get; set; }
     }

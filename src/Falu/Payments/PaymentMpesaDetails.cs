@@ -74,9 +74,10 @@ namespace Falu.Payments
         public string CommandType { get; set; }
 
         /// <summary>
-        /// Charges for the transaction. Only populated for outgoing payments.
+        /// Charges for the transaction in the smallest currency unit.
+        /// Only populated for outgoing payments.
         /// </summary>
-        public float? Charges { get; set; }
+        public long? Charges { get; set; }
 
         /// <summary>
         /// Details of the receiver. Only populated for outgoing payments.

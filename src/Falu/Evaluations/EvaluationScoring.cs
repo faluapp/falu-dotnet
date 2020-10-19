@@ -14,9 +14,9 @@ namespace Falu.Evaluations
         public float? Risk { get; set; }
 
         /// <summary>
-        /// Limit advised for lending.
+        /// Limit advised for lending in the smallest curency unit.
         /// </summary>
-        public int? Limit { get; set; }
+        public long? Limit { get; set; }
 
         /// <summary>
         /// Time upto which the score is deemed valid.

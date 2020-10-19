@@ -9,7 +9,7 @@ trigger:
       - LICENSE.md
       - RELEASENOTES.md
       - CHANGELOG.md
-      - doc/**/*
+      - docs/**/*
 
 pr:
   branches:
@@ -77,15 +77,8 @@ stages:
 
 - stage: Release
   dependsOn: Build
-  # only release from the master branch and skip pull requests
-  condition: |
-    and
-    (
-      succeeded(),
-      not(startsWith(variables['Build.SourceBranch'], 'refs/pull/'))
-    )
   jobs:
-  - deployment: AzureArtifacts
+  - deployment: Internal
     environment: Azure Artifacts (Nuget)
     pool:
       vmImage: 'windows-latest'
@@ -104,3 +97,30 @@ stages:
               packagesToPush: '$(Pipeline.Workspace)/drop/**/*.nupkg'
               publishVstsFeed: 'tingle'
               allowPackageConflicts: true
+
+  - deployment: Public
+    environment: (NugetOrg)
+    # only release from the master branch and skip pull requests
+    condition: |
+      and
+      (
+        succeeded(),
+        not(startsWith(variables['Build.SourceBranch'], 'refs/pull/'))
+      )
+    pool:
+      vmImage: 'windows-latest'
+
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: drop
+
+          # - task: NuGetCommand@2
+          #   displayName: 'NuGet push'
+          #   inputs:
+          #     command: push
+          #     packagesToPush: '$(Pipeline.Workspace)/drop/**/*.nupkg'
+          #     nuGetFeedType: 'external'
+          #     publishFeedCredentials: '$(feedCredentials)'

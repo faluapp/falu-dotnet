@@ -10,7 +10,8 @@ namespace Falu.Payments
     {
         /// <summary>
         /// Breakdown of balance by business code.
+        /// The value is represented in the smallest currrency unit.
         /// </summary>
-        public Dictionary<string, float> Mpesa { get; set; }
+        public Dictionary<string, long> Mpesa { get; set; }
     }
 }

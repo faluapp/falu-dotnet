@@ -101,7 +101,7 @@ namespace Falu
             // get the content type
             var contentType = response.Content.Headers?.ContentType;
 
-            //  TODO: check if content type
+            //  TODO: check if content type matches expectation
 
             // get a stream reference for the content
             // the stream may still be being incoming and thus we should only read when necessary

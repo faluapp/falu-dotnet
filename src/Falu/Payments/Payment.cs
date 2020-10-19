@@ -12,9 +12,9 @@ namespace Falu.Payments
         public string Id { get; set; }
 
         /// <summary>
-        /// Amount of the payment.
+        /// Amount of the payment in smallest currency unit.
         /// </summary>
-        public float Amount { get; set; }
+        public long Amount { get; set; }
 
         /// <summary>
         /// Three-letter <see href="https://www.iso.org/iso-4217-currency-codes.html">ISO currency code</see>,

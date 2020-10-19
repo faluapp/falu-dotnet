@@ -12,14 +12,15 @@ namespace Falu.Payments.Reversals
         public string Id { get; set; }
 
         /// <summary>
-        /// Identifier of the Payment to reverse.
+        /// Identifier of the Payment reversed.
         /// </summary>
         public string PaymentId { get; set; }
 
         /// <summary>
-        /// Amount of the payment. This is pulled from the Payment.
+        /// Amount reversed in smallest currency unit.
+        /// This is pulled from the Payment.
         /// </summary>
-        public float Amount { get; set; }
+        public long Amount { get; set; }
 
         /// <summary>
         /// Three-letter <see href="https://www.iso.org/iso-4217-currency-codes.html">ISO currency code</see>,

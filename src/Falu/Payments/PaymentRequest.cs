@@ -8,9 +8,9 @@ namespace Falu.Payments
     public class PaymentRequest
     {
         /// <summary>
-        /// Amount of the payment.
+        /// Amount of the payment in smallest currency unit.
         /// </summary>
-        public int Amount { get; set; }
+        public long Amount { get; set; }
 
         /// <summary>
         /// Three-letter <see href="https://www.iso.org/iso-4217-currency-codes.html">ISO currency code</see>,

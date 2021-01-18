@@ -8,7 +8,7 @@ trigger:
       - README.md
       - LICENSE
       - CHANGELOG.md
-      - docs/**/*
+      - docs/**
 
 pr:
   branches:
@@ -19,7 +19,7 @@ pr:
       - README.md
       - LICENSE
       - CHANGELOG.md
-      - docs/**/*
+      - docs/**
 
 stages:
 - stage: Build

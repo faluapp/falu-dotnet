@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Falu.Core;
+using System;
 using System.Collections.Generic;
 using Tingle.Extensions.Modeling.Identity;
 
@@ -7,36 +8,50 @@ namespace Falu.Identity
     /// <summary>
     /// The identification record for an entity.
     /// </summary>
-    public class IdentityRecord
+    public class IdentityRecord : IHasId, IHasCreated, IHasUpdated, IHasEtag
     {
+        /// <inheritdoc/>
+        public string Id { get; set; }
+
+        /// <inheritdoc/>
+        public DateTimeOffset Created { get; set; }
+
+        /// <inheritdoc/>
+        public DateTimeOffset Updated { get; set; }
+
+        /// <summary>
+        /// Three-letter <see href="https://www.iso.org/iso-3166-country-codes.html">ISO country code</see>,
+        /// in lowercase, where to the record exists.
+        /// </summary>
+        public string Country { get; set; } = "ken";
+
+        /// <summary>
+        /// The kind of identification document.
+        /// </summary>
+        public IdentityDocumentKind? DocumentType { get; set; }
+
+        /// <summary>
+        /// The identification document number.
+        /// </summary>
+        public string DocumentNumber { get; set; }
+
         /// <summary>
         /// The full name of the entity.
         /// </summary>
-        public string FullName { get; set; }
-
-        /// <summary>
-        /// The national identity number.
-        /// </summary>
-        public string IdNumber { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// The date of birth of the entity if specified.
-        /// This value is not guaranteed to be availed. For entities that are not human (e.g. companies, businesses, NGOs,
+        /// This value is not guaranteed to be availed.
+        /// For entities that are not human (e.g. companies, businesses, NGOs,
         /// this value represents the date of registration or incorporation.
         /// </summary>
         public DateTimeOffset? Birthday { get; set; }
 
         /// <summary>
-        /// The date of registration of the details provided.
-        /// For example, if the record comes from a phone number registration, the value specified is the date the phone was registered.
-        /// If the record comes from elsewhere, the date represents the when the record was verified or acquired.
+        /// Phone number(s) attached to the identity.
         /// </summary>
-        public DateTimeOffset? RegistrationDate { get; set; }
-
-        /// <summary>
-        /// Phone numbers attached to the person.
-        /// </summary>
-        public List<string> PhoneNumbers { get; set; }
+        public List<string> Phones { get; set; }
 
         /// <summary>
         /// The gender of the entity.
@@ -51,5 +66,8 @@ namespace Falu.Identity
         /// It should not be used to determine predicted gender.
         /// </summary>
         public float? GenderConfidence { get; set; }
+
+        /// <inheritdoc/>
+        public string Etag { get; set; }
     }
 }

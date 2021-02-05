@@ -51,12 +51,13 @@ stages:
         restoreSolution: '$(solution)'
         vstsFeed: 'tingle'
 
-    - task: VSBuild@1
-      displayName: 'Build solution'
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet build'
       inputs:
-        solution: '$(solution)'
-        platform: 'Any CPU'
-        configuration: '$(buildConfiguration)'
+        projects: '**/*.csproj'
+        arguments: >
+          -c $(buildConfiguration)
+          --no-restore
 
     - task: DotNetCoreCLI@2
       displayName: 'dotnet test'

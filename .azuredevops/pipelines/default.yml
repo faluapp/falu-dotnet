@@ -63,7 +63,10 @@ stages:
       inputs:
         command: test
         projects: '**/*[Tt]ests*.csproj'
-        arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+        arguments: >
+          -c $(buildConfiguration)
+          --no-build
+          --collect "Code Coverage"
 
     - task: DotNetCoreCLI@2
       displayName: 'dotnet pack'

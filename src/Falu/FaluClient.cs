@@ -42,13 +42,13 @@ namespace Falu
         /// <param name="search">The details to use for searching.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<IdentitySearchResult>> SearchIdentityAsync(IdentitySearchModel search,
-                                                                                      CancellationToken cancellationToken = default)
+        public async Task<ResourceResponse<IdentityRecord>> SearchIdentityAsync(IdentitySearchModel search,
+                                                                                CancellationToken cancellationToken = default)
         {
             if (search is null) throw new ArgumentNullException(nameof(search));
 
             var uri = new Uri(BaseAddress, "/v1/identity/search");
-            return await PostAsJsonAsync<IdentitySearchResult>(uri, search, cancellationToken: cancellationToken);
+            return await PostAsJsonAsync<IdentityRecord>(uri, search, cancellationToken: cancellationToken);
         }
 
         #region Helpers

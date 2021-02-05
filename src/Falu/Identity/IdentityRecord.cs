@@ -5,17 +5,17 @@ using Tingle.Extensions.Modeling.Identity;
 namespace Falu.Identity
 {
     /// <summary>
-    /// Result of searching for an entity
+    /// The identification record for an entity.
     /// </summary>
-    public class IdentitySearchResult
+    public class IdentityRecord
     {
         /// <summary>
-        /// The full name of the entity
+        /// The full name of the entity.
         /// </summary>
         public string FullName { get; set; }
 
         /// <summary>
-        /// The national identity number
+        /// The national identity number.
         /// </summary>
         public string IdNumber { get; set; }
 
@@ -34,7 +34,7 @@ namespace Falu.Identity
         public DateTimeOffset? RegistrationDate { get; set; }
 
         /// <summary>
-        /// Phone numbers attached to the person
+        /// Phone numbers attached to the person.
         /// </summary>
         public List<string> PhoneNumbers { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Tingle.Extensions.Modeling.Identity;
 
 namespace Falu.Identity
 {

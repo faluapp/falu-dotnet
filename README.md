@@ -211,13 +211,17 @@ With `FaluClient` you can verify your user's identity from a documentation persp
 ```cs
 FaluClient client; // omitted for brevity
 
-var response = await client.SearchIdentityAsync(phoneNumber: "+254722000000");
+var search = new IdentitySearchModel
+{
+    Phone = "+254722000000",
+};
+var response = await client.SearchIdentityAsync(search);
 response.EnsureSuccess(); // might throw an exception (FaluException)
 var result = response.Resource;
 if (result != null)
 {
-    var name = result.FullName;
-    var idNumber = result.IdNumber;
+    var name = result.Name;
+    var idNumber = result.DocumentNumber;
     // application confirms if the name and idNumber provided matches the ones in the result
 }
 ```

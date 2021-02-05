@@ -10,6 +10,14 @@ trigger:
       - CHANGELOG.md
       - docs/**
 
+schedules:
+- cron: '0 2 * * 1-5' # daily at 2am UTC
+  displayName: 'Nightly Build'
+  batch: true
+  branches:
+    include:
+      - main
+
 pr:
   branches:
     include:
@@ -23,19 +31,28 @@ pr:
 
 stages:
 - stage: Build
+  variables:
+    solution: '**/*.sln'
+    buildConfiguration: 'Release'
+    DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+
   jobs:
   - job: Build
     pool:
-      vmImage: 'windows-latest'
+      vmImage: 'ubuntu-latest'
 
     variables:
-      solution: '**/*.sln'
-      buildConfiguration: 'Release'
+      buildProjects: '**/*.csproj'
+      testProjects: '**/*[Tt]ests*.csproj'
 
     steps:
-    - task: GitVersion@5
-      displayName: 'GitVersion'
+    - task: gitversion/setup@0
       inputs:
+        versionSpec: '5.x'
+
+    - task: gitversion/execute@0
+      inputs:
+        useConfigFile: true
         configFilePath: '$(Build.SourcesDirectory)/GitVersion.yml'
 
     - task: NuGetToolInstaller@1
@@ -47,19 +64,21 @@ stages:
         restoreSolution: '$(solution)'
         vstsFeed: 'tingle'
 
-    - task: VSBuild@1
-      displayName: 'Build solution'
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet build $(buildProjects)'
       inputs:
-        solution: '$(solution)'
-        platform: 'Any CPU'
-        configuration: '$(buildConfiguration)'
+        projects: '$(buildProjects)'
+        arguments: '-c $(buildConfiguration) --no-restore'
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet test'
+      displayName: 'dotnet test$(testProjects)'
       inputs:
         command: test
-        projects: '**/*[Tt]ests*.csproj'
-        arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+        projects: '$(testProjects)'
+        arguments: >
+          --configuration $(buildConfiguration)
+          --no-build
+          --collect "Code Coverage"
 
     - task: DotNetCoreCLI@2
       displayName: 'dotnet pack'
@@ -82,6 +101,14 @@ stages:
     environment: Azure Artifacts (Nuget)
     pool:
       vmImage: 'windows-latest'
+
+    # only release non pr branches
+    condition: |
+      and
+      (
+        succeeded(),
+        not(startsWith(variables['Build.SourceBranch'], 'refs/pull/'))
+      )
 
     strategy:
       runOnce:

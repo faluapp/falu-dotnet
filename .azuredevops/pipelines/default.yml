@@ -23,14 +23,18 @@ pr:
 
 stages:
 - stage: Build
+  variables:
+    solution: '**/*.sln'
+    buildConfiguration: 'Release'
+
   jobs:
   - job: Build
     pool:
       vmImage: 'windows-latest'
 
     variables:
-      solution: '**/*.sln'
-      buildConfiguration: 'Release'
+      buildProjects: '**/*.csproj'
+      testProjects: '**/*[Tt]ests*.csproj'
 
     steps:
     - task: gitversion/setup@0
@@ -52,20 +56,18 @@ stages:
         vstsFeed: 'tingle'
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet build'
+      displayName: 'dotnet build $(buildProjects)'
       inputs:
-        projects: '**/*.csproj'
-        arguments: >
-          -c $(buildConfiguration)
-          --no-restore
+        projects: '$(buildProjects)'
+        arguments: '-c $(buildConfiguration) --no-restore'
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet test'
+      displayName: 'dotnet test$(testProjects)'
       inputs:
         command: test
-        projects: '**/*[Tt]ests*.csproj'
+        projects: '$(testProjects)'
         arguments: >
-          -c $(buildConfiguration)
+          --configuration $(buildConfiguration)
           --no-build
           --collect "Code Coverage"
 
@@ -90,6 +92,14 @@ stages:
     environment: Azure Artifacts (Nuget)
     pool:
       vmImage: 'windows-latest'
+
+    # only release non pr branches
+    condition: |
+      and
+      (
+        succeeded(),
+        not(startsWith(variables['Build.SourceBranch'], 'refs/pull/'))
+      )
 
     strategy:
       runOnce:

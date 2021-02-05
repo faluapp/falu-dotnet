@@ -37,26 +37,18 @@ namespace Falu
         private Uri BaseAddress => backChannel.BaseAddress;
 
         /// <summary>
-        /// Find a persons identity either by national identification number or phone number.
+        /// Search for an entity's identity.
         /// </summary>
-        /// <param name="nationalId">the unique identifier of the person</param>
-        /// <param name="phoneNumber">the phone number to query</param>
+        /// <param name="search">The details to use for searching.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<IdentitySearchResult>> SearchIdentityAsync(string nationalId = null,
-                                                                                      string phoneNumber = null,
+        public async Task<ResourceResponse<IdentitySearchResult>> SearchIdentityAsync(IdentitySearchModel search,
                                                                                       CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(nationalId) && string.IsNullOrWhiteSpace(phoneNumber))
-                throw new InvalidOperationException($"Either '{nameof(nationalId)}' or '{nameof(phoneNumber)}' must be provided");
+            if (search is null) throw new ArgumentNullException(nameof(search));
 
-            var args = new Dictionary<string, string>();
-            if (!string.IsNullOrWhiteSpace(nationalId)) args["idNumber"] = nationalId;
-            if (!string.IsNullOrWhiteSpace(phoneNumber)) args["phoneNumber"] = phoneNumber;
-
-            var query = QueryHelper.MakeQueryString(args);
-            var uri = new Uri(BaseAddress, $"/v1/identity/search{query}");
-            return await GetAsJsonAsync<IdentitySearchResult>(uri, cancellationToken: cancellationToken);
+            var uri = new Uri(BaseAddress, "/v1/identity/search");
+            return await PostAsJsonAsync<IdentitySearchResult>(uri, search, cancellationToken: cancellationToken);
         }
 
         #region Helpers

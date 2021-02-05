@@ -8,7 +8,7 @@ namespace Falu.Identity
     /// <summary>
     /// The identification record for an entity.
     /// </summary>
-    public class IdentityRecord : IHasId, IHasCreated, IHasUpdated, IHasEtag
+    public class IdentityRecord : IHasId, IHasCreated, IHasUpdated, IHasCountry, IHasEtag
     {
         /// <inheritdoc/>
         public string Id { get; set; }
@@ -19,10 +19,7 @@ namespace Falu.Identity
         /// <inheritdoc/>
         public DateTimeOffset Updated { get; set; }
 
-        /// <summary>
-        /// Three-letter <see href="https://www.iso.org/iso-3166-country-codes.html">ISO country code</see>,
-        /// in lowercase, where to the record exists.
-        /// </summary>
+        /// <inheritdoc/>
         public string Country { get; set; } = "ken";
 
         /// <summary>

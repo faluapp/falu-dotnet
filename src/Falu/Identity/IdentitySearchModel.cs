@@ -1,17 +1,14 @@
-﻿using Tingle.Extensions.Modeling.Identity;
+﻿using Falu.Core;
+using Tingle.Extensions.Modeling.Identity;
 
 namespace Falu.Identity
 {
     /// <summary>
     /// Information for searching for an entity's identity.
     /// </summary>
-    public class IdentitySearchModel
+    public class IdentitySearchModel : IHasCountry
     {
-        /// <summary>
-        /// Three-letter <see href="https://www.iso.org/iso-3166-country-codes.html">ISO country code</see>,
-        /// in lowercase, where to search.
-        /// Defaults to <c>ken</c>.
-        /// </summary>
+        /// <inheritdoc />
         public string Country { get; set; } = "ken";
 
         /// <summary>

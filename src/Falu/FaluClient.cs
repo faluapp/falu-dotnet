@@ -51,6 +51,29 @@ namespace Falu
             return await PostAsJsonAsync<IdentityRecord>(uri, search, cancellationToken: cancellationToken);
         }
 
+        /// <summary>
+        /// Fetch restricted identity data for marketing purposes.
+        /// Sensitive data is excluded in the response. The corresponsing properties will be null.
+        /// </summary>
+        /// <param name="model">Starting date for the payments</param>
+        /// <param name="count">Maximum number of items to return</param>
+        /// <param name="continuationToken">The continuation token from a previous request</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<ResourceResponse<List<IdentityRecord>>> MarketingIdentityAsync(IdentityMarketingQuery model = null,
+                                                                                         int? count = null,
+                                                                                         string continuationToken = null,
+                                                                                         CancellationToken cancellationToken = default)
+        {
+            var args = new Dictionary<string, string>();
+            if (count != null) args["count"] = $"{count}";
+            if (!string.IsNullOrWhiteSpace(continuationToken)) args["ct"] = continuationToken;
+
+            var query = QueryHelper.MakeQueryString(args);
+            var uri = new Uri(BaseAddress, $"/v1/identity/marketing{query}");
+            return await PostAsJsonAsync<List<IdentityRecord>>(uri, model, cancellationToken: cancellationToken);
+        }
+
         #region Helpers
 
         private async Task<ResourceResponse<TResource>> GetAsJsonAsync<TResource>(Uri uri, CancellationToken cancellationToken = default)

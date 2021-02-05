@@ -1,6 +1,4 @@
-﻿using Tingle.Extensions.Modeling.Identity;
-
-namespace Falu.Identity
+﻿namespace Falu.Identity
 {
     /// <summary>
     /// Details about a query for marketing data

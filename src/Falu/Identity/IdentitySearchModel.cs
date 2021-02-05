@@ -1,5 +1,4 @@
 ﻿using Falu.Core;
-using Tingle.Extensions.Modeling.Identity;
 
 namespace Falu.Identity
 {

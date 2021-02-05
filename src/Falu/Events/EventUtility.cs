@@ -10,6 +10,9 @@ namespace Falu.Events
     /// <summary>
     /// This class contains utility methods to process event objects in Falu's webhooks.
     /// </summary>
+    /// <remarks>
+    /// Use only for <see cref="Webhooks.WebhookFormat.Basic"/>.
+    /// </remarks>
     public static class EventUtility
     {
         private const int DefaultTimeTolerance = 300;

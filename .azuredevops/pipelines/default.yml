@@ -10,6 +10,14 @@ trigger:
       - CHANGELOG.md
       - docs/**
 
+schedules:
+- cron: '0 2 * * 1-5' # daily at 2am UTC
+  displayName: 'Nightly Build'
+  batch: true
+  branches:
+    include:
+      - main
+
 pr:
   branches:
     include:

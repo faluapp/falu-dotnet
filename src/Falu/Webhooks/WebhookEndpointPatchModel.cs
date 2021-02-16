@@ -12,7 +12,7 @@ namespace Falu.Webhooks
         /// The list of events to enable for this endpoint.
         /// Possible values are available in <see cref="EventTypes"/>.
         /// </summary>
-        public List<string> EnabledEvents { get; set; }
+        public List<string> Events { get; set; }
 
         /// <inheritdoc/>
         public string Description { get; set; }

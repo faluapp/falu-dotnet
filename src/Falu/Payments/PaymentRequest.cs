@@ -5,7 +5,7 @@ namespace Falu.Payments
     /// <summary>
     /// Information for initiating a payment.
     /// </summary>
-    public class PaymentRequest
+    public class PaymentRequest : PaymentPatchModel
     {
         /// <summary>
         /// Amount of the payment in smallest currency unit.

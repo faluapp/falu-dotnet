@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Falu.Messages
+﻿namespace Falu.Messages
 {
     /// <summary>
     /// Information about the template used (or to be used) to send a message.
@@ -20,6 +18,6 @@ namespace Falu.Messages
         /// <summary>
         /// Model applied when rending the template.
         /// </summary>
-        public Dictionary<string, object> Model { get; set; }
+        public object Model { get; set; }
     }
 }

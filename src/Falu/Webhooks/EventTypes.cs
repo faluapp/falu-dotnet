@@ -44,7 +44,7 @@
         /// <summary>
         /// Occurs whenever a payment is cancelled.
         /// </summary>
-        public const string PaymentCancelled = "payment.updated";
+        public const string PaymentCancelled = "payment.cancelled";
 
         /// <summary>
         /// Occurs whenever a payment reversal if updated.

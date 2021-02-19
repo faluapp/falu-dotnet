@@ -14,7 +14,7 @@ namespace Falu
     /// <summary>
     /// Official client for Falu API
     /// </summary>
-    public sealed class FaluClient
+    public class FaluClient
     {
         /// <summary>
         /// Creates an instance of <see cref="FaluClient"/>
@@ -40,30 +40,30 @@ namespace Falu
         }
 
         ///
-        public EvaluationsService Evaluations { get; }
+        public virtual EvaluationsService Evaluations { get; }
 
         ///
-        public EventsService Events { get; }
+        public virtual EventsService Events { get; }
 
         ///
-        public IdentityService Identity { get; }
+        public virtual IdentityService Identity { get; }
 
         ///
-        public MessagesService Messages { get; }
+        public virtual MessagesService Messages { get; }
 
         ///
-        public PaymentsService Payments { get; }
+        public virtual PaymentsService Payments { get; }
 
         ///
-        public PaymentsBalanceService PaymentsBalance { get; }
+        public virtual PaymentsBalanceService PaymentsBalance { get; }
 
         ///
-        public PaymentsReversalsService PaymentsReversal { get; }
+        public virtual PaymentsReversalsService PaymentsReversal { get; }
 
         ///
-        public TemplatesService Templates { get; }
+        public virtual TemplatesService Templates { get; }
 
         ///
-        public WebhooksService Webhooks { get; }
+        public virtual WebhooksService Webhooks { get; }
     }
 }

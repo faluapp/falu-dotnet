@@ -21,10 +21,10 @@ namespace Falu.Events
         /// <param name="continuationToken">The continuation token from a previous request</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<List<WebhookEvent<T>>>> ListAsync<T>(DateTimeOffset? from = null,
-                                                                                int? count = null,
-                                                                                string continuationToken = null,
-                                                                                CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<List<WebhookEvent<T>>>> ListAsync<T>(DateTimeOffset? from = null,
+                                                                                        int? count = null,
+                                                                                        string continuationToken = null,
+                                                                                        CancellationToken cancellationToken = default)
             where T : class
         {
             var args = new Dictionary<string, string>();
@@ -45,10 +45,10 @@ namespace Falu.Events
         /// <param name="continuationToken">The continuation token from a previous request</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<List<WebhookEvent>>> ListAsync(DateTimeOffset? from = null,
-                                                                          int? count = null,
-                                                                          string continuationToken = null,
-                                                                          CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<List<WebhookEvent>>> ListAsync(DateTimeOffset? from = null,
+                                                                                  int? count = null,
+                                                                                  string continuationToken = null,
+                                                                                  CancellationToken cancellationToken = default)
         {
             var args = new Dictionary<string, string>();
             if (from != null) args["from"] = $"{from:o}";
@@ -66,7 +66,8 @@ namespace Falu.Events
         /// <param name="id">Unique identifier for the event</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<WebhookEvent<T>>> GetAsync<T>(string id, CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<WebhookEvent<T>>> GetAsync<T>(string id,
+                                                                                 CancellationToken cancellationToken = default)
             where T : class
         {
             var uri = new Uri(BaseAddress, $"/v1/events/{id}");
@@ -79,7 +80,8 @@ namespace Falu.Events
         /// <param name="id">Unique identifier for the event</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<WebhookEvent>> GetAsync(string id, CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<WebhookEvent>> GetAsync(string id,
+                                                                           CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/events/{id}");
             return await GetAsJsonAsync<WebhookEvent>(uri, cancellationToken);

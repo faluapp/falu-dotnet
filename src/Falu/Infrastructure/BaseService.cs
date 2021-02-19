@@ -18,20 +18,21 @@ namespace Falu.Infrastructure
         private readonly FaluClientOptions options;
 
         ///
-        public BaseService(HttpClient backChannel, FaluClientOptions options)
+        protected BaseService(HttpClient backChannel, FaluClientOptions options)
         {
             this.backChannel = backChannel ?? throw new ArgumentNullException(nameof(backChannel));
             this.options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
         ///
-        protected Uri BaseAddress => backChannel.BaseAddress;
+        protected virtual Uri BaseAddress => backChannel.BaseAddress;
 
 
         #region Helpers
 
         ///
-        protected async Task<ResourceResponse<TResource>> GetAsJsonAsync<TResource>(Uri uri, CancellationToken cancellationToken = default)
+        protected virtual async Task<ResourceResponse<TResource>> GetAsJsonAsync<TResource>(Uri uri,
+                                                                                            CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, uri);
             request.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(JsonContentType));
@@ -39,10 +40,10 @@ namespace Falu.Infrastructure
         }
 
         ///
-        protected async Task<ResourceResponse<TResource>> PatchAsJsonAsync<TResource>(Uri uri,
-                                                                                      object patch,
-                                                                                      Encoding encoding = null,
-                                                                                      CancellationToken cancellationToken = default)
+        protected virtual async Task<ResourceResponse<TResource>> PatchAsJsonAsync<TResource>(Uri uri,
+                                                                                              object patch,
+                                                                                              Encoding encoding = null,
+                                                                                              CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(new HttpMethod("PATCH"), uri)
             {
@@ -52,10 +53,10 @@ namespace Falu.Infrastructure
         }
 
         ///
-        protected async Task<ResourceResponse<TResource>> PostAsJsonAsync<TResource>(Uri uri,
-                                                                                     object o,
-                                                                                     Encoding encoding = null,
-                                                                                     CancellationToken cancellationToken = default)
+        protected virtual async Task<ResourceResponse<TResource>> PostAsJsonAsync<TResource>(Uri uri,
+                                                                                             object o,
+                                                                                             Encoding encoding = null,
+                                                                                             CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, uri)
             {
@@ -65,8 +66,8 @@ namespace Falu.Infrastructure
         }
 
         ///
-        protected async Task<ResourceResponse<TResource>> SendAsync<TResource>(HttpRequestMessage request,
-                                                                               CancellationToken cancellationToken = default)
+        protected virtual async Task<ResourceResponse<TResource>> SendAsync<TResource>(HttpRequestMessage request,
+                                                                                       CancellationToken cancellationToken = default)
         {
             var response = await SendAsync(request, cancellationToken);
             var resource = default(TResource);

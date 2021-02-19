@@ -17,7 +17,7 @@ namespace Falu.Payments
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<AccountBalance>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<AccountBalance>> GetAsync(CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, "/v1/payments/balance");
             return await GetAsJsonAsync<AccountBalance>(uri, cancellationToken: cancellationToken);
@@ -28,7 +28,7 @@ namespace Falu.Payments
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<object>> RefreshAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<object>> RefreshAsync(CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, "/v1/payments/balance/refresh");
             return await PostAsJsonAsync<object>(uri, new { }, cancellationToken: cancellationToken);

@@ -65,9 +65,9 @@ namespace Falu
         /// <param name="patch"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<Message>> UpdateTemplateAsync(string id,
-                                                                         JsonPatchDocument<MessagePatchModel> patch,
-                                                                         CancellationToken cancellationToken = default)
+        public async Task<ResourceResponse<Message>> UpdateMessageAsync(string id,
+                                                                        JsonPatchDocument<MessagePatchModel> patch,
+                                                                        CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/messages/{id}");
             return await PatchAsJsonAsync<Message>(uri, patch, cancellationToken: cancellationToken);

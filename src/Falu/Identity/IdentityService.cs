@@ -19,8 +19,8 @@ namespace Falu.Identity
         /// <param name="search">The details to use for searching.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<IdentityRecord>> SearchIdentityAsync(IdentitySearchModel search,
-                                                                                CancellationToken cancellationToken = default)
+        public async Task<ResourceResponse<IdentityRecord>> SearchAsync(IdentitySearchModel search,
+                                                                        CancellationToken cancellationToken = default)
         {
             if (search is null) throw new ArgumentNullException(nameof(search));
 
@@ -37,10 +37,10 @@ namespace Falu.Identity
         /// <param name="continuationToken">The continuation token from a previous request</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<List<IdentityRecord>>> MarketingIdentityAsync(IdentityMarketingQuery model = null,
-                                                                                         int? count = null,
-                                                                                         string continuationToken = null,
-                                                                                         CancellationToken cancellationToken = default)
+        public async Task<ResourceResponse<List<IdentityRecord>>> MarketingAsync(IdentityMarketingQuery model = null,
+                                                                                 int? count = null,
+                                                                                 string continuationToken = null,
+                                                                                 CancellationToken cancellationToken = default)
         {
             var args = new Dictionary<string, string>();
             if (count != null) args["count"] = $"{count}";

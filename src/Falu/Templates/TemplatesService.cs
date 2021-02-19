@@ -21,9 +21,9 @@ namespace Falu.Templates
         /// <param name="continuationToken">The continuation token from a previous request</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<List<Template>>> ListTemplatesAsync(int? count = null,
-                                                                               string continuationToken = null,
-                                                                               CancellationToken cancellationToken = default)
+        public async Task<ResourceResponse<List<Template>>> ListAsync(int? count = null,
+                                                                      string continuationToken = null,
+                                                                      CancellationToken cancellationToken = default)
         {
             var args = new Dictionary<string, string>();
             if (count != null) args["count"] = $"{count}";
@@ -40,7 +40,7 @@ namespace Falu.Templates
         /// <param name="id">Unique identifier for the template</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<Template>> GetTemplateAsync(string id, CancellationToken cancellationToken = default)
+        public async Task<ResourceResponse<Template>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/templates/{id}");
             return await GetAsJsonAsync<Template>(uri, cancellationToken);
@@ -52,8 +52,8 @@ namespace Falu.Templates
         /// <param name="template"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<Template>> CreateTemplateAsync(TemplatePatchModel template,
-                                                                          CancellationToken cancellationToken = default)
+        public async Task<ResourceResponse<Template>> CreateAsync(TemplatePatchModel template,
+                                                                  CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/templates");
             return await PostAsJsonAsync<Template>(uri, template, cancellationToken: cancellationToken);
@@ -66,9 +66,9 @@ namespace Falu.Templates
         /// <param name="patch"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<Template>> UpdateTemplateAsync(string id,
-                                                                          JsonPatchDocument<TemplatePatchModel> patch,
-                                                                          CancellationToken cancellationToken = default)
+        public async Task<ResourceResponse<Template>> UpdateAsync(string id,
+                                                                  JsonPatchDocument<TemplatePatchModel> patch,
+                                                                  CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/templates/{id}");
             return await PatchAsJsonAsync<Template>(uri, patch, cancellationToken: cancellationToken);
@@ -80,7 +80,7 @@ namespace Falu.Templates
         /// <param name="id">Unique identifier for the template</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<Template>> DeleteTemplateAsync(string id, CancellationToken cancellationToken = default)
+        public async Task<ResourceResponse<Template>> DeleteAsync(string id, CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/templates/{id}");
             var request = new HttpRequestMessage(HttpMethod.Delete, uri);
@@ -93,8 +93,8 @@ namespace Falu.Templates
         /// <param name="template"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<TemplateValidationResponse>> ValidateTemplateAsync(TemplateValidationRequest template,
-                                                                                              CancellationToken cancellationToken = default)
+        public async Task<ResourceResponse<TemplateValidationResponse>> ValidateAsync(TemplateValidationRequest template,
+                                                                                      CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/templates/validate");
             return await PostAsJsonAsync<TemplateValidationResponse>(uri, template, cancellationToken: cancellationToken);

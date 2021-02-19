@@ -16,6 +16,6 @@ namespace Falu.Templates
         /// <summary>
         /// The template model to be used when rendering test content.
         /// </summary>
-        public IDictionary<string, object> TestRenderModel { get; set; }
+        public IDictionary<string, object> Model { get; set; }
     }
 }

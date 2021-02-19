@@ -1,15 +1,19 @@
 ﻿using Falu.Infrastructure;
-using Falu.Messages;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Tingle.Extensions.JsonPatch;
 
-namespace Falu
+namespace Falu.Messages
 {
-    public partial class FaluClient
+    ///
+    public class MessagesService : BaseService
     {
+        ///
+        public MessagesService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+
         /// <summary>
         /// List messages.
         /// </summary>
@@ -18,7 +22,7 @@ namespace Falu
         /// <param name="continuationToken">The continuation token from a previous request</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<List<Message>>> ListMessagesAsync(DateTimeOffset? from = null,
+        public virtual async Task<ResourceResponse<List<Message>>> ListAsync(DateTimeOffset? from = null,
                                                                              int? count = null,
                                                                              string continuationToken = null,
                                                                              CancellationToken cancellationToken = default)
@@ -39,7 +43,8 @@ namespace Falu
         /// <param name="id">Unique identifier for the message</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<Message>> GetMessageAsync(string id, CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<Message>> GetAsync(string id,
+                                                                      CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/messages/{id}");
             return await GetAsJsonAsync<Message>(uri, cancellationToken);
@@ -51,8 +56,8 @@ namespace Falu
         /// <param name="message"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<Message>> SendMessageAsync(MessageCreateRequest message,
-                                                                      CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<Message>> CreateAsync(MessageCreateRequest message,
+                                                                         CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, "/v1/messages");
             return await PostAsJsonAsync<Message>(uri, message, cancellationToken: cancellationToken);
@@ -65,9 +70,9 @@ namespace Falu
         /// <param name="patch"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<Message>> UpdateMessageAsync(string id,
-                                                                        JsonPatchDocument<MessagePatchModel> patch,
-                                                                        CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<Message>> UpdateAsync(string id,
+                                                                         JsonPatchDocument<MessagePatchModel> patch,
+                                                                         CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/messages/{id}");
             return await PatchAsJsonAsync<Message>(uri, patch, cancellationToken: cancellationToken);
@@ -79,8 +84,8 @@ namespace Falu
         /// <param name="messages"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<List<Message>>> SendMessagesBatchAsync(IEnumerable<MessageCreateRequest> messages,
-                                                                                  CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<List<Message>>> CreateBatchAsync(IEnumerable<MessageCreateRequest> messages,
+                                                                                    CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, "/v1/messages/bulk");
             return await PostAsJsonAsync<List<Message>>(uri, messages, cancellationToken: cancellationToken);

@@ -1,36 +1,18 @@
 ﻿using Falu.Infrastructure;
-using Falu.Payments;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Tingle.Extensions.JsonPatch;
 
-namespace Falu
+namespace Falu.Payments
 {
-    public partial class FaluClient
+    ///
+    public class PaymentsService : BaseService
     {
-        /// <summary>
-        /// Retrieve balance.
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public async Task<ResourceResponse<AccountBalance>> GetBalanceAsync(CancellationToken cancellationToken = default)
-        {
-            var uri = new Uri(BaseAddress, "/v1/payments/balance");
-            return await GetAsJsonAsync<AccountBalance>(uri, cancellationToken: cancellationToken);
-        }
-
-        /// <summary>
-        /// Force a balance refresh.
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public async Task<ResourceResponse<object>> ForceBalanceRefreshAsync(CancellationToken cancellationToken = default)
-        {
-            var uri = new Uri(BaseAddress, "/v1/payments/balance/refresh");
-            return await PostAsJsonAsync<object>(uri, new { }, cancellationToken: cancellationToken);
-        }
+        ///
+        public PaymentsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
 
         /// <summary>
         /// List payments.
@@ -40,7 +22,7 @@ namespace Falu
         /// <param name="continuationToken">The continuation token from a previous request</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<List<Payment>>> ListPaymentsAsync(DateTimeOffset? from = null,
+        public virtual async Task<ResourceResponse<List<Payment>>> ListAsync(DateTimeOffset? from = null,
                                                                              int? count = null,
                                                                              string continuationToken = null,
                                                                              CancellationToken cancellationToken = default)
@@ -61,7 +43,8 @@ namespace Falu
         /// <param name="id">Unique identifier for the payment</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<Payment>> GetPaymentAsync(string id, CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<Payment>> GetAsync(string id,
+                                                                      CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/payments/{id}");
             return await GetAsJsonAsync<Payment>(uri, cancellationToken);
@@ -73,8 +56,8 @@ namespace Falu
         /// <param name="payment"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<Payment>> InitiatePaymentAsync(PaymentRequest payment,
-                                                                          CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<Payment>> CreateAsync(PaymentRequest payment,
+                                                                         CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, "/v1/payments");
             return await PostAsJsonAsync<Payment>(uri, payment, cancellationToken: cancellationToken);
@@ -87,9 +70,9 @@ namespace Falu
         /// <param name="patch"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<Payment>> UpdatePaymentAsync(string id,
-                                                                        JsonPatchDocument<PaymentPatchModel> patch,
-                                                                        CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<Payment>> UpdateAsync(string id,
+                                                                         JsonPatchDocument<PaymentPatchModel> patch,
+                                                                         CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/payments/{id}");
             return await PatchAsJsonAsync<Payment>(uri, patch, cancellationToken: cancellationToken);

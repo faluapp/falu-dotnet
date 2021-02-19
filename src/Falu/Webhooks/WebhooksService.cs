@@ -1,5 +1,4 @@
 ﻿using Falu.Infrastructure;
-using Falu.Webhooks;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -7,10 +6,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Tingle.Extensions.JsonPatch;
 
-namespace Falu
+namespace Falu.Webhooks
 {
-    public partial class FaluClient 
+    ///
+    public class WebhooksService : BaseService
     {
+        ///
+        public WebhooksService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+
         /// <summary>
         /// List webhook endpoints.
         /// </summary>
@@ -18,9 +21,9 @@ namespace Falu
         /// <param name="continuationToken">The continuation token from a previous request</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<List<WebhookEndpoint>>> ListWebhookEndpointsAsync(int? count = null,
-                                                                                             string continuationToken = null,
-                                                                                             CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<List<WebhookEndpoint>>> ListAsync(int? count = null,
+                                                                                     string continuationToken = null,
+                                                                                     CancellationToken cancellationToken = default)
         {
             var args = new Dictionary<string, string>();
             if (count != null) args["count"] = $"{count}";
@@ -37,8 +40,8 @@ namespace Falu
         /// <param name="id">Unique identifier for the webhook endpoint</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<WebhookEndpoint>> GetWebhookEndpointAsync(string id,
-                                                                                     CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<WebhookEndpoint>> GetAsync(string id,
+                                                                              CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/webhooks/endpoints/{id}");
             return await GetAsJsonAsync<WebhookEndpoint>(uri, cancellationToken);
@@ -50,8 +53,8 @@ namespace Falu
         /// <param name="endpoint"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<WebhookEndpoint>> CreateWebhookEndpointAsync(WebhookEndpointPatchModel endpoint,
-                                                                                        CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<WebhookEndpoint>> CreateAsync(WebhookEndpointPatchModel endpoint,
+                                                                                 CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, "/v1/webhooks/endpoints");
             return await PostAsJsonAsync<WebhookEndpoint>(uri, endpoint, cancellationToken: cancellationToken);
@@ -64,9 +67,9 @@ namespace Falu
         /// <param name="patch"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<WebhookEndpoint>> UpdateWebhookEndpointAsync(string id,
-                                                                                        JsonPatchDocument<WebhookEndpointPatchModel> patch,
-                                                                                        CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<WebhookEndpoint>> UpdateAsync(string id,
+                                                                                 JsonPatchDocument<WebhookEndpointPatchModel> patch,
+                                                                                 CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/webhooks/endpoints/{id}");
             return await PatchAsJsonAsync<WebhookEndpoint>(uri, patch, cancellationToken: cancellationToken);
@@ -78,8 +81,8 @@ namespace Falu
         /// <param name="id">Unique identifier for the webhook endpoint</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<WebhookEndpoint>> DeleteWebhookEndpointAsync(string id,
-                                                                                        CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<WebhookEndpoint>> DeleteAsync(string id,
+                                                                                 CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/webhooks/endpoints/{id}");
             var request = new HttpRequestMessage(HttpMethod.Delete, uri);

@@ -1,5 +1,4 @@
-﻿using Falu.Evaluations;
-using Falu.Infrastructure;
+﻿using Falu.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -7,10 +6,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Tingle.Extensions.JsonPatch;
 
-namespace Falu
+namespace Falu.Evaluations
 {
-    public partial class FaluClient
+    ///
+    public class EvaluationsService : BaseService
     {
+        ///
+        public EvaluationsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+
         /// <summary>
         /// List evaluations.
         /// </summary>
@@ -21,12 +24,12 @@ namespace Falu
         /// <param name="continuationToken">The continuation token from a previous request</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<List<Evaluation>>> ListEvaluationsAsync(DateTimeOffset? from = null,
-                                                                                   string email = null,
-                                                                                   string phone = null,
-                                                                                   int? count = null,
-                                                                                   string continuationToken = null,
-                                                                                   CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<List<Evaluation>>> ListAsync(DateTimeOffset? from = null,
+                                                                                string email = null,
+                                                                                string phone = null,
+                                                                                int? count = null,
+                                                                                string continuationToken = null,
+                                                                                CancellationToken cancellationToken = default)
         {
             var args = new Dictionary<string, string>();
             if (from != null) args["from"] = $"{from:o}";
@@ -46,10 +49,11 @@ namespace Falu
         /// <param name="id">Unique identifier for the evaluation</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Task<ResourceResponse<Evaluation>> GetEvaluationAsync(string id, CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<Evaluation>> GetAsync(string id,
+                                                                         CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/evaluations/{id}");
-            return GetAsJsonAsync<Evaluation>(uri, cancellationToken: cancellationToken);
+            return await GetAsJsonAsync<Evaluation>(uri, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -59,9 +63,9 @@ namespace Falu
         /// <param name="patch"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<Evaluation>> UpdateEvaluationAsync(string id,
-                                                                              JsonPatchDocument<EvaluationPatchModel> patch,
-                                                                              CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<Evaluation>> UpdateAsync(string id,
+                                                                            JsonPatchDocument<EvaluationPatchModel> patch,
+                                                                            CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/evaluations/{id}");
             return await PatchAsJsonAsync<Evaluation>(uri, patch, cancellationToken: cancellationToken);
@@ -73,8 +77,8 @@ namespace Falu
         /// <param name="evaluation"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ResourceResponse<Evaluation>> RequestEvaluationAsync(EvaluationRequest evaluation,
-                                                                               CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<Evaluation>> CreateAsync(EvaluationRequest evaluation,
+                                                                            CancellationToken cancellationToken = default)
         {
             var content = new MultipartFormDataContent
             {

@@ -1,14 +1,18 @@
-﻿using Falu.Events;
-using Falu.Infrastructure;
+﻿using Falu.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Falu
+namespace Falu.Events
 {
-    public partial class FaluClient
+    ///
+    public class EventsService : BaseService
     {
+        ///
+        public EventsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+
         /// <summary>
         /// Retrieve events.
         /// </summary>

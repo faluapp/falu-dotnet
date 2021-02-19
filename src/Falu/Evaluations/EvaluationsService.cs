@@ -1,5 +1,4 @@
-﻿using Falu.Evaluations;
-using Falu.Infrastructure;
+﻿using Falu.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -7,10 +6,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Tingle.Extensions.JsonPatch;
 
-namespace Falu
+namespace Falu.Evaluations
 {
-    public partial class FaluClient
+    ///
+    public class EvaluationsService : BaseService
     {
+        ///
+        public EvaluationsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+
         /// <summary>
         /// List evaluations.
         /// </summary>

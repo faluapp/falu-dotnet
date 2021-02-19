@@ -1,5 +1,4 @@
 ﻿using Falu.Infrastructure;
-using Falu.Templates;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -7,10 +6,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Tingle.Extensions.JsonPatch;
 
-namespace Falu
+namespace Falu.Templates
 {
-    public partial class FaluClient
+    ///
+    public class TemplatesService : BaseService
     {
+        ///
+        public TemplatesService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+
         /// <summary>
         /// List templates.
         /// </summary>

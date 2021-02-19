@@ -1,15 +1,19 @@
 ﻿using Falu.Infrastructure;
-using Falu.Payments;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Tingle.Extensions.JsonPatch;
 
-namespace Falu
+namespace Falu.Payments
 {
-    public partial class FaluClient
+    ///
+    public class PaymentsService : BaseService
     {
+        ///
+        public PaymentsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+
         /// <summary>
         /// Retrieve balance.
         /// </summary>

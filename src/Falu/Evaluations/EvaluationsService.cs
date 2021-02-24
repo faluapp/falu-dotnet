@@ -78,13 +78,18 @@ namespace Falu.Evaluations
                 { new StringContent(evaluation.Name), nameof(evaluation.Name) },
                 { new StringContent(evaluation.Phone), nameof(evaluation.Phone) },
                 { new StringContent(evaluation.Password), nameof(evaluation.Password) },
-                { new StringContent(evaluation.Description), nameof(evaluation.Description) },
                 //{ new StringContent(evaluation.Metadata), nameof(evaluation.Metadata) },
                 //{ new StringContent(evaluation.Tags), nameof(evaluation.Tags) },
 
                 // populate the file stream
                 { new StreamContent(evaluation.Content), "File", evaluation.FileName },
             };
+
+            if (!string.IsNullOrWhiteSpace(evaluation.Description))
+            {
+                content.Add(new StringContent(evaluation.Description), nameof(evaluation.Description));
+            }
+
             var uri = new Uri(BaseAddress, "/v1/statements/extract/mpesa");
             var request = new HttpRequestMessage(HttpMethod.Post, uri) { Content = content };
             return await SendAsync<Evaluation>(request, cancellationToken: cancellationToken);

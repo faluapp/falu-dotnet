@@ -2,6 +2,7 @@
 using Falu.Messages;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -78,16 +79,36 @@ namespace Falu.Evaluations
                 { new StringContent(evaluation.Name), nameof(evaluation.Name) },
                 { new StringContent(evaluation.Phone), nameof(evaluation.Phone) },
                 { new StringContent(evaluation.Password), nameof(evaluation.Password) },
-                //{ new StringContent(evaluation.Metadata), nameof(evaluation.Metadata) },
-                //{ new StringContent(evaluation.Tags), nameof(evaluation.Tags) },
 
                 // populate the file stream
                 { new StreamContent(evaluation.Content), "File", evaluation.FileName },
             };
 
+            // Add description if provided
             if (!string.IsNullOrWhiteSpace(evaluation.Description))
             {
                 content.Add(new StringContent(evaluation.Description), nameof(evaluation.Description));
+            }
+
+            // Add tags if provided
+            var tags = evaluation.Tags;
+            if (tags != null)
+            {
+                for (var i = 0; i < tags.Count; i++)
+                {
+                    content.Add(new StringContent(tags[i]), $"{nameof(evaluation.Tags)}[{i}]");
+                }
+            }
+
+            // Add metadata if provided
+            var metadata = evaluation.Metadata.ToList();
+            if (metadata != null)
+            {
+                for (var i = 0; i < metadata.Count; i++)
+                {
+                    content.Add(new StringContent(metadata[i].Key), $"{nameof(evaluation.Metadata)}[{i}].Key");
+                    content.Add(new StringContent(metadata[i].Value), $"{nameof(evaluation.Metadata)}[{i}].Value");
+                }
             }
 
             var uri = new Uri(BaseAddress, "/v1/evaluations");

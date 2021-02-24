@@ -90,7 +90,7 @@ namespace Falu.Evaluations
                 content.Add(new StringContent(evaluation.Description), nameof(evaluation.Description));
             }
 
-            var uri = new Uri(BaseAddress, "/v1/statements/extract/mpesa");
+            var uri = new Uri(BaseAddress, "/v1/evaluations");
             var request = new HttpRequestMessage(HttpMethod.Post, uri) { Content = content };
             return await SendAsync<Evaluation>(request, cancellationToken: cancellationToken);
         }

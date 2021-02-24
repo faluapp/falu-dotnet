@@ -1,4 +1,5 @@
-﻿using Falu.Infrastructure;
+﻿using Falu.Core;
+using Falu.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -17,20 +18,14 @@ namespace Falu.Payments
         /// <summary>
         /// List payments.
         /// </summary>
-        /// <param name="from">Starting date for the payments</param>
-        /// <param name="count">Maximum number of items to return</param>
-        /// <param name="continuationToken">The continuation token from a previous request</param>
+        /// <param name="options">Options for filtering and pagination.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<Payment>>> ListAsync(DateTimeOffset? from = null,
-                                                                             int? count = null,
-                                                                             string continuationToken = null,
+        public virtual async Task<ResourceResponse<List<Payment>>> ListAsync(BasicListOptions options = null,
                                                                              CancellationToken cancellationToken = default)
         {
             var args = new Dictionary<string, string>();
-            if (from != null) args["from"] = $"{from:o}";
-            if (count != null) args["count"] = $"{count}";
-            if (!string.IsNullOrWhiteSpace(continuationToken)) args["ct"] = continuationToken;
+            options?.PopulateQueryValues(args);
 
             var query = QueryHelper.MakeQueryString(args);
             var uri = new Uri(BaseAddress, $"/v1/payments{query}");

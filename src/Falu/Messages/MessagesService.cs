@@ -17,20 +17,14 @@ namespace Falu.Messages
         /// <summary>
         /// List messages.
         /// </summary>
-        /// <param name="from">Starting date for the messages</param>
-        /// <param name="count">Maximum number of items to return</param>
-        /// <param name="continuationToken">The continuation token from a previous request</param>
+        /// <param name="options">Options for filtering and pagination.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<Message>>> ListAsync(DateTimeOffset? from = null,
-                                                                             int? count = null,
-                                                                             string continuationToken = null,
+        public virtual async Task<ResourceResponse<List<Message>>> ListAsync(MessagesListOptions options,
                                                                              CancellationToken cancellationToken = default)
         {
             var args = new Dictionary<string, string>();
-            if (from != null) args["from"] = $"{from:o}";
-            if (count != null) args["count"] = $"{count}";
-            if (!string.IsNullOrWhiteSpace(continuationToken)) args["ct"] = continuationToken;
+            options?.PopulateQueryValues(args);
 
             var query = QueryHelper.MakeQueryString(args);
             var uri = new Uri(BaseAddress, $"/v1/messages{query}");

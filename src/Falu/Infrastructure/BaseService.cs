@@ -33,11 +33,12 @@ namespace Falu.Infrastructure
 
         ///
         protected virtual async Task<ResourceResponse<TResource>> GetAsJsonAsync<TResource>(Uri uri,
+                                                                                            RequestOptions options = null,
                                                                                             CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, uri);
             request.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(JsonContentType));
-            return await SendAsync<TResource>(request, null, cancellationToken);
+            return await SendAsync<TResource>(request, options, cancellationToken);
         }
 
         ///

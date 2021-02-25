@@ -19,9 +19,11 @@ namespace Falu.Payments
         /// List payments.
         /// </summary>
         /// <param name="options">Options for filtering and pagination.</param>
+        /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<List<Payment>>> ListAsync(BasicListOptions options = null,
+                                                                             RequestOptions requestOptions = null,
                                                                              CancellationToken cancellationToken = default)
         {
             var args = new Dictionary<string, string>();
@@ -29,20 +31,22 @@ namespace Falu.Payments
 
             var query = QueryHelper.MakeQueryString(args);
             var uri = new Uri(BaseAddress, $"/v1/payments{query}");
-            return await GetAsJsonAsync<List<Payment>>(uri, cancellationToken);
+            return await GetAsJsonAsync<List<Payment>>(uri, requestOptions, cancellationToken);
         }
 
         /// <summary>
         /// Retrieve a payment.
         /// </summary>
         /// <param name="id">Unique identifier for the payment</param>
+        /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<Payment>> GetAsync(string id,
+                                                                      RequestOptions options = null,
                                                                       CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/payments/{id}");
-            return await GetAsJsonAsync<Payment>(uri, cancellationToken);
+            return await GetAsJsonAsync<Payment>(uri, options, cancellationToken);
         }
 
         /// <summary>

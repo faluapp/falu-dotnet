@@ -16,12 +16,14 @@ namespace Falu.Payments
         /// <summary>
         /// Retrieve balance.
         /// </summary>
+        /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<AccountBalance>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<AccountBalance>> GetAsync(RequestOptions options = null,
+                                                                             CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, "/v1/payments/balance");
-            return await GetAsJsonAsync<AccountBalance>(uri, cancellationToken: cancellationToken);
+            return await GetAsJsonAsync<AccountBalance>(uri, options, cancellationToken);
         }
 
         /// <summary>

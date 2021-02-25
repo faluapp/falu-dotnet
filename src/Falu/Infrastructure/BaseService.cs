@@ -114,9 +114,16 @@ namespace Falu.Infrastructure
                     request.Headers.Add("X-Idempotency-Key", options.IdempotencyKey);
                 }
 
+                // only for user bearer token
                 if (!string.IsNullOrWhiteSpace(options.Workspace))
                 {
                     request.Headers.Add("X-Falu-Workspace-Id", options.Workspace);
+                }
+
+                // only for user bearer token
+                if (options.Live)
+                {
+                    request.Headers.Add("X-Live-Mode", "true");
                 }
             }
 

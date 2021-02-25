@@ -20,5 +20,13 @@
         /// This value is set in the <c>X-Falu-Workspace-Id</c> request header.
         /// </summary>
         public string Workspace { get; set; }
+
+        /// <summary>
+        /// Gets or sets value indicating if the request is targeted to the live or test environment.
+        /// This is only required when using user account bearer token.
+        /// For API key authentication, the key already identifies environment.
+        /// This value is set in the <c>X-Live-Mode</c> request header.
+        /// </summary>
+        public bool Live { get; set; }
     }
 }

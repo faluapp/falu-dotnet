@@ -49,13 +49,15 @@ namespace Falu.Payments
         /// Initiate a payment.
         /// </summary>
         /// <param name="payment"></param>
+        /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<Payment>> CreateAsync(PaymentRequest payment,
+                                                                         RequestOptions options = null,
                                                                          CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, "/v1/payments");
-            return await PostAsJsonAsync<Payment>(uri, payment, cancellationToken: cancellationToken);
+            return await PostAsJsonAsync<Payment>(uri, payment, options, cancellationToken);
         }
 
         /// <summary>
@@ -63,14 +65,16 @@ namespace Falu.Payments
         /// </summary>
         /// <param name="id">Unique identifier for the payment</param>
         /// <param name="patch"></param>
+        /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<Payment>> UpdateAsync(string id,
                                                                          JsonPatchDocument<PaymentPatchModel> patch,
+                                                                         RequestOptions options = null,
                                                                          CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/payments/{id}");
-            return await PatchAsJsonAsync<Payment>(uri, patch, cancellationToken: cancellationToken);
+            return await PatchAsJsonAsync<Payment>(uri, patch, options, cancellationToken);
         }
     }
 }

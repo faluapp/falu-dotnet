@@ -49,13 +49,15 @@ namespace Falu.Templates
         /// Create a template.
         /// </summary>
         /// <param name="template"></param>
+        /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<Template>> CreateAsync(TemplatePatchModel template,
+                                                                          RequestOptions options = null,
                                                                           CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/templates");
-            return await PostAsJsonAsync<Template>(uri, template, cancellationToken: cancellationToken);
+            return await PostAsJsonAsync<Template>(uri, template, options, cancellationToken);
         }
 
         /// <summary>
@@ -63,41 +65,47 @@ namespace Falu.Templates
         /// </summary>
         /// <param name="id">Unique identifier for the template</param>
         /// <param name="patch"></param>
+        /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<Template>> UpdateAsync(string id,
                                                                           JsonPatchDocument<TemplatePatchModel> patch,
+                                                                          RequestOptions options = null,
                                                                           CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/templates/{id}");
-            return await PatchAsJsonAsync<Template>(uri, patch, cancellationToken: cancellationToken);
+            return await PatchAsJsonAsync<Template>(uri, patch, options, cancellationToken);
         }
 
         /// <summary>
         /// Delete a template.
         /// </summary>
         /// <param name="id">Unique identifier for the template</param>
+        /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<Template>> DeleteAsync(string id,
+                                                                          RequestOptions options = null,
                                                                           CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/templates/{id}");
             var request = new HttpRequestMessage(HttpMethod.Delete, uri);
-            return await SendAsync<Template>(request, cancellationToken);
+            return await SendAsync<Template>(request, options, cancellationToken);
         }
 
         /// <summary>
         /// Validate a template.
         /// </summary>
         /// <param name="template"></param>
+        /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<TemplateValidationResponse>> ValidateAsync(TemplateValidationRequest template,
+                                                                                              RequestOptions options = null,
                                                                                               CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/templates/validate");
-            return await PostAsJsonAsync<TemplateValidationResponse>(uri, template, cancellationToken: cancellationToken);
+            return await PostAsJsonAsync<TemplateValidationResponse>(uri, template, options, cancellationToken);
         }
     }
 }

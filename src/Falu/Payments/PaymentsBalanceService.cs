@@ -1,4 +1,5 @@
-﻿using Falu.Infrastructure;
+﻿using Falu.Core;
+using Falu.Infrastructure;
 using System;
 using System.Net.Http;
 using System.Threading;
@@ -26,12 +27,14 @@ namespace Falu.Payments
         /// <summary>
         /// Force a balance refresh.
         /// </summary>
+        /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<object>> RefreshAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<object>> RefreshAsync(RequestOptions options = null,
+                                                                         CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, "/v1/payments/balance/refresh");
-            return await PostAsJsonAsync<object>(uri, new { }, cancellationToken: cancellationToken);
+            return await PostAsJsonAsync<object>(uri, new { }, options, cancellationToken);
         }
     }
 }

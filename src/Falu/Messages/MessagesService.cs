@@ -1,4 +1,5 @@
-﻿using Falu.Infrastructure;
+﻿using Falu.Core;
+using Falu.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -48,13 +49,15 @@ namespace Falu.Messages
         /// Send a message.
         /// </summary>
         /// <param name="message"></param>
+        /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<Message>> CreateAsync(MessageCreateRequest message,
+                                                                         RequestOptions options = null,
                                                                          CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, "/v1/messages");
-            return await PostAsJsonAsync<Message>(uri, message, cancellationToken: cancellationToken);
+            return await PostAsJsonAsync<Message>(uri, message, options, cancellationToken);
         }
 
         /// <summary>
@@ -62,27 +65,31 @@ namespace Falu.Messages
         /// </summary>
         /// <param name="id">Unique identifier for the message</param>
         /// <param name="patch"></param>
+        /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<Message>> UpdateAsync(string id,
                                                                          JsonPatchDocument<MessagePatchModel> patch,
+                                                                         RequestOptions options = null,
                                                                          CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/messages/{id}");
-            return await PatchAsJsonAsync<Message>(uri, patch, cancellationToken: cancellationToken);
+            return await PatchAsJsonAsync<Message>(uri, patch, options, cancellationToken);
         }
 
         /// <summary>
         /// Send a batch of messages.
         /// </summary>
         /// <param name="messages"></param>
+        /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<List<Message>>> CreateBatchAsync(IEnumerable<MessageCreateRequest> messages,
+                                                                                    RequestOptions options = null,
                                                                                     CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, "/v1/messages/bulk");
-            return await PostAsJsonAsync<List<Message>>(uri, messages, cancellationToken: cancellationToken);
+            return await PostAsJsonAsync<List<Message>>(uri, messages, options, cancellationToken);
         }
     }
 }

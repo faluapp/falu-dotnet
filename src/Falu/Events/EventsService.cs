@@ -18,9 +18,11 @@ namespace Falu.Events
         /// Retrieve events.
         /// </summary>
         /// <param name="options">Options for filtering and pagination.</param>
+        /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<List<WebhookEvent<T>>>> ListAsync<T>(BasicListOptions options = null,
+                                                                                        RequestOptions requestOptions = null,
                                                                                         CancellationToken cancellationToken = default)
             where T : class
         {
@@ -29,16 +31,18 @@ namespace Falu.Events
 
             var query = QueryHelper.MakeQueryString(args);
             var uri = new Uri(BaseAddress, $"/v1/events{query}");
-            return await GetAsJsonAsync<List<WebhookEvent<T>>>(uri, cancellationToken);
+            return await GetAsJsonAsync<List<WebhookEvent<T>>>(uri, requestOptions, cancellationToken);
         }
 
         /// <summary>
         /// Retrieve events.
         /// </summary>
         /// <param name="options">Options for filtering and pagination.</param>
+        /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<List<WebhookEvent>>> ListAsync(BasicListOptions options = null,
+                                                                                  RequestOptions requestOptions = null,
                                                                                   CancellationToken cancellationToken = default)
         {
             var args = new Dictionary<string, string>();
@@ -46,34 +50,38 @@ namespace Falu.Events
 
             var query = QueryHelper.MakeQueryString(args);
             var uri = new Uri(BaseAddress, $"/v1/events{query}");
-            return await GetAsJsonAsync<List<WebhookEvent>>(uri, cancellationToken);
+            return await GetAsJsonAsync<List<WebhookEvent>>(uri, requestOptions, cancellationToken);
         }
 
         /// <summary>
         /// Get an event.
         /// </summary>
         /// <param name="id">Unique identifier for the event</param>
+        /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<WebhookEvent<T>>> GetAsync<T>(string id,
+                                                                                 RequestOptions options = null,
                                                                                  CancellationToken cancellationToken = default)
             where T : class
         {
             var uri = new Uri(BaseAddress, $"/v1/events/{id}");
-            return await GetAsJsonAsync<WebhookEvent<T>>(uri, cancellationToken);
+            return await GetAsJsonAsync<WebhookEvent<T>>(uri, options, cancellationToken);
         }
 
         /// <summary>
         /// Get an event.
         /// </summary>
         /// <param name="id">Unique identifier for the event</param>
+        /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<WebhookEvent>> GetAsync(string id,
+                                                                           RequestOptions options = null,
                                                                            CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/events/{id}");
-            return await GetAsJsonAsync<WebhookEvent>(uri, cancellationToken);
+            return await GetAsJsonAsync<WebhookEvent>(uri, options, cancellationToken);
         }
     }
 }

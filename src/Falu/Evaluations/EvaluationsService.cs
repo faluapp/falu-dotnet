@@ -1,4 +1,5 @@
-﻿using Falu.Infrastructure;
+﻿using Falu.Core;
+using Falu.Infrastructure;
 using Falu.Messages;
 using System;
 using System.Collections.Generic;
@@ -20,9 +21,11 @@ namespace Falu.Evaluations
         /// List evaluations.
         /// </summary>
         /// <param name="options">Options for filtering and pagination.</param>
+        /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<List<Evaluation>>> ListAsync(EvaluationsListOptions options = null,
+                                                                                RequestOptions requestOptions = null,
                                                                                 CancellationToken cancellationToken = default)
         {
             var args = new Dictionary<string, string>();
@@ -30,20 +33,22 @@ namespace Falu.Evaluations
 
             var query = QueryHelper.MakeQueryString(args);
             var uri = new Uri(BaseAddress, $"/v1/evaluations{query}");
-            return await GetAsJsonAsync<List<Evaluation>>(uri, cancellationToken: cancellationToken);
+            return await GetAsJsonAsync<List<Evaluation>>(uri, requestOptions, cancellationToken);
         }
 
         /// <summary>
         /// Retrieve an evaluation.
         /// </summary>
         /// <param name="id">Unique identifier for the evaluation</param>
+        /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<Evaluation>> GetAsync(string id,
+                                                                         RequestOptions options = null,
                                                                          CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/evaluations/{id}");
-            return await GetAsJsonAsync<Evaluation>(uri, cancellationToken: cancellationToken);
+            return await GetAsJsonAsync<Evaluation>(uri, options, cancellationToken);
         }
 
         /// <summary>
@@ -51,23 +56,27 @@ namespace Falu.Evaluations
         /// </summary>
         /// <param name="id">Unique identifier for the evaluation</param>
         /// <param name="patch"></param>
+        /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<Evaluation>> UpdateAsync(string id,
                                                                             JsonPatchDocument<EvaluationPatchModel> patch,
+                                                                            RequestOptions options = null,
                                                                             CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, $"/v1/evaluations/{id}");
-            return await PatchAsJsonAsync<Evaluation>(uri, patch, cancellationToken: cancellationToken);
+            return await PatchAsJsonAsync<Evaluation>(uri, patch, options, cancellationToken);
         }
 
         /// <summary>
         /// Initiate an evaluation.
         /// </summary>
         /// <param name="evaluation"></param>
+        /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<Evaluation>> CreateAsync(EvaluationRequest evaluation,
+                                                                            RequestOptions options = null,
                                                                             CancellationToken cancellationToken = default)
         {
             var content = new MultipartFormDataContent
@@ -113,7 +122,7 @@ namespace Falu.Evaluations
 
             var uri = new Uri(BaseAddress, "/v1/evaluations");
             var request = new HttpRequestMessage(HttpMethod.Post, uri) { Content = content };
-            return await SendAsync<Evaluation>(request, cancellationToken: cancellationToken);
+            return await SendAsync<Evaluation>(request, options, cancellationToken);
         }
     }
 }

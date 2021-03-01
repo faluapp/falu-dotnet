@@ -124,5 +124,21 @@ namespace Falu.Evaluations
             var request = new HttpRequestMessage(HttpMethod.Post, uri) { Content = content };
             return await SendAsync<Evaluation>(request, options, cancellationToken);
         }
+
+
+        /// <summary>
+        /// Score an evaluation.
+        /// </summary>
+        /// <param name="id">Unique identifier for the evaluation</param>
+        /// <param name="options">Options to use for the request.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<ResourceResponse<Evaluation>> ScoreAsync(string id,
+                                                                            RequestOptions options = null,
+                                                                            CancellationToken cancellationToken = default)
+        {
+            var uri = new Uri(BaseAddress, $"/v1/evaluations/{id}/score");
+            return await PostAsJsonAsync<Evaluation>(uri, new { }, options, cancellationToken);
+        }
     }
 }

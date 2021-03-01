@@ -34,12 +34,6 @@ namespace Falu.Evaluations
         public EvaluationStatus Status { get; set; }
 
         /// <summary>
-        /// Details in case of failure.
-        /// Only populated when the <c>Status</c> is <c>Failed</c>
-        /// </summary>
-        public string FailureMessage { get; set; }
-
-        /// <summary>
         /// Statement used for the evaluation.
         /// </summary>
         public Statement Statement { get; set; }

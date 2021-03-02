@@ -37,7 +37,7 @@ namespace Microsoft.Extensions.DependencyInjection
             // get the version from the assembly
             var productVersion = typeof(FaluClient).Assembly.GetName().Version.ToString(3);
 
-            var builder = services.AddHttpClient<FaluClient>()
+            var builder = services.AddHttpClient<FaluClient>(name: "NewFaluClient" /* TODO: remove this name once the clients migrate from the old FaluClient */)
                                   .ConfigureHttpClient((provider, client) =>
                                   {
                                       // set the base address

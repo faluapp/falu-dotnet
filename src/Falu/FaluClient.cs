@@ -32,7 +32,7 @@ namespace Falu
             Messages = new MessagesService(backChannel, options);
             Payments = new PaymentsService(backChannel, options);
             PaymentBalances = new PaymentBalancesService(backChannel, options);
-            PaymentsReversal = new PaymentsReversalsService(backChannel, options);
+            PaymentReversals = new PaymentReversalsService(backChannel, options);
             Templates = new TemplatesService(backChannel, options);
             Events = new EventsService(backChannel, options);
             Webhooks = new WebhooksService(backChannel, options);
@@ -57,7 +57,7 @@ namespace Falu
         public virtual PaymentBalancesService PaymentBalances { get; }
 
         ///
-        public virtual PaymentsReversalsService PaymentsReversal { get; }
+        public virtual PaymentReversalsService PaymentReversals { get; }
 
         ///
         public virtual TemplatesService Templates { get; }

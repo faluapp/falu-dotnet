@@ -6,13 +6,7 @@
     public enum EvaluationStatus
     {
         ///
-        Pending,
-
-        ///
-        Extracting,
-
-        ///
-        Validating,
+        Created,
 
         ///
         Scoring,

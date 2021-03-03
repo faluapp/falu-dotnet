@@ -50,9 +50,9 @@ namespace Falu.Messages
         public DateTimeOffset? Delivered { get; set; }
 
         /// <inheritdoc/>
-        public string Etag { get; set; }
+        public bool Live { get; set; }
 
         /// <inheritdoc/>
-        public bool Live { get; set; }
+        public string Etag { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Falu.Core;
 using Falu.Infrastructure;
+using Falu.Messages.Templates;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -7,16 +8,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using Tingle.Extensions.JsonPatch;
 
-namespace Falu.Templates
+namespace Falu.Messages
 {
     ///
-    public class TemplatesService : BaseService
+    public class MessageTemplatesService : BaseService
     {
         ///
-        public TemplatesService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+        public MessageTemplatesService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
 
         /// <summary>
-        /// List templates.
+        /// List message templates.
         /// </summary>
         /// <param name="options">Options for filtering and pagination.</param>
         /// <param name="requestOptions">Options to use for the request.</param>
@@ -30,14 +31,14 @@ namespace Falu.Templates
             options?.PopulateQueryValues(args);
 
             var query = QueryHelper.MakeQueryString(args);
-            var uri = new Uri(BaseAddress, $"/v1/templates{query}");
+            var uri = new Uri(BaseAddress, $"/v1/message_templates{query}");
             return await GetAsJsonAsync<List<Template>>(uri, requestOptions, cancellationToken);
         }
 
         /// <summary>
-        /// Retrieve a template.
+        /// Retrieve a message template.
         /// </summary>
-        /// <param name="id">Unique identifier for the template</param>
+        /// <param name="id">Unique identifier for the message template</param>
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
@@ -45,12 +46,12 @@ namespace Falu.Templates
                                                                        RequestOptions options = null,
                                                                        CancellationToken cancellationToken = default)
         {
-            var uri = new Uri(BaseAddress, $"/v1/templates/{id}");
+            var uri = new Uri(BaseAddress, $"/v1/message_templates/{id}");
             return await GetAsJsonAsync<Template>(uri, options, cancellationToken);
         }
 
         /// <summary>
-        /// Create a template.
+        /// Create a message template.
         /// </summary>
         /// <param name="template"></param>
         /// <param name="options">Options to use for the request.</param>
@@ -60,14 +61,14 @@ namespace Falu.Templates
                                                                           RequestOptions options = null,
                                                                           CancellationToken cancellationToken = default)
         {
-            var uri = new Uri(BaseAddress, $"/v1/templates");
+            var uri = new Uri(BaseAddress, $"/v1/message_templates");
             return await PostAsJsonAsync<Template>(uri, template, options, cancellationToken);
         }
 
         /// <summary>
-        /// Update a template.
+        /// Update a message template.
         /// </summary>
-        /// <param name="id">Unique identifier for the template</param>
+        /// <param name="id">Unique identifier for the message template</param>
         /// <param name="patch"></param>
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
@@ -77,14 +78,14 @@ namespace Falu.Templates
                                                                           RequestOptions options = null,
                                                                           CancellationToken cancellationToken = default)
         {
-            var uri = new Uri(BaseAddress, $"/v1/templates/{id}");
+            var uri = new Uri(BaseAddress, $"/v1/message_templates/{id}");
             return await PatchAsJsonAsync<Template>(uri, patch, options, cancellationToken);
         }
 
         /// <summary>
-        /// Delete a template.
+        /// Delete a message template.
         /// </summary>
-        /// <param name="id">Unique identifier for the template</param>
+        /// <param name="id">Unique identifier for the message template</param>
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
@@ -92,13 +93,13 @@ namespace Falu.Templates
                                                                           RequestOptions options = null,
                                                                           CancellationToken cancellationToken = default)
         {
-            var uri = new Uri(BaseAddress, $"/v1/templates/{id}");
+            var uri = new Uri(BaseAddress, $"/v1/message_templates/{id}");
             var request = new HttpRequestMessage(HttpMethod.Delete, uri);
             return await SendAsync<Template>(request, options, cancellationToken);
         }
 
         /// <summary>
-        /// Validate a template.
+        /// Validate a message template.
         /// </summary>
         /// <param name="template"></param>
         /// <param name="options">Options to use for the request.</param>
@@ -108,7 +109,7 @@ namespace Falu.Templates
                                                                                               RequestOptions options = null,
                                                                                               CancellationToken cancellationToken = default)
         {
-            var uri = new Uri(BaseAddress, $"/v1/templates/validate");
+            var uri = new Uri(BaseAddress, $"/v1/message_templates/validate");
             return await PostAsJsonAsync<TemplateValidationResponse>(uri, template, options, cancellationToken);
         }
     }

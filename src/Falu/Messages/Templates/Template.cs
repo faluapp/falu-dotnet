@@ -1,7 +1,7 @@
 ﻿using Falu.Core;
 using System;
 
-namespace Falu.Templates
+namespace Falu.Messages.Templates
 {
     /// <summary>
     /// A template for sending messages.
@@ -18,9 +18,9 @@ namespace Falu.Templates
         public DateTimeOffset Updated { get; set; }
 
         /// <inheritdoc/>
-        public string Etag { get; set; }
+        public bool Live { get; set; }
 
         /// <inheritdoc/>
-        public bool Live { get; set; }
+        public string Etag { get; set; }
     }
 }

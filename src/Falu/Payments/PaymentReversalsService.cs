@@ -11,10 +11,10 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.Payments
 {
     ///
-    public class PaymentsReversalsService : BaseService
+    public class PaymentReversalsService : BaseService
     {
         ///
-        public PaymentsReversalsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+        public PaymentReversalsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
 
         /// <summary>
         /// List payment reversals.

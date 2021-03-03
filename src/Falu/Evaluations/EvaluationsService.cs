@@ -75,7 +75,7 @@ namespace Falu.Evaluations
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<Evaluation>> CreateAsync(EvaluationRequest evaluation,
+        public virtual async Task<ResourceResponse<Evaluation>> CreateAsync(EvaluationCreateModel evaluation,
                                                                             RequestOptions options = null,
                                                                             CancellationToken cancellationToken = default)
         {

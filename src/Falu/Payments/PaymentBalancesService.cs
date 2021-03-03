@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 namespace Falu.Payments
 {
     ///
-    public class PaymentsBalanceService : BaseService
+    public class PaymentBalancesService : BaseService
     {
         ///
-        public PaymentsBalanceService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+        public PaymentBalancesService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
 
         /// <summary>
         /// Retrieve balance.
@@ -19,11 +19,11 @@ namespace Falu.Payments
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<AccountBalance>> GetAsync(RequestOptions options = null,
+        public virtual async Task<ResourceResponse<PaymentBalances>> GetAsync(RequestOptions options = null,
                                                                              CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, "/v1/payments/balance");
-            return await GetAsJsonAsync<AccountBalance>(uri, options, cancellationToken);
+            return await GetAsJsonAsync<PaymentBalances>(uri, options, cancellationToken);
         }
 
         /// <summary>

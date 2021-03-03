@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Falu.Templates
+namespace Falu.Messages.Templates
 {
     /// <summary>
     /// Model for requesting template validation

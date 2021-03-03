@@ -3,7 +3,6 @@ using Falu.Events;
 using Falu.Identity;
 using Falu.Messages;
 using Falu.Payments;
-using Falu.Templates;
 using Falu.Webhooks;
 using Microsoft.Extensions.Options;
 using System;
@@ -32,9 +31,10 @@ namespace Falu
             Identity = new IdentityService(backChannel, options);
             Messages = new MessagesService(backChannel, options);
             Payments = new PaymentsService(backChannel, options);
-            PaymentsBalance = new PaymentsBalanceService(backChannel, options);
-            PaymentsReversal = new PaymentsReversalsService(backChannel, options);
-            Templates = new TemplatesService(backChannel, options);
+            PaymentBalances = new PaymentBalancesService(backChannel, options);
+            PaymentReversals = new PaymentReversalsService(backChannel, options);
+            MessageStreams = new MessageStreamsService(backChannel, options);
+            MessageTemplates = new MessageTemplatesService(backChannel, options);
             Events = new EventsService(backChannel, options);
             Webhooks = new WebhooksService(backChannel, options);
         }
@@ -52,16 +52,19 @@ namespace Falu
         public virtual MessagesService Messages { get; }
 
         ///
+        public virtual MessageStreamsService MessageStreams { get; }
+
+        ///
+        public virtual MessageTemplatesService MessageTemplates { get; }
+
+        ///
         public virtual PaymentsService Payments { get; }
 
         ///
-        public virtual PaymentsBalanceService PaymentsBalance { get; }
+        public virtual PaymentBalancesService PaymentBalances { get; }
 
         ///
-        public virtual PaymentsReversalsService PaymentsReversal { get; }
-
-        ///
-        public virtual TemplatesService Templates { get; }
+        public virtual PaymentReversalsService PaymentReversals { get; }
 
         ///
         public virtual WebhooksService Webhooks { get; }

@@ -11,10 +11,10 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.Messages
 {
     ///
-    public class TemplatesService : BaseService
+    public class MessageTemplatesService : BaseService
     {
         ///
-        public TemplatesService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+        public MessageTemplatesService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
 
         /// <summary>
         /// List templates.

@@ -28,5 +28,11 @@
         /// Required if <see cref="Body"/> is not specified.
         /// </summary>
         public MessageTemplate Template { get; set; }
+
+        /// <summary>
+        /// The identifier of the stream to use.
+        /// If not provided, message will default to the "transactional" stream.
+        /// </summary>
+        public string Stream { get; set; } = "transactional";
     }
 }

@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 namespace Falu.Payments
 {
     ///
-    public class PaymentsBalanceService : BaseService
+    public class PaymentBalancesService : BaseService
     {
         ///
-        public PaymentsBalanceService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+        public PaymentBalancesService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
 
         /// <summary>
         /// Retrieve balance.

@@ -22,7 +22,7 @@ namespace Falu.Payments
         public virtual async Task<ResourceResponse<PaymentBalances>> GetAsync(RequestOptions options = null,
                                                                              CancellationToken cancellationToken = default)
         {
-            var uri = new Uri(BaseAddress, "/v1/payments/balance");
+            var uri = new Uri(BaseAddress, "/v1/payment_balances");
             return await GetAsJsonAsync<PaymentBalances>(uri, options, cancellationToken);
         }
 
@@ -35,7 +35,7 @@ namespace Falu.Payments
         public virtual async Task<ResourceResponse<object>> RefreshAsync(RequestOptions options = null,
                                                                          CancellationToken cancellationToken = default)
         {
-            var uri = new Uri(BaseAddress, "/v1/payments/balance/refresh");
+            var uri = new Uri(BaseAddress, "/v1/payment_balances/refresh");
             return await PostAsJsonAsync<object>(uri, new { }, options, cancellationToken);
         }
     }

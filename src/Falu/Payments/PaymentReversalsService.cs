@@ -31,7 +31,7 @@ namespace Falu.Payments
             options?.PopulateQueryValues(args);
 
             var query = QueryHelper.MakeQueryString(args);
-            var uri = new Uri(BaseAddress, $"/v1/payments/reversals{query}");
+            var uri = new Uri(BaseAddress, $"/v1/payment_reversals{query}");
             return await GetAsJsonAsync<List<PaymentReversal>>(uri, reqeustOptions, cancellationToken);
         }
 
@@ -46,7 +46,7 @@ namespace Falu.Payments
                                                                               RequestOptions options = null,
                                                                               CancellationToken cancellationToken = default)
         {
-            var uri = new Uri(BaseAddress, $"/v1/payments/reversals/{id}");
+            var uri = new Uri(BaseAddress, $"/v1/payment_reversals/{id}");
             return await GetAsJsonAsync<PaymentReversal>(uri, options, cancellationToken);
         }
 
@@ -61,7 +61,7 @@ namespace Falu.Payments
                                                                                  RequestOptions options = null,
                                                                                  CancellationToken cancellationToken = default)
         {
-            var uri = new Uri(BaseAddress, "/v1/payments/reversals");
+            var uri = new Uri(BaseAddress, "/v1/payment_reversals");
             return await PostAsJsonAsync<PaymentReversal>(uri, reversal, options, cancellationToken);
         }
 
@@ -78,7 +78,7 @@ namespace Falu.Payments
                                                                                  RequestOptions options = null,
                                                                                  CancellationToken cancellationToken = default)
         {
-            var uri = new Uri(BaseAddress, $"/v1/payments/reversals/{id}");
+            var uri = new Uri(BaseAddress, $"/v1/payment_reversals/{id}");
             return await PatchAsJsonAsync<PaymentReversal>(uri, patch, options, cancellationToken);
         }
     }

@@ -3,7 +3,6 @@ using Falu.Events;
 using Falu.Identity;
 using Falu.Messages;
 using Falu.Payments;
-using Falu.Templates;
 using Falu.Webhooks;
 using Microsoft.Extensions.Options;
 using System;

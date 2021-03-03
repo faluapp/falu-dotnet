@@ -1,7 +1,7 @@
 ﻿using Falu.Core;
 using System;
 
-namespace Falu.Templates
+namespace Falu.Messages.Templates
 {
     /// <summary>
     /// A template for sending messages.

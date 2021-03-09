@@ -10,7 +10,7 @@ namespace Falu.Core
     {
         /// <summary>
         /// The order to use for sorting the objects returned.
-        /// (Optional, default <code>desc</code>).
+        /// Optional, defaults to <see cref="SortingOrder.Descending"/>.
         /// </summary>
         public SortingOrder? Sorting { get; set; }
 

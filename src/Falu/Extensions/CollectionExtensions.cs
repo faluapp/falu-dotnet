@@ -18,7 +18,7 @@
                                                                   Func<T, string> converter)
             where T : struct
         {
-            return dictionary.AddIfNotNull(key, converter(value.Value));
+            return dictionary.AddIfNotNull(key, value is null ? null : converter(value.Value));
         }
 
         public static IDictionary<string, string> AddIfNotNull(this IDictionary<string, string> dictionary, string key, string value)

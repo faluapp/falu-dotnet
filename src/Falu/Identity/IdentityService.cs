@@ -39,7 +39,7 @@ namespace Falu.Identity
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<IdentityRecord>>> MarketingAsync(MarketingListOptions options = null,
+        public virtual async Task<ResourceResponse<List<MarketingResult>>> MarketingAsync(MarketingListOptions options = null,
                                                                                          RequestOptions requestOptions = null,
                                                                                          CancellationToken cancellationToken = default)
         {
@@ -48,7 +48,7 @@ namespace Falu.Identity
 
             var query = QueryHelper.MakeQueryString(args);
             var uri = new Uri(BaseAddress, $"/v1/identity/marketing{query}");
-            return await PostAsJsonAsync<List<IdentityRecord>>(uri, options, requestOptions, cancellationToken);
+            return await PostAsJsonAsync<List<MarketingResult>>(uri, options, requestOptions, cancellationToken);
         }
     }
 }

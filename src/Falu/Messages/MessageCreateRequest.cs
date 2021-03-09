@@ -12,12 +12,6 @@
         public string To { get; set; }
 
         /// <summary>
-        /// Provider for the sending service.
-        /// Only required when the message must be sent by a specific provider.
-        /// </summary>
-        public MessageProviderType? Provider { get; set; }
-
-        /// <summary>
         /// Actual message content to be sent.
         /// Required if <see cref="Template"/> is not specified.
         /// </summary>

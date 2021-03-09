@@ -6,11 +6,6 @@
     public class MessageProvider
     {
         /// <summary>
-        /// Provider for the sending service.
-        /// </summary>
-        public MessageProviderType? Type { get; set; }
-
-        /// <summary>
         /// Unique identifier for the request as provided by the provider.
         /// </summary>
         public string RequestId { get; set; }

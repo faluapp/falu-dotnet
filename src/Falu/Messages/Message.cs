@@ -39,6 +39,11 @@ namespace Falu.Messages
         public MessageTemplate Template { get; set; }
 
         /// <summary>
+        /// Stream used for the message.
+        /// </summary>
+        public string StreamId { get; set; }
+
+        /// <summary>
         /// Provider used for the message.
         /// </summary>
         public MessageProvider Provider { get; set; }

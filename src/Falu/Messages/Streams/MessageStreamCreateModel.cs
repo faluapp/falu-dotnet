@@ -14,8 +14,13 @@
         public string Name { get; set; }
 
         /// <summary>
-        /// The type of stream to be created.
+        /// Type of stream.
         /// </summary>
         public MessageStreamType Type { get; set; } = MessageStreamType.Transactional;
+
+        /// <summary>
+        /// Provider to be used.
+        /// </summary>
+        public MessageProviderType? Provider { get; set; }
     }
 }

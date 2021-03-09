@@ -12,6 +12,11 @@ namespace Falu.Messages.Streams
         /// <inheritdoc/>
         public string Id { get; set; }
 
+        /// <summary>
+        /// Name of the stream.
+        /// </summary>
+        public string Name { get; set; }
+
         /// <inheritdoc/>
         public DateTimeOffset Created { get; set; }
 
@@ -19,9 +24,14 @@ namespace Falu.Messages.Streams
         public DateTimeOffset Updated { get; set; }
 
         /// <summary>
-        /// The type of stream.
+        /// Type of stream.
         /// </summary>
         public MessageStreamType Type { get; set; }
+
+        /// <summary>
+        /// Provider used by the stream.
+        /// </summary>
+        public MessageProviderType Provider { get; set; }
 
         /// <summary>
         /// Time at which the stream was archived.

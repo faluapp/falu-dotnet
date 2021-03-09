@@ -9,9 +9,9 @@ namespace Falu.Messages.Streams
     public class MessageStreamPatchModel : IHasDescription, IHasMetadata, IHasTags
     {
         /// <summary>
-        /// Optional string you can provide to identify this stream.
+        /// Settings for the stream.
         /// </summary>
-        public string Name { get; set; }
+        public MessageStreamSettings Settings { get; set; }
 
         /// <inheritdoc/>
         public string Description { get; set; }

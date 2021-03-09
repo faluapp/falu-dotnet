@@ -12,6 +12,11 @@ namespace Falu.Messages.Streams
         /// <inheritdoc/>
         public string Id { get; set; }
 
+        /// <summary>
+        /// Name of the stream.
+        /// </summary>
+        public string Name { get; set; }
+
         /// <inheritdoc/>
         public DateTimeOffset Created { get; set; }
 

@@ -30,7 +30,8 @@
         public MessageTemplate Template { get; set; }
 
         /// <summary>
-        /// The identifier of the stream to use.
+        /// The stream to use.
+        /// It can either be the name or unique identifier of the stream.
         /// If not provided, message will default to the "transactional" stream.
         /// </summary>
         public string Stream { get; set; } = "transactional";

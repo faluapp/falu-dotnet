@@ -88,10 +88,16 @@ namespace Falu.Messages
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<Message>>> CreateBatchAsync(IEnumerable<MessageCreateRequest> messages,
+        public virtual async Task<ResourceResponse<List<Message>>> CreateBatchAsync(IList<MessageCreateRequest> messages,
                                                                                     RequestOptions options = null,
                                                                                     CancellationToken cancellationToken = default)
         {
+            if (messages.Count > 10_000)
+            {
+                throw new ArgumentOutOfRangeException(paramName: nameof(messages),
+                                                      message: "The service does not support more than 10,000 (10k) messages");
+            }
+
             var uri = new Uri(BaseAddress, "/v1/messages/bulk");
             return await PostAsJsonAsync<List<Message>>(uri, messages, options, cancellationToken);
         }

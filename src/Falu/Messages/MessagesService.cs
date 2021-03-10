@@ -22,7 +22,7 @@ namespace Falu.Messages
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<Message>>> ListAsync(MessagesListOptions options,
+        public virtual async Task<ResourceResponse<List<Message>>> ListAsync(MessagesListOptions options = null,
                                                                              RequestOptions requestOptions = null,
                                                                              CancellationToken cancellationToken = default)
         {
@@ -45,6 +45,8 @@ namespace Falu.Messages
                                                                       RequestOptions options = null,
                                                                       CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
+
             var uri = new Uri(BaseAddress, $"/v1/messages/{id}");
             return await GetAsJsonAsync<Message>(uri, options, cancellationToken);
         }
@@ -60,6 +62,8 @@ namespace Falu.Messages
                                                                          RequestOptions options = null,
                                                                          CancellationToken cancellationToken = default)
         {
+            if (message is null) throw new ArgumentNullException(nameof(message));
+
             var uri = new Uri(BaseAddress, "/v1/messages");
             return await PostAsJsonAsync<Message>(uri, message, options, cancellationToken);
         }
@@ -77,6 +81,9 @@ namespace Falu.Messages
                                                                          RequestOptions options = null,
                                                                          CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
+            if (patch is null) throw new ArgumentNullException(nameof(patch));
+
             var uri = new Uri(BaseAddress, $"/v1/messages/{id}");
             return await PatchAsJsonAsync<Message>(uri, patch, options, cancellationToken);
         }
@@ -92,6 +99,8 @@ namespace Falu.Messages
                                                                                     RequestOptions options = null,
                                                                                     CancellationToken cancellationToken = default)
         {
+            if (messages is null) throw new ArgumentNullException(nameof(messages));
+
             if (messages.Count > 10_000)
             {
                 throw new ArgumentOutOfRangeException(paramName: nameof(messages),

@@ -40,8 +40,8 @@ namespace Falu.Identity
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<List<MarketingResult>>> MarketingAsync(MarketingListOptions options = null,
-                                                                                         RequestOptions requestOptions = null,
-                                                                                         CancellationToken cancellationToken = default)
+                                                                                          RequestOptions requestOptions = null,
+                                                                                          CancellationToken cancellationToken = default)
         {
             var args = new Dictionary<string, string>();
             options?.PopulateQueryValues(args);

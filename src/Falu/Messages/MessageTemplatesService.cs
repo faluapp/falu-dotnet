@@ -46,6 +46,8 @@ namespace Falu.Messages
                                                                        RequestOptions options = null,
                                                                        CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
+
             var uri = new Uri(BaseAddress, $"/v1/message_templates/{id}");
             return await GetAsJsonAsync<Template>(uri, options, cancellationToken);
         }
@@ -61,7 +63,9 @@ namespace Falu.Messages
                                                                           RequestOptions options = null,
                                                                           CancellationToken cancellationToken = default)
         {
-            var uri = new Uri(BaseAddress, $"/v1/message_templates");
+            if (template is null) throw new ArgumentNullException(nameof(template));
+
+            var uri = new Uri(BaseAddress, "/v1/message_templates");
             return await PostAsJsonAsync<Template>(uri, template, options, cancellationToken);
         }
 
@@ -78,6 +82,9 @@ namespace Falu.Messages
                                                                           RequestOptions options = null,
                                                                           CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
+            if (patch is null) throw new ArgumentNullException(nameof(patch));
+
             var uri = new Uri(BaseAddress, $"/v1/message_templates/{id}");
             return await PatchAsJsonAsync<Template>(uri, patch, options, cancellationToken);
         }
@@ -93,6 +100,8 @@ namespace Falu.Messages
                                                                           RequestOptions options = null,
                                                                           CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
+
             var uri = new Uri(BaseAddress, $"/v1/message_templates/{id}");
             var request = new HttpRequestMessage(HttpMethod.Delete, uri);
             return await SendAsync<Template>(request, options, cancellationToken);
@@ -109,7 +118,9 @@ namespace Falu.Messages
                                                                                               RequestOptions options = null,
                                                                                               CancellationToken cancellationToken = default)
         {
-            var uri = new Uri(BaseAddress, $"/v1/message_templates/validate");
+            if (template is null) throw new ArgumentNullException(nameof(template));
+
+            var uri = new Uri(BaseAddress, "/v1/message_templates/validate");
             return await PostAsJsonAsync<TemplateValidationResponse>(uri, template, options, cancellationToken);
         }
     }

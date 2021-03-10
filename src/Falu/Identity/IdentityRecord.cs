@@ -45,9 +45,14 @@ namespace Falu.Identity
         public DateTimeOffset? Birthday { get; set; }
 
         /// <summary>
-        /// Phone number(s) attached to the identity.
+        /// Phone numbers attached to the identity.
         /// </summary>
         public List<string> Phones { get; set; }
+
+        /// <summary>
+        /// Email addresses attached to the identity.
+        /// </summary>
+        public List<string> Emails { get; set; }
 
         /// <summary>
         /// The gender of the entity.

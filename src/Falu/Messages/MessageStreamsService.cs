@@ -46,6 +46,8 @@ namespace Falu.Messages
                                                                             RequestOptions options = null,
                                                                             CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
+
             var uri = new Uri(BaseAddress, $"/v1/message_streams/{id}");
             return await GetAsJsonAsync<MessageStream>(uri, options, cancellationToken);
         }
@@ -61,7 +63,9 @@ namespace Falu.Messages
                                                                                RequestOptions options = null,
                                                                                CancellationToken cancellationToken = default)
         {
-            var uri = new Uri(BaseAddress, $"/v1/message_streams");
+            if (stream is null) throw new ArgumentNullException(nameof(stream));
+
+            var uri = new Uri(BaseAddress, "/v1/message_streams");
             return await PostAsJsonAsync<MessageStream>(uri, stream, options, cancellationToken);
         }
 
@@ -78,6 +82,9 @@ namespace Falu.Messages
                                                                                RequestOptions options = null,
                                                                                CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
+            if (patch is null) throw new ArgumentNullException(nameof(patch));
+
             var uri = new Uri(BaseAddress, $"/v1/message_streams/{id}");
             return await PatchAsJsonAsync<MessageStream>(uri, patch, options, cancellationToken);
         }
@@ -93,6 +100,8 @@ namespace Falu.Messages
                                                                           RequestOptions options = null,
                                                                           CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
+
             var uri = new Uri(BaseAddress, $"/v1/message_streams/{id}");
             var request = new HttpRequestMessage(HttpMethod.Delete, uri);
             return await SendAsync<MessageStream>(request, options, cancellationToken);

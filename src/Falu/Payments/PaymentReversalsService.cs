@@ -46,6 +46,8 @@ namespace Falu.Payments
                                                                               RequestOptions options = null,
                                                                               CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
+
             var uri = new Uri(BaseAddress, $"/v1/payment_reversals/{id}");
             return await GetAsJsonAsync<PaymentReversal>(uri, options, cancellationToken);
         }
@@ -61,6 +63,8 @@ namespace Falu.Payments
                                                                                  RequestOptions options = null,
                                                                                  CancellationToken cancellationToken = default)
         {
+            if (reversal is null) throw new ArgumentNullException(nameof(reversal));
+
             var uri = new Uri(BaseAddress, "/v1/payment_reversals");
             return await PostAsJsonAsync<PaymentReversal>(uri, reversal, options, cancellationToken);
         }
@@ -78,6 +82,9 @@ namespace Falu.Payments
                                                                                  RequestOptions options = null,
                                                                                  CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
+            if (patch is null) throw new ArgumentNullException(nameof(patch));
+
             var uri = new Uri(BaseAddress, $"/v1/payment_reversals/{id}");
             return await PatchAsJsonAsync<PaymentReversal>(uri, patch, options, cancellationToken);
         }

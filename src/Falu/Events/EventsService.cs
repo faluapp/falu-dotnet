@@ -65,6 +65,8 @@ namespace Falu.Events
                                                                                  CancellationToken cancellationToken = default)
             where T : class
         {
+            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
+
             var uri = new Uri(BaseAddress, $"/v1/events/{id}");
             return await GetAsJsonAsync<WebhookEvent<T>>(uri, options, cancellationToken);
         }
@@ -80,6 +82,8 @@ namespace Falu.Events
                                                                            RequestOptions options = null,
                                                                            CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
+
             var uri = new Uri(BaseAddress, $"/v1/events/{id}");
             return await GetAsJsonAsync<WebhookEvent>(uri, options, cancellationToken);
         }

@@ -47,6 +47,8 @@ namespace Falu.Evaluations
                                                                          RequestOptions options = null,
                                                                          CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
+
             var uri = new Uri(BaseAddress, $"/v1/evaluations/{id}");
             return await GetAsJsonAsync<Evaluation>(uri, options, cancellationToken);
         }
@@ -64,6 +66,9 @@ namespace Falu.Evaluations
                                                                             RequestOptions options = null,
                                                                             CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
+            if (patch is null) throw new ArgumentNullException(nameof(patch));
+
             var uri = new Uri(BaseAddress, $"/v1/evaluations/{id}");
             return await PatchAsJsonAsync<Evaluation>(uri, patch, options, cancellationToken);
         }
@@ -79,6 +84,8 @@ namespace Falu.Evaluations
                                                                             RequestOptions options = null,
                                                                             CancellationToken cancellationToken = default)
         {
+            if (evaluation is null) throw new ArgumentNullException(nameof(evaluation));
+
             var content = new MultipartFormDataContent
             {
                 // populate fields of the model as key value pairs
@@ -110,7 +117,7 @@ namespace Falu.Evaluations
             }
 
             // Add metadata if provided
-            var metadata = evaluation.Metadata.ToList();
+            var metadata = evaluation.Metadata?.ToList();
             if (metadata != null)
             {
                 for (var i = 0; i < metadata.Count; i++)
@@ -134,9 +141,11 @@ namespace Falu.Evaluations
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<Evaluation>> ScoreAsync(string id,
-                                                                            RequestOptions options = null,
-                                                                            CancellationToken cancellationToken = default)
+                                                                           RequestOptions options = null,
+                                                                           CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
+
             var uri = new Uri(BaseAddress, $"/v1/evaluations/{id}/score");
             return await PostAsJsonAsync<Evaluation>(uri, new { }, options, cancellationToken);
         }

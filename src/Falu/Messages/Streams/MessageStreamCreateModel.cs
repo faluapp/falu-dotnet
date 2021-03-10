@@ -3,7 +3,7 @@
     /// <summary>
     /// Model for creating a message stream.
     /// </summary>
-    public class MessageStreamCreateModel : MessagePatchModel
+    public class MessageStreamCreateModel : MessageStreamPatchModel
     {
         /// <summary>
         /// A string of 3-50 characters used for easier identification of a message stream.

@@ -45,6 +45,8 @@ namespace Falu.Webhooks
                                                                               RequestOptions options = null, 
                                                                               CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
+
             var uri = new Uri(BaseAddress, $"/v1/webhooks/endpoints/{id}");
             return await GetAsJsonAsync<WebhookEndpoint>(uri, options, cancellationToken);
         }
@@ -60,6 +62,8 @@ namespace Falu.Webhooks
                                                                                  RequestOptions options = null,
                                                                                  CancellationToken cancellationToken = default)
         {
+            if (endpoint is null) throw new ArgumentNullException(nameof(endpoint));
+
             var uri = new Uri(BaseAddress, "/v1/webhooks/endpoints");
             return await PostAsJsonAsync<WebhookEndpoint>(uri, endpoint, options, cancellationToken);
         }
@@ -77,6 +81,9 @@ namespace Falu.Webhooks
                                                                                  RequestOptions options = null,
                                                                                  CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
+            if (patch is null) throw new ArgumentNullException(nameof(patch));
+
             var uri = new Uri(BaseAddress, $"/v1/webhooks/endpoints/{id}");
             return await PatchAsJsonAsync<WebhookEndpoint>(uri, patch, options, cancellationToken);
         }
@@ -92,6 +99,8 @@ namespace Falu.Webhooks
                                                                                  RequestOptions options = null,
                                                                                  CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
+
             var uri = new Uri(BaseAddress, $"/v1/webhooks/endpoints/{id}");
             var request = new HttpRequestMessage(HttpMethod.Delete, uri);
             return await SendAsync<WebhookEndpoint>(request, options, cancellationToken);

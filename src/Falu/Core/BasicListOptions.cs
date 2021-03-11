@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
 
 namespace Falu.Core
 {
@@ -42,7 +44,7 @@ namespace Falu.Core
         {
             if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
 
-            dictionary.AddIfNotNull("sort", Sorting, ConvertSortingOrder)
+            dictionary.AddIfNotNull("sort", Sorting, ConvertEnum)
                       .AddIfNotNull("count", Count, ConvertInt)
                       .AddIfNotNull("ct", Token);
 
@@ -54,6 +56,15 @@ namespace Falu.Core
 
         internal static Func<DateTimeOffset, string> ConvertDate = d => d.ToString("o");
         internal static Func<int, string> ConvertInt = d => d.ToString();
-        internal static Func<SortingOrder, string> ConvertSortingOrder = d => d.ToString().ToLowerInvariant();
+        internal static string ConvertEnum<T>(T d) where T : Enum
+        {
+            // Give priority to EnumMemberAttribute
+            var memInfo = typeof(T).GetMember(d.ToString());
+            var attr = memInfo.FirstOrDefault()?.GetCustomAttributes(false)
+                              .OfType<EnumMemberAttribute>()
+                              .FirstOrDefault();
+
+            return attr?.Value ?? d.ToString().ToLowerInvariant();
+        }
     }
 }

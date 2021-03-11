@@ -48,7 +48,7 @@ namespace Falu.Identity
 
             var query = QueryHelper.MakeQueryString(args);
             var uri = new Uri(BaseAddress, $"/v1/identity/marketing{query}");
-            return await PostAsJsonAsync<List<MarketingResult>>(uri, options, requestOptions, cancellationToken);
+            return await PostAsJsonAsync<List<MarketingResult>>(uri, new { }, requestOptions, cancellationToken);
         }
     }
 }

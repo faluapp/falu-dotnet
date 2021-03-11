@@ -7,7 +7,7 @@ namespace Falu.Identity
     /// <summary>
     /// Options for filtering and pagination of list identity marketing data operation.
     /// </summary>
-    public class MarketingListOptions: BasicListOptions
+    public class MarketingListOptions : BasicListOptions
     {
         /// <inheritdoc/>
         public string Country { get; set; } = "ken";
@@ -34,6 +34,8 @@ namespace Falu.Identity
         internal override IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)
         {
             base.PopulateQueryValues(dictionary);
+            dictionary.AddIfNotNull("country", Country);
+            dictionary.AddIfNotNull("gender", Gender, ConvertEnum);
             Age?.PopulateQueryValues("age", dictionary, ConvertInt);
             Birthday?.PopulateQueryValues("birthday", dictionary, ConvertDate);
             return dictionary;

@@ -34,9 +34,13 @@ namespace Falu.Identity
         internal override IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)
         {
             base.PopulateQueryValues(dictionary);
+            dictionary.AddIfNotNull("country", Country);
+            dictionary.AddIfNotNull("gender", Gender, ConvertGender);
             Age?.PopulateQueryValues("age", dictionary, ConvertInt);
             Birthday?.PopulateQueryValues("birthday", dictionary, ConvertDate);
             return dictionary;
         }
+
+        internal static Func<Gender, string> ConvertGender = d => d.ToString().ToLowerInvariant();
     }
 }

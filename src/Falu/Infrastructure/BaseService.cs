@@ -79,8 +79,6 @@ namespace Falu.Infrastructure
             // get the content type
             var contentType = response.Content.Headers?.ContentType;
 
-            //  TODO: check if content type matches expectation
-
             // get a stream reference for the content
             // the stream may still be being incoming and thus we should only read when necessary
             var stream = await response.Content.ReadAsStreamAsync();
@@ -88,11 +86,11 @@ namespace Falu.Infrastructure
             // if the response was a success then deserialize the body as TResource otherwise TError
             if (response.IsSuccessStatusCode)
             {
-                resource = await DeserializeAsync<TResource>(stream, cancellationToken);
+                resource = await DeserializeAsync<TResource>(contentType?.MediaType, stream, cancellationToken);
             }
             else
             {
-                error = await DeserializeAsync<FaluError>(stream, cancellationToken);
+                error = await DeserializeAsync<FaluError>(contentType?.MediaType, stream, cancellationToken);
             }
             return new ResourceResponse<TResource>(response: response, resource: resource, error: error);
         }
@@ -140,7 +138,7 @@ namespace Falu.Infrastructure
             return content;
         }
 
-        private async Task<T> DeserializeAsync<T>(Stream stream, CancellationToken cancellationToken)
+        private async Task<T> DeserializeAsync<T>(string contentType, Stream stream, CancellationToken cancellationToken)
         {
             using (stream)
             {
@@ -148,6 +146,9 @@ namespace Falu.Infrastructure
 
                 // if the stream is empty return the default
                 if (stream.Length == 0) return default;
+
+                // if content type is provided, it must match JSON
+                if (!string.IsNullOrWhiteSpace(contentType) && !JsonContentType.Equals("json")) return default;
 
                 return await JsonSerializer.DeserializeAsync<T>(utf8Json: stream,
                                                                 options: options.SerializerOptions,

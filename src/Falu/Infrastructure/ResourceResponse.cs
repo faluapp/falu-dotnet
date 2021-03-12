@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -88,7 +89,17 @@ namespace Falu.Infrastructure
             // do not bother with successful requests
             if (IsSuccessful) return;
 
-            var message = Error?.Detail ?? Error?.Title ?? $"The HTTP request failed with code {StatusCode} ({(int)StatusCode})";
+            var lines = new List<string>
+            {
+                Error?.Detail ?? Error?.Title ?? $"Request failed - {StatusCode} ({(int)StatusCode})",
+                $"StatusCode: {(int)StatusCode} ({StatusCode})"
+            };
+            lines.AddIf(!string.IsNullOrWhiteSpace(RequestId), $"RequestId: {RequestId}");
+            lines.AddIf(!string.IsNullOrWhiteSpace(TraceId), $"TraceId: {TraceId}");
+            lines.AddIf(!string.IsNullOrWhiteSpace(Error?.Title), $"Error: {Error?.Title}");
+            lines.AddIf(!string.IsNullOrWhiteSpace(Error?.Detail), $"Message: {Error?.Detail}");
+            var message = string.Join("\r\n", lines);
+
             throw new FaluException(statusCode: StatusCode, message: message)
             {
                 Response = Response,
@@ -115,7 +126,7 @@ namespace Falu.Infrastructure
             return default;
         }
 
-        internal static T GetHeader<T>(HttpResponseHeaders headers, string name)
+        private static T GetHeader<T>(HttpResponseHeaders headers, string name)
         {
             var value = GetHeader(headers, name);
             if (string.IsNullOrWhiteSpace(value)) return default;

@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -32,19 +34,27 @@ namespace Falu.Infrastructure
             Resource = resource;
             Error = error;
 
-            RequestId = GetHeader(response.Headers, "X-Request-Id");
-            IdempotencyKey = GetHeader(response.Headers, "X-Idempotency-Key");
-            ContinuationToken = GetHeader(response.Headers, "X-Continuation-Token");
+            RequestId = GetHeader(response.Headers, HeadersNames.XRequestId);
+            TraceId = GetHeader(response.Headers, HeadersNames.XTraceId);
+            ContinuationToken = GetHeader(response.Headers, HeadersNames.XContinuationToken);
+            CachedResponse = GetHeader<bool?>(response.Headers, HeadersNames.XCachedResponse);
         }
 
         /// <summary>Gets the ID of the request, as returned by Falu.</summary>
         public string RequestId { get; }
 
-        /// <summary>Gets the idempotency key of the request, as returned by Falu.</summary>
-        public string IdempotencyKey { get; }
+        /// <summary>Gets the ID of the trace, as returned by Falu.</summary>
+        public string TraceId { get; set; }
 
         /// <summary>Gets the token to use to fetch more data, as returned by Falu.</summary>
         public string ContinuationToken { get; }
+
+        /// <summary>
+        /// Gets value indicating if the response was returned from cache.
+        /// This is true for repeat requests using the same idempotency key.
+        /// When <see langword="null" />, the header was not present in the response.
+        /// </summary>
+        public bool? CachedResponse { get; }
 
         /// <summary>
         /// The original HTTP response
@@ -79,10 +89,23 @@ namespace Falu.Infrastructure
             // do not bother with successful requests
             if (IsSuccessful) return;
 
-            var message = Error?.Detail ?? Error?.Title ?? $"The HTTP request failed with code {StatusCode} ({(int)StatusCode})";
-            throw new FaluException(statusCode: StatusCode, error: Error, message: message)
+            var lines = new List<string>
+            {
+                Error?.Detail ?? Error?.Title ?? $"Request failed - {StatusCode} ({(int)StatusCode})",
+                $"StatusCode: {(int)StatusCode} ({StatusCode})"
+            };
+            lines.AddIf(!string.IsNullOrWhiteSpace(RequestId), $"RequestId: {RequestId}");
+            lines.AddIf(!string.IsNullOrWhiteSpace(TraceId), $"TraceId: {TraceId}");
+            lines.AddIf(!string.IsNullOrWhiteSpace(Error?.Title), $"Error: {Error?.Title}");
+            lines.AddIf(!string.IsNullOrWhiteSpace(Error?.Detail), $"Message: {Error?.Detail}");
+            var message = string.Join("\r\n", lines);
+
+            throw new FaluException(statusCode: StatusCode, message: message)
             {
                 Response = Response,
+                RequestId = RequestId,
+                TraceId = TraceId,
+                Error = Error,
             };
         }
 
@@ -93,7 +116,7 @@ namespace Falu.Infrastructure
         /// </summary>
         public bool? HasMoreResults => typeof(IEnumerable).IsAssignableFrom(typeof(TResource)) ? ContinuationToken != null : (bool?)null;
 
-        private static string GetHeader(HttpResponseHeaders headers, string name)
+        internal static string GetHeader(HttpResponseHeaders headers, string name)
         {
             if (headers.TryGetValues(name, out var values))
             {
@@ -101,6 +124,22 @@ namespace Falu.Infrastructure
             }
 
             return default;
+        }
+
+        private static T GetHeader<T>(HttpResponseHeaders headers, string name)
+        {
+            var value = GetHeader(headers, name);
+            if (string.IsNullOrWhiteSpace(value)) return default;
+
+            // Handle nullable differently
+            var t = typeof(T);
+            if (t.IsGenericType && t.GetGenericTypeDefinition().Equals(typeof(Nullable<>)))
+            {
+                if (value == null) return default;
+                t = Nullable.GetUnderlyingType(t);
+            }
+
+            return (T)Convert.ChangeType(value, t);
         }
     }
 }

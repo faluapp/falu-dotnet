@@ -61,7 +61,7 @@ namespace Falu.Events
         /// Validate a signature provided alongside a webhook event.
         /// </summary>
         /// <param name="json">The raw JSON body payload</param>
-        /// <param name="signature">The value of the <c>X-Falu-Signature</c> header from the webhook request.</param>
+        /// <param name="signature">The value of the <see cref="HeadersNames.XFaluSignature"/> header from the webhook request.</param>
         /// <param name="secret">The webhook endpoint's signing secret.</param>
         /// <param name="tolerance">The time tolerance, in seconds. Defaults to 300 seconds</param>
         /// <param name="utcNow">The timestamp to use for the current time. Defaults to curent time.</param>
@@ -72,7 +72,7 @@ namespace Falu.Events
 
             if (!IsSignaturePresent(expected, actualItems["sha256"]))
             {
-                throw new FaluException("The signature for the webhook is not present in the X-Falu-Signature header.");
+                throw new FaluException($"The signature for the webhook is not present in the {HeadersNames.XFaluSignature} header.");
             }
 
             var webhookUtc = Convert.ToInt32(actualItems["t"].FirstOrDefault());

@@ -102,7 +102,7 @@ namespace Falu.Infrastructure
         /// </summary>
         public bool? HasMoreResults => typeof(IEnumerable).IsAssignableFrom(typeof(TResource)) ? ContinuationToken != null : (bool?)null;
 
-        private static string GetHeader(HttpResponseHeaders headers, string name)
+        internal static string GetHeader(HttpResponseHeaders headers, string name)
         {
             if (headers.TryGetValues(name, out var values))
             {
@@ -112,7 +112,7 @@ namespace Falu.Infrastructure
             return default;
         }
 
-        private static T GetHeader<T>(HttpResponseHeaders headers, string name)
+        internal static T GetHeader<T>(HttpResponseHeaders headers, string name)
         {
             var value = GetHeader(headers, name);
             if (string.IsNullOrWhiteSpace(value)) return default;

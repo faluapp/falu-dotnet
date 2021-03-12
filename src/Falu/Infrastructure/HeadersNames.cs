@@ -9,5 +9,6 @@
         public const string XIdempotencyKey = "X-Idempotency-Key";
         public const string XLiveMode = "X-Live-Mode";
         public const string XContinuationToken = "X-Continuation-Token";
+        public const string XTraceId = "X-Trace-Id";
     }
 }

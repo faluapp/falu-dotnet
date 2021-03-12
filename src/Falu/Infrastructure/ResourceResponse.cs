@@ -33,12 +33,16 @@ namespace Falu.Infrastructure
             Error = error;
 
             RequestId = GetHeader(response.Headers, HeadersNames.XRequestId);
+            TraceId = GetHeader(response.Headers, HeadersNames.XTraceId);
             IdempotencyKey = GetHeader(response.Headers, HeadersNames.XIdempotencyKey);
             ContinuationToken = GetHeader(response.Headers, HeadersNames.XContinuationToken);
         }
 
         /// <summary>Gets the ID of the request, as returned by Falu.</summary>
         public string RequestId { get; }
+
+        /// <summary>Gets the ID of the trace, as returned by Falu.</summary>
+        public string TraceId { get; set; }
 
         /// <summary>Gets the idempotency key of the request, as returned by Falu.</summary>
         public string IdempotencyKey { get; }

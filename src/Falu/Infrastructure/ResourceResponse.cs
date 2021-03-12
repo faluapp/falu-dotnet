@@ -35,7 +35,6 @@ namespace Falu.Infrastructure
 
             RequestId = GetHeader(response.Headers, HeadersNames.XRequestId);
             TraceId = GetHeader(response.Headers, HeadersNames.XTraceId);
-            IdempotencyKey = GetHeader(response.Headers, HeadersNames.XIdempotencyKey);
             ContinuationToken = GetHeader(response.Headers, HeadersNames.XContinuationToken);
             CachedResponse = GetHeader<bool?>(response.Headers, HeadersNames.XCachedResponse);
         }
@@ -45,9 +44,6 @@ namespace Falu.Infrastructure
 
         /// <summary>Gets the ID of the trace, as returned by Falu.</summary>
         public string TraceId { get; set; }
-
-        /// <summary>Gets the idempotency key of the request, as returned by Falu.</summary>
-        public string IdempotencyKey { get; }
 
         /// <summary>Gets the token to use to fetch more data, as returned by Falu.</summary>
         public string ContinuationToken { get; }

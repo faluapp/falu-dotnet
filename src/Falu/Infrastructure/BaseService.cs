@@ -104,26 +104,26 @@ namespace Falu.Infrastructure
             // ensure request is not null
             if (request == null) throw new ArgumentNullException(nameof(request));
 
-            request.Headers.Add("X-Falu-Version", FaluClientOptions.ApiVersion);
+            request.Headers.Add(HeadersNames.XFaluVersion, FaluClientOptions.ApiVersion);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", this.options.ApiKey);
 
             if (options != null)
             {
                 if (!string.IsNullOrWhiteSpace(options.IdempotencyKey))
                 {
-                    request.Headers.Add("X-Idempotency-Key", options.IdempotencyKey);
+                    request.Headers.Add(HeadersNames.XIdempotencyKey, options.IdempotencyKey);
                 }
 
                 // only for user bearer token
                 if (!string.IsNullOrWhiteSpace(options.Workspace))
                 {
-                    request.Headers.Add("X-Falu-Workspace-Id", options.Workspace);
+                    request.Headers.Add(HeadersNames.XWorkspaceId, options.Workspace);
                 }
 
                 // only for user bearer token
                 if (options.Live)
                 {
-                    request.Headers.Add("X-Live-Mode", "true");
+                    request.Headers.Add(HeadersNames.XLiveMode, "true");
                 }
             }
 

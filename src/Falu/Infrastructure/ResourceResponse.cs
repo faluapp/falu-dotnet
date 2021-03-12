@@ -32,9 +32,9 @@ namespace Falu.Infrastructure
             Resource = resource;
             Error = error;
 
-            RequestId = GetHeader(response.Headers, "X-Request-Id");
-            IdempotencyKey = GetHeader(response.Headers, "X-Idempotency-Key");
-            ContinuationToken = GetHeader(response.Headers, "X-Continuation-Token");
+            RequestId = GetHeader(response.Headers, HeadersNames.XRequestId);
+            IdempotencyKey = GetHeader(response.Headers, HeadersNames.XIdempotencyKey);
+            ContinuationToken = GetHeader(response.Headers, HeadersNames.XContinuationToken);
         }
 
         /// <summary>Gets the ID of the request, as returned by Falu.</summary>

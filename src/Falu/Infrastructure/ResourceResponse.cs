@@ -89,9 +89,12 @@ namespace Falu.Infrastructure
             if (IsSuccessful) return;
 
             var message = Error?.Detail ?? Error?.Title ?? $"The HTTP request failed with code {StatusCode} ({(int)StatusCode})";
-            throw new FaluException(statusCode: StatusCode, error: Error, message: message)
+            throw new FaluException(statusCode: StatusCode, message: message)
             {
                 Response = Response,
+                RequestId = RequestId,
+                TraceId = TraceId,
+                Error = Error,
             };
         }
 

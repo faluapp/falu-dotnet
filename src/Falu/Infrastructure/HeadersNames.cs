@@ -10,5 +10,6 @@
         public const string XLiveMode = "X-Live-Mode";
         public const string XContinuationToken = "X-Continuation-Token";
         public const string XTraceId = "X-Trace-Id";
+        public const string XCachedResponse = "X-Cached-Response";
     }
 }

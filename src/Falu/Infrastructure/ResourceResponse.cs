@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -36,6 +37,7 @@ namespace Falu.Infrastructure
             TraceId = GetHeader(response.Headers, HeadersNames.XTraceId);
             IdempotencyKey = GetHeader(response.Headers, HeadersNames.XIdempotencyKey);
             ContinuationToken = GetHeader(response.Headers, HeadersNames.XContinuationToken);
+            CachedResponse = GetHeader<bool?>(response.Headers, HeadersNames.XCachedResponse);
         }
 
         /// <summary>Gets the ID of the request, as returned by Falu.</summary>
@@ -49,6 +51,13 @@ namespace Falu.Infrastructure
 
         /// <summary>Gets the token to use to fetch more data, as returned by Falu.</summary>
         public string ContinuationToken { get; }
+
+        /// <summary>
+        /// Gets value indicating if the response was returned from cache.
+        /// This is true for repeat requests using the same idempotency key.
+        /// When <see langword="null" />, the header was not present in the response.
+        /// </summary>
+        public bool? CachedResponse { get; }
 
         /// <summary>
         /// The original HTTP response
@@ -105,6 +114,22 @@ namespace Falu.Infrastructure
             }
 
             return default;
+        }
+
+        private static T GetHeader<T>(HttpResponseHeaders headers, string name)
+        {
+            var value = GetHeader(headers, name);
+            if (string.IsNullOrWhiteSpace(value)) return default;
+
+            // Handle nullable differently
+            var t = typeof(T);
+            if (t.IsGenericType && t.GetGenericTypeDefinition().Equals(typeof(Nullable<>)))
+            {
+                if (value == null) return default;
+                t = Nullable.GetUnderlyingType(t);
+            }
+
+            return (T)Convert.ChangeType(value, t);
         }
     }
 }

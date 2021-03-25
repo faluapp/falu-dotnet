@@ -1,9 +1,9 @@
 ﻿namespace Falu.Payments.Reversals
 {
     /// <summary>
-    /// The reason why a payment has been reversed.
+    /// The reason for reversing a payment or transfer.
     /// </summary>
-    public enum PaymentReversalReason
+    public enum ReversalReason
     {
         ///
         Duplicate,

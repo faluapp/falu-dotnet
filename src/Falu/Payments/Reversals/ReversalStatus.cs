@@ -1,20 +1,20 @@
 ﻿namespace Falu.Payments.Reversals
 {
     /// <summary>
-    /// The status of a payment reversal.
+    /// The status of a reversal.
     /// </summary>
-    public enum PaymentReversalStatus
+    public enum ReversalStatus
     {
         ///
         Pending,
+
+        ///
+        InTransit,
 
         ///
         Succeeded,
 
         ///
         Failed,
-
-        ///
-        Canceled,
     }
 }

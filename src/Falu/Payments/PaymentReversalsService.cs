@@ -53,7 +53,7 @@ namespace Falu.Payments
         }
 
         /// <summary>
-        /// Initiate reversal for a payment.
+        /// Create payment reversal.
         /// </summary>
         /// <param name="reversal"></param>
         /// <param name="options">Options to use for the request.</param>
@@ -78,7 +78,7 @@ namespace Falu.Payments
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<PaymentReversal>> UpdateAsync(string id,
-                                                                                 JsonPatchDocument<PaymentReversalPatchModel> patch,
+                                                                                 JsonPatchDocument<ReversalPatchModel> patch,
                                                                                  RequestOptions options = null,
                                                                                  CancellationToken cancellationToken = default)
         {

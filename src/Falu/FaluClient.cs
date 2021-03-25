@@ -33,6 +33,7 @@ namespace Falu
             Payments = new PaymentsService(backChannel, options);
             PaymentReversals = new PaymentReversalsService(backChannel, options);
             Transfers = new TransfersService(backChannel, options);
+            TransferReversals = new TransferReversalsService(backChannel, options);
             PaymentBalances = new PaymentBalancesService(backChannel, options);
             MessageStreams = new MessageStreamsService(backChannel, options);
             MessageTemplates = new MessageTemplatesService(backChannel, options);
@@ -66,6 +67,9 @@ namespace Falu
 
         ///
         public virtual TransfersService Transfers { get; }
+
+        ///
+        public virtual TransferReversalsService TransferReversals { get; }
 
         ///
         public virtual PaymentBalancesService PaymentBalances { get; }

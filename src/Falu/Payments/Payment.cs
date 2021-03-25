@@ -47,7 +47,7 @@ namespace Falu.Payments
         public PaymentMpesaDetails Mpesa { get; set; }
 
         /// <summary>
-        /// Details about failure if the transfer is in failed state.
+        /// Details about failure if the payment is in failed state.
         /// </summary>
         public FailureDetails Failure { get; set; }
 

@@ -45,6 +45,11 @@ namespace Falu.Payments.Reversals
         /// </summary>
         public ReversalMpesaDetails Mpesa { get; set; }
 
+        /// <summary>
+        /// Details about failure if the reversal is in failed state.
+        /// </summary>
+        public FailureDetails Failure { get; set; }
+
         /// <inheritdoc/>
         public bool Live { get; set; }
 

@@ -1,4 +1,6 @@
-﻿namespace Falu.Payments
+﻿using System.Runtime.Serialization;
+
+namespace Falu.Payments
 {
     /// <summary>
     /// Reason for failure of a payment, transfer or revesal.

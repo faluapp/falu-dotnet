@@ -3,14 +3,14 @@
 namespace Falu.Payments
 {
     /// <summary>
-    /// Information for initiating a reversal for a payment.
+    /// Information for initiating a reversal for a transfer.
     /// </summary>
-    public class PaymentReversalRequest : ReversalPatchModel
+    public class TransferReversalRequest : ReversalPatchModel
     {
         /// <summary>
-        /// Identifier of the Payment to reverse.
+        /// Identifier of the Transfer to reverse.
         /// </summary>
-        public string PaymentId { get; set; }
+        public string TransferId { get; set; }
 
         /// <summary>
         /// Reason for the reversal.

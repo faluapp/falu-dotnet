@@ -1,12 +1,12 @@
 ﻿using Falu.Core;
 using System.Collections.Generic;
 
-namespace Falu.Payments.Reversals
+namespace Falu.Payments
 {
     /// <summary>
-    /// A model representing details that can be changed about a payment reversal.
+    /// A model representing details that can be changed about a transfer.
     /// </summary>
-    public class PaymentReversalPatchModel : IHasDescription, IHasMetadata, IHasTags
+    public class TransferPatchModel : IHasDescription, IHasMetadata, IHasTags
     {
         /// <inheritdoc/>
         public string Description { get; set; }

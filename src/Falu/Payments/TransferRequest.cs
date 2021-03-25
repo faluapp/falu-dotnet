@@ -3,9 +3,9 @@
 namespace Falu.Payments
 {
     /// <summary>
-    /// Information for initiating a payment.
+    /// Information for initiating a transfer.
     /// </summary>
-    public class PaymentRequest : PaymentPatchModel
+    public class TransferRequest : TransferPatchModel
     {
         /// <summary>
         /// Three-letter <see href="https://www.iso.org/iso-4217-currency-codes.html">ISO currency code</see>,
@@ -19,8 +19,8 @@ namespace Falu.Payments
         public long Amount { get; set; }
 
         /// <summary>
-        /// Details about initiation by MPESA's STK Push
+        /// Details about initiation of an MPESA transfer to a customer or another business.
         /// </summary>
-        public PaymentRequestMpesa Mpesa { get; set; }
+        public TransferRequestMpesa Mpesa { get; set; }
     }
 }

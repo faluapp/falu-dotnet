@@ -52,7 +52,7 @@ namespace Falu.Payments
         }
 
         /// <summary>
-        /// Initiate a payment.
+        /// Create a payment.
         /// </summary>
         /// <param name="payment"></param>
         /// <param name="options">Options to use for the request.</param>

@@ -6,7 +6,7 @@ namespace Falu.Messages.Templates
     /// <summary>
     /// A template for sending messages.
     /// </summary>
-    public class Template : TemplatePatchModel, IHasId, IHasCreated, IHasUpdated, IHasLive, IHasEtag
+    public class Template : TemplatePatchModel, IHasId, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
     {
         /// <inheritdoc/>
         public string Id { get; set; }
@@ -16,6 +16,9 @@ namespace Falu.Messages.Templates
 
         /// <inheritdoc/>
         public DateTimeOffset Updated { get; set; }
+
+        /// <inheritdoc/>
+        public string WorkspaceId { get; set; }
 
         /// <inheritdoc/>
         public bool Live { get; set; }

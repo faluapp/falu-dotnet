@@ -6,7 +6,7 @@ namespace Falu.Messages
     /// <summary>
     /// A message record.
     /// </summary>
-    public class Message : MessagePatchModel, IHasId, IHasCreated, IHasUpdated, IHasLive, IHasEtag
+    public class Message : MessagePatchModel, IHasId, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
     {
         /// <inheritdoc/>
         public string Id { get; set; }
@@ -53,6 +53,9 @@ namespace Falu.Messages
         /// This is dependent on the underlying provider.
         /// </summary>
         public DateTimeOffset? Delivered { get; set; }
+
+        /// <inheritdoc/>
+        public string WorkspaceId { get; set; }
 
         /// <inheritdoc/>
         public bool Live { get; set; }

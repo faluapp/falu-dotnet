@@ -7,7 +7,7 @@ namespace Falu.Messages.Streams
     /// Represents a stream used for sending messages.
     /// This is a way to spearate messages sent to ensure high deliverability.
     /// </summary>
-    public class MessageStream : MessageStreamPatchModel, IHasId, IHasCreated, IHasUpdated, IHasLive, IHasEtag
+    public class MessageStream : MessageStreamPatchModel, IHasId, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
     {
         /// <inheritdoc/>
         public string Id { get; set; }
@@ -38,6 +38,9 @@ namespace Falu.Messages.Streams
         /// Only populated once a stream is archived.
         /// </summary>
         public DateTimeOffset? Archived { get; set; }
+
+        /// <inheritdoc/>
+        public string WorkspaceId { get; set; }
 
         /// <inheritdoc/>
         public bool Live { get; set; }

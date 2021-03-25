@@ -7,7 +7,7 @@ namespace Falu.Events
     /// <summary>
     /// The basic implementation of a Webhook Event irrespective of the usage
     /// </summary>
-    public class WebhookEvent<TObject> : IHasId, IHasCreated, IHasMetadata, IHasLive
+    public class WebhookEvent<TObject> : IHasId, IHasCreated, IHasMetadata, IHasWorkspaceId, IHasLive
     {
         /// <inheritdoc/>
         public string Id { get; set; }
@@ -33,6 +33,9 @@ namespace Falu.Events
 
         /// <inheritdoc/>
         public Dictionary<string, string> Metadata { get; set; }
+
+        /// <inheritdoc/>
+        public string WorkspaceId { get; set; }
 
         /// <inheritdoc/>
         public bool Live { get; set; }

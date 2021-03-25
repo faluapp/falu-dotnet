@@ -7,7 +7,7 @@ namespace Falu.Payments
     /// <summary>
     /// Represents a transaction done by a customer to the business.
     /// </summary>
-    public class Payment : PaymentPatchModel, IHasId, IHasCreated, IHasUpdated, IHasLive, IHasEtag
+    public class Payment : PaymentPatchModel, IHasId, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
     {
         /// <inheritdoc/>
         public string Id { get; set; }
@@ -55,6 +55,9 @@ namespace Falu.Payments
         /// Identifier of the reversal, if payment has been reversed.
         /// </summary>
         public string ReversalId { get; set; }
+
+        /// <inheritdoc/>
+        public string WorkspaceId { get; set; }
 
         /// <inheritdoc/>
         public bool Live { get; set; }

@@ -6,7 +6,7 @@ namespace Falu.Payments.Reversals
     /// <summary>
     /// Represents a reversal of a Payment.
     /// </summary>
-    public abstract class AbstractReversal : ReversalPatchModel, IHasId, IHasCreated, IHasUpdated, IHasLive, IHasEtag
+    public abstract class AbstractReversal : ReversalPatchModel, IHasId, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
     {
         /// <inheritdoc/>
         public string Id { get; set; }
@@ -49,6 +49,9 @@ namespace Falu.Payments.Reversals
         /// Details about failure if the reversal is in failed state.
         /// </summary>
         public FailureDetails Failure { get; set; }
+
+        /// <inheritdoc/>
+        public string WorkspaceId { get; set; }
 
         /// <inheritdoc/>
         public bool Live { get; set; }

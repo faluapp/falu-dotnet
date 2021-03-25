@@ -10,12 +10,12 @@
         Mpesa,
 
         ///
-        AirtelMoney,
+        Airtelmoney,
 
         ///
-        MtnMoney,
+        Mtnmoney,
 
         ///
-        PesaLink,
+        Pesalink,
     }
 }

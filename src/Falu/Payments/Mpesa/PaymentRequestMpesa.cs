@@ -1,9 +1,9 @@
 ﻿namespace Falu.Payments.Mpesa
 {
     /// <summary>
-    /// Information for initiating an incoming payment from customer to business via MPESA.
+    /// Information for initiating a payment from a customer to the business via MPESA.
     /// </summary>
-    public class PaymentRequestMpesaStkPush
+    public class PaymentRequestMpesa
     {
         /// <summary>
         /// The phone number representing the account to be charged.

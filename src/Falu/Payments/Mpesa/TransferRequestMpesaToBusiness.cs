@@ -3,7 +3,7 @@
     /// <summary>
     /// Information for initiating an outgoing payment to business via MPESA.
     /// </summary>
-    public class PaymentRequestMpesaToBusiness
+    public class TransferRequestMpesaToBusiness
     {
         /// <summary>
         /// The business short code to be debited.

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Falu.Payments.Mpesa
+﻿namespace Falu.Payments.Mpesa
 {
     /// <summary>
     /// Represents the provider details for an MPESA payment, transfer or reversal.
@@ -24,10 +22,5 @@ namespace Falu.Payments.Mpesa
         /// Only populated for completed transactions.
         /// </summary>
         public string TransactionNo { get; set; }
-
-        /// <summary>
-        /// Time at which the transaction was successfully completed.
-        /// </summary>
-        public DateTimeOffset? Completed { get; set; } // TODO: shouldn't we move this to the root object and rename to Succeeded
     }
 }

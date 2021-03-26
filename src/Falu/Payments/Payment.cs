@@ -35,6 +35,11 @@ namespace Falu.Payments
         public DateTimeOffset Updated { get; set; }
 
         /// <summary>
+        /// Time at which the payment succeeded. Only populated when successful.
+        /// </summary>
+        public DateTimeOffset? Succeeded { get; set; }
+
+        /// <summary>
         /// The type of the Payment.
         /// An additional property is populated on the Payment with a name matching this value.
         /// It contains additional information specific to the Payment type.

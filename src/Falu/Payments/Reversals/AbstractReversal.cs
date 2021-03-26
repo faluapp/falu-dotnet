@@ -40,6 +40,11 @@ namespace Falu.Payments.Reversals
         public DateTimeOffset Updated { get; set; }
 
         /// <summary>
+        /// Time at which the reversal succeeded. Only populated when successful.
+        /// </summary>
+        public DateTimeOffset? Succeeded { get; set; }
+
+        /// <summary>
         /// Details of the reversal if done via MPESA.
         /// Only populated if the payment being reversed use an MPESA intrument.
         /// </summary>

@@ -8,7 +8,7 @@
         /// <summary>
         /// The phone number representing the account to be charged.
         /// </summary>
-        public string PhoneNumber { get; set; }
+        public string Phone { get; set; }
 
         /// <summary>
         /// The reference that the payment will be made in.

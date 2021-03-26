@@ -165,10 +165,13 @@ var request = new PaymentRequest
 {
     Amount = 1000,
     Currency = "kes",
-    MpesaToCustomer = new PaymentRequestMpesaToCustomer
+    Mpesa = new TransferRequestMpesa
     {
-        PhoneNumber = "+254722000000",
-        Kind = MpesaCommandKind.BusinessPayment, // can also be SalaryPayment
+        Customer = new TransferRequestMpesaToCustomer
+        {
+            Phone = "+254722000000",
+            Kind = MpesaCommandKind.BusinessPayment, // can also be SalaryPayment
+        },
     }
 };
 
@@ -188,9 +191,9 @@ var request = new PaymentRequest
 {
     Amount = 1000,
     Currency = "kes",
-    StkPush = new PaymentRequestMpesaStkPush
+    Mpesa = new PaymentRequestMpesaStkPush
     {
-        PhoneNumber = "+254722000000",
+        Phone = "+254722000000",
         Reference = "<put-payment-reference-here>"
         Kind = MpesaStkPushTransactionType.CustomerPayBillOnline, // can also be CustomerBuyGoodsOnline
         Destination = "<put-till-number-here>", // only for CustomerBuyGoodsOnline

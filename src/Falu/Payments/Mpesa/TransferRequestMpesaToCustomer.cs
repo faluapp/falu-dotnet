@@ -16,7 +16,7 @@
         /// <summary>
         /// The phone number to which the money is to be sent.
         /// </summary>
-        public string PhoneNumber { get; set; }
+        public string Phone { get; set; }
 
         /// <summary>
         /// The kind of command being made. It can only be one of the following:

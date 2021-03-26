@@ -18,13 +18,13 @@ namespace Falu.Tests
         //    var sp = scope.ServiceProvider;
         //    var client = sp.GetRequiredService<FaluClient>();
 
-        //    var msg = "Either 'nationalId' or 'phoneNumber' must be provided";
+        //    var msg = "Either 'documentNumber' or 'phone' must be provided";
         //    var ex = await Assert.ThrowsAsync<InvalidOperationException>(
-        //        () => client.SearchIdentityAsync(nationalId: null, phoneNumber: null));
+        //        () => client.SearchIdentityAsync(nationalId: null, phone: null));
         //    Assert.Equal(msg, ex.Message);
 
         //    ex = await Assert.ThrowsAsync<InvalidOperationException>(
-        //        () => client.SearchIdentityAsync(nationalId: "", phoneNumber: ""));
+        //        () => client.SearchIdentityAsync(nationalId: "", phone: ""));
         //    Assert.Equal(msg, ex.Message);
         //}
     }

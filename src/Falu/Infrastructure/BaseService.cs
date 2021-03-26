@@ -148,7 +148,7 @@ namespace Falu.Infrastructure
                 if (stream.Length == 0) return default;
 
                 // if content type is provided, it must match JSON
-                if (!string.IsNullOrWhiteSpace(contentType) && !JsonContentType.Equals("json")) return default;
+                if (!string.IsNullOrWhiteSpace(contentType) && !contentType.Contains("json")) return default;
 
                 return await JsonSerializer.DeserializeAsync<T>(utf8Json: stream,
                                                                 options: options.SerializerOptions,

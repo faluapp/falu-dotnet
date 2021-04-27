@@ -19,6 +19,11 @@ namespace Falu.Payments
         public long Amount { get; set; }
 
         /// <summary>
+        /// Purpose of the transfer.
+        /// </summary>
+        public TransferPurpose? Purpose { get; set; }
+
+        /// <summary>
         /// Details about initiation of an MPESA transfer to a customer or another business.
         /// </summary>
         public TransferRequestMpesa Mpesa { get; set; }

@@ -47,6 +47,11 @@ namespace Falu.Payments
         public TransferType Type { get; set; }
 
         /// <summary>
+        /// Purpose of the transfer.
+        /// </summary>
+        public TransferPurpose Purpose { get; set; }
+
+        /// <summary>
         /// If this is an MPESA transfer, this contains details about the MPESA transfer.
         /// </summary>
         public TransferMpesaDetails Mpesa { get; set; }

@@ -6,11 +6,6 @@
     public class TransferMpesaDetails : BaseMpesaDetails
     {
         /// <summary>
-        /// Type of command.
-        /// </summary>
-        public string Type { get; set; }
-
-        /// <summary>
         /// Destination of where the transfer is/was sent to.
         /// </summary>
         public string Destination { get; set; }

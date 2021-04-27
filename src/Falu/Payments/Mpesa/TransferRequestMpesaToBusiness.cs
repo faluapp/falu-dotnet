@@ -18,10 +18,8 @@
         public string Destination { get; set; }
 
         /// <summary>
-        /// The kind of command being made. It can only be one of the following:
-        /// BusinessPayBill, BusinessBuyGoods, DisburseFundsToBusiness, BusinessToBusinessTransfer,
-        /// or BusinessTransferFromMMFToUtility
+        /// Indicates if the transfer is from MMF to Utility.
         /// </summary>
-        public MpesaCommandKind? Kind { get; set; }
+        public bool MMF { get; set; }
     }
 }

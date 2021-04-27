@@ -17,9 +17,10 @@
         public string Reference { get; set; }
 
         /// <summary>
-        /// The kind of STK Push to initiate.
+        /// Set true if the payment to be initiated is to be made to a paybill;
+        /// false, the payment is made to a BuyGoods till.
         /// </summary>
-        public MpesaStkPushTransactionType? Kind { get; set; }
+        public bool Paybill { get; set; }
 
         /// <summary>
         /// The shortcode of the receiver.

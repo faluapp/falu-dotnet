@@ -1,8 +1,7 @@
 # Falu
 
 [![NuGet](https://img.shields.io/nuget/v/Falu.svg)](https://www.nuget.org/packages/Falu/)
-[![Build Status](https://dev.azure.com/tingle/Core/_apis/build/status/Falu/Falu%20Sdk%20-%20DotNet?branchName=master)](https://dev.azure.com/tingle/Core/_build/latest?definitionId=458&branchName=master)
-![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/tingle/Core/458)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/tinglesoftware/falu-sdk-dotnet/Build%20and%20Publish?style=flat-square)
 
 The official [Falu][falu] .NET library, supporting .NET Standard 2.1+.
 
@@ -264,3 +263,7 @@ For any requests, bug or comments, please [open an issue][issues] or [submit a p
 [pulls]: https://github.com/tingle/falu-dotnet/pulls
 [falu]: https://falu.io
 [workspace-settings]: https://dashboard.falu.io/settings
+
+### License
+
+The Library is licensed under the [MIT](http://www.opensource.org/licenses/mit-license.php "Read more about the MIT license form") license. Refer to the [LICENSE](./LICENSE) file for more information.

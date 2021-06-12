@@ -1,4 +1,4 @@
-# Falu
+# Falu SDK for .NET
 
 [![NuGet](https://img.shields.io/nuget/v/Falu.svg)](https://www.nuget.org/packages/Falu/)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/tinglesoftware/falu-sdk-dotnet/Build%20and%20Publish?style=flat-square)
@@ -60,7 +60,7 @@ public class Program
 
 ### Dependency Injection
 
-Often it is recommended that you make use of an IoC container to control the litefime of dependencies created. This is the case in ASP.NET Core but can also be done in background jobs. First, you would put the API Key in your secret:
+Often it is recommended that you make use of an IoC container to control the lifetime of dependencies created. This is the case in ASP.NET Core but can also be done in background jobs. First, you would put the API Key in your secret:
 
 ```json
 {
@@ -200,7 +200,7 @@ var request = new PaymentRequest
 };
 
 // Initiate payment, results shall be relayed via webhooks
-var reponse = await client.InitiatePaymentAsync(request);
+var response = await client.InitiatePaymentAsync(request);
 response.EnsureSuccess(); // might throw an exception (FaluException)
 ```
 
@@ -239,7 +239,7 @@ var request = new EvaluationRequest
 {
     Scope = EvaluationScope.Personal, // can also be Business
     Provider = StatementProvider.Mpesa,
-    Name = "KAMAU ONYANGO", // full name as on statement
+    Name = "JOHN KAMAU ONYANGO", // full name as on statement
     Phone = "+254722000000", // phone number as on statement for mobile based providers
     Password = "1234567890", // password to open statement file
     Content = System.IO.File.OpenRead("path-to-statement-file") // can be any readable stream

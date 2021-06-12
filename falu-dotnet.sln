@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Falu", "Falu\Falu.csproj", "{963DEBFA-CB4D-4A2F-8AE4-5C64D6917730}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Falu", "src\Falu\Falu.csproj", "{963DEBFA-CB4D-4A2F-8AE4-5C64D6917730}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Falu.Tests", "Falu.Tests\Falu.Tests.csproj", "{BC55832D-F48D-41CC-80A5-B4C36C289C3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Falu.Tests", "tests\Falu.Tests\Falu.Tests.csproj", "{BC55832D-F48D-41CC-80A5-B4C36C289C3F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

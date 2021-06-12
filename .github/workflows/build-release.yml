@@ -17,6 +17,8 @@ on:
         description: 'Reason for running the action'
         required: false
         default: 'Pre-Release'
+  schedule:
+    - cron: '0 2 * * 1-5' # Nightly Build (daily at 2am UTC)
 
 jobs:
   Build:

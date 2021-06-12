@@ -9,7 +9,7 @@
     <Company>Tingle Software Limited</Company>
     <Authors>Tingle Software Limited</Authors>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <InternalsVisibleTo Include="Falu.Tests" />
   </ItemGroup>
@@ -38,7 +38,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.AzureRepos.Git" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
   </ItemGroup>
 
 </Project>

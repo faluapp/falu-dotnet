@@ -119,7 +119,7 @@
         public const string MessageFailed = "message.failed";
 
         /// <summary>
-        /// Occurs whenever an SMS is delivered succesfully.
+        /// Occurs whenever an SMS is delivered successfully.
         /// NOTE: only called when a provider with delivery reports is enabled configured
         /// </summary>
         public const string MessageDelivered = "message.delivered";

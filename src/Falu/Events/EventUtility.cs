@@ -26,7 +26,7 @@ namespace Falu.Events
         /// <param name="signature">The value of the <c>X-Falu-Signature</c> header from the webhook request.</param>
         /// <param name="secret">The webhook endpoint's signing secret.</param>
         /// <param name="tolerance">The time tolerance, in seconds. Defaults to 300 seconds.</param>
-        /// <param name="utcNow">The timestamp to use for the current time. Defaults to curent time.</param>
+        /// <param name="utcNow">The timestamp to use for the current time. Defaults to current time.</param>
         /// <returns>The deserialized <see cref="WebhookEvent{TObject}"/>.</returns>
         /// <exception cref="FaluException">
         /// Thrown if the signature verification fails for any reason.
@@ -64,7 +64,7 @@ namespace Falu.Events
         /// <param name="signature">The value of the <see cref="HeadersNames.XFaluSignature"/> header from the webhook request.</param>
         /// <param name="secret">The webhook endpoint's signing secret.</param>
         /// <param name="tolerance">The time tolerance, in seconds. Defaults to 300 seconds</param>
-        /// <param name="utcNow">The timestamp to use for the current time. Defaults to curent time.</param>
+        /// <param name="utcNow">The timestamp to use for the current time. Defaults to current time.</param>
         public static void ValidateSignature(string json, string signature, string secret, long? tolerance = null, long? utcNow = null)
         {
             var actualItems = ParseSignature(signature);

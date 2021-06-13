@@ -19,7 +19,7 @@ namespace Falu.Evaluations
         public long? Limit { get; set; }
 
         /// <summary>
-        /// Time upto which the score is deemed valid.
+        /// Time up to which the score is deemed valid.
         /// </summary>
         public DateTimeOffset Expires { get; set; }
     }

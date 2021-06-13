@@ -13,7 +13,7 @@ namespace Falu.Payments
         public FailureReason Reason { get; set; }
 
         /// <summary>
-        /// Time at which failure occured.
+        /// Time at which failure occurred.
         /// </summary>
         public DateTimeOffset Timestamp { get; set; }
 

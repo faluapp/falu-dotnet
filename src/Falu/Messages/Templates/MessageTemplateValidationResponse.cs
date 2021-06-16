@@ -5,7 +5,7 @@ namespace Falu.Messages.Templates
     /// <summary>
     /// Response for validating a template
     /// </summary>
-    public class TemplateValidationResponse
+    public class MessageTemplateValidationResponse
     {
         /// <summary>
         /// A JSON object structure that will provide information

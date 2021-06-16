@@ -5,7 +5,7 @@ namespace Falu.Messages.Templates
     /// <summary>
     /// Model for requesting template validation
     /// </summary>
-    public class TemplateValidationRequest
+    public class MessageTemplateValidationRequest
     {
         /// <summary>
         /// The content to use when this template is used to send messages.

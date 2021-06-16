@@ -114,14 +114,14 @@ namespace Falu.Messages
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<TemplateValidationResponse>> ValidateAsync(TemplateValidationRequest template,
-                                                                                              RequestOptions options = null,
-                                                                                              CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<MessageTemplateValidationResponse>> ValidateAsync(MessageTemplateValidationRequest template,
+                                                                                                     RequestOptions options = null,
+                                                                                                     CancellationToken cancellationToken = default)
         {
             if (template is null) throw new ArgumentNullException(nameof(template));
 
             var uri = new Uri(BaseAddress, "/v1/message_templates/validate");
-            return await PostAsJsonAsync<TemplateValidationResponse>(uri, template, options, cancellationToken);
+            return await PostAsJsonAsync<MessageTemplateValidationResponse>(uri, template, options, cancellationToken);
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Falu.Payments.Mpesa
+﻿namespace Falu.Payments.Mpesa
 {
     /// <summary>
     /// Details about an MPESA Payment
@@ -21,24 +19,6 @@ namespace Falu.Payments.Mpesa
         /// Phone number that made the payment, in <see href="https://en.wikipedia.org/wiki/E.164">E.164 format</see>.
         /// </summary>
         public string Phone { get; set; }
-
-        /// <summary>
-        /// Time at which the payment was initiated.
-        /// This is only populated for payments that are intiated by the business such as MPESA's STK push.
-        /// </summary>
-        public DateTimeOffset? Initiated { get; set; }
-
-        /// <summary>
-        /// Time at which the payment validation was requested.
-        /// This is only populare for payments that undergo validation such as customer initiate MPESA payments.
-        /// </summary>
-        public DateTimeOffset? Validated { get; set; }
-
-        /// <summary>
-        /// Whether the payment was marked as valid.
-        /// This is only populare for payments that undergo validation such as customer initiate MPESA payments.
-        /// </summary>
-        public bool? Valid { get; set; }
 
         /// <summary>
         /// Name of the entity making or that made the payment.

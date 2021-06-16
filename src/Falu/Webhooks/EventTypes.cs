@@ -45,6 +45,21 @@
         public const string PaymentFailed = "payment.failed";
 
         /// <summary>
+        /// Occurs whenever a payment authorization is requested.
+        /// </summary>
+        public const string PaymentAuthorizationRequest = "payment.authorization.request";
+
+        /// <summary>
+        /// Occurs whenever a payment authorization is created.
+        /// </summary>
+        public const string PaymentAuthorizationCreated = "payment.authorization.created";
+
+        /// <summary>
+        /// Occurs whenever a payment authorization is updated.
+        /// </summary>
+        public const string PaymentAuthorizationUpdated = "payment.authorization.updated";
+
+        /// <summary>
         /// Occurs whenever a payment reversal is created.
         /// </summary>
         public const string PaymentReversalCreated = "payment.reversal.created";

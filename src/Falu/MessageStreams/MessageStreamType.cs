@@ -1,4 +1,4 @@
-﻿namespace Falu.Messages.Streams
+﻿namespace Falu.MessageStreams
 {
     /// <summary>
     /// Represents the types of streams for messages.

@@ -1,4 +1,4 @@
-﻿namespace Falu.Messages.Streams
+﻿namespace Falu.MessageStreams
 {
     /// <summary>
     /// Settings for using the Mobi4tech provider.

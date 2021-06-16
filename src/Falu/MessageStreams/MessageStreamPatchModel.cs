@@ -1,7 +1,7 @@
 ﻿using Falu.Core;
 using System.Collections.Generic;
 
-namespace Falu.Messages.Streams
+namespace Falu.MessageStreams
 {
     /// <summary>
     /// Represents the details about a message stream that can be patched.

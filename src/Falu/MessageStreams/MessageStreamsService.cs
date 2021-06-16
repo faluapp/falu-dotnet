@@ -1,6 +1,5 @@
 ﻿using Falu.Core;
 using Falu.Infrastructure;
-using Falu.Messages.Streams;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -8,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Tingle.Extensions.JsonPatch;
 
-namespace Falu.Messages
+namespace Falu.MessageStreams
 {
     ///
     public class MessageStreamsService : BaseService

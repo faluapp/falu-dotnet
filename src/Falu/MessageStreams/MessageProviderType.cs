@@ -1,4 +1,4 @@
-﻿namespace Falu.Messages
+﻿namespace Falu.MessageStreams
 {
     /// <summary>
     /// Represents the kind of provider used to send messages in a message stream.

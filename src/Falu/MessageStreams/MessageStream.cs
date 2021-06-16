@@ -1,7 +1,7 @@
 ﻿using Falu.Core;
 using System;
 
-namespace Falu.Messages.Streams
+namespace Falu.MessageStreams
 {
     /// <summary>
     /// Represents a stream used for sending messages.

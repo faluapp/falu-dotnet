@@ -59,7 +59,7 @@ namespace Falu.Messages
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<Template>> CreateAsync(TemplatePatchModel template,
+        public virtual async Task<ResourceResponse<Template>> CreateAsync(MessageTemplatePatchModel template,
                                                                           RequestOptions options = null,
                                                                           CancellationToken cancellationToken = default)
         {
@@ -78,7 +78,7 @@ namespace Falu.Messages
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<Template>> UpdateAsync(string id,
-                                                                          JsonPatchDocument<TemplatePatchModel> patch,
+                                                                          JsonPatchDocument<MessageTemplatePatchModel> patch,
                                                                           RequestOptions options = null,
                                                                           CancellationToken cancellationToken = default)
         {

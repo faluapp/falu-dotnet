@@ -6,7 +6,7 @@ namespace Falu.Messages.Templates
     /// <summary>
     /// A model representing details that can be changed about a template
     /// </summary>
-    public class TemplatePatchModel : IHasDescription, IHasMetadata, IHasTags
+    public class MessageTemplatePatchModel : IHasDescription, IHasMetadata, IHasTags
     {
         /// <summary>
         /// An optional string you can provide to identify this template.

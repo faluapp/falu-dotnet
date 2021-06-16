@@ -1,7 +1,7 @@
 ﻿using Falu.Core;
 using System.Collections.Generic;
 
-namespace Falu.Messages.Templates
+namespace Falu.MessageTemplates
 {
     /// <summary>
     /// A model representing details that can be changed about a template

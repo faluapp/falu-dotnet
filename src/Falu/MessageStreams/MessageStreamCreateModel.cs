@@ -21,6 +21,6 @@
         /// <summary>
         /// Provider to be used.
         /// </summary>
-        public MessageProviderType? Provider { get; set; }
+        public MessageStreamProviderType? Provider { get; set; }
     }
 }

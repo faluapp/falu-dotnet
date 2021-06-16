@@ -31,7 +31,7 @@ namespace Falu.MessageStreams
         /// <summary>
         /// Provider used by the stream.
         /// </summary>
-        public MessageProviderType Provider { get; set; }
+        public MessageStreamProviderType Provider { get; set; }
 
         /// <summary>
         /// Time at which the stream was archived.

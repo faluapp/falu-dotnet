@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents the kind of provider used to send messages in a message stream.
     /// </summary>
-    public enum MessageProviderType
+    public enum MessageStreamProviderType
     {
         /// <summary>
         /// Backed by <see href="http://www.crossgatesolutions.com/"/>

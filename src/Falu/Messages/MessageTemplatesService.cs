@@ -23,16 +23,16 @@ namespace Falu.Messages
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<Template>>> ListAsync(BasicListOptions options = null,
-                                                                              RequestOptions requestOptions = null,
-                                                                              CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<List<MessageTemplate>>> ListAsync(BasicListOptions options = null,
+                                                                                     RequestOptions requestOptions = null,
+                                                                                     CancellationToken cancellationToken = default)
         {
             var args = new Dictionary<string, string>();
             options?.PopulateQueryValues(args);
 
             var query = QueryHelper.MakeQueryString(args);
             var uri = new Uri(BaseAddress, $"/v1/message_templates{query}");
-            return await GetAsJsonAsync<List<Template>>(uri, requestOptions, cancellationToken);
+            return await GetAsJsonAsync<List<MessageTemplate>>(uri, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -42,14 +42,14 @@ namespace Falu.Messages
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<Template>> GetAsync(string id,
-                                                                       RequestOptions options = null,
-                                                                       CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<MessageTemplate>> GetAsync(string id,
+                                                                              RequestOptions options = null,
+                                                                              CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
             var uri = new Uri(BaseAddress, $"/v1/message_templates/{id}");
-            return await GetAsJsonAsync<Template>(uri, options, cancellationToken);
+            return await GetAsJsonAsync<MessageTemplate>(uri, options, cancellationToken);
         }
 
         /// <summary>
@@ -59,14 +59,14 @@ namespace Falu.Messages
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<Template>> CreateAsync(MessageTemplatePatchModel template,
-                                                                          RequestOptions options = null,
-                                                                          CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<MessageTemplate>> CreateAsync(MessageTemplatePatchModel template,
+                                                                                 RequestOptions options = null,
+                                                                                 CancellationToken cancellationToken = default)
         {
             if (template is null) throw new ArgumentNullException(nameof(template));
 
             var uri = new Uri(BaseAddress, "/v1/message_templates");
-            return await PostAsJsonAsync<Template>(uri, template, options, cancellationToken);
+            return await PostAsJsonAsync<MessageTemplate>(uri, template, options, cancellationToken);
         }
 
         /// <summary>
@@ -77,16 +77,16 @@ namespace Falu.Messages
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<Template>> UpdateAsync(string id,
-                                                                          JsonPatchDocument<MessageTemplatePatchModel> patch,
-                                                                          RequestOptions options = null,
-                                                                          CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<MessageTemplate>> UpdateAsync(string id,
+                                                                                 JsonPatchDocument<MessageTemplatePatchModel> patch,
+                                                                                 RequestOptions options = null,
+                                                                                 CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
             var uri = new Uri(BaseAddress, $"/v1/message_templates/{id}");
-            return await PatchAsJsonAsync<Template>(uri, patch, options, cancellationToken);
+            return await PatchAsJsonAsync<MessageTemplate>(uri, patch, options, cancellationToken);
         }
 
         /// <summary>
@@ -96,15 +96,15 @@ namespace Falu.Messages
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<Template>> DeleteAsync(string id,
-                                                                          RequestOptions options = null,
-                                                                          CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<MessageTemplate>> DeleteAsync(string id,
+                                                                                 RequestOptions options = null,
+                                                                                 CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
             var uri = new Uri(BaseAddress, $"/v1/message_templates/{id}");
             var request = new HttpRequestMessage(HttpMethod.Delete, uri);
-            return await SendAsync<Template>(request, options, cancellationToken);
+            return await SendAsync<MessageTemplate>(request, options, cancellationToken);
         }
 
         /// <summary>

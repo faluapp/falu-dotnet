@@ -36,7 +36,7 @@ namespace Falu.Messages
         /// <summary>
         /// Template used for the message.
         /// </summary>
-        public MessageTemplate Template { get; set; }
+        public MessageSourceTemplate Template { get; set; }
 
         /// <summary>
         /// Stream used for the message.

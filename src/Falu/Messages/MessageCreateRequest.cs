@@ -21,7 +21,7 @@
         /// The template to use.
         /// Required if <see cref="Body"/> is not specified.
         /// </summary>
-        public MessageTemplate Template { get; set; }
+        public MessageSourceTemplate Template { get; set; }
 
         /// <summary>
         /// The stream to use.

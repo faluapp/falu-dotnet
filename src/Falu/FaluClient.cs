@@ -2,7 +2,13 @@
 using Falu.Events;
 using Falu.Identity;
 using Falu.Messages;
+using Falu.MessageStreams;
+using Falu.MessageTemplates;
+using Falu.PaymentAuthorizations;
+using Falu.PaymentReversals;
 using Falu.Payments;
+using Falu.TransferReversals;
+using Falu.Transfers;
 using Falu.Webhooks;
 using Microsoft.Extensions.Options;
 using System;
@@ -31,6 +37,7 @@ namespace Falu
             Identity = new IdentityService(backChannel, options);
             Messages = new MessagesService(backChannel, options);
             Payments = new PaymentsService(backChannel, options);
+            PaymentAuthorizations = new PaymentAuthorizationsService(backChannel, options);
             PaymentReversals = new PaymentReversalsService(backChannel, options);
             Transfers = new TransfersService(backChannel, options);
             TransferReversals = new TransferReversalsService(backChannel, options);
@@ -61,6 +68,9 @@ namespace Falu
 
         ///
         public virtual PaymentsService Payments { get; }
+
+        ///
+        public virtual PaymentAuthorizationsService PaymentAuthorizations { get; }
 
         ///
         public virtual PaymentReversalsService PaymentReversals { get; }

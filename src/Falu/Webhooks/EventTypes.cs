@@ -44,6 +44,29 @@
         /// </summary>
         public const string PaymentFailed = "payment.failed";
 
+        #endregion
+
+        #region PaymentAuthorizations
+
+        /// <summary>
+        /// Occurs whenever a payment authorization is requested.
+        /// </summary>
+        public const string PaymentAuthorizationRequest = "payment.authorization.request";
+
+        /// <summary>
+        /// Occurs whenever a payment authorization is created.
+        /// </summary>
+        public const string PaymentAuthorizationCreated = "payment.authorization.created";
+
+        /// <summary>
+        /// Occurs whenever a payment authorization is updated.
+        /// </summary>
+        public const string PaymentAuthorizationUpdated = "payment.authorization.updated";
+
+        #endregion
+
+        #region PaymentReversals
+
         /// <summary>
         /// Occurs whenever a payment reversal is created.
         /// </summary>
@@ -64,6 +87,10 @@
         /// </summary>
         public const string PaymentReversalFailed = "payment.reversal.failed";
 
+        #endregion
+
+        #region Transfers
+
         /// <summary>
         /// Occurs whenever a transfer is created.
         /// </summary>
@@ -83,6 +110,10 @@
         /// Occurs whenever a transfer fails.
         /// </summary>
         public const string TransferFailed = "transfer.failed";
+
+        #endregion
+
+        #region TransferReversals
 
         /// <summary>
         /// Occurs whenever a transfer reversal is created.
@@ -123,6 +154,25 @@
         /// NOTE: only called when a provider with delivery reports is enabled configured
         /// </summary>
         public const string MessageDelivered = "message.delivered";
+
+        #endregion
+
+        #region MessageTemplates
+
+        /// <summary>
+        /// Occurs whenever a message template is created.
+        /// </summary>
+        public const string MessageTemplateCreated = "message_template.created";
+
+        /// <summary>
+        /// Occurs whenever a message template is updated.
+        /// </summary>
+        public const string MessageTemplateUpdated = "message_template.updated";
+
+        /// <summary>
+        /// Occurs whenever a message template is deleted.
+        /// </summary>
+        public const string MessageTemplateDeleted = "message_template.deleted";
 
         #endregion
 

@@ -124,6 +124,21 @@
         /// </summary>
         public const string MessageDelivered = "message.delivered";
 
+        /// <summary>
+        /// Occurs whenever a message template is created.
+        /// </summary>
+        public const string MessageTemplateCreated = "message_template.created";
+
+        /// <summary>
+        /// Occurs whenever a message template is updated.
+        /// </summary>
+        public const string MessageTemplateUpdated = "message_template.updated";
+
+        /// <summary>
+        /// Occurs whenever a message template is deleted.
+        /// </summary>
+        public const string MessageTemplateDeleted = "message_template.deleted";
+
         #endregion
 
     }

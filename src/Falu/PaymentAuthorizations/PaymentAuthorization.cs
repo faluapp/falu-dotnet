@@ -1,6 +1,5 @@
 ﻿using Falu.Core;
 using Falu.Payments;
-using Falu.Payments.Mpesa;
 using System;
 
 namespace Falu.PaymentAuthorizations

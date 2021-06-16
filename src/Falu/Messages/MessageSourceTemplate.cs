@@ -3,7 +3,7 @@
     /// <summary>
     /// Information about the template used (or to be used) to send a message.
     /// </summary>
-    public class MessageTemplate
+    public class MessageSourceTemplate
     {
         /// <summary>
         /// Unique identifier of the template used.

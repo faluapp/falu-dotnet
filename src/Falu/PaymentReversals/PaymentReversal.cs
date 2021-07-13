@@ -6,7 +6,7 @@ namespace Falu.PaymentReversals
     /// <summary>
     /// Represents a reversal of a Payment.
     /// </summary>
-    public class PaymentReversal : PaymentReversalPatchModel, IHasId, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
+    public class PaymentReversal : PaymentReversalPatchModel, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
     {
         /// <inheritdoc/>
         public string? Id { get; set; }
@@ -16,10 +16,7 @@ namespace Falu.PaymentReversals
         /// </summary>
         public string? PaymentId { get; set; }
 
-        /// <summary>
-        /// Three-letter <see href="https://www.iso.org/iso-4217-currency-codes.html">ISO currency code</see>,
-        /// in lowercase. This is pulled from the Payment.
-        /// </summary>
+        /// <inheritdoc/>
         public string? Currency { get; set; }
 
         /// <summary>

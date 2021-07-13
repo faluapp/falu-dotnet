@@ -22,7 +22,7 @@ namespace Falu.Transfers
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<Transfer>>> ListAsync(BasicListOptions? options = null,
+        public virtual async Task<ResourceResponse<List<Transfer>>> ListAsync(TransfersListOptions? options = null,
                                                                               RequestOptions? requestOptions = null,
                                                                               CancellationToken cancellationToken = default)
         {

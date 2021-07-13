@@ -1,29 +1,23 @@
 ﻿using Falu.Core;
 using System.Collections.Generic;
 
-namespace Falu.PaymentAuthorizations
+namespace Falu.PaymentReversals
 {
     /// <summary>
-    /// Options for filtering and pagination of list payment authorizations operation.
+    /// Options for filtering and pagination of list payment reversals operation.
     /// </summary>
-    public class PaymentAuthorizationsListOptions : BasicListOptionsWithMoney
+    public class PaymentReversalsListOptions : BasicListOptionsWithMoney
     {
         /// <summary>
         /// Filter options for <code>status</code> property.
         /// </summary>
-        public List<PaymentAuthorizationStatus>? Status { get; set; }
-
-        /// <summary>
-        /// Filter options for <code>authorized</code> property.
-        /// </summary>
-        public bool? Authorized { get; set; }
+        public List<PaymentReversalStatus>? Status { get; set; }
 
         /// <inheritdoc/>
         internal override IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)
         {
             base.PopulateQueryValues(dictionary);
             dictionary.AddIfNotNull("status", Status, ConvertEnumList);
-            dictionary.AddIfNotNull("authorized", Authorized, ConvertBool);
 
             return dictionary;
         }

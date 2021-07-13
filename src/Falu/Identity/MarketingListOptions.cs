@@ -36,7 +36,7 @@ namespace Falu.Identity
             base.PopulateQueryValues(dictionary);
             dictionary.AddIfNotNull("country", Country);
             dictionary.AddIfNotNull("gender", Gender, ConvertEnum);
-            Age?.PopulateQueryValues("age", dictionary, ConvertInt);
+            Age?.PopulateQueryValues("age", dictionary, ConvertInt32);
             Birthday?.PopulateQueryValues("birthday", dictionary, ConvertDate);
             return dictionary;
         }

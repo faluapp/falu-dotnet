@@ -7,21 +7,18 @@ namespace Falu.PaymentAuthorizations
     /// <summary>
     /// Represents a payment authorization.
     /// </summary>
-    public class PaymentAuthorization : PaymentAuthorizationPatchModel, IHasId, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
+    public class PaymentAuthorization : PaymentAuthorizationPatchModel, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
     {
         /// <inheritdoc/>
         public string? Id { get; set; }
+
+        /// <inheritdoc/>
+        public string? Currency { get; set; }
 
         /// <summary>
         /// Amount that was authorized or rejected, in smallest currency unit.
         /// </summary>
         public long Amount { get; set; }
-
-        /// <summary>
-        /// Three-letter <see href="https://www.iso.org/iso-4217-currency-codes.html">ISO currency code</see>,
-        /// in lowercase.
-        /// </summary>
-        public string? Currency { get; set; }
 
         /// <summary>
         /// Whether the authorization has been approved.

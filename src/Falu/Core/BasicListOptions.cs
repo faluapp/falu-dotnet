@@ -45,7 +45,7 @@ namespace Falu.Core
             if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
 
             dictionary.AddIfNotNull("sort", Sorting, ConvertEnum)
-                      .AddIfNotNull("count", Count, ConvertInt)
+                      .AddIfNotNull("count", Count, ConvertInt32)
                       .AddIfNotNull("ct", Token);
 
             Created?.PopulateQueryValues("created", dictionary, ConvertDate);
@@ -54,17 +54,23 @@ namespace Falu.Core
             return dictionary;
         }
 
-        internal static Func<DateTimeOffset, string> ConvertDate = d => d.ToString("o");
-        internal static Func<int, string> ConvertInt = d => d.ToString();
-        internal static string ConvertEnum<T>(T d) where T : Enum
+        internal static string ConvertBool(bool b) => b.ToString().ToLowerInvariant();
+        internal static string ConvertDate(DateTimeOffset d) => d.ToString("o");
+        internal static string ConvertInt32(int i) => i.ToString();
+        internal static string ConvertInt64(long i) => i.ToString();
+        internal static string ConvertEnum<T>(T e) where T : Enum
         {
             // Give priority to EnumMemberAttribute
-            var memInfo = typeof(T).GetMember(d.ToString());
+            var memInfo = typeof(T).GetMember(e.ToString());
             var attr = memInfo.FirstOrDefault()?.GetCustomAttributes(false)
                               .OfType<EnumMemberAttribute>()
                               .FirstOrDefault();
 
-            return attr?.Value ?? d.ToString().ToLowerInvariant();
+            return attr?.Value ?? e.ToString().ToLowerInvariant();
+        }
+        internal static string ConvertEnumList<T>(IList<T> list) where T : Enum
+        {
+            return string.Join(",", list.Select(l => ConvertEnum(l)));
         }
     }
 }

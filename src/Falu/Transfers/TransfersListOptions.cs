@@ -6,7 +6,7 @@ namespace Falu.Transfers
     /// <summary>
     /// Options for filtering and pagination of list transfer operation.
     /// </summary>
-    public class TransfersListOptions : BasicListOptions
+    public class TransfersListOptions : BasicListOptionsWithMoney
     {
         /// <summary>
         /// Filter options for <code>status</code> property.

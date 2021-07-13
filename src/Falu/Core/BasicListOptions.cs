@@ -45,7 +45,7 @@ namespace Falu.Core
             if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
 
             dictionary.AddIfNotNull("sort", Sorting, ConvertEnum)
-                      .AddIfNotNull("count", Count, ConvertInt)
+                      .AddIfNotNull("count", Count, ConvertInt32)
                       .AddIfNotNull("ct", Token);
 
             Created?.PopulateQueryValues("created", dictionary, ConvertDate);
@@ -56,7 +56,8 @@ namespace Falu.Core
 
         internal static string ConvertBool(bool b) => b.ToString().ToLowerInvariant();
         internal static string ConvertDate(DateTimeOffset d) => d.ToString("o");
-        internal static string ConvertInt(int i) => i.ToString();
+        internal static string ConvertInt32(int i) => i.ToString();
+        internal static string ConvertInt64(long i) => i.ToString();
         internal static string ConvertEnum<T>(T e) where T : Enum
         {
             // Give priority to EnumMemberAttribute

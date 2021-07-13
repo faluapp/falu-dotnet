@@ -6,7 +6,7 @@ namespace Falu.PaymentReversals
     /// <summary>
     /// Options for filtering and pagination of list payment reversals operation.
     /// </summary>
-    public class PaymentReversalsListOptions : BasicListOptions
+    public class PaymentReversalsListOptions : BasicListOptionsWithMoney
     {
         /// <summary>
         /// Filter options for <code>status</code> property.

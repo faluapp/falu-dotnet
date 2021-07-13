@@ -6,7 +6,7 @@ namespace Falu.PaymentAuthorizations
     /// <summary>
     /// Options for filtering and pagination of list payment authorizations operation.
     /// </summary>
-    public class PaymentAuthorizationsListOptions : BasicListOptions
+    public class PaymentAuthorizationsListOptions : BasicListOptionsWithMoney
     {
         /// <summary>
         /// Filter options for <code>status</code> property.

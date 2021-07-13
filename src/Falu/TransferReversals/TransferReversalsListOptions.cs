@@ -6,7 +6,7 @@ namespace Falu.TransferReversals
     /// <summary>
     /// Options for filtering and pagination of list transfer reversals operation.
     /// </summary>
-    public class TransferReversalsListOptions : BasicListOptions
+    public class TransferReversalsListOptions : BasicListOptionsWithMoney
     {
         /// <summary>
         /// Filter options for <code>status</code> property.

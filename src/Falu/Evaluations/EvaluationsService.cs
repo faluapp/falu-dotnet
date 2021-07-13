@@ -88,15 +88,15 @@ namespace Falu.Evaluations
             var content = new MultipartFormDataContent
             {
                 // populate fields of the model as key value pairs
-                { new StringContent(evaluation.Currency), nameof(evaluation.Currency) },
-                { new StringContent(evaluation.Scope.ToString()), nameof(evaluation.Scope) },
-                { new StringContent(evaluation.Provider.ToString()), nameof(evaluation.Provider) },
-                { new StringContent(evaluation.Name), nameof(evaluation.Name) },
-                { new StringContent(evaluation.Phone), nameof(evaluation.Phone) },
-                { new StringContent(evaluation.Password), nameof(evaluation.Password) },
+                { new StringContent(evaluation.Currency), "currency" },
+                { new StringContent(evaluation.Scope.ToString()), "scope" },
+                { new StringContent(evaluation.Provider.ToString()), "provider" },
+                { new StringContent(evaluation.Name), "name" },
+                { new StringContent(evaluation.Phone), "phone" },
+                { new StringContent(evaluation.Password), "password" },
 
                 // populate the file stream
-                { new StreamContent(evaluation.Content), "File", evaluation.FileName },
+                { new StreamContent(evaluation.Content), "file", evaluation.FileName },
             };
 
             // Add description if provided

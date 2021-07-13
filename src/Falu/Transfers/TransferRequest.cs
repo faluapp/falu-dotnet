@@ -1,14 +1,13 @@
-﻿namespace Falu.Transfers
+﻿using Falu.Core;
+
+namespace Falu.Transfers
 {
     /// <summary>
     /// Information for initiating a transfer.
     /// </summary>
-    public class TransferRequest : TransferPatchModel
+    public class TransferRequest : TransferPatchModel, IHasCurrency
     {
-        /// <summary>
-        /// Three-letter <see href="https://www.iso.org/iso-4217-currency-codes.html">ISO currency code</see>,
-        /// in lowercase.
-        /// </summary>
+        /// <inheritdoc/>
         public string? Currency { get; set; }
 
         /// <summary>

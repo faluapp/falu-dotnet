@@ -1,14 +1,13 @@
-﻿namespace Falu.Payments
+﻿using Falu.Core;
+
+namespace Falu.Payments
 {
     /// <summary>
     /// Information for initiating a payment.
     /// </summary>
-    public class PaymentRequest : PaymentPatchModel
+    public class PaymentRequest : PaymentPatchModel, IHasCurrency
     {
-        /// <summary>
-        /// Three-letter <see href="https://www.iso.org/iso-4217-currency-codes.html">ISO currency code</see>,
-        /// in lowercase.
-        /// </summary>
+        /// <inheritdoc/>
         public string? Currency { get; set; }
 
         /// <summary>

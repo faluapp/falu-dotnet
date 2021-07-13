@@ -6,15 +6,12 @@ namespace Falu.Evaluations
     /// <summary>
     /// An evaluation record.
     /// </summary>
-    public class Evaluation : EvaluationPatchModel, IHasId, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
+    public class Evaluation : EvaluationPatchModel, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
     {
         /// <inheritdoc/>
         public string? Id { get; set; }
 
-        /// <summary>
-        /// Three-letter <see href="https://www.iso.org/iso-4217-currency-codes.html">ISO currency code</see>,
-        /// in lowercase.
-        /// </summary>
+        /// <inheritdoc/>
         public string? Currency { get; set; }
 
         /// <summary>

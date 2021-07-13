@@ -1,16 +1,14 @@
-﻿using System.IO;
+﻿using Falu.Core;
+using System.IO;
 
 namespace Falu.Evaluations
 {
     /// <summary>
     /// Model for creating an evaluation.
     /// </summary>
-    public class EvaluationCreateModel : EvaluationPatchModel
+    public class EvaluationCreateModel : EvaluationPatchModel, IHasCurrency
     {
-        /// <summary>
-        /// Three-letter <see href="https://www.iso.org/iso-4217-currency-codes.html">ISO currency code</see>,
-        /// in lowercase.
-        /// </summary>
+        /// <inheritdoc/>
         public string? Currency { get; set; }
 
         /// <summary>

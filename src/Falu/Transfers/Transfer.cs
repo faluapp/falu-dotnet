@@ -6,15 +6,12 @@ namespace Falu.Transfers
     /// <summary>
     /// Represents a transaction made by the business to customer or another business.
     /// </summary>
-    public class Transfer : TransferPatchModel, IHasId, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
+    public class Transfer : TransferPatchModel, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
     {
         /// <inheritdoc/>
         public string? Id { get; set; }
 
-        /// <summary>
-        /// Three-letter <see href="https://www.iso.org/iso-4217-currency-codes.html">ISO currency code</see>,
-        /// in lowercase.
-        /// </summary>
+        /// <inheritdoc/>
         public string? Currency { get; set; }
 
         /// <summary>

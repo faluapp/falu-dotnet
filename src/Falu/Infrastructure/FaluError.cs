@@ -12,16 +12,16 @@ namespace Falu.Infrastructure
         /// of the problem, except for purposes of localization(e.g., using proactive content negotiation;
         /// see[RFC7231], Section 3.4).
         /// </summary>
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
         /// <summary>
         /// A human-readable explanation specific to this occurrence of the problem.
         /// </summary>
-        public virtual string Detail { get; set; }
+        public virtual string? Detail { get; set; }
 
         /// <summary>
         /// Gets the validation errors associated the problem.
         /// </summary>
-        public virtual IDictionary<string, string[]> Errors { get; set; }
+        public virtual IDictionary<string, string[]>? Errors { get; set; }
     }
 }

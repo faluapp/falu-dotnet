@@ -9,12 +9,12 @@ namespace Falu.PaymentReversals
     public class PaymentReversalPatchModel : IHasDescription, IHasMetadata, IHasTags
     {
         /// <inheritdoc/>
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <inheritdoc/>
-        public Dictionary<string, string> Metadata { get; set; }
+        public Dictionary<string, string>? Metadata { get; set; }
 
         /// <inheritdoc/>
-        public List<string> Tags { get; set; } = new List<string> { };
+        public List<string>? Tags { get; set; }
     }
 }

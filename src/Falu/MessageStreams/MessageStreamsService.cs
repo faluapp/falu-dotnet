@@ -22,8 +22,8 @@ namespace Falu.MessageStreams
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<MessageStream>>> ListAsync(BasicListOptions options = null,
-                                                                                   RequestOptions requestOptions = null,
+        public virtual async Task<ResourceResponse<List<MessageStream>>> ListAsync(BasicListOptions? options = null,
+                                                                                   RequestOptions? requestOptions = null,
                                                                                    CancellationToken cancellationToken = default)
         {
             var args = new Dictionary<string, string>();
@@ -42,7 +42,7 @@ namespace Falu.MessageStreams
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<MessageStream>> GetAsync(string id,
-                                                                            RequestOptions options = null,
+                                                                            RequestOptions? options = null,
                                                                             CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
@@ -59,7 +59,7 @@ namespace Falu.MessageStreams
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<MessageStream>> CreateAsync(MessageStreamCreateModel stream,
-                                                                               RequestOptions options = null,
+                                                                               RequestOptions? options = null,
                                                                                CancellationToken cancellationToken = default)
         {
             if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -78,7 +78,7 @@ namespace Falu.MessageStreams
         /// <returns></returns>
         public virtual async Task<ResourceResponse<MessageStream>> UpdateAsync(string id,
                                                                                JsonPatchDocument<MessageStreamPatchModel> patch,
-                                                                               RequestOptions options = null,
+                                                                               RequestOptions? options = null,
                                                                                CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
@@ -96,8 +96,8 @@ namespace Falu.MessageStreams
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<MessageStream>> DeleteAsync(string id,
-                                                                          RequestOptions options = null,
-                                                                          CancellationToken cancellationToken = default)
+                                                                               RequestOptions? options = null,
+                                                                               CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 

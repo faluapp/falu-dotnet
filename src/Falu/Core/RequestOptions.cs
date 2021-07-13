@@ -11,7 +11,7 @@
         /// It can only be set for requests that are not idempotent by default.
         /// These are requests/operations that create new data or mutate existing data.
         /// </summary>
-        public string IdempotencyKey { get; set; }
+        public string? IdempotencyKey { get; set; }
 
         /// <summary>
         /// The identifier of the workspace to target.
@@ -19,7 +19,7 @@
         /// For API key authentication, the key already identifies the workspace.
         /// This value is set in the <c>X-Falu-Workspace-Id</c> request header.
         /// </summary>
-        public string Workspace { get; set; }
+        public string? Workspace { get; set; }
 
         /// <summary>
         /// Gets or sets value indicating if the request is targeted to the live or test environment.

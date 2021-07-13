@@ -28,17 +28,17 @@ namespace Falu.Core
         /// a <code>X-Continuation-Token</code> header with value <c>bravo</c>, your subsequent
         /// call can include <code>ct=bravo</code>.
         /// </summary>
-        public string Token { get; set; }
+        public string? Token { get; set; }
 
         /// <summary>
         /// Range filter options for <code>created</code> property.
         /// </summary>
-        public RangeFilteringOptions<DateTimeOffset> Created { get; set; }
+        public RangeFilteringOptions<DateTimeOffset>? Created { get; set; }
 
         /// <summary>
         /// Range filter options for <code>updated</code> property.
         /// </summary>
-        public RangeFilteringOptions<DateTimeOffset> Updated { get; set; }
+        public RangeFilteringOptions<DateTimeOffset>? Updated { get; set; }
 
         internal virtual IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)
         {

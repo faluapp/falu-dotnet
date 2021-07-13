@@ -12,7 +12,7 @@ namespace Falu.PaymentAuthorizations
         /// <summary>
         /// Range filter options for <code>delivered</code> property.
         /// </summary>
-        public RangeFilteringOptions<DateTimeOffset> Delivered { get; set; }
+        public RangeFilteringOptions<DateTimeOffset>? Delivered { get; set; } // TODO: fix this
 
         /// <inheritdoc/>
         internal override IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)

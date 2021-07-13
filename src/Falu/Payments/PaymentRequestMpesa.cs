@@ -8,13 +8,13 @@
         /// <summary>
         /// The phone number representing the account to be charged.
         /// </summary>
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
 
         /// <summary>
         /// The reference that the payment will be made in.
         /// This can be an account number.
         /// </summary>
-        public string Reference { get; set; }
+        public string? Reference { get; set; }
 
         /// <summary>
         /// Set true if the payment to be initiated is to be made to a paybill;
@@ -30,6 +30,6 @@
         /// <br/>
         /// This value is usually required and different from the business short code when using BuyGoods.
         /// </summary>
-        public string Destination { get; set; }
+        public string? Destination { get; set; }
     }
 }

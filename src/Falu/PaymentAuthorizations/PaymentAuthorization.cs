@@ -10,7 +10,7 @@ namespace Falu.PaymentAuthorizations
     public class PaymentAuthorization : PaymentAuthorizationPatchModel, IHasId, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
     {
         /// <inheritdoc/>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         /// <summary>
         /// Amount that was authorized or rejected, in smallest currency unit.
@@ -21,7 +21,7 @@ namespace Falu.PaymentAuthorizations
         /// Three-letter <see href="https://www.iso.org/iso-4217-currency-codes.html">ISO currency code</see>,
         /// in lowercase.
         /// </summary>
-        public string Currency { get; set; }
+        public string? Currency { get; set; }
 
         /// <summary>
         /// Whether the authorization has been approved.
@@ -49,15 +49,15 @@ namespace Falu.PaymentAuthorizations
         /// <summary>
         /// If this is an MPESA Payment, this contains details about the MPESA payment.
         /// </summary>
-        public PaymentMpesaDetails Mpesa { get; set; }
+        public PaymentMpesaDetails? Mpesa { get; set; }
 
         /// <inheritdoc/>
-        public string WorkspaceId { get; set; }
+        public string? WorkspaceId { get; set; }
 
         /// <inheritdoc/>
         public bool Live { get; set; }
 
         /// <inheritdoc/>
-        public string Etag { get; set; }
+        public string? Etag { get; set; }
     }
 }

@@ -23,11 +23,11 @@ namespace Falu
         /// <summary>
         /// The API Key for authenticating requests to Falu servers.
         /// </summary>
-        public string ApiKey { get; set; }
+        public string? ApiKey { get; set; }
 
         internal static JsonSerializerOptions CreateSerializerOptions()
         {
-            var serializerOptions = new JsonSerializerOptions()
+            var serializerOptions = new JsonSerializerOptions
             {
                 IgnoreNullValues = true,
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -36,7 +36,7 @@ namespace Falu
                 ReadCommentHandling = JsonCommentHandling.Skip,
             };
 
-            serializerOptions.Converters.Add(new JsonStringEnumConverter(serializerOptions?.PropertyNamingPolicy));
+            serializerOptions.Converters.Add(new JsonStringEnumConverter(serializerOptions.PropertyNamingPolicy));
 
             return serializerOptions;
         }

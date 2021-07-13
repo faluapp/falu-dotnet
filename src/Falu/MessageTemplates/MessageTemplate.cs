@@ -9,7 +9,7 @@ namespace Falu.MessageTemplates
     public class MessageTemplate : MessageTemplatePatchModel, IHasId, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
     {
         /// <inheritdoc/>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         /// <inheritdoc/>
         public DateTimeOffset Created { get; set; }
@@ -18,12 +18,12 @@ namespace Falu.MessageTemplates
         public DateTimeOffset Updated { get; set; }
 
         /// <inheritdoc/>
-        public string WorkspaceId { get; set; }
+        public string? WorkspaceId { get; set; }
 
         /// <inheritdoc/>
         public bool Live { get; set; }
 
         /// <inheritdoc/>
-        public string Etag { get; set; }
+        public string? Etag { get; set; }
     }
 }

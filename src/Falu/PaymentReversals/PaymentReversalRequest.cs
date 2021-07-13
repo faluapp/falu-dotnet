@@ -8,11 +8,11 @@
         /// <summary>
         /// Identifier of the Payment to reverse.
         /// </summary>
-        public string PaymentId { get; set; }
+        public string? PaymentId { get; set; }
 
         /// <summary>
         /// Reason for the reversal.
         /// </summary>
-        public PaymentReversalReason Reason { get; set; }
+        public PaymentReversalReason? Reason { get; set; }
     }
 }

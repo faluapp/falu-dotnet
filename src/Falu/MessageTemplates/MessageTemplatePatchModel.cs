@@ -13,21 +13,21 @@ namespace Falu.MessageTemplates
         /// Allowed characters are numbers, ASCII letters, and ‘.’, ‘-’, ‘_’ characters,
         /// and the string has to start with a letter.
         /// </summary>
-        public string Alias { get; set; }
+        public string? Alias { get; set; }
 
         /// <inheritdoc/>
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// The content to use when this template is used to send messages.
         /// See our template language documentation for more information on the syntax for this field.
         /// </summary>
-        public string Body { get; set; }
+        public string? Body { get; set; }
 
         /// <inheritdoc/>
-        public Dictionary<string, string> Metadata { get; set; }
+        public Dictionary<string, string>? Metadata { get; set; }
 
         /// <inheritdoc/>
-        public List<string> Tags { get; set; }
+        public List<string>? Tags { get; set; }
     }
 }

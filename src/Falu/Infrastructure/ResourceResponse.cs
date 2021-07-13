@@ -27,10 +27,10 @@ namespace Falu.Infrastructure
         /// <param name="resource"></param>
         /// <param name="error"></param>
         public ResourceResponse(HttpResponseMessage response,
-                                TResource resource = default,
-                                FaluError error = default)
+                                TResource? resource = default,
+                                FaluError? error = default)
         {
-            Response = response;
+            Response = response ?? throw new ArgumentNullException(nameof(response));
             Resource = resource;
             Error = error;
 
@@ -41,13 +41,13 @@ namespace Falu.Infrastructure
         }
 
         /// <summary>Gets the ID of the request, as returned by Falu.</summary>
-        public string RequestId { get; }
+        public string? RequestId { get; }
 
         /// <summary>Gets the ID of the trace, as returned by Falu.</summary>
-        public string TraceId { get; set; }
+        public string? TraceId { get; set; }
 
         /// <summary>Gets the token to use to fetch more data, as returned by Falu.</summary>
-        public string ContinuationToken { get; }
+        public string? ContinuationToken { get; }
 
         /// <summary>
         /// Gets value indicating if the response was returned from cache.
@@ -74,12 +74,12 @@ namespace Falu.Infrastructure
         /// <summary>
         /// The resource extracted from the response body
         /// </summary>
-        public TResource Resource { get; set; }
+        public TResource? Resource { get; set; }
 
         /// <summary>
         /// The error extracted from the response body
         /// </summary>
-        public FaluError Error { get; set; }
+        public FaluError? Error { get; set; }
 
         /// <summary>
         /// Helper method to ensure the response was successful
@@ -116,7 +116,7 @@ namespace Falu.Infrastructure
         /// </summary>
         public bool? HasMoreResults => typeof(IEnumerable).IsAssignableFrom(typeof(TResource)) ? ContinuationToken != null : (bool?)null;
 
-        internal static string GetHeader(HttpResponseHeaders headers, string name)
+        internal static string? GetHeader(HttpResponseHeaders headers, string name)
         {
             if (headers.TryGetValues(name, out var values))
             {
@@ -126,7 +126,7 @@ namespace Falu.Infrastructure
             return default;
         }
 
-        private static T GetHeader<T>(HttpResponseHeaders headers, string name)
+        private static T? GetHeader<T>(HttpResponseHeaders headers, string name)
         {
             var value = GetHeader(headers, name);
             if (string.IsNullOrWhiteSpace(value)) return default;

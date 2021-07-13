@@ -22,7 +22,7 @@ namespace Falu.Identity
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<IdentityRecord>> SearchAsync(IdentitySearchModel search,
-                                                                                RequestOptions options = null,
+                                                                                RequestOptions? options = null,
                                                                                 CancellationToken cancellationToken = default)
         {
             if (search is null) throw new ArgumentNullException(nameof(search));
@@ -39,8 +39,8 @@ namespace Falu.Identity
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<MarketingResult>>> MarketingAsync(MarketingListOptions options = null,
-                                                                                          RequestOptions requestOptions = null,
+        public virtual async Task<ResourceResponse<List<MarketingResult>>> MarketingAsync(MarketingListOptions? options = null,
+                                                                                          RequestOptions? requestOptions = null,
                                                                                           CancellationToken cancellationToken = default)
         {
             var args = new Dictionary<string, string>();

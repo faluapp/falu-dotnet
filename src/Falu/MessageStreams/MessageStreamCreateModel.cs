@@ -11,12 +11,12 @@
         /// Allowed characters are numbers, lowercase ASCII letters, and ‘-’, ‘_’ characters,
         /// and the string has to start with a letter.
         /// </summary>
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Type of stream.
         /// </summary>
-        public MessageStreamType Type { get; set; } = MessageStreamType.Transactional;
+        public MessageStreamType? Type { get; set; }
 
         /// <summary>
         /// Provider to be used.

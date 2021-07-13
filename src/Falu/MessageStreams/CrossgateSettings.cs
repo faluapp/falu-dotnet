@@ -8,16 +8,16 @@
         /// <summary>
         /// The application identifier for making requests with.
         /// </summary>
-        public string AppKey { get; set; }
+        public string? AppKey { get; set; }
 
         /// <summary>
         /// The application secret for making requests with.
         /// </summary>
-        public string AppSecret { get; set; }
+        public string? AppSecret { get; set; }
 
         /// <summary>
         /// The profile to use when making requests.
         /// </summary>
-        public string ProfileId { get; set; }
+        public string? ProfileId { get; set; }
     }
 }

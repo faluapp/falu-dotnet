@@ -24,8 +24,8 @@ namespace Falu.Evaluations
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<Evaluation>>> ListAsync(EvaluationsListOptions options = null,
-                                                                                RequestOptions requestOptions = null,
+        public virtual async Task<ResourceResponse<List<Evaluation>>> ListAsync(EvaluationsListOptions? options = null,
+                                                                                RequestOptions? requestOptions = null,
                                                                                 CancellationToken cancellationToken = default)
         {
             var args = new Dictionary<string, string>();
@@ -44,7 +44,7 @@ namespace Falu.Evaluations
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<Evaluation>> GetAsync(string id,
-                                                                         RequestOptions options = null,
+                                                                         RequestOptions? options = null,
                                                                          CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
@@ -63,7 +63,7 @@ namespace Falu.Evaluations
         /// <returns></returns>
         public virtual async Task<ResourceResponse<Evaluation>> UpdateAsync(string id,
                                                                             JsonPatchDocument<EvaluationPatchModel> patch,
-                                                                            RequestOptions options = null,
+                                                                            RequestOptions? options = null,
                                                                             CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
@@ -81,7 +81,7 @@ namespace Falu.Evaluations
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<Evaluation>> CreateAsync(EvaluationCreateModel evaluation,
-                                                                            RequestOptions options = null,
+                                                                            RequestOptions? options = null,
                                                                             CancellationToken cancellationToken = default)
         {
             if (evaluation is null) throw new ArgumentNullException(nameof(evaluation));
@@ -141,7 +141,7 @@ namespace Falu.Evaluations
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<Evaluation>> ScoreAsync(string id,
-                                                                           RequestOptions options = null,
+                                                                           RequestOptions? options = null,
                                                                            CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));

@@ -33,7 +33,7 @@ namespace Falu.Infrastructure
 
         ///
         protected virtual async Task<ResourceResponse<TResource>> GetAsJsonAsync<TResource>(Uri uri,
-                                                                                            RequestOptions options = null,
+                                                                                            RequestOptions? options = null,
                                                                                             CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, uri);
@@ -44,7 +44,7 @@ namespace Falu.Infrastructure
         ///
         protected virtual async Task<ResourceResponse<TResource>> PatchAsJsonAsync<TResource>(Uri uri,
                                                                                               object patch,
-                                                                                              RequestOptions options = null,
+                                                                                              RequestOptions? options = null,
                                                                                               CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(new HttpMethod("PATCH"), uri)
@@ -57,7 +57,7 @@ namespace Falu.Infrastructure
         ///
         protected virtual async Task<ResourceResponse<TResource>> PostAsJsonAsync<TResource>(Uri uri,
                                                                                              object o,
-                                                                                             RequestOptions options = null,
+                                                                                             RequestOptions? options = null,
                                                                                              CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, uri)
@@ -69,7 +69,7 @@ namespace Falu.Infrastructure
 
         ///
         protected virtual async Task<ResourceResponse<TResource>> SendAsync<TResource>(HttpRequestMessage request,
-                                                                                       RequestOptions options = null,
+                                                                                       RequestOptions? options = null,
                                                                                        CancellationToken cancellationToken = default)
         {
             var response = await SendAsync(request, options, cancellationToken);
@@ -96,7 +96,7 @@ namespace Falu.Infrastructure
         }
 
         private async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
-                                                          RequestOptions options = null,
+                                                          RequestOptions? options = null,
                                                           CancellationToken cancellationToken = default)
         {
             // ensure request is not null
@@ -138,7 +138,7 @@ namespace Falu.Infrastructure
             return content;
         }
 
-        private async Task<T> DeserializeAsync<T>(string contentType, Stream stream, CancellationToken cancellationToken)
+        private async Task<T?> DeserializeAsync<T>(string? contentType, Stream stream, CancellationToken cancellationToken)
         {
             using (stream)
             {

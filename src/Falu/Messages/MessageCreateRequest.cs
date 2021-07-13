@@ -9,19 +9,19 @@
         /// Destination phone number in <see href="https://en.wikipedia.org/wiki/E.164">E.164 format</see>.
         /// </summary>
         /// <example>+254722000000</example>
-        public string To { get; set; }
+        public string? To { get; set; }
 
         /// <summary>
         /// Actual message content to be sent.
         /// Required if <see cref="Template"/> is not specified.
         /// </summary>
-        public string Body { get; set; }
+        public string? Body { get; set; }
 
         /// <summary>
         /// The template to use.
         /// Required if <see cref="Body"/> is not specified.
         /// </summary>
-        public MessageSourceTemplate Template { get; set; }
+        public MessageSourceTemplate? Template { get; set; }
 
         /// <summary>
         /// The stream to use.

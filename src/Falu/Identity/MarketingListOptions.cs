@@ -22,13 +22,13 @@ namespace Falu.Identity
         /// Range filter options for <code>birthday</code> property but based on age.
         /// Cannot be used with <see cref="Birthday"/>.
         /// </summary>
-        public RangeFilteringOptions<int> Age { get; set; }
+        public RangeFilteringOptions<int>? Age { get; set; }
 
         /// <summary>
         /// Range filter options for <code>birthday</code> property.
         /// Cannot be used with <see cref="Age"/>.
         /// </summary>
-        public RangeFilteringOptions<DateTimeOffset> Birthday { get; set; }
+        public RangeFilteringOptions<DateTimeOffset>? Birthday { get; set; }
 
         /// <inheritdoc/>
         internal override IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)

@@ -31,15 +31,15 @@ namespace Falu.Infrastructure
         public HttpStatusCode StatusCode { get; }
 
         /// 
-        public HttpResponseMessage Response { get; internal set; }
+        public HttpResponseMessage? Response { get; internal set; }
 
         /// 
-        public string RequestId { get; internal set; }
+        public string? RequestId { get; internal set; }
 
         /// 
-        public string TraceId { get; internal set; }
+        public string? TraceId { get; internal set; }
 
         /// 
-        public FaluError Error { get; internal set; }
+        public FaluError? Error { get; internal set; }
     }
 }

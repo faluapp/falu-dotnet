@@ -44,7 +44,7 @@ namespace Falu.Tests
             // Assert
             var serviceDescriptor = collection.FirstOrDefault(x => x.ServiceType == typeof(FaluClient));
             Assert.NotNull(serviceDescriptor);
-            Assert.Equal(ServiceLifetime.Transient, serviceDescriptor.Lifetime);
+            Assert.Equal(ServiceLifetime.Transient, serviceDescriptor!.Lifetime);
         }
 
         [Fact]

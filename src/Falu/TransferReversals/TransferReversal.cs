@@ -9,18 +9,18 @@ namespace Falu.TransferReversals
     public class TransferReversal : TransferReversalPatchModel, IHasId, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
     {
         /// <inheritdoc/>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         /// <summary>
         /// Identifier of the Transfer reversed.
         /// </summary>
-        public string TransferId { get; set; }
+        public string? TransferId { get; set; }
 
         /// <summary>
         /// Three-letter <see href="https://www.iso.org/iso-4217-currency-codes.html">ISO currency code</see>,
         /// in lowercase. This is pulled from the Payment.
         /// </summary>
-        public string Currency { get; set; }
+        public string? Currency { get; set; }
 
         /// <summary>
         /// Amount reversed in smallest currency unit.
@@ -53,20 +53,20 @@ namespace Falu.TransferReversals
         /// Details of the reversal if done via MPESA.
         /// Only populated if the payment being reversed use an MPESA intrument.
         /// </summary>
-        public TransferReversalMpesaDetails Mpesa { get; set; }
+        public TransferReversalMpesaDetails? Mpesa { get; set; }
 
         /// <summary>
         /// Details about failure if the reversal is in failed state.
         /// </summary>
-        public TransferReversalFailureDetails Failure { get; set; }
+        public TransferReversalFailureDetails? Failure { get; set; }
 
         /// <inheritdoc/>
-        public string WorkspaceId { get; set; }
+        public string? WorkspaceId { get; set; }
 
         /// <inheritdoc/>
         public bool Live { get; set; }
 
         /// <inheritdoc/>
-        public string Etag { get; set; }
+        public string? Etag { get; set; }
     }
 }

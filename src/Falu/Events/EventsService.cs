@@ -21,8 +21,8 @@ namespace Falu.Events
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<WebhookEvent<T>>>> ListAsync<T>(BasicListOptions options = null,
-                                                                                        RequestOptions requestOptions = null,
+        public virtual async Task<ResourceResponse<List<WebhookEvent<T>>>> ListAsync<T>(BasicListOptions? options = null,
+                                                                                        RequestOptions? requestOptions = null,
                                                                                         CancellationToken cancellationToken = default)
             where T : class
         {
@@ -41,8 +41,8 @@ namespace Falu.Events
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<WebhookEvent>>> ListAsync(BasicListOptions options = null,
-                                                                                  RequestOptions requestOptions = null,
+        public virtual async Task<ResourceResponse<List<WebhookEvent>>> ListAsync(BasicListOptions? options = null,
+                                                                                  RequestOptions? requestOptions = null,
                                                                                   CancellationToken cancellationToken = default)
         {
             var args = new Dictionary<string, string>();
@@ -61,7 +61,7 @@ namespace Falu.Events
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<WebhookEvent<T>>> GetAsync<T>(string id,
-                                                                                 RequestOptions options = null,
+                                                                                 RequestOptions? options = null,
                                                                                  CancellationToken cancellationToken = default)
             where T : class
         {
@@ -79,7 +79,7 @@ namespace Falu.Events
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<WebhookEvent>> GetAsync(string id,
-                                                                           RequestOptions options = null,
+                                                                           RequestOptions? options = null,
                                                                            CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));

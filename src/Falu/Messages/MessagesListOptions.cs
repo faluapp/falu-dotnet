@@ -12,7 +12,7 @@ namespace Falu.Messages
         /// <summary>
         /// Range filter options for <code>delivered</code> property.
         /// </summary>
-        public RangeFilteringOptions<DateTimeOffset> Delivered { get; set; }
+        public RangeFilteringOptions<DateTimeOffset>? Delivered { get; set; }
 
         /// <inheritdoc/>
         internal override IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)

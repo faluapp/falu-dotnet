@@ -8,6 +8,6 @@
         /// <summary>
         /// Unique identifier for the object.
         /// </summary>
-        public string Id { get; set; }
+        public string? Id { get; set; }
     }
 }

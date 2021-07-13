@@ -9,6 +9,6 @@
         /// Three-letter <see href="https://www.iso.org/iso-3166-country-codes.html">ISO country code</see>,
         /// in lowercase, where to the record exists.
         /// </summary>
-        string Country { get; set; }
+        string? Country { get; set; }
     }
 }

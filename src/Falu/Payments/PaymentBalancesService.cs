@@ -19,7 +19,7 @@ namespace Falu.Payments
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<PaymentBalances>> GetAsync(RequestOptions options = null,
+        public virtual async Task<ResourceResponse<PaymentBalances>> GetAsync(RequestOptions? options = null,
                                                                              CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, "/v1/payment_balances");
@@ -32,7 +32,7 @@ namespace Falu.Payments
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<object>> RefreshAsync(RequestOptions options = null,
+        public virtual async Task<ResourceResponse<object>> RefreshAsync(RequestOptions? options = null,
                                                                          CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, "/v1/payment_balances/refresh");

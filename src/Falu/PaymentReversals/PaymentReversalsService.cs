@@ -22,8 +22,8 @@ namespace Falu.PaymentReversals
         /// <param name="reqeustOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<PaymentReversal>>> ListAsync(BasicListOptions options = null,
-                                                                                     RequestOptions reqeustOptions = null,
+        public virtual async Task<ResourceResponse<List<PaymentReversal>>> ListAsync(BasicListOptions? options = null,
+                                                                                     RequestOptions? reqeustOptions = null,
                                                                                      CancellationToken cancellationToken = default)
         {
             var args = new Dictionary<string, string>();
@@ -42,7 +42,7 @@ namespace Falu.PaymentReversals
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<PaymentReversal>> GetAsync(string id,
-                                                                              RequestOptions options = null,
+                                                                              RequestOptions? options = null,
                                                                               CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
@@ -59,7 +59,7 @@ namespace Falu.PaymentReversals
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<PaymentReversal>> CreateAsync(PaymentReversalRequest reversal,
-                                                                                 RequestOptions options = null,
+                                                                                 RequestOptions? options = null,
                                                                                  CancellationToken cancellationToken = default)
         {
             if (reversal is null) throw new ArgumentNullException(nameof(reversal));
@@ -78,7 +78,7 @@ namespace Falu.PaymentReversals
         /// <returns></returns>
         public virtual async Task<ResourceResponse<PaymentReversal>> UpdateAsync(string id,
                                                                                  JsonPatchDocument<PaymentReversalPatchModel> patch,
-                                                                                 RequestOptions options = null,
+                                                                                 RequestOptions? options = null,
                                                                                  CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));

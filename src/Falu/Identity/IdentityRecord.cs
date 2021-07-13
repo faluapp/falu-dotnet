@@ -10,7 +10,7 @@ namespace Falu.Identity
     public class IdentityRecord : IHasId, IHasCreated, IHasUpdated, IHasCountry, IHasEtag
     {
         /// <inheritdoc/>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         /// <inheritdoc/>
         public DateTimeOffset Created { get; set; }
@@ -19,7 +19,7 @@ namespace Falu.Identity
         public DateTimeOffset Updated { get; set; }
 
         /// <inheritdoc/>
-        public string Country { get; set; } = "ken";
+        public string? Country { get; set; } = "ken";
 
         /// <summary>
         /// The kind of identification document.
@@ -29,12 +29,12 @@ namespace Falu.Identity
         /// <summary>
         /// The identification document number.
         /// </summary>
-        public string DocumentNumber { get; set; }
+        public string? DocumentNumber { get; set; }
 
         /// <summary>
         /// The full name of the entity.
         /// </summary>
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// The date of birth of the entity if specified.
@@ -47,12 +47,12 @@ namespace Falu.Identity
         /// <summary>
         /// Phone numbers attached to the identity.
         /// </summary>
-        public List<string> Phones { get; set; }
+        public List<string>? Phones { get; set; }
 
         /// <summary>
         /// Email addresses attached to the identity.
         /// </summary>
-        public List<string> Emails { get; set; }
+        public List<string>? Emails { get; set; }
 
         /// <summary>
         /// The gender of the entity.
@@ -69,6 +69,6 @@ namespace Falu.Identity
         public float? GenderConfidence { get; set; }
 
         /// <inheritdoc/>
-        public string Etag { get; set; }
+        public string? Etag { get; set; }
     }
 }

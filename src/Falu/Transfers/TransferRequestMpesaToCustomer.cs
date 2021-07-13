@@ -11,11 +11,11 @@
         /// When not provided, either the default outgoing business code
         /// or the first business code for the workspace is used.
         /// </summary>
-        public string Source { get; set; }
+        public string? Source { get; set; }
 
         /// <summary>
         /// The phone number to which the money is to be sent.
         /// </summary>
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
     }
 }

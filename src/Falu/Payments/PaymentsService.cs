@@ -22,8 +22,8 @@ namespace Falu.Payments
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<Payment>>> ListAsync(BasicListOptions options = null,
-                                                                             RequestOptions requestOptions = null,
+        public virtual async Task<ResourceResponse<List<Payment>>> ListAsync(BasicListOptions? options = null,
+                                                                             RequestOptions? requestOptions = null,
                                                                              CancellationToken cancellationToken = default)
         {
             var args = new Dictionary<string, string>();
@@ -42,7 +42,7 @@ namespace Falu.Payments
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<Payment>> GetAsync(string id,
-                                                                      RequestOptions options = null,
+                                                                      RequestOptions? options = null,
                                                                       CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
@@ -59,7 +59,7 @@ namespace Falu.Payments
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<Payment>> CreateAsync(PaymentRequest payment,
-                                                                         RequestOptions options = null,
+                                                                         RequestOptions? options = null,
                                                                          CancellationToken cancellationToken = default)
         {
             if (payment is null) throw new ArgumentNullException(nameof(payment));
@@ -78,7 +78,7 @@ namespace Falu.Payments
         /// <returns></returns>
         public virtual async Task<ResourceResponse<Payment>> UpdateAsync(string id,
                                                                          JsonPatchDocument<PaymentPatchModel> patch,
-                                                                         RequestOptions options = null,
+                                                                         RequestOptions? options = null,
                                                                          CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));

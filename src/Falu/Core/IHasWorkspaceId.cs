@@ -8,6 +8,6 @@
         /// <summary>
         /// Unique identifier for the workspace that the object belongs to.
         /// </summary>
-        string WorkspaceId { get; set; }
+        string? WorkspaceId { get; set; }
     }
 }

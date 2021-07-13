@@ -20,6 +20,6 @@ namespace Falu.Transfers
         /// <summary>
         /// Failure message as recevied from teh provider.
         /// </summary>
-        public string Detail { get; set; }
+        public string? Detail { get; set; }
     }
 }

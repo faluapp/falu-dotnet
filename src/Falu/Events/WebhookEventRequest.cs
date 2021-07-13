@@ -10,11 +10,11 @@
         /// ID of the API request that caused the event. If null, the event was automatic
         /// (e.g., automatic balance updates).
         /// </summary>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         /// <summary>
         /// The idempotency key transmitted during the request, if any.
         /// </summary>
-        public string IdempotencyKey { get; set; }
+        public string? IdempotencyKey { get; set; }
     }
 }

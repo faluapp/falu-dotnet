@@ -21,7 +21,7 @@
             return dictionary.AddIfNotNull(key, value is null ? null : converter(value.Value));
         }
 
-        public static IDictionary<string, string> AddIfNotNull(this IDictionary<string, string> dictionary, string key, string value)
+        public static IDictionary<string, string> AddIfNotNull(this IDictionary<string, string> dictionary, string key, string? value)
         {
             if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
 
@@ -38,7 +38,7 @@
             return condition ? collection.AddIfNotNull(value) : collection;
         }
 
-        public static T AddIfNotNull<T>(this T collection, string value) where T : ICollection<string>
+        public static T AddIfNotNull<T>(this T collection, string? value) where T : ICollection<string>
         {
             if (collection is null) throw new ArgumentNullException(nameof(collection));
 

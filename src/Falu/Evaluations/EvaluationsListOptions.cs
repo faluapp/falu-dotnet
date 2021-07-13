@@ -11,12 +11,12 @@ namespace Falu.Messages
         /// <summary>
         /// Email address of the evaluations.
         /// </summary>
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         /// <summary>
         /// Phone number of the evaluations.
         /// </summary>
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
 
         /// <inheritdoc/>
         internal override IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)

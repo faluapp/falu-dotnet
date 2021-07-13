@@ -9,9 +9,9 @@ namespace Falu.Messages
     public class MessagePatchModel : IHasMetadata, IHasTags
     {
         /// <inheritdoc/>
-        public Dictionary<string, string> Metadata { get; set; }
+        public Dictionary<string, string>? Metadata { get; set; }
 
         /// <inheritdoc/>
-        public List<string> Tags { get; set; }
+        public List<string>? Tags { get; set; }
     }
 }

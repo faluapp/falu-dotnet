@@ -10,6 +10,6 @@ namespace Falu.Core
         /// <summary>
         /// Set of values that you can attach to an object. This can be useful for searching.
         /// </summary>
-        public List<string> Tags { get; set; }
+        public List<string>? Tags { get; set; }
     }
 }

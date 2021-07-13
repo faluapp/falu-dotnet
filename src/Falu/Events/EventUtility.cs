@@ -31,7 +31,7 @@ namespace Falu.Events
         /// <exception cref="FaluException">
         /// Thrown if the signature verification fails for any reason.
         /// </exception>
-        public static WebhookEvent<T> ConstructEvent<T>(string json,
+        public static WebhookEvent<T>? ConstructEvent<T>(string json,
                                                         string signature,
                                                         string secret,
                                                         long? tolerance = null,
@@ -51,7 +51,7 @@ namespace Falu.Events
         /// signatures</a>. It's recommended that you use
         /// <see cref="ConstructEvent(string, string, string, long?, long?)"/> instead.
         /// </remarks>
-        public static WebhookEvent<T> ParseEvent<T>(string json)
+        public static WebhookEvent<T>? ParseEvent<T>(string json)
         {
             var options = FaluClientOptions.CreateSerializerOptions();
             return System.Text.Json.JsonSerializer.Deserialize<WebhookEvent<T>>(json, options);

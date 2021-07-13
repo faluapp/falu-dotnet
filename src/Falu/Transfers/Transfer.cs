@@ -9,13 +9,13 @@ namespace Falu.Transfers
     public class Transfer : TransferPatchModel, IHasId, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
     {
         /// <inheritdoc/>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         /// <summary>
         /// Three-letter <see href="https://www.iso.org/iso-4217-currency-codes.html">ISO currency code</see>,
         /// in lowercase.
         /// </summary>
-        public string Currency { get; set; }
+        public string? Currency { get; set; }
 
         /// <summary>
         /// Amount of the transfer in smallest currency unit.
@@ -53,25 +53,25 @@ namespace Falu.Transfers
         /// <summary>
         /// If this is an MPESA transfer, this contains details about the MPESA transfer.
         /// </summary>
-        public TransferMpesaDetails Mpesa { get; set; }
+        public TransferMpesaDetails? Mpesa { get; set; }
 
         /// <summary>
         /// Details about failure if the transfer is in failed state.
         /// </summary>
-        public TransferFailureDetails Failure { get; set; }
+        public TransferFailureDetails? Failure { get; set; }
 
         /// <summary>
         /// Identifier of the reversal, if transfer has been reversed.
         /// </summary>
-        public string ReversalId { get; set; }
+        public string? ReversalId { get; set; }
 
         /// <inheritdoc/>
-        public string WorkspaceId { get; set; }
+        public string? WorkspaceId { get; set; }
 
         /// <inheritdoc/>
         public bool Live { get; set; }
 
         /// <inheritdoc/>
-        public string Etag { get; set; }
+        public string? Etag { get; set; }
     }
 }

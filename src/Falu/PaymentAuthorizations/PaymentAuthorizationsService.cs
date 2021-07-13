@@ -22,8 +22,8 @@ namespace Falu.PaymentAuthorizations
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<PaymentAuthorization>>> ListAsync(PaymentAuthorizationsListOptions options = null,
-                                                                                          RequestOptions requestOptions = null,
+        public virtual async Task<ResourceResponse<List<PaymentAuthorization>>> ListAsync(PaymentAuthorizationsListOptions? options = null,
+                                                                                          RequestOptions? requestOptions = null,
                                                                                           CancellationToken cancellationToken = default)
         {
             var args = new Dictionary<string, string>();
@@ -42,7 +42,7 @@ namespace Falu.PaymentAuthorizations
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<PaymentAuthorization>> GetAsync(string id,
-                                                                                   RequestOptions options = null,
+                                                                                   RequestOptions? options = null,
                                                                                    CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
@@ -61,7 +61,7 @@ namespace Falu.PaymentAuthorizations
         /// <returns></returns>
         public virtual async Task<ResourceResponse<PaymentAuthorization>> UpdateAsync(string id,
                                                                                       JsonPatchDocument<PaymentAuthorizationPatchModel> patch,
-                                                                                      RequestOptions options = null,
+                                                                                      RequestOptions? options = null,
                                                                                       CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
@@ -81,7 +81,7 @@ namespace Falu.PaymentAuthorizations
         /// <returns></returns>
         public virtual async Task<ResourceResponse<PaymentAuthorization>> ApproveAsync(string id,
                                                                                        PaymentAuthorizationPatchModel model,
-                                                                                       RequestOptions options = null,
+                                                                                       RequestOptions? options = null,
                                                                                        CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
@@ -100,7 +100,7 @@ namespace Falu.PaymentAuthorizations
         /// <returns></returns>
         public virtual async Task<ResourceResponse<PaymentAuthorization>> DeclineAsync(string id,
                                                                                        PaymentAuthorizationPatchModel model,
-                                                                                       RequestOptions options = null,
+                                                                                       RequestOptions? options = null,
                                                                                        CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));

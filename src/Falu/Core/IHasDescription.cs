@@ -8,6 +8,6 @@
         /// <summary>
         /// An arbitrary string attached to the object. Often useful for displaying to users.
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
     }
 }

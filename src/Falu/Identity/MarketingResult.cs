@@ -10,7 +10,7 @@ namespace Falu.Identity
     public class MarketingResult : IHasId, IHasCreated, IHasUpdated, IHasCountry, IHasEtag
     {
         /// <inheritdoc/>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         /// <inheritdoc/>
         public DateTimeOffset Created { get; set; }
@@ -19,7 +19,7 @@ namespace Falu.Identity
         public DateTimeOffset Updated { get; set; }
 
         /// <inheritdoc/>
-        public string Country { get; set; }
+        public string? Country { get; set; }
 
         /// <summary>
         /// The date of birth of the entity if specified.
@@ -32,12 +32,12 @@ namespace Falu.Identity
         /// <summary>
         /// Phone numbers attached to the identity.
         /// </summary>
-        public List<string> Phones { get; set; }
+        public List<string>? Phones { get; set; }
 
         /// <summary>
         /// Email addresses attached to the identity.
         /// </summary>
-        public List<string> Emails { get; set; }
+        public List<string>? Emails { get; set; }
 
         /// <summary>
         /// The gender of the entity.
@@ -47,6 +47,6 @@ namespace Falu.Identity
         public Gender? Gender { get; set; }
 
         /// <inheritdoc/>
-        public string Etag { get; set; }
+        public string? Etag { get; set; }
     }
 }

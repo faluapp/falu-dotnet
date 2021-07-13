@@ -9,7 +9,7 @@
         /// Three-letter <see href="https://www.iso.org/iso-4217-currency-codes.html">ISO currency code</see>,
         /// in lowercase.
         /// </summary>
-        public string Currency { get; set; }
+        public string? Currency { get; set; }
 
         /// <summary>
         /// Amount of the payment in smallest currency unit.
@@ -24,6 +24,6 @@
         /// <summary>
         /// Details about initiation of an MPESA transfer to a customer or another business.
         /// </summary>
-        public TransferRequestMpesa Mpesa { get; set; }
+        public TransferRequestMpesa? Mpesa { get; set; }
     }
 }

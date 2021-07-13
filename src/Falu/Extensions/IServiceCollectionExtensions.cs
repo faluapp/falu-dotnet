@@ -18,8 +18,8 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="configureBuilder">An <see cref="Action{IHttpClientBuilder}"/> to configure the HTTP client builder.</param>
         /// <returns></returns>
         public static IServiceCollection AddFalu(this IServiceCollection services,
-                                                 Action<FaluClientOptions> configure = null,
-                                                 Action<IHttpClientBuilder> configureBuilder = null)
+                                                 Action<FaluClientOptions>? configure = null,
+                                                 Action<IHttpClientBuilder>? configureBuilder = null)
         {
             if (configure != null) services.Configure(configure);
             services.PostConfigure<FaluClientOptions>(o =>

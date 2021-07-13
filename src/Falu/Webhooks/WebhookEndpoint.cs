@@ -9,7 +9,7 @@ namespace Falu.Webhooks
     public class WebhookEndpoint : WebhookEndpointPatchModel, IHasId, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
     {
         /// <inheritdoc/>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         /// <inheritdoc/>
         public DateTimeOffset Created { get; set; }
@@ -24,15 +24,15 @@ namespace Falu.Webhooks
         /// returned in full on creation. However, subsequent times like read/get/update,
         /// would return either <c>null</c> or <c>e0gNHBa90***********************************</c>.
         /// </summary>
-        public string Secret { get; set; }
+        public string? Secret { get; set; }
 
         /// <inheritdoc/>
-        public string WorkspaceId { get; set; }
+        public string? WorkspaceId { get; set; }
 
         /// <inheritdoc/>
         public bool Live { get; set; }
 
         /// <inheritdoc/>
-        public string Etag { get; set; }
+        public string? Etag { get; set; }
     }
 }

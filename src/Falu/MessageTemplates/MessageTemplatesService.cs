@@ -22,8 +22,8 @@ namespace Falu.MessageTemplates
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<MessageTemplate>>> ListAsync(BasicListOptions options = null,
-                                                                                     RequestOptions requestOptions = null,
+        public virtual async Task<ResourceResponse<List<MessageTemplate>>> ListAsync(BasicListOptions? options = null,
+                                                                                     RequestOptions? requestOptions = null,
                                                                                      CancellationToken cancellationToken = default)
         {
             var args = new Dictionary<string, string>();
@@ -42,7 +42,7 @@ namespace Falu.MessageTemplates
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<MessageTemplate>> GetAsync(string id,
-                                                                              RequestOptions options = null,
+                                                                              RequestOptions? options = null,
                                                                               CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
@@ -59,7 +59,7 @@ namespace Falu.MessageTemplates
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<MessageTemplate>> CreateAsync(MessageTemplatePatchModel template,
-                                                                                 RequestOptions options = null,
+                                                                                 RequestOptions? options = null,
                                                                                  CancellationToken cancellationToken = default)
         {
             if (template is null) throw new ArgumentNullException(nameof(template));
@@ -78,7 +78,7 @@ namespace Falu.MessageTemplates
         /// <returns></returns>
         public virtual async Task<ResourceResponse<MessageTemplate>> UpdateAsync(string id,
                                                                                  JsonPatchDocument<MessageTemplatePatchModel> patch,
-                                                                                 RequestOptions options = null,
+                                                                                 RequestOptions? options = null,
                                                                                  CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
@@ -96,7 +96,7 @@ namespace Falu.MessageTemplates
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<MessageTemplate>> DeleteAsync(string id,
-                                                                                 RequestOptions options = null,
+                                                                                 RequestOptions? options = null,
                                                                                  CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
@@ -114,7 +114,7 @@ namespace Falu.MessageTemplates
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<MessageTemplateValidationResponse>> ValidateAsync(MessageTemplateValidationRequest template,
-                                                                                                     RequestOptions options = null,
+                                                                                                     RequestOptions? options = null,
                                                                                                      CancellationToken cancellationToken = default)
         {
             if (template is null) throw new ArgumentNullException(nameof(template));

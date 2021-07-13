@@ -54,17 +54,22 @@ namespace Falu.Core
             return dictionary;
         }
 
+        internal static Func<bool, string> ConvertBool = b => b.ToString().ToLowerInvariant();
         internal static Func<DateTimeOffset, string> ConvertDate = d => d.ToString("o");
-        internal static Func<int, string> ConvertInt = d => d.ToString();
-        internal static string ConvertEnum<T>(T d) where T : Enum
+        internal static Func<int, string> ConvertInt = i => i.ToString();
+        internal static string ConvertEnum<T>(T e) where T : Enum
         {
             // Give priority to EnumMemberAttribute
-            var memInfo = typeof(T).GetMember(d.ToString());
+            var memInfo = typeof(T).GetMember(e.ToString());
             var attr = memInfo.FirstOrDefault()?.GetCustomAttributes(false)
                               .OfType<EnumMemberAttribute>()
                               .FirstOrDefault();
 
-            return attr?.Value ?? d.ToString().ToLowerInvariant();
+            return attr?.Value ?? e.ToString().ToLowerInvariant();
+        }
+        internal static string ConvertEnumList<T>(IList<T> list) where T : Enum
+        {
+            return string.Join(",", list.Select(l => ConvertEnum(l)));
         }
     }
 }

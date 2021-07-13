@@ -1,5 +1,4 @@
 ﻿using Falu.Core;
-using System;
 using System.Collections.Generic;
 
 namespace Falu.PaymentAuthorizations
@@ -10,15 +9,22 @@ namespace Falu.PaymentAuthorizations
     public class PaymentAuthorizationsListOptions : BasicListOptions
     {
         /// <summary>
-        /// Range filter options for <code>delivered</code> property.
+        /// Filter options for <code>status</code> property.
         /// </summary>
-        public RangeFilteringOptions<DateTimeOffset>? Delivered { get; set; } // TODO: fix this
+        public List<PaymentAuthorizationStatus>? Status { get; set; }
+
+        /// <summary>
+        /// Filter options for <code>authorized</code> property.
+        /// </summary>
+        public bool? Authorized { get; set; }
 
         /// <inheritdoc/>
         internal override IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)
         {
             base.PopulateQueryValues(dictionary);
-            Delivered?.PopulateQueryValues("delivered", dictionary, ConvertDate);
+            dictionary.AddIfNotNull("status", Status, ConvertEnumList);
+            dictionary.AddIfNotNull("authorized", Authorized, ConvertBool);
+
             return dictionary;
         }
     }

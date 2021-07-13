@@ -21,6 +21,15 @@
             return dictionary.AddIfNotNull(key, value is null ? null : converter(value.Value));
         }
 
+        public static IDictionary<string, string> AddIfNotNull<T>(this IDictionary<string, string> dictionary,
+                                                                  string key,
+                                                                  T? value,
+                                                                  Func<T, string> converter)
+            where T : class
+        {
+            return dictionary.AddIfNotNull(key, value is null ? null : converter(value));
+        }
+
         public static IDictionary<string, string> AddIfNotNull(this IDictionary<string, string> dictionary, string key, string? value)
         {
             if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));

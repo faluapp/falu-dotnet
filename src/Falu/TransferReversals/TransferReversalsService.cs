@@ -22,7 +22,7 @@ namespace Falu.TransferReversals
         /// <param name="reqeustOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<TransferReversal>>> ListAsync(BasicListOptions? options = null,
+        public virtual async Task<ResourceResponse<List<TransferReversal>>> ListAsync(TransferReversalsListOptions? options = null,
                                                                                       RequestOptions? reqeustOptions = null,
                                                                                       CancellationToken cancellationToken = default)
         {

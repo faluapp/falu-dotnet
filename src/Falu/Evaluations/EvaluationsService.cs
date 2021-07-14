@@ -86,7 +86,10 @@ namespace Falu.Evaluations
             if (evaluation is null) throw new ArgumentNullException(nameof(evaluation));
             if (evaluation.Scope is null) throw new InvalidOperationException($"{nameof(evaluation.Scope)} cannot be null.");
             if (evaluation.Provider is null) throw new InvalidOperationException($"{nameof(evaluation.Provider)} cannot be null.");
-            if (string.IsNullOrWhiteSpace(evaluation.Name)) throw new InvalidOperationException($"{nameof(evaluation.Name)} cannot be null or whitespace.");
+            if (string.IsNullOrWhiteSpace(evaluation.Name))
+            {
+                throw new InvalidOperationException($"{nameof(evaluation.Name)} cannot be null or whitespace.");
+            }
 
             var content = new MultipartFormDataContent
             {
@@ -95,12 +98,22 @@ namespace Falu.Evaluations
                 { new StringContent(evaluation.Scope?.GetEnumMemberAttrValueOrDefault()), "scope" },
                 { new StringContent(evaluation.Provider?.GetEnumMemberAttrValueOrDefault()), "provider" },
                 { new StringContent(evaluation.Name), "name" },
-                { new StringContent(evaluation.Phone), "phone" },
-                { new StringContent(evaluation.Password), "password" },
 
                 // populate the file stream
                 { new StreamContent(evaluation.Content), "file", evaluation.FileName },
             };
+
+            // Add phone if provided
+            if (!string.IsNullOrWhiteSpace(evaluation.Phone))
+            {
+                content.Add(new StringContent(evaluation.Phone), "phone");
+            }
+
+            // Add password if provided
+            if (!string.IsNullOrWhiteSpace(evaluation.Password))
+            {
+                content.Add(new StringContent(evaluation.Password), "password");
+            }
 
             // Add description if provided
             if (!string.IsNullOrWhiteSpace(evaluation.Description))

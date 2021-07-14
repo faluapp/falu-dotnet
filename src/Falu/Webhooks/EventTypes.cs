@@ -25,9 +25,9 @@
         #region Payments
 
         /// <summary>
-        /// Occurs whenever the balance has been updated.
+        /// Occurs whenever a payment balances are updated.
         /// </summary>
-        public const string BalanceUpdated = "balance.updated";
+        public const string PaymentBalancesUpdated = "payment_balances.updated";
 
         /// <summary>
         /// Occurs whenever a payment is updated.

@@ -19,6 +19,10 @@ namespace Falu.TransferReversals
         AuthenticationError,
 
         ///
+        [EnumMember(Value = "amount_out_of_bound")]
+        AmountOutOfBound,
+
+        ///
         Timeout,
 
         ///

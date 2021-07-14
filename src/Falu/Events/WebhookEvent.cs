@@ -16,7 +16,7 @@ namespace Falu.Events
         public DateTimeOffset Created { get; set; }
 
         /// <summary>
-        /// Type of event (e.g. payment.updated, balance.updated, etc.).
+        /// Type of event (e.g. payment.updated, payment_balances.updated, etc.).
         /// Possible values are available in <see cref="Webhooks.EventTypes"/>.
         /// </summary>
         public string? Type { get; set; }

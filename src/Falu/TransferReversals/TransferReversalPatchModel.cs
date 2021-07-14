@@ -15,6 +15,7 @@ namespace Falu.TransferReversals
         public Dictionary<string, string>? Metadata { get; set; }
 
         /// <inheritdoc/>
+        [System.Obsolete(MessageStrings.TagsDeprecated)]
         public List<string>? Tags { get; set; }
     }
 }

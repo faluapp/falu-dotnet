@@ -84,36 +84,54 @@ namespace Falu.Evaluations
                                                                             CancellationToken cancellationToken = default)
         {
             if (evaluation is null) throw new ArgumentNullException(nameof(evaluation));
+            if (evaluation.Scope is null) throw new InvalidOperationException($"{nameof(evaluation.Scope)} cannot be null.");
+            if (evaluation.Provider is null) throw new InvalidOperationException($"{nameof(evaluation.Provider)} cannot be null.");
+            if (string.IsNullOrWhiteSpace(evaluation.Name))
+            {
+                throw new InvalidOperationException($"{nameof(evaluation.Name)} cannot be null or whitespace.");
+            }
 
             var content = new MultipartFormDataContent
             {
                 // populate fields of the model as key value pairs
-                { new StringContent(evaluation.Currency), nameof(evaluation.Currency) },
-                { new StringContent(evaluation.Scope.ToString()), nameof(evaluation.Scope) },
-                { new StringContent(evaluation.Provider.ToString()), nameof(evaluation.Provider) },
-                { new StringContent(evaluation.Name), nameof(evaluation.Name) },
-                { new StringContent(evaluation.Phone), nameof(evaluation.Phone) },
-                { new StringContent(evaluation.Password), nameof(evaluation.Password) },
+                { new StringContent(evaluation.Currency), "currency" },
+                { new StringContent(evaluation.Scope?.GetEnumMemberAttrValueOrDefault()), "scope" },
+                { new StringContent(evaluation.Provider?.GetEnumMemberAttrValueOrDefault()), "provider" },
+                { new StringContent(evaluation.Name), "name" },
 
                 // populate the file stream
-                { new StreamContent(evaluation.Content), "File", evaluation.FileName },
+                { new StreamContent(evaluation.Content), "file", evaluation.FileName },
             };
+
+            // Add phone if provided
+            if (!string.IsNullOrWhiteSpace(evaluation.Phone))
+            {
+                content.Add(new StringContent(evaluation.Phone), "phone");
+            }
+
+            // Add password if provided
+            if (!string.IsNullOrWhiteSpace(evaluation.Password))
+            {
+                content.Add(new StringContent(evaluation.Password), "password");
+            }
 
             // Add description if provided
             if (!string.IsNullOrWhiteSpace(evaluation.Description))
             {
-                content.Add(new StringContent(evaluation.Description), nameof(evaluation.Description));
+                content.Add(new StringContent(evaluation.Description), "description");
             }
 
             // Add tags if provided
+#pragma warning disable CS0618 // Type or member is obsolete
             var tags = evaluation.Tags;
             if (tags != null)
             {
                 for (var i = 0; i < tags.Count; i++)
                 {
-                    content.Add(new StringContent(tags[i]), $"{nameof(evaluation.Tags)}[{i}]");
+                    content.Add(new StringContent(tags[i]), $"tags[{i}]");
                 }
             }
+#pragma warning restore CS0618 // Type or member is obsolete
 
             // Add metadata if provided
             var metadata = evaluation.Metadata?.ToList();
@@ -121,8 +139,8 @@ namespace Falu.Evaluations
             {
                 for (var i = 0; i < metadata.Count; i++)
                 {
-                    content.Add(new StringContent(metadata[i].Key), $"{nameof(evaluation.Metadata)}[{i}].Key");
-                    content.Add(new StringContent(metadata[i].Value), $"{nameof(evaluation.Metadata)}[{i}].Value");
+                    content.Add(new StringContent(metadata[i].Key), $"metadata[{i}].Key");
+                    content.Add(new StringContent(metadata[i].Value), $"metadata[{i}].Value");
                 }
             }
 

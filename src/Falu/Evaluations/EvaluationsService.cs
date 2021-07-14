@@ -84,13 +84,16 @@ namespace Falu.Evaluations
                                                                             CancellationToken cancellationToken = default)
         {
             if (evaluation is null) throw new ArgumentNullException(nameof(evaluation));
+            if (evaluation.Scope is null) throw new InvalidOperationException($"{nameof(evaluation.Scope)} cannot be null.");
+            if (evaluation.Provider is null) throw new InvalidOperationException($"{nameof(evaluation.Provider)} cannot be null.");
+            if (string.IsNullOrWhiteSpace(evaluation.Name)) throw new InvalidOperationException($"{nameof(evaluation.Name)} cannot be null or whitespace.");
 
             var content = new MultipartFormDataContent
             {
                 // populate fields of the model as key value pairs
                 { new StringContent(evaluation.Currency), "currency" },
-                { new StringContent(evaluation.Scope.ToString()), "scope" },
-                { new StringContent(evaluation.Provider.ToString()), "provider" },
+                { new StringContent(evaluation.Scope?.GetEnumMemberAttrValueOrDefault()), "scope" },
+                { new StringContent(evaluation.Provider?.GetEnumMemberAttrValueOrDefault()), "provider" },
                 { new StringContent(evaluation.Name), "name" },
                 { new StringContent(evaluation.Phone), "phone" },
                 { new StringContent(evaluation.Password), "password" },

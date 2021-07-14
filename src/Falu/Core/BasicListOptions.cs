@@ -58,19 +58,7 @@ namespace Falu.Core
         internal static string ConvertDate(DateTimeOffset d) => d.ToString("o");
         internal static string ConvertInt32(int i) => i.ToString();
         internal static string ConvertInt64(long i) => i.ToString();
-        internal static string ConvertEnum<T>(T e) where T : Enum
-        {
-            // Give priority to EnumMemberAttribute
-            var memInfo = typeof(T).GetMember(e.ToString());
-            var attr = memInfo.FirstOrDefault()?.GetCustomAttributes(false)
-                              .OfType<EnumMemberAttribute>()
-                              .FirstOrDefault();
-
-            return attr?.Value ?? e.ToString().ToLowerInvariant();
-        }
-        internal static string ConvertEnumList<T>(IList<T> list) where T : Enum
-        {
-            return string.Join(",", list.Select(l => ConvertEnum(l)));
-        }
+        internal static string ConvertEnum<T>(T e) where T : Enum => e.GetEnumMemberAttrValueOrDefault();
+        internal static string ConvertEnumList<T>(IList<T> list) where T : Enum => string.Join(",", list.Select(l => ConvertEnum(l)));
     }
 }

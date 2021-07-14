@@ -118,7 +118,7 @@ namespace Falu.Evaluations
             // Add description if provided
             if (!string.IsNullOrWhiteSpace(evaluation.Description))
             {
-                content.Add(new StringContent(evaluation.Description), nameof(evaluation.Description));
+                content.Add(new StringContent(evaluation.Description), "description");
             }
 
             // Add tags if provided
@@ -127,7 +127,7 @@ namespace Falu.Evaluations
             {
                 for (var i = 0; i < tags.Count; i++)
                 {
-                    content.Add(new StringContent(tags[i]), $"{nameof(evaluation.Tags)}[{i}]");
+                    content.Add(new StringContent(tags[i]), $"tags[{i}]");
                 }
             }
 
@@ -137,8 +137,8 @@ namespace Falu.Evaluations
             {
                 for (var i = 0; i < metadata.Count; i++)
                 {
-                    content.Add(new StringContent(metadata[i].Key), $"{nameof(evaluation.Metadata)}[{i}].Key");
-                    content.Add(new StringContent(metadata[i].Value), $"{nameof(evaluation.Metadata)}[{i}].Value");
+                    content.Add(new StringContent(metadata[i].Key), $"metadata[{i}].Key");
+                    content.Add(new StringContent(metadata[i].Value), $"metadata[{i}].Value");
                 }
             }
 

@@ -10,6 +10,7 @@ namespace Falu.Core
         /// <summary>
         /// Set of values that you can attach to an object. This can be useful for searching.
         /// </summary>
+        [System.Obsolete(MessageStrings.TagsDeprecated)]
         public List<string>? Tags { get; set; }
     }
 }

@@ -122,6 +122,7 @@ namespace Falu.Evaluations
             }
 
             // Add tags if provided
+#pragma warning disable CS0618 // Type or member is obsolete
             var tags = evaluation.Tags;
             if (tags != null)
             {
@@ -130,6 +131,7 @@ namespace Falu.Evaluations
                     content.Add(new StringContent(tags[i]), $"tags[{i}]");
                 }
             }
+#pragma warning restore CS0618 // Type or member is obsolete
 
             // Add metadata if provided
             var metadata = evaluation.Metadata?.ToList();

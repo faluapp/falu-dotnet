@@ -6,6 +6,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Deterministic>true</Deterministic>
     <Company>Tingle Software Limited</Company>
+    <!--<IsPackable>true</IsPackable>-->
   </PropertyGroup>
 
   <PropertyGroup>

@@ -36,6 +36,11 @@ namespace Falu.Payments
         public DateTimeOffset? Succeeded { get; set; }
 
         /// <summary>
+        /// Identifier of the authorization, if the payment passed through a flow requiring authorization.
+        /// </summary>
+        public string? AuthorizationId { get; set; }
+
+        /// <summary>
         /// The type of the Payment.
         /// An additional property is populated on the Payment with a name matching this value.
         /// It contains additional information specific to the Payment type.

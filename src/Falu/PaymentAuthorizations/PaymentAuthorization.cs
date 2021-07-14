@@ -48,6 +48,11 @@ namespace Falu.PaymentAuthorizations
         /// </summary>
         public PaymentMpesaDetails? Mpesa { get; set; }
 
+        /// <summary>
+        /// Identifier of the payment created after the authorization is approved and closed.
+        /// </summary>
+        public string? PaymentId { get; set; }
+
         /// <inheritdoc/>
         public string? WorkspaceId { get; set; }
 

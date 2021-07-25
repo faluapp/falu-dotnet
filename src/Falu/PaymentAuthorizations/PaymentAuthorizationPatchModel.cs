@@ -6,13 +6,9 @@ namespace Falu.PaymentAuthorizations
     /// <summary>
     /// Represents the details that can be patched in a payment authorization.
     /// </summary>
-    public class PaymentAuthorizationPatchModel : IHasMetadata, IHasTags
+    public class PaymentAuthorizationPatchModel : IHasMetadata
     {
         /// <inheritdoc/>
         public Dictionary<string, string>? Metadata { get; set; }
-
-        /// <inheritdoc/>
-        [System.Obsolete(MessageStrings.TagsDeprecated)]
-        public List<string>? Tags { get; set; }
     }
 }

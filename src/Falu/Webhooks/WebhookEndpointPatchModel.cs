@@ -6,7 +6,7 @@ namespace Falu.Webhooks
     /// <summary>
     /// A model representing details that can be changed about a Webhook endpoint
     /// </summary>
-    public class WebhookEndpointPatchModel : IHasDescription, IHasMetadata, IHasTags
+    public class WebhookEndpointPatchModel : IHasDescription, IHasMetadata
     {
         /// <summary>
         /// The list of events to enable for this endpoint.
@@ -34,9 +34,5 @@ namespace Falu.Webhooks
 
         /// <inheritdoc/>
         public Dictionary<string, string>? Metadata { get; set; }
-
-        /// <inheritdoc/>
-        [System.Obsolete(MessageStrings.TagsDeprecated)]
-        public List<string>? Tags { get; set; }
     }
 }

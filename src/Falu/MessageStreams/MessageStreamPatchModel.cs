@@ -6,7 +6,7 @@ namespace Falu.MessageStreams
     /// <summary>
     /// Represents the details about a message stream that can be patched.
     /// </summary>
-    public class MessageStreamPatchModel : IHasDescription, IHasMetadata, IHasTags
+    public class MessageStreamPatchModel : IHasDescription, IHasMetadata
     {
         /// <summary>
         /// Settings for the stream.
@@ -18,9 +18,5 @@ namespace Falu.MessageStreams
 
         /// <inheritdoc/>
         public Dictionary<string, string>? Metadata { get; set; }
-
-        /// <inheritdoc/>
-        [System.Obsolete(MessageStrings.TagsDeprecated)]
-        public List<string>? Tags { get; set; }
     }
 }

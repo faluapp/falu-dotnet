@@ -6,16 +6,12 @@ namespace Falu.PaymentReversals
     /// <summary>
     /// A model representing details that can be changed about a payment reversal.
     /// </summary>
-    public class PaymentReversalPatchModel : IHasDescription, IHasMetadata, IHasTags
+    public class PaymentReversalPatchModel : IHasDescription, IHasMetadata
     {
         /// <inheritdoc/>
         public string? Description { get; set; }
 
         /// <inheritdoc/>
         public Dictionary<string, string>? Metadata { get; set; }
-
-        /// <inheritdoc/>
-        [System.Obsolete(MessageStrings.TagsDeprecated)]
-        public List<string>? Tags { get; set; }
     }
 }

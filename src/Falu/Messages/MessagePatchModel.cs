@@ -6,13 +6,9 @@ namespace Falu.Messages
     /// <summary>
     /// A model representing details that can be changed about a message.
     /// </summary>
-    public class MessagePatchModel : IHasMetadata, IHasTags
+    public class MessagePatchModel : IHasMetadata
     {
         /// <inheritdoc/>
         public Dictionary<string, string>? Metadata { get; set; }
-
-        /// <inheritdoc/>
-        [System.Obsolete(MessageStrings.TagsDeprecated)]
-        public List<string>? Tags { get; set; }
     }
 }

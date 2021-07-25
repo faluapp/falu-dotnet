@@ -6,7 +6,7 @@ namespace Falu.MessageTemplates
     /// <summary>
     /// A model representing details that can be changed about a template
     /// </summary>
-    public class MessageTemplatePatchModel : IHasDescription, IHasMetadata, IHasTags
+    public class MessageTemplatePatchModel : IHasDescription, IHasMetadata
     {
         /// <summary>
         /// An optional string you can provide to identify this template.
@@ -26,9 +26,5 @@ namespace Falu.MessageTemplates
 
         /// <inheritdoc/>
         public Dictionary<string, string>? Metadata { get; set; }
-
-        /// <inheritdoc/>
-        [System.Obsolete(MessageStrings.TagsDeprecated)]
-        public List<string>? Tags { get; set; }
     }
 }

@@ -24,6 +24,7 @@ jobs:
     env:
       buildConfiguration: 'Release'
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+      RELEASING_SDK: true
 
     steps:
     - name: Checkout

@@ -25,6 +25,11 @@ namespace Falu
         /// </summary>
         public string? ApiKey { get; set; }
 
+        /// <summary>
+        /// Maximum number of retries made by the client.
+        /// </summary>
+        public int Retries { get; set; } = 3;
+
         internal static JsonSerializerOptions CreateSerializerOptions()
         {
             var serializerOptions = new JsonSerializerOptions

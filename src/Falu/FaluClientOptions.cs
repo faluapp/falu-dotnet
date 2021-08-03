@@ -27,8 +27,9 @@ namespace Falu
 
         /// <summary>
         /// Maximum number of retries made by the client.
+        /// Defaults to <c>2</c>.
         /// </summary>
-        public int Retries { get; set; } = 3;
+        public int Retries { get; set; } = 2;
 
         internal static JsonSerializerOptions CreateSerializerOptions()
         {

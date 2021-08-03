@@ -36,7 +36,8 @@ namespace Falu
         /// <example>https://example.com</example>
         public string? Url { get; set; }
 
-        internal string FormatUserAgent()
+        /// <inheritdoc/>
+        public override string ToString()
         {
             var result = Name;
             if (!string.IsNullOrWhiteSpace(Version)) result += $"/{Version}";

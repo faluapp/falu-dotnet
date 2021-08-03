@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Description>The official client library for Falu. (https://falu.io)</Description>
-    <AssemblyName>FaluSdk</AssemblyName> <!-- Using the default Falu causes issues with CLI. This has no impact on anything else -->
     <PackageId>Falu</PackageId>
+    <RootNamespace>Falu</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

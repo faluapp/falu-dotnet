@@ -1,6 +1,11 @@
 ﻿using Falu;
 using Falu.Infrastructure;
+using Microsoft.Extensions.Options;
+using Polly;
+using Polly.Contrib.WaitAndRetry;
+using Polly.Extensions.Http;
 using System;
+using System.Net;
 using System.Net.Http.Headers;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -32,11 +37,17 @@ namespace Microsoft.Extensions.DependencyInjection
                                 + "at https://falu.com/support/email if you have any questions.";
                     throw new FaluException(message);
                 }
+
+                if (o.Retries < 0)
+                {
+                    throw new FaluException("Retries cannot be negative.");
+                }
             });
 
             // get the version from the assembly
             var productVersion = typeof(FaluClient).Assembly.GetName().Version.ToString(3);
 
+            // setup client
             var builder = services.AddHttpClient<FaluClient>(name: "NewFaluClient" /* TODO: remove this name once the clients migrate from the old FaluClient */)
                                   .ConfigureHttpClient((provider, client) =>
                                   {
@@ -47,6 +58,18 @@ namespace Microsoft.Extensions.DependencyInjection
                                       var userAgent = new ProductInfoHeaderValue("falu-dotnet", productVersion);
                                       client.DefaultRequestHeaders.UserAgent.Add(userAgent);
                                   });
+
+            // setup retries
+            builder.AddPolicyHandler((provider, request) =>
+            {
+                var options = provider.GetRequiredService<IOptions<FaluClientOptions>>().Value;
+                var delays = Backoff.DecorrelatedJitterBackoffV2(medianFirstRetryDelay: TimeSpan.FromSeconds(0.5f),
+                                                                 retryCount: options.Retries);
+                var policy = HttpPolicyExtensions.HandleTransientHttpError()
+                                                 .OrResult(r => r.StatusCode is HttpStatusCode.BadGateway or HttpStatusCode.ServiceUnavailable /* 502,503 */)
+                                                 .WaitAndRetryAsync<System.Net.Http.HttpResponseMessage>(delays);
+                return policy;
+            });
 
             // continue configuring the IHttpClientBuilder
             configureBuilder?.Invoke(builder);

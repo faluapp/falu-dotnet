@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Falu", "src\Falu\Falu.csproj", "{963DEBFA-CB4D-4A2F-8AE4-5C64D6917730}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FaluSdk", "src\FaluSdk\FaluSdk.csproj", "{963DEBFA-CB4D-4A2F-8AE4-5C64D6917730}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Falu.Tests", "tests\Falu.Tests\Falu.Tests.csproj", "{BC55832D-F48D-41CC-80A5-B4C36C289C3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FaluSdk.Tests", "tests\FaluSdk.Tests\FaluSdk.Tests.csproj", "{BC55832D-F48D-41CC-80A5-B4C36C289C3F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C024C82C-F934-46C4-A477-09B3890B6127}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F29660E1-F3A8-4EB9-A189-B26053912E98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +28,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{963DEBFA-CB4D-4A2F-8AE4-5C64D6917730} = {C024C82C-F934-46C4-A477-09B3890B6127}
+		{BC55832D-F48D-41CC-80A5-B4C36C289C3F} = {F29660E1-F3A8-4EB9-A189-B26053912E98}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {492076E1-C172-444F-8AF2-93692D4CCAF7}

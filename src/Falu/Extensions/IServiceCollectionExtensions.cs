@@ -54,9 +54,16 @@ namespace Microsoft.Extensions.DependencyInjection
                                       // set the base address
                                       client.BaseAddress = new Uri("https://api.falu.io/");
 
+                                      // prepare User-Agent value
+                                      var userAgent = $"falu-dotnet/{productVersion}";
+                                      var options = provider.GetRequiredService<IOptions<FaluClientOptions>>().Value;
+                                      if (options.Application is not null)
+                                      {
+                                          userAgent += $" {options.Application}";
+                                      }
+
                                       // populate the User-Agent header
-                                      var userAgent = new ProductInfoHeaderValue("falu-dotnet", productVersion);
-                                      client.DefaultRequestHeaders.UserAgent.Add(userAgent);
+                                      client.DefaultRequestHeaders.Add("User-Agent", userAgent);
                                   });
 
             // setup retries

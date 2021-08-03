@@ -31,6 +31,12 @@ namespace Falu
         /// </summary>
         public int Retries { get; set; } = 2;
 
+        /// <summary>
+        /// Information about the application.
+        /// It is recommended for use only with thirdy party plugins/services for identification purposes.
+        /// </summary>
+        public ApplicationInformation? Application { get; set; }
+
         internal static JsonSerializerOptions CreateSerializerOptions()
         {
             var serializerOptions = new JsonSerializerOptions

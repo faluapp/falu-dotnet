@@ -50,7 +50,7 @@ public class Program
     static async Task Main(string[] args)
     {
         var apiKey = "<put-you-key-here>";
-        var options = Options.Create(new FaluClientOptions { ApiKey = apiKey});
+        var options = Options.Create(new FaluClientOptions { ApiKey = apiKey, });
 
         var client = new FaluClient(new HttpClient(), options);
         // .... do whatever you wish
@@ -117,7 +117,12 @@ public async Task DoSomethingAsync(CancellationToken cancellationToken = default
 All of the service methods accept an optional [idempotency key][idempotency-keys].
 
 ```c#
-client.InitiateEvaluationAsync(idempotencyKey: "SOME STRING");
+var request = new EvaluationCreateModel
+{
+    // omitted for brevity
+};
+var ro = new RequestOptions { IdempotencyKey = "SOME STRING", };
+await client.Evaluations.CreateAsync(evaluation: request, options: ro);
 ```
 
 ## Messages
@@ -128,7 +133,7 @@ With `FaluClient` you can send both transactional and bulk messages to customers
 FaluClient client; // omitted for brevity
 
 // Creating message template (only needs to be done once)
-await client.CreateTemplateAsync(new TemplatePatchModel
+await client.MessageTemplates.CreateAsync(new TemplatePatchModel
 {
     Description = "Sample Template",
     Alias = "sample-template",
@@ -147,7 +152,7 @@ var message = new MessageCreateRequest
 };
 
 // Send message, delivery shall be relayed via webhooks
-var response = await client.SendMessageAsync(message);
+var response = await client.Messages.CreateAsync(message);
 response.EnsureSuccess(); // might throw an exception (FaluException)
 ```
 
@@ -160,22 +165,23 @@ With `FaluClient` you can send and receive money to and from customers or busine
 ```cs
 FaluClient client; // omitted for brevity
 
-var request = new PaymentRequest
+var request = new TransferRequest
 {
     Amount = 1000,
     Currency = "kes",
+    Purpose = TransferPurpose.Business, // can also be Salary
     Mpesa = new TransferRequestMpesa
     {
         Customer = new TransferRequestMpesaToCustomer
         {
             Phone = "+254722000000",
-            Kind = MpesaCommandKind.BusinessPayment, // can also be SalaryPayment
+            Source = "<put-short-code-here>", // required for specificity
         },
     }
 };
 
-// Initiate payment, results shall be relayed via webhooks
-var response = await client.InitiatePaymentAsync(request);
+// Initiate the transfer, completion shall be relayed via webhooks
+var response = await client.Transfers.CreateAsync(request);
 response.EnsureSuccess(); // might throw an exception (FaluException)
 ```
 
@@ -193,14 +199,14 @@ var request = new PaymentRequest
     Mpesa = new PaymentRequestMpesaStkPush
     {
         Phone = "+254722000000",
-        Reference = "<put-payment-reference-here>"
-        Kind = MpesaStkPushTransactionType.CustomerPayBillOnline, // can also be CustomerBuyGoodsOnline
-        Destination = "<put-till-number-here>", // only for CustomerBuyGoodsOnline
+        Reference = "<put-payment-reference-here>",
+        Paybill = true, // false to tills (a.k.a Buygoods)
+        Destination = "<put-short-code-here>", // required for specificity
     }
 };
 
-// Initiate payment, results shall be relayed via webhooks
-var response = await client.InitiatePaymentAsync(request);
+// Initiate the payment, completion shall be relayed via webhooks
+var response = await client.Payments.CreateAsync(request);
 response.EnsureSuccess(); // might throw an exception (FaluException)
 ```
 
@@ -217,7 +223,7 @@ var search = new IdentitySearchModel
 {
     Phone = "+254722000000",
 };
-var response = await client.SearchIdentityAsync(search);
+var response = await client.Identity.SearchAsync(search);
 response.EnsureSuccess(); // might throw an exception (FaluException)
 var result = response.Resource;
 if (result != null)
@@ -235,8 +241,9 @@ With `FaluClient` you can evaluate the credit worthiness of your customers via f
 ```cs
 FaluClient client; // omitted for brevity
 
-var request = new EvaluationRequest
+var request = new EvaluationCreateModel
 {
+    Currency = "kes",
     Scope = EvaluationScope.Personal, // can also be Business
     Provider = StatementProvider.Mpesa,
     Name = "JOHN KAMAU ONYANGO", // full name as on statement
@@ -246,7 +253,7 @@ var request = new EvaluationRequest
 };
 
 // Request evaluation, results shall be relayed via webhooks
-var response = await client.RequestEvaluationAsync(request);
+var response = await client.Evaluations.CreateAsync(request);
 response.EnsureSuccess(); // might throw an exception (FaluException)
 ```
 

@@ -1,12 +1,12 @@
 ﻿using Falu;
 using Falu.Infrastructure;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
 using Polly.Extensions.Http;
 using System;
 using System.Net;
-using System.Net.Http.Headers;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -18,31 +18,80 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <summary>
         /// Add client for Falu API
         /// </summary>
+        /// <param name="services">the collection to be added to</param>
+        /// <param name="apiKey"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddFalu(this IServiceCollection services, string apiKey)
+        {
+            if (string.IsNullOrWhiteSpace(apiKey))
+            {
+                throw new ArgumentNullException(nameof(apiKey));
+            }
+
+            return services.AddFalu(o => o.ApiKey = apiKey);
+        }
+
+        /// <summary>
+        /// Add client for Falu API
+        /// </summary>
         /// <param name="services">The <see cref="IServiceCollection"/> to be added to.</param>
+        /// <param name="configure">An <see cref="Action{FaluClientOptions}"/> to configure the client options.</param>
+        /// <returns></returns>
+        public static IServiceCollection AddFalu(this IServiceCollection services, Action<FaluClientOptions> configure)
+        {
+            if (configure is null)
+            {
+                throw new ArgumentNullException(nameof(configure));
+            }
+
+            return services.AddFalu(configuration: null, configure: configure, configureBuilder: null);
+        }
+
+        /// <summary>
+        /// Add client for Falu API
+        /// </summary>
+        /// <param name="services">The <see cref="IServiceCollection"/> to be added to.</param>
+        /// <param name="configuration">
+        /// An <see cref="IConfiguration"/> containing the values of <see cref="FaluClientOptions"/> at its root.
+        /// </param>
+        /// <returns></returns>
+        public static IServiceCollection AddFalu(this IServiceCollection services, IConfiguration configuration)
+        {
+            if (configuration is null)
+            {
+                throw new ArgumentNullException(nameof(configuration));
+            }
+
+            return services.AddFalu(configuration: configuration, configure: null, configureBuilder: null);
+        }
+
+        /// <summary>
+        /// Add client for Falu API
+        /// </summary>
+        /// <param name="services">The <see cref="IServiceCollection"/> to be added to.</param>
+        /// <param name="configuration">
+        /// An <see cref="IConfiguration"/> containing the values of <see cref="FaluClientOptions"/> at its root.
+        /// </param>
         /// <param name="configure">An <see cref="Action{FaluClientOptions}"/> to configure the client options.</param>
         /// <param name="configureBuilder">An <see cref="Action{IHttpClientBuilder}"/> to configure the HTTP client builder.</param>
         /// <returns></returns>
         public static IServiceCollection AddFalu(this IServiceCollection services,
+                                                 IConfiguration? configuration = null,
                                                  Action<FaluClientOptions>? configure = null,
                                                  Action<IHttpClientBuilder>? configureBuilder = null)
         {
-            if (configure != null) services.Configure(configure);
-            services.PostConfigure<FaluClientOptions>(o =>
+            if (configuration is not null)
             {
-                if (string.IsNullOrWhiteSpace(o.ApiKey))
-                {
-                    var message = "Your API key is invalid, as it is an empty string. You can "
-                                + "double-check your API key from the Falu Dashboard. See "
-                                + "https://docs.falu.io/api/authentication for details or contact support "
-                                + "at https://falu.com/support/email if you have any questions.";
-                    throw new FaluException(message);
-                }
+                services.Configure<FaluClientOptions>(configuration);
+            }
 
-                if (o.Retries < 0)
-                {
-                    throw new FaluException("Retries cannot be negative.");
-                }
-            });
+            if (configure != null)
+            {
+                services.Configure(configure);
+            }
+
+            // register post configuration for validation purposes
+            services.AddSingleton<IPostConfigureOptions<FaluClientOptions>, FaluClientOptionsPostConfigureOptions>();
 
             // get the version from the assembly
             var productVersion = typeof(FaluClient).Assembly.GetName().Version.ToString(3);
@@ -82,19 +131,6 @@ namespace Microsoft.Extensions.DependencyInjection
             configureBuilder?.Invoke(builder);
 
             return services;
-        }
-
-        /// <summary>
-        /// Add client for Falu API
-        /// </summary>
-        /// <param name="services">the collection to be added to</param>
-        /// <param name="apiKey"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddFalu(this IServiceCollection services, string apiKey)
-        {
-            if (string.IsNullOrWhiteSpace(apiKey))
-                throw new ArgumentNullException(nameof(apiKey));
-            return services.AddFalu(o => o.ApiKey = apiKey);
         }
     }
 }

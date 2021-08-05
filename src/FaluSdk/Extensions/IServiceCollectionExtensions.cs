@@ -90,22 +90,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 services.Configure(configure);
             }
 
-            services.PostConfigure<FaluClientOptions>(o =>
-            {
-                if (string.IsNullOrWhiteSpace(o.ApiKey))
-                {
-                    var message = "Your API key is invalid, as it is an empty string. You can "
-                                + "double-check your API key from the Falu Dashboard. See "
-                                + "https://docs.falu.io/api/authentication for details or contact support "
-                                + "at https://falu.com/support/email if you have any questions.";
-                    throw new FaluException(message);
-                }
-
-                if (o.Retries < 0)
-                {
-                    throw new FaluException("Retries cannot be negative.");
-                }
-            });
+            // register post configuration for validation purposes
+            services.AddSingleton<IPostConfigureOptions<FaluClientOptions>, FaluClientOptionsPostConfigureOptions>();
 
             // get the version from the assembly
             var productVersion = typeof(FaluClient).Assembly.GetName().Version.ToString(3);

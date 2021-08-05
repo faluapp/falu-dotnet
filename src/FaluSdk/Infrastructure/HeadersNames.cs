@@ -13,6 +13,7 @@
         public const string XTraceId = "X-Trace-Id";
         public const string XContinuationToken = "X-Continuation-Token";
         public const string XCachedResponse = "X-Cached-Response";
+        public const string XShouldRetry = "X-Should-Retry";
 
         // Webhooks
         public const string XFaluSignature = "X-Falu-Signature";

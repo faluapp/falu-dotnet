@@ -4,9 +4,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
-using Polly.Extensions.Http;
 using System;
+using System.Linq;
 using System.Net;
+using System.Net.Http;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -121,9 +122,11 @@ namespace Microsoft.Extensions.DependencyInjection
                 var options = provider.GetRequiredService<IOptions<FaluClientOptions>>().Value;
                 var delays = Backoff.DecorrelatedJitterBackoffV2(medianFirstRetryDelay: TimeSpan.FromSeconds(0.5f),
                                                                  retryCount: options.Retries);
-                var policy = HttpPolicyExtensions.HandleTransientHttpError()
-                                                 .OrResult(r => r.StatusCode is HttpStatusCode.BadGateway or HttpStatusCode.ServiceUnavailable /* 502,503 */)
-                                                 .WaitAndRetryAsync<System.Net.Http.HttpResponseMessage>(delays);
+
+                // Network failures are handled via HttpRequestException, other errors are handled in the ShouldRetry method
+                var policy = Policy<HttpResponseMessage>.Handle<HttpRequestException>()
+                                                        .OrResult(ShouldRetry)
+                                                        .WaitAndRetryAsync(delays);
                 return policy;
             });
 
@@ -131,6 +134,30 @@ namespace Microsoft.Extensions.DependencyInjection
             configureBuilder?.Invoke(builder);
 
             return services;
+        }
+
+        private static bool ShouldRetry(HttpResponseMessage response)
+        {
+            if (response is null)
+            {
+                throw new ArgumentNullException(nameof(response));
+            }
+
+            // Respect server ask to not retry.
+            if (response.Headers.TryGetValues(HeadersNames.XShouldRetry, out var values)
+                && bool.TryParse(values.First(), out var b))
+            {
+                return b;
+            }
+
+            // Retry on conflict and timeout errors.
+            if (response.StatusCode is HttpStatusCode.Conflict or HttpStatusCode.RequestTimeout)
+            {
+                return true;
+            }
+
+            // Retry on 500, 503, and other internal errors.
+            return (int)response.StatusCode >= 500;
         }
     }
 }

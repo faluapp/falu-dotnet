@@ -64,7 +64,10 @@ Often it is recommended that you make use of an IoC container to control the lif
 
 ```json
 {
-    "Falu:ApiKey": "<put-you-key-here>",
+    "Falu": {
+        "ApiKey": "<put-you-key-here>",
+        "Retries": 3, // defaults to 2
+    }
 }
 ```
 
@@ -88,6 +91,9 @@ public void ConfigureServices(IServiceCollection services)
 {
    // Add client
    services.AddFalu(Configuration["Falu:ApiKey"]);
+
+   //// You can also use whole configuration section
+   // services.AddFalu(Configuration.GetSection("Falu"));
 
    // The sample service we'll use to demonstrate usage
    // It is recommended the service be consumed in a service with scoped or transient lifetime and not in a singleton one

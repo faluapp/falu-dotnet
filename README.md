@@ -152,8 +152,8 @@ var message = new MessageCreateRequest
     To = "+254722000000",
     Template = new MessageTemplate
     {
-        TemplateId = "sample-template",
-        TemplateModel = new { var1 = "test", var2 = "test2" },
+        Alias = "sample-template",
+        Model = new { var1 = "test", var2 = "test2" },
     }
 };
 
@@ -193,7 +193,7 @@ response.EnsureSuccess(); // might throw an exception (FaluException)
 
 > Your outgoing account for MPESA must be configured in your [Workspace settings][workspace-settings] before you can initiate an outgoing payment to a customer.
 
-Below is a sample of how to request money from a customer via MPESA's STK Push (a.k.a. Popup, Checkout, etc.).
+Below is a sample of how to request money from a customer via MPESA STK Push (a.k.a. Popup, Checkout, etc.).
 
 ```cs
 FaluClient client; // omitted for brevity

@@ -26,7 +26,7 @@ namespace Falu
         public string? ApiKey { get; set; }
 
         /// <summary>
-        /// Maximum number of retries made by the client.
+        /// Maximum number of retries to be made by the client, in addition to the original call.
         /// Defaults to <c>2</c>.
         /// </summary>
         public int Retries { get; set; } = 2;

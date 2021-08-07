@@ -62,7 +62,7 @@ public class Program
 
 Often it is recommended that you make use of an IoC container to control the lifetime of dependencies created. This is the case in ASP.NET Core but can also be done in background jobs. First, you would put the API Key in your secret:
 
-```json
+```jsonc
 {
     "Falu": {
         "ApiKey": "<put-you-key-here>",

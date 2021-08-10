@@ -31,7 +31,7 @@ namespace Falu.Payments
 
             var query = QueryHelper.MakeQueryString(args);
             var uri = new Uri(BaseAddress, $"/v1/payments{query}");
-            return await GetAsJsonAsync<List<Payment>>(uri, requestOptions, cancellationToken);
+            return await GetAsJsonAsync<List<Payment>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Falu.Payments
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
             var uri = new Uri(BaseAddress, $"/v1/payments/{id}");
-            return await GetAsJsonAsync<Payment>(uri, options, cancellationToken);
+            return await GetAsJsonAsync<Payment>(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Falu.Payments
             if (payment is null) throw new ArgumentNullException(nameof(payment));
 
             var uri = new Uri(BaseAddress, "/v1/payments");
-            return await PostAsJsonAsync<Payment>(uri, payment, options, cancellationToken);
+            return await PostAsJsonAsync<Payment>(uri, payment, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Falu.Payments
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
             var uri = new Uri(BaseAddress, $"/v1/payments/{id}");
-            return await PatchAsJsonAsync<Payment>(uri, patch, options, cancellationToken);
+            return await PatchAsJsonAsync<Payment>(uri, patch, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

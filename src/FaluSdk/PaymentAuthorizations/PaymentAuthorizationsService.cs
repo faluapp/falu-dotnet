@@ -31,7 +31,7 @@ namespace Falu.PaymentAuthorizations
 
             var query = QueryHelper.MakeQueryString(args);
             var uri = new Uri(BaseAddress, $"/v1/payment_authorizations{query}");
-            return await GetAsJsonAsync<List<PaymentAuthorization>>(uri, requestOptions, cancellationToken);
+            return await GetAsJsonAsync<List<PaymentAuthorization>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Falu.PaymentAuthorizations
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
             var uri = new Uri(BaseAddress, $"/v1/payment_authorizations/{id}");
-            return await GetAsJsonAsync<PaymentAuthorization>(uri, options, cancellationToken);
+            return await GetAsJsonAsync<PaymentAuthorization>(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Falu.PaymentAuthorizations
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
             var uri = new Uri(BaseAddress, $"/v1/payment_authorizations/{id}");
-            return await PatchAsJsonAsync<PaymentAuthorization>(uri, patch, options, cancellationToken);
+            return await PatchAsJsonAsync<PaymentAuthorization>(uri, patch, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Falu.PaymentAuthorizations
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
             var uri = new Uri(BaseAddress, $"/v1/payment_authorizations/{id}/approve");
-            return await PostAsJsonAsync<PaymentAuthorization>(uri, new { }, options, cancellationToken);
+            return await PostAsJsonAsync<PaymentAuthorization>(uri, new { }, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Falu.PaymentAuthorizations
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
             var uri = new Uri(BaseAddress, $"/v1/payment_authorizations/{id}/decline");
-            return await PostAsJsonAsync<PaymentAuthorization>(uri, new { }, options, cancellationToken);
+            return await PostAsJsonAsync<PaymentAuthorization>(uri, new { }, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

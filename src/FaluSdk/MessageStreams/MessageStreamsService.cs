@@ -31,7 +31,7 @@ namespace Falu.MessageStreams
 
             var query = QueryHelper.MakeQueryString(args);
             var uri = new Uri(BaseAddress, $"/v1/message_streams{query}");
-            return await GetAsJsonAsync<List<MessageStream>>(uri, requestOptions, cancellationToken);
+            return await GetAsJsonAsync<List<MessageStream>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Falu.MessageStreams
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
             var uri = new Uri(BaseAddress, $"/v1/message_streams/{id}");
-            return await GetAsJsonAsync<MessageStream>(uri, options, cancellationToken);
+            return await GetAsJsonAsync<MessageStream>(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Falu.MessageStreams
             if (stream is null) throw new ArgumentNullException(nameof(stream));
 
             var uri = new Uri(BaseAddress, "/v1/message_streams");
-            return await PostAsJsonAsync<MessageStream>(uri, stream, options, cancellationToken);
+            return await PostAsJsonAsync<MessageStream>(uri, stream, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Falu.MessageStreams
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
             var uri = new Uri(BaseAddress, $"/v1/message_streams/{id}");
-            return await PatchAsJsonAsync<MessageStream>(uri, patch, options, cancellationToken);
+            return await PatchAsJsonAsync<MessageStream>(uri, patch, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Falu.MessageStreams
 
             var uri = new Uri(BaseAddress, $"/v1/message_streams/{id}");
             var request = new HttpRequestMessage(HttpMethod.Delete, uri);
-            return await SendAsync<MessageStream>(request, options, cancellationToken);
+            return await SendAsync<MessageStream>(request, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

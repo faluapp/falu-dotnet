@@ -38,7 +38,7 @@ namespace Falu.Infrastructure
         {
             var request = new HttpRequestMessage(HttpMethod.Get, uri);
             request.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(JsonContentType));
-            return await SendAsync<TResource>(request, options, cancellationToken);
+            return await SendAsync<TResource>(request, options, cancellationToken).ConfigureAwait(false);
         }
 
         ///
@@ -50,8 +50,9 @@ namespace Falu.Infrastructure
             var request = new HttpRequestMessage(new HttpMethod("PATCH"), uri)
             {
                 Content = await MakeJsonHttpContentAsync(patch, cancellationToken)
+.ConfigureAwait(false)
             };
-            return await SendAsync<TResource>(request, options, cancellationToken);
+            return await SendAsync<TResource>(request, options, cancellationToken).ConfigureAwait(false);
         }
 
         ///
@@ -62,9 +63,9 @@ namespace Falu.Infrastructure
         {
             var request = new HttpRequestMessage(HttpMethod.Post, uri)
             {
-                Content = await MakeJsonHttpContentAsync(o, cancellationToken),
+                Content = await MakeJsonHttpContentAsync(o, cancellationToken).ConfigureAwait(false),
             };
-            return await SendAsync<TResource>(request, options, cancellationToken);
+            return await SendAsync<TResource>(request, options, cancellationToken).ConfigureAwait(false);
         }
 
         ///
@@ -72,7 +73,7 @@ namespace Falu.Infrastructure
                                                                                        RequestOptions? options = null,
                                                                                        CancellationToken cancellationToken = default)
         {
-            var response = await SendAsync(request, options, cancellationToken);
+            var response = await SendAsync(request, options, cancellationToken).ConfigureAwait(false);
             var resource = default(TResource);
             var error = default(FaluError);
 
@@ -81,16 +82,16 @@ namespace Falu.Infrastructure
 
             // get a stream reference for the content
             // the stream may still be being incoming and thus we should only read when necessary
-            var stream = await response.Content.ReadAsStreamAsync();
+            var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
 
             // if the response was a success then deserialize the body as TResource otherwise TError
             if (response.IsSuccessStatusCode)
             {
-                resource = await DeserializeAsync<TResource>(contentType?.MediaType, stream, cancellationToken);
+                resource = await DeserializeAsync<TResource>(contentType?.MediaType, stream, cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                error = await DeserializeAsync<FaluError>(contentType?.MediaType, stream, cancellationToken);
+                error = await DeserializeAsync<FaluError>(contentType?.MediaType, stream, cancellationToken).ConfigureAwait(false);
             }
             return new ResourceResponse<TResource>(response: response, resource: resource, error: error);
         }
@@ -126,13 +127,13 @@ namespace Falu.Infrastructure
             }
 
             // execute the request
-            return await backChannel.SendAsync(request, cancellationToken);
+            return await backChannel.SendAsync(request, cancellationToken).ConfigureAwait(false);
         }
 
         private async Task<HttpContent> MakeJsonHttpContentAsync(object o, CancellationToken cancellationToken)
         {
             var encoding = Encoding.UTF8;
-            var stream = await SerializeAsync(o, cancellationToken);
+            var stream = await SerializeAsync(o, cancellationToken).ConfigureAwait(false);
             var content = new StreamContent(stream);
             content.Headers.ContentType = MediaTypeHeaderValue.Parse($"{JsonContentType};charset={encoding.BodyName}");
             return content;
@@ -152,7 +153,7 @@ namespace Falu.Infrastructure
 
                 return await JsonSerializer.DeserializeAsync<T>(utf8Json: stream,
                                                                 options: options.SerializerOptions,
-                                                                cancellationToken: cancellationToken);
+                                                                cancellationToken: cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -162,7 +163,7 @@ namespace Falu.Infrastructure
             await JsonSerializer.SerializeAsync(utf8Json: payload,
                                                 value: input,
                                                 options: options.SerializerOptions,
-                                                cancellationToken: cancellationToken);
+                                                cancellationToken: cancellationToken).ConfigureAwait(false);
 
             // make the produced payload readable
             payload.Position = 0;

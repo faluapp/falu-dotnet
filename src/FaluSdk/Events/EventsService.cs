@@ -31,7 +31,7 @@ namespace Falu.Events
 
             var query = QueryHelper.MakeQueryString(args);
             var uri = new Uri(BaseAddress, $"/v1/events{query}");
-            return await GetAsJsonAsync<List<WebhookEvent<T>>>(uri, requestOptions, cancellationToken);
+            return await GetAsJsonAsync<List<WebhookEvent<T>>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Falu.Events
 
             var query = QueryHelper.MakeQueryString(args);
             var uri = new Uri(BaseAddress, $"/v1/events{query}");
-            return await GetAsJsonAsync<List<WebhookEvent>>(uri, requestOptions, cancellationToken);
+            return await GetAsJsonAsync<List<WebhookEvent>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Falu.Events
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
             var uri = new Uri(BaseAddress, $"/v1/events/{id}");
-            return await GetAsJsonAsync<WebhookEvent<T>>(uri, options, cancellationToken);
+            return await GetAsJsonAsync<WebhookEvent<T>>(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Falu.Events
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
             var uri = new Uri(BaseAddress, $"/v1/events/{id}");
-            return await GetAsJsonAsync<WebhookEvent>(uri, options, cancellationToken);
+            return await GetAsJsonAsync<WebhookEvent>(uri, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

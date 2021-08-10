@@ -31,7 +31,7 @@ namespace Falu.TransferReversals
 
             var query = QueryHelper.MakeQueryString(args);
             var uri = new Uri(BaseAddress, $"/v1/transfer_reversals{query}");
-            return await GetAsJsonAsync<List<TransferReversal>>(uri, reqeustOptions, cancellationToken);
+            return await GetAsJsonAsync<List<TransferReversal>>(uri, reqeustOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Falu.TransferReversals
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
             var uri = new Uri(BaseAddress, $"/v1/transfer_reversals/{id}");
-            return await GetAsJsonAsync<TransferReversal>(uri, options, cancellationToken);
+            return await GetAsJsonAsync<TransferReversal>(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Falu.TransferReversals
             if (reversal is null) throw new ArgumentNullException(nameof(reversal));
 
             var uri = new Uri(BaseAddress, "/v1/transfer_reversals");
-            return await PostAsJsonAsync<TransferReversal>(uri, reversal, options, cancellationToken);
+            return await PostAsJsonAsync<TransferReversal>(uri, reversal, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Falu.TransferReversals
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
             var uri = new Uri(BaseAddress, $"/v1/transfer_reversals/{id}");
-            return await PatchAsJsonAsync<TransferReversal>(uri, patch, options, cancellationToken);
+            return await PatchAsJsonAsync<TransferReversal>(uri, patch, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

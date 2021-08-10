@@ -23,7 +23,7 @@ namespace Falu.Payments
                                                                              CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, "/v1/payment_balances");
-            return await GetAsJsonAsync<PaymentBalances>(uri, options, cancellationToken);
+            return await GetAsJsonAsync<PaymentBalances>(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Falu.Payments
                                                                          CancellationToken cancellationToken = default)
         {
             var uri = new Uri(BaseAddress, "/v1/payment_balances/refresh");
-            return await PostAsJsonAsync<object>(uri, new { }, options, cancellationToken);
+            return await PostAsJsonAsync<object>(uri, new { }, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

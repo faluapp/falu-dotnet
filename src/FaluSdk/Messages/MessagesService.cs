@@ -31,7 +31,7 @@ namespace Falu.Messages
 
             var query = QueryHelper.MakeQueryString(args);
             var uri = new Uri(BaseAddress, $"/v1/messages{query}");
-            return await GetAsJsonAsync<List<Message>>(uri, requestOptions, cancellationToken);
+            return await GetAsJsonAsync<List<Message>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Falu.Messages
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
             var uri = new Uri(BaseAddress, $"/v1/messages/{id}");
-            return await GetAsJsonAsync<Message>(uri, options, cancellationToken);
+            return await GetAsJsonAsync<Message>(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Falu.Messages
             if (message is null) throw new ArgumentNullException(nameof(message));
 
             var uri = new Uri(BaseAddress, "/v1/messages");
-            return await PostAsJsonAsync<Message>(uri, message, options, cancellationToken);
+            return await PostAsJsonAsync<Message>(uri, message, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Falu.Messages
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
             var uri = new Uri(BaseAddress, $"/v1/messages/{id}");
-            return await PatchAsJsonAsync<Message>(uri, patch, options, cancellationToken);
+            return await PatchAsJsonAsync<Message>(uri, patch, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Falu.Messages
             }
 
             var uri = new Uri(BaseAddress, "/v1/messages/bulk");
-            return await PostAsJsonAsync<List<Message>>(uri, messages, options, cancellationToken);
+            return await PostAsJsonAsync<List<Message>>(uri, messages, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Falu.MessageTemplates
 
             var query = QueryHelper.MakeQueryString(args);
             var uri = new Uri(BaseAddress, $"/v1/message_templates{query}");
-            return await GetAsJsonAsync<List<MessageTemplate>>(uri, requestOptions, cancellationToken);
+            return await GetAsJsonAsync<List<MessageTemplate>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Falu.MessageTemplates
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
             var uri = new Uri(BaseAddress, $"/v1/message_templates/{id}");
-            return await GetAsJsonAsync<MessageTemplate>(uri, options, cancellationToken);
+            return await GetAsJsonAsync<MessageTemplate>(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Falu.MessageTemplates
             if (template is null) throw new ArgumentNullException(nameof(template));
 
             var uri = new Uri(BaseAddress, "/v1/message_templates");
-            return await PostAsJsonAsync<MessageTemplate>(uri, template, options, cancellationToken);
+            return await PostAsJsonAsync<MessageTemplate>(uri, template, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Falu.MessageTemplates
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
             var uri = new Uri(BaseAddress, $"/v1/message_templates/{id}");
-            return await PatchAsJsonAsync<MessageTemplate>(uri, patch, options, cancellationToken);
+            return await PatchAsJsonAsync<MessageTemplate>(uri, patch, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Falu.MessageTemplates
 
             var uri = new Uri(BaseAddress, $"/v1/message_templates/{id}");
             var request = new HttpRequestMessage(HttpMethod.Delete, uri);
-            return await SendAsync<MessageTemplate>(request, options, cancellationToken);
+            return await SendAsync<MessageTemplate>(request, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Falu.MessageTemplates
             if (template is null) throw new ArgumentNullException(nameof(template));
 
             var uri = new Uri(BaseAddress, "/v1/message_templates/validate");
-            return await PostAsJsonAsync<MessageTemplateValidationResponse>(uri, template, options, cancellationToken);
+            return await PostAsJsonAsync<MessageTemplateValidationResponse>(uri, template, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

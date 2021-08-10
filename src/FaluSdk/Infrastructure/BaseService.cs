@@ -112,6 +112,10 @@ namespace Falu.Infrastructure
                 {
                     request.Headers.Add(HeadersNames.XIdempotencyKey, options.IdempotencyKey);
                 }
+                else if (request.Method == HttpMethod.Patch || request.Method == HttpMethod.Post) // add IdempotencyKey to allow to automatic retries
+                {
+                    request.Headers.Add(HeadersNames.XIdempotencyKey, Guid.NewGuid().ToString());
+                }
 
                 // only for user bearer token
                 if (!string.IsNullOrWhiteSpace(options.Workspace))

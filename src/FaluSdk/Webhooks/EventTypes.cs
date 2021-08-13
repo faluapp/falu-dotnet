@@ -65,27 +65,27 @@
 
         #endregion
 
-        #region PaymentReversals
+        #region PaymentRefunds
 
         /// <summary>
-        /// Occurs whenever a payment reversal is created.
+        /// Occurs whenever a payment refund is created.
         /// </summary>
-        public const string PaymentReversalCreated = "payment.reversal.created";
+        public const string PaymentRefundCreated = "payment.refund.created";
 
         /// <summary>
-        /// Occurs whenever a payment reversal is updated.
+        /// Occurs whenever a payment refunc is updated.
         /// </summary>
-        public const string PaymentReversalUpdated = "payment.reversal.updated";
+        public const string PaymentRefundUpdated = "payment.refund.updated";
 
         /// <summary>
-        /// Occurs whenever a payment reversal succeeds.
+        /// Occurs whenever a payment refund succeeds.
         /// </summary>
-        public const string PaymentReversalSucceeded = "payment.reversal.succeeded";
+        public const string PaymentRefundSucceeded = "payment.refund.succeeded";
 
         /// <summary>
-        /// Occurs whenever a payment reversal fails.
+        /// Occurs whenever a payment refund fails.
         /// </summary>
-        public const string PaymentReversalFailed = "payment.reversal.failed";
+        public const string PaymentRefundFailed = "payment.refund.failed";
 
         #endregion
 

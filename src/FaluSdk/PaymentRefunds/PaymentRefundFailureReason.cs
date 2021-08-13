@@ -1,11 +1,11 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Falu.PaymentReversals
+namespace Falu.PaymentRefunds
 {
     /// <summary>
-    /// Reason for failure of a payment reversal.
+    /// Reason for failure of a payment refund.
     /// </summary>
-    public enum PaymentReversalFailureReason
+    public enum PaymentRefundFailureReason
     {
         ///
         Unknown,

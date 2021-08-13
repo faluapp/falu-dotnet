@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents the details for an MPESA payment reversal.
     /// </summary>
-    public class PaymentReversalMpesaDetails
+    public class PaymentRefundMpesaDetails
     {
         /// <summary>
         /// The target business short code

@@ -5,12 +5,12 @@ namespace Falu.PaymentRefunds
     /// <summary>
     /// Details about failure of a payment reversal.
     /// </summary>
-    public class PaymentReversalFailureDetails
+    public class PaymentRefundFailureDetails
     {
         /// <summary>
         /// Reason for failure.
         /// </summary>
-        public PaymentReversalFailureReason Reason { get; set; }
+        public PaymentRefundFailureReason Reason { get; set; }
 
         /// <summary>
         /// Time at which failure occurred.

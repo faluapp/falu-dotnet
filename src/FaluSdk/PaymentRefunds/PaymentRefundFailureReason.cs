@@ -5,7 +5,7 @@ namespace Falu.PaymentRefunds
     /// <summary>
     /// Reason for failure of a payment reversal.
     /// </summary>
-    public enum PaymentReversalFailureReason
+    public enum PaymentRefundFailureReason
     {
         ///
         Unknown,

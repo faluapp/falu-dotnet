@@ -10,10 +10,10 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.PaymentRefunds
 {
     ///
-    public class PaymentReversalsService : BaseService
+    public class PaymentRefundsService : BaseService
     {
         ///
-        public PaymentReversalsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+        public PaymentRefundsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
 
         /// <summary>
         /// List payment reversals.
@@ -22,7 +22,7 @@ namespace Falu.PaymentRefunds
         /// <param name="reqeustOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<PaymentReversal>>> ListAsync(PaymentReversalsListOptions? options = null,
+        public virtual async Task<ResourceResponse<List<PaymentRefund>>> ListAsync(PaymentRefundsListOptions? options = null,
                                                                                      RequestOptions? reqeustOptions = null,
                                                                                      CancellationToken cancellationToken = default)
         {
@@ -31,7 +31,7 @@ namespace Falu.PaymentRefunds
 
             var query = QueryHelper.MakeQueryString(args);
             var uri = new Uri(BaseAddress, $"/v1/payment_reversals{query}");
-            return await GetAsJsonAsync<List<PaymentReversal>>(uri, reqeustOptions, cancellationToken).ConfigureAwait(false);
+            return await GetAsJsonAsync<List<PaymentRefund>>(uri, reqeustOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -41,14 +41,14 @@ namespace Falu.PaymentRefunds
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<PaymentReversal>> GetAsync(string id,
+        public virtual async Task<ResourceResponse<PaymentRefund>> GetAsync(string id,
                                                                               RequestOptions? options = null,
                                                                               CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
             var uri = new Uri(BaseAddress, $"/v1/payment_reversals/{id}");
-            return await GetAsJsonAsync<PaymentReversal>(uri, options, cancellationToken).ConfigureAwait(false);
+            return await GetAsJsonAsync<PaymentRefund>(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -58,14 +58,14 @@ namespace Falu.PaymentRefunds
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<PaymentReversal>> CreateAsync(PaymentReversalRequest reversal,
+        public virtual async Task<ResourceResponse<PaymentRefund>> CreateAsync(PaymentRefundRequest reversal,
                                                                                  RequestOptions? options = null,
                                                                                  CancellationToken cancellationToken = default)
         {
             if (reversal is null) throw new ArgumentNullException(nameof(reversal));
 
             var uri = new Uri(BaseAddress, "/v1/payment_reversals");
-            return await PostAsJsonAsync<PaymentReversal>(uri, reversal, options, cancellationToken).ConfigureAwait(false);
+            return await PostAsJsonAsync<PaymentRefund>(uri, reversal, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -76,8 +76,8 @@ namespace Falu.PaymentRefunds
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<PaymentReversal>> UpdateAsync(string id,
-                                                                                 JsonPatchDocument<PaymentReversalPatchModel> patch,
+        public virtual async Task<ResourceResponse<PaymentRefund>> UpdateAsync(string id,
+                                                                                 JsonPatchDocument<PaymentRefundPatchModel> patch,
                                                                                  RequestOptions? options = null,
                                                                                  CancellationToken cancellationToken = default)
         {
@@ -85,7 +85,7 @@ namespace Falu.PaymentRefunds
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
             var uri = new Uri(BaseAddress, $"/v1/payment_reversals/{id}");
-            return await PatchAsJsonAsync<PaymentReversal>(uri, patch, options, cancellationToken).ConfigureAwait(false);
+            return await PatchAsJsonAsync<PaymentRefund>(uri, patch, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

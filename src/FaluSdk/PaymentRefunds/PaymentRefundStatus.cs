@@ -3,7 +3,7 @@
     /// <summary>
     /// The status of a payment reversal.
     /// </summary>
-    public enum PaymentReversalStatus
+    public enum PaymentRefundStatus
     {
         ///
         Pending,

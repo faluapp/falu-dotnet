@@ -6,7 +6,7 @@ namespace Falu.PaymentRefunds
     /// <summary>
     /// A model representing details that can be changed about a payment reversal.
     /// </summary>
-    public class PaymentReversalPatchModel : IHasDescription, IHasMetadata
+    public class PaymentRefundPatchModel : IHasDescription, IHasMetadata
     {
         /// <inheritdoc/>
         public string? Description { get; set; }

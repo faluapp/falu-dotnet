@@ -3,7 +3,7 @@
     /// <summary>
     /// Information for initiating a payment reversal.
     /// </summary>
-    public class PaymentReversalRequest : PaymentReversalPatchModel
+    public class PaymentRefundRequest : PaymentRefundPatchModel
     {
         /// <summary>
         /// Identifier of the Payment to reverse.
@@ -13,6 +13,6 @@
         /// <summary>
         /// Reason for the reversal.
         /// </summary>
-        public PaymentReversalReason? Reason { get; set; }
+        public PaymentRefundReason? Reason { get; set; }
     }
 }

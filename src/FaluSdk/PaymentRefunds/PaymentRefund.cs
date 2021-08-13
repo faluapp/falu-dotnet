@@ -6,7 +6,7 @@ namespace Falu.PaymentRefunds
     /// <summary>
     /// Represents a reversal of a Payment.
     /// </summary>
-    public class PaymentReversal : PaymentReversalPatchModel, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
+    public class PaymentRefund : PaymentRefundPatchModel, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
     {
         /// <inheritdoc/>
         public string? Id { get; set; }
@@ -28,12 +28,12 @@ namespace Falu.PaymentRefunds
         /// <summary>
         /// Reason for the reversal.
         /// </summary>
-        public PaymentReversalReason Reason { get; set; }
+        public PaymentRefundReason Reason { get; set; }
 
         /// <summary>
         /// Status of the reversal. 
         /// </summary>
-        public PaymentReversalStatus Status { get; set; }
+        public PaymentRefundStatus Status { get; set; }
 
         /// <inheritdoc/>
         public DateTimeOffset Created { get; set; }
@@ -50,12 +50,12 @@ namespace Falu.PaymentRefunds
         /// Details of the reversal if done via MPESA.
         /// Only populated if the payment being reversed use an MPESA intrument.
         /// </summary>
-        public PaymentReversalMpesaDetails? Mpesa { get; set; }
+        public PaymentRefundMpesaDetails? Mpesa { get; set; }
 
         /// <summary>
         /// Details about failure if the reversal is in failed state.
         /// </summary>
-        public PaymentReversalFailureDetails? Failure { get; set; }
+        public PaymentRefundFailureDetails? Failure { get; set; }
 
         /// <inheritdoc/>
         public string? WorkspaceId { get; set; }

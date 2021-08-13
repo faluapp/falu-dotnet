@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Falu.PaymentRefunds
 {
     /// <summary>
-    /// Options for filtering and pagination of list payment reversals operation.
+    /// Options for filtering and pagination of list payment refunds operation.
     /// </summary>
     public class PaymentRefundsListOptions : BasicListOptionsWithMoney
     {

@@ -1,7 +1,7 @@
 ﻿namespace Falu.PaymentRefunds
 {
     /// <summary>
-    /// The status of a payment reversal.
+    /// The status of a payment refund.
     /// </summary>
     public enum PaymentRefundStatus
     {

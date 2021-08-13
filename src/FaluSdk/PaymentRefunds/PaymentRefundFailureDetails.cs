@@ -3,7 +3,7 @@
 namespace Falu.PaymentRefunds
 {
     /// <summary>
-    /// Details about failure of a payment reversal.
+    /// Details about failure of a payment refund.
     /// </summary>
     public class PaymentRefundFailureDetails
     {

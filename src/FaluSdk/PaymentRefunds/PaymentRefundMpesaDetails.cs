@@ -1,7 +1,7 @@
 ﻿namespace Falu.PaymentRefunds
 {
     /// <summary>
-    /// Represents the details for an MPESA payment reversal.
+    /// Represents the details for an MPESA payment refund.
     /// </summary>
     public class PaymentRefundMpesaDetails
     {

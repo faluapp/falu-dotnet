@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Falu.PaymentRefunds
 {
     /// <summary>
-    /// A model representing details that can be changed about a payment reversal.
+    /// A model representing details that can be changed about a payment refund.
     /// </summary>
     public class PaymentRefundPatchModel : IHasDescription, IHasMetadata
     {

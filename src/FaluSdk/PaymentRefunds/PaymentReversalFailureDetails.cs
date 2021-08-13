@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Falu.PaymentReversals
+namespace Falu.PaymentRefunds
 {
     /// <summary>
     /// Details about failure of a payment reversal.

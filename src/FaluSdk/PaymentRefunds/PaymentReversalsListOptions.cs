@@ -1,7 +1,7 @@
 ﻿using Falu.Core;
 using System.Collections.Generic;
 
-namespace Falu.PaymentReversals
+namespace Falu.PaymentRefunds
 {
     /// <summary>
     /// Options for filtering and pagination of list payment reversals operation.

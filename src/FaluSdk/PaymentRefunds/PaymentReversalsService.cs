@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Tingle.Extensions.JsonPatch;
 
-namespace Falu.PaymentReversals
+namespace Falu.PaymentRefunds
 {
     ///
     public class PaymentReversalsService : BaseService

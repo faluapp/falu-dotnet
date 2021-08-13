@@ -5,7 +5,7 @@ using Falu.Messages;
 using Falu.MessageStreams;
 using Falu.MessageTemplates;
 using Falu.PaymentAuthorizations;
-using Falu.PaymentReversals;
+using Falu.PaymentRefunds;
 using Falu.Payments;
 using Falu.TransferReversals;
 using Falu.Transfers;

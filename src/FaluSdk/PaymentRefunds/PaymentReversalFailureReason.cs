@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Falu.PaymentReversals
+namespace Falu.PaymentRefunds
 {
     /// <summary>
     /// Reason for failure of a payment reversal.

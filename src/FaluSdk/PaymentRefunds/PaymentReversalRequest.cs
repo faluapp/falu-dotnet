@@ -1,4 +1,4 @@
-﻿namespace Falu.PaymentReversals
+﻿namespace Falu.PaymentRefunds
 {
     /// <summary>
     /// Information for initiating a payment reversal.

@@ -1,7 +1,7 @@
 ﻿using Falu.Core;
 using System.Collections.Generic;
 
-namespace Falu.PaymentReversals
+namespace Falu.PaymentRefunds
 {
     /// <summary>
     /// A model representing details that can be changed about a payment reversal.

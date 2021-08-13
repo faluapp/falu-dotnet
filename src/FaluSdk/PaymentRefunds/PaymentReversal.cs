@@ -1,7 +1,7 @@
 ﻿using Falu.Core;
 using System;
 
-namespace Falu.PaymentReversals
+namespace Falu.PaymentRefunds
 {
     /// <summary>
     /// Represents a reversal of a Payment.

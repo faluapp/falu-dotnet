@@ -22,6 +22,45 @@
 
         #endregion
 
+        #region Messages
+
+        /// <summary>
+        /// Occurs whenever a message is sent.
+        /// </summary>
+        public const string MessageSent = "message.sent";
+
+        /// <summary>
+        /// Occurs whenever a message fails to send.
+        /// </summary>
+        public const string MessageFailed = "message.failed";
+
+        /// <summary>
+        /// Occurs whenever an SMS is delivered successfully.
+        /// NOTE: only called when a provider with delivery reports is enabled configured
+        /// </summary>
+        public const string MessageDelivered = "message.delivered";
+
+        #endregion
+
+        #region MessageTemplates
+
+        /// <summary>
+        /// Occurs whenever a message template is created.
+        /// </summary>
+        public const string MessageTemplateCreated = "message_template.created";
+
+        /// <summary>
+        /// Occurs whenever a message template is updated.
+        /// </summary>
+        public const string MessageTemplateUpdated = "message_template.updated";
+
+        /// <summary>
+        /// Occurs whenever a message template is deleted.
+        /// </summary>
+        public const string MessageTemplateDeleted = "message_template.deleted";
+
+        #endregion
+
         #region Money Balances
 
         /// <summary>
@@ -138,45 +177,6 @@
         /// Occurs whenever a transfer reversal fails.
         /// </summary>
         public const string TransferReversalFailed = "transfer.reversal.failed";
-
-        #endregion
-
-        #region Messages
-
-        /// <summary>
-        /// Occurs whenever a message is sent.
-        /// </summary>
-        public const string MessageSent = "message.sent";
-
-        /// <summary>
-        /// Occurs whenever a message fails to send.
-        /// </summary>
-        public const string MessageFailed = "message.failed";
-
-        /// <summary>
-        /// Occurs whenever an SMS is delivered successfully.
-        /// NOTE: only called when a provider with delivery reports is enabled configured
-        /// </summary>
-        public const string MessageDelivered = "message.delivered";
-
-        #endregion
-
-        #region MessageTemplates
-
-        /// <summary>
-        /// Occurs whenever a message template is created.
-        /// </summary>
-        public const string MessageTemplateCreated = "message_template.created";
-
-        /// <summary>
-        /// Occurs whenever a message template is updated.
-        /// </summary>
-        public const string MessageTemplateUpdated = "message_template.updated";
-
-        /// <summary>
-        /// Occurs whenever a message template is deleted.
-        /// </summary>
-        public const string MessageTemplateDeleted = "message_template.deleted";
 
         #endregion
 

@@ -4,9 +4,9 @@ namespace Falu.Payments
 {
     /// <summary>
     /// Funds that are available to be transferred.
-    /// The available balance is categorized by provider and currency.
+    /// They are categorized by provider and currency.
     /// </summary>
-    public class PaymentBalances
+    public class MoneyBalances
     {
         /// <summary>
         /// Breakdown of balance by business code.

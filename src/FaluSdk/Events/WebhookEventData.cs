@@ -7,7 +7,7 @@
     {
         /// <summary>
         /// Object containing the API resource relevant to the event.
-        /// For example, a <c>payment_balances.updated</c> event will have a full balance object.
+        /// For example, a <c>money_balances.updated</c> event will have a full balance object.
         /// </summary>
         public TObject? Object { get; set; }
 

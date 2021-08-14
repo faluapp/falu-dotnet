@@ -164,7 +164,7 @@ response.EnsureSuccess(); // might throw an exception (FaluException)
 
 > Templates should be created only once before use. Store the template ID or the Alias in your application and use either to reference the template.
 
-## Payments
+## Transfers
 
 With `FaluClient` you can send and receive money to and from customers or businesses via multiple payment providers. Below is a sample of how to send money to a customer via MPESA.
 
@@ -192,6 +192,8 @@ response.EnsureSuccess(); // might throw an exception (FaluException)
 ```
 
 > Your outgoing account for MPESA must be configured in your [Workspace settings][workspace-settings] before you can initiate an outgoing payment to a customer.
+
+## Payments
 
 Below is a sample of how to request money from a customer via MPESA STK Push (a.k.a. Popup, Checkout, etc.).
 

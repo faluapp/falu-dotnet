@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 namespace Falu.Payments
 {
     ///
-    public class PaymentBalancesService : BaseService
+    public class MoneyBalancesService : BaseService
     {
         ///
-        public PaymentBalancesService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+        public MoneyBalancesService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
 
         /// <summary>
         /// Retrieve balance.
@@ -19,11 +19,11 @@ namespace Falu.Payments
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<PaymentBalances>> GetAsync(RequestOptions? options = null,
+        public virtual async Task<ResourceResponse<MoneyBalances>> GetAsync(RequestOptions? options = null,
                                                                              CancellationToken cancellationToken = default)
         {
-            var uri = new Uri(BaseAddress, "/v1/payment_balances");
-            return await GetAsJsonAsync<PaymentBalances>(uri, options, cancellationToken).ConfigureAwait(false);
+            var uri = new Uri(BaseAddress, "/v1/money_balances");
+            return await GetAsJsonAsync<MoneyBalances>(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Falu.Payments
         public virtual async Task<ResourceResponse<object>> RefreshAsync(RequestOptions? options = null,
                                                                          CancellationToken cancellationToken = default)
         {
-            var uri = new Uri(BaseAddress, "/v1/payment_balances/refresh");
+            var uri = new Uri(BaseAddress, "/v1/money_balances/refresh");
             return await PostAsJsonAsync<object>(uri, new { }, options, cancellationToken).ConfigureAwait(false);
         }
     }

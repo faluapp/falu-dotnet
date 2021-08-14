@@ -22,12 +22,16 @@
 
         #endregion
 
-        #region Payments
+        #region Money Balances
 
         /// <summary>
-        /// Occurs whenever a payment balances are updated.
+        /// Occurs whenever a money balances are updated.
         /// </summary>
-        public const string PaymentBalancesUpdated = "payment_balances.updated";
+        public const string MoneyBalancesUpdated = "money_balances.updated";
+
+        #endregion
+
+        #region Payments
 
         /// <summary>
         /// Occurs whenever a payment is updated.

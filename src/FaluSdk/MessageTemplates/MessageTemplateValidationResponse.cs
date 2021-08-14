@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Falu.MessageTemplates
+﻿namespace Falu.MessageTemplates
 {
     /// <summary>
     /// Response for validating a template
@@ -13,7 +11,7 @@ namespace Falu.MessageTemplates
         /// If a <code>Model</code> was submitted, it will be merged
         /// and returned with this model.
         /// </summary>
-        public IDictionary<string, object>? Model { get; set; }
+        public object? Model { get; set; }
 
         /// <summary>
         /// Using the <code>Model</code> the text content that

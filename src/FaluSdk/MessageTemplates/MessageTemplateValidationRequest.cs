@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Falu.MessageTemplates
+﻿namespace Falu.MessageTemplates
 {
     /// <summary>
     /// Model for requesting template validation
@@ -16,6 +14,6 @@ namespace Falu.MessageTemplates
         /// <summary>
         /// The template model to be used when rendering test content.
         /// </summary>
-        public IDictionary<string, object>? Model { get; set; }
+        public object? Model { get; set; }
     }
 }

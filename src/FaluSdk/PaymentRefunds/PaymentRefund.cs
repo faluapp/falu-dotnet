@@ -31,7 +31,7 @@ namespace Falu.PaymentRefunds
         public PaymentRefundReason Reason { get; set; }
 
         /// <summary>
-        /// Status of the reversal. 
+        /// Status of the reversal.
         /// </summary>
         public PaymentRefundStatus Status { get; set; }
 
@@ -48,7 +48,7 @@ namespace Falu.PaymentRefunds
 
         /// <summary>
         /// Details of the reversal if done via MPESA.
-        /// Only populated if the payment being reversed use an MPESA intrument.
+        /// Only populated if the payment being reversed used an MPESA instrument.
         /// </summary>
         public PaymentRefundMpesaDetails? Mpesa { get; set; }
 

@@ -18,7 +18,7 @@ namespace Falu.Transfers
         public DateTimeOffset Timestamp { get; set; }
 
         /// <summary>
-        /// Failure message as recevied from teh provider.
+        /// Failure message as received from the provider.
         /// </summary>
         public string? Detail { get; set; }
     }

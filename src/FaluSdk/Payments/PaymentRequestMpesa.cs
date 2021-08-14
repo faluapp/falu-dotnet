@@ -24,7 +24,7 @@
 
         /// <summary>
         /// The shortcode of the receiver.
-        /// When not provided, it defaults to the default recepient.
+        /// When not provided, it defaults to the default recipient.
         /// When not provided, either the default incoming business code
         /// or the first business code for the workspace is used depending on the <c>Kind</c>.
         /// <br/>

@@ -18,7 +18,7 @@ namespace Falu.Payments
 
         /// <summary>
         /// Breakdown of balance by business code.
-        /// The value is represented in the smallest currrency unit.
+        /// The value is represented in the smallest currency unit.
         /// </summary>
         public Dictionary<string, long>? Mpesa { get; set; }
 

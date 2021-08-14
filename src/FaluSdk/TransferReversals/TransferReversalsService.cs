@@ -19,11 +19,11 @@ namespace Falu.TransferReversals
         /// List transfer reversals.
         /// </summary>
         /// <param name="options">Options for filtering and pagination.</param>
-        /// <param name="reqeustOptions">Options to use for the request.</param>
+        /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<List<TransferReversal>>> ListAsync(TransferReversalsListOptions? options = null,
-                                                                                      RequestOptions? reqeustOptions = null,
+                                                                                      RequestOptions? requestOptions = null,
                                                                                       CancellationToken cancellationToken = default)
         {
             var args = new Dictionary<string, string>();
@@ -31,7 +31,7 @@ namespace Falu.TransferReversals
 
             var query = QueryHelper.MakeQueryString(args);
             var uri = new Uri(BaseAddress, $"/v1/transfer_reversals{query}");
-            return await GetAsJsonAsync<List<TransferReversal>>(uri, reqeustOptions, cancellationToken).ConfigureAwait(false);
+            return await GetAsJsonAsync<List<TransferReversal>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

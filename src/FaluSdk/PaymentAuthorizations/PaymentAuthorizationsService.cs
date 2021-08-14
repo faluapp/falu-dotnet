@@ -80,14 +80,15 @@ namespace Falu.PaymentAuthorizations
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<PaymentAuthorization>> ApproveAsync(string id,
-                                                                                       PaymentAuthorizationPatchModel model,
+                                                                                       PaymentAuthorizationPatchModel? model = null,
                                                                                        RequestOptions? options = null,
                                                                                        CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
+            model ??= new PaymentAuthorizationPatchModel();
             var uri = new Uri(BaseAddress, $"/v1/payment_authorizations/{id}/approve");
-            return await PostAsJsonAsync<PaymentAuthorization>(uri, new { }, options, cancellationToken).ConfigureAwait(false);
+            return await PostAsJsonAsync<PaymentAuthorization>(uri, model, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -99,14 +100,15 @@ namespace Falu.PaymentAuthorizations
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ResourceResponse<PaymentAuthorization>> DeclineAsync(string id,
-                                                                                       PaymentAuthorizationPatchModel model,
+                                                                                       PaymentAuthorizationPatchModel? model = null,
                                                                                        RequestOptions? options = null,
                                                                                        CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
+            model ??= new PaymentAuthorizationPatchModel();
             var uri = new Uri(BaseAddress, $"/v1/payment_authorizations/{id}/decline");
-            return await PostAsJsonAsync<PaymentAuthorization>(uri, new { }, options, cancellationToken).ConfigureAwait(false);
+            return await PostAsJsonAsync<PaymentAuthorization>(uri, model, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

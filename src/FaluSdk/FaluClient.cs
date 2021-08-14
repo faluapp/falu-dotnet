@@ -36,12 +36,12 @@ namespace Falu
             Evaluations = new EvaluationsService(backChannel, options);
             Identity = new IdentityService(backChannel, options);
             Messages = new MessagesService(backChannel, options);
+            MoneyBalances = new MoneyBalancesService(backChannel, options);
             Payments = new PaymentsService(backChannel, options);
             PaymentAuthorizations = new PaymentAuthorizationsService(backChannel, options);
             PaymentRefunds = new PaymentRefundsService(backChannel, options);
             Transfers = new TransfersService(backChannel, options);
             TransferReversals = new TransferReversalsService(backChannel, options);
-            PaymentBalances = new PaymentBalancesService(backChannel, options);
             MessageStreams = new MessageStreamsService(backChannel, options);
             MessageTemplates = new MessageTemplatesService(backChannel, options);
             Events = new EventsService(backChannel, options);
@@ -67,6 +67,9 @@ namespace Falu
         public virtual MessageTemplatesService MessageTemplates { get; }
 
         ///
+        public virtual MoneyBalancesService MoneyBalances { get; }
+
+        ///
         public virtual PaymentsService Payments { get; }
 
         ///
@@ -80,9 +83,6 @@ namespace Falu
 
         ///
         public virtual TransferReversalsService TransferReversals { get; }
-
-        ///
-        public virtual PaymentBalancesService PaymentBalances { get; }
 
         ///
         public virtual WebhooksService Webhooks { get; }

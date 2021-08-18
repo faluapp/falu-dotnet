@@ -63,6 +63,7 @@ namespace Falu.Messages
                                                                          CancellationToken cancellationToken = default)
         {
             if (message is null) throw new ArgumentNullException(nameof(message));
+            message.Template?.Model?.GetType().EnsureAllowedForMessageTemplateModel();
 
             var uri = new Uri(BaseAddress, "/v1/messages");
             return await PostAsJsonAsync<Message>(uri, message, options, cancellationToken).ConfigureAwait(false);
@@ -105,6 +106,11 @@ namespace Falu.Messages
             {
                 throw new ArgumentOutOfRangeException(paramName: nameof(messages),
                                                       message: "The service does not support more than 10,000 (10k) messages");
+            }
+
+            foreach(var m in messages)
+            {
+                m.Template?.Model?.GetType().EnsureAllowedForMessageTemplateModel();
             }
 
             var uri = new Uri(BaseAddress, "/v1/messages/bulk");

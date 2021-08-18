@@ -119,6 +119,8 @@ namespace Falu.MessageTemplates
         {
             if (template is null) throw new ArgumentNullException(nameof(template));
 
+            template.Model?.GetType().EnsureAllowedForMessageTemplateModel();
+
             var uri = new Uri(BaseAddress, "/v1/message_templates/validate");
             return await PostAsJsonAsync<MessageTemplateValidationResponse>(uri, template, options, cancellationToken).ConfigureAwait(false);
         }

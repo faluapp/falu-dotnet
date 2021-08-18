@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Reflection;
 using System.Runtime.Serialization;
 
 namespace System
@@ -7,10 +8,8 @@ namespace System
     {
         public static string GetEnumMemberAttrValueOrDefault<T>(this T enumVal) where T : Enum
         {
-            var memInfo = typeof(T).GetMember(enumVal.ToString());
-            var attr = memInfo.FirstOrDefault()?.GetCustomAttributes(false)
-                              .OfType<EnumMemberAttribute>()
-                              .FirstOrDefault();
+            var memInfo = typeof(T).GetMember(enumVal.ToString()).FirstOrDefault();
+            var attr = memInfo?.GetCustomAttribute<EnumMemberAttribute>(inherit: false);
 
             return attr?.Value ?? enumVal.ToString().ToLowerInvariant();
         }

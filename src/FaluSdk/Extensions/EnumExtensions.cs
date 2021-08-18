@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Runtime.Serialization;
 
-namespace System.Collections.Generic
+namespace System
 {
     internal static class EnumExtensions
     {

@@ -18,7 +18,7 @@ namespace Falu
         /// Serialization options.
         /// For internal-use only;
         /// </summary>
-        public JsonSerializerOptions SerializerOptions { get; } = CreateSerializerOptions();
+        internal JsonSerializerOptions SerializerOptions { get; } = CreateSerializerOptions();
 
         /// <summary>
         /// The API Key for authenticating requests to Falu servers.

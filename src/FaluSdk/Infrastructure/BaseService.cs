@@ -15,18 +15,21 @@ namespace Falu.Infrastructure
     {
         private readonly string JsonContentType = System.Net.Mime.MediaTypeNames.Application.Json;
 
-        private readonly HttpClient backChannel;
-        private readonly FaluClientOptions options;
-
         ///
         protected BaseService(HttpClient backChannel, FaluClientOptions options)
         {
-            this.backChannel = backChannel ?? throw new ArgumentNullException(nameof(backChannel));
-            this.options = options ?? throw new ArgumentNullException(nameof(options));
+            BackChannel = backChannel ?? throw new ArgumentNullException(nameof(backChannel));
+            Options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
         ///
-        protected virtual Uri BaseAddress => backChannel.BaseAddress;
+        protected HttpClient BackChannel { get; }
+
+        ///
+        protected FaluClientOptions Options { get; }
+
+        ///
+        protected virtual Uri BaseAddress => BackChannel.BaseAddress;
 
 
         #region Helpers
@@ -103,7 +106,7 @@ namespace Falu.Infrastructure
             if (request == null) throw new ArgumentNullException(nameof(request));
 
             request.Headers.Add(HeadersNames.XFaluVersion, FaluClientOptions.ApiVersion);
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", this.options.ApiKey);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Options.ApiKey);
 
             options ??= new RequestOptions(); // allows for code below to run
 
@@ -129,7 +132,7 @@ namespace Falu.Infrastructure
             }
 
             // execute the request
-            return await backChannel.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            return await BackChannel.SendAsync(request, cancellationToken).ConfigureAwait(false);
         }
 
         private async Task<HttpContent> MakeJsonHttpContentAsync(object o, CancellationToken cancellationToken)
@@ -154,7 +157,7 @@ namespace Falu.Infrastructure
                 if (!string.IsNullOrWhiteSpace(contentType) && !contentType.Contains("json")) return default;
 
                 return await JsonSerializer.DeserializeAsync<T>(utf8Json: stream,
-                                                                options: options.SerializerOptions,
+                                                                options: Options.SerializerOptions,
                                                                 cancellationToken: cancellationToken).ConfigureAwait(false);
             }
         }
@@ -164,7 +167,7 @@ namespace Falu.Infrastructure
             var payload = new MemoryStream();
             await JsonSerializer.SerializeAsync(utf8Json: payload,
                                                 value: input,
-                                                options: options.SerializerOptions,
+                                                options: Options.SerializerOptions,
                                                 cancellationToken: cancellationToken).ConfigureAwait(false);
 
             // make the produced payload readable

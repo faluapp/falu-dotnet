@@ -28,25 +28,31 @@ namespace Falu
         /// <param name="optionsAccessor"></param>
         public FaluClient(HttpClient backChannel, IOptions<FaluClientOptions> optionsAccessor)
         {
-            if (backChannel is null) throw new ArgumentNullException(nameof(backChannel));
+            BackChannel = backChannel ?? throw new ArgumentNullException(nameof(backChannel));
+            Options = optionsAccessor?.Value ?? throw new ArgumentNullException(nameof(optionsAccessor));
 
-            var options = optionsAccessor?.Value;
-            if (options is null) throw new ArgumentNullException(nameof(optionsAccessor));
-
-            Evaluations = new EvaluationsService(backChannel, options);
-            Identity = new IdentityService(backChannel, options);
-            Messages = new MessagesService(backChannel, options);
-            MoneyBalances = new MoneyBalancesService(backChannel, options);
-            Payments = new PaymentsService(backChannel, options);
-            PaymentAuthorizations = new PaymentAuthorizationsService(backChannel, options);
-            PaymentRefunds = new PaymentRefundsService(backChannel, options);
-            Transfers = new TransfersService(backChannel, options);
-            TransferReversals = new TransferReversalsService(backChannel, options);
-            MessageStreams = new MessageStreamsService(backChannel, options);
-            MessageTemplates = new MessageTemplatesService(backChannel, options);
-            Events = new EventsService(backChannel, options);
-            Webhooks = new WebhooksService(backChannel, options);
+            Evaluations = new EvaluationsService(BackChannel, Options);
+            Identity = new IdentityService(BackChannel, Options);
+            Messages = new MessagesService(BackChannel, Options);
+            MoneyBalances = new MoneyBalancesService(BackChannel, Options);
+            Payments = new PaymentsService(BackChannel, Options);
+            PaymentAuthorizations = new PaymentAuthorizationsService(BackChannel, Options);
+            PaymentRefunds = new PaymentRefundsService(BackChannel, Options);
+            Transfers = new TransfersService(BackChannel, Options);
+            TransferReversals = new TransferReversalsService(BackChannel, Options);
+            MessageStreams = new MessageStreamsService(BackChannel, Options);
+            MessageTemplates = new MessageTemplatesService(BackChannel, Options);
+            Events = new EventsService(BackChannel, Options);
+            Webhooks = new WebhooksService(BackChannel, Options);
         }
+
+        ///
+        protected HttpClient BackChannel { get; }
+
+        ///
+        protected FaluClientOptions Options { get; }
+
+        #region Services
 
         ///
         public virtual EvaluationsService Evaluations { get; }
@@ -86,5 +92,7 @@ namespace Falu
 
         ///
         public virtual WebhooksService Webhooks { get; }
+
+        #endregion
     }
 }

@@ -3,9 +3,9 @@ using Microsoft.Extensions.Options;
 
 namespace Falu
 {
-    internal class FaluClientOptionsPostConfigureOptions : IPostConfigureOptions<FaluClientOptions>
+    internal class PostConfigureFaluClientOptions<TClientOptions> : IPostConfigureOptions<TClientOptions> where TClientOptions : FaluClientOptions
     {
-        public void PostConfigure(string name, FaluClientOptions options)
+        public void PostConfigure(string name, TClientOptions options)
         {
             if (string.IsNullOrWhiteSpace(options.ApiKey))
             {

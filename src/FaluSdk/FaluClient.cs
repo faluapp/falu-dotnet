@@ -19,14 +19,14 @@ namespace Falu
     /// <summary>
     /// Official client for Falu API
     /// </summary>
-    public class FaluClient
+    public class FaluClient<TOptions> where TOptions : FaluClientOptions
     {
         /// <summary>
-        /// Creates an instance of <see cref="FaluClient"/>
+        /// Creates an instance of <see cref="FaluClient{TOptions}"/>
         /// </summary>
         /// <param name="backChannel"></param>
         /// <param name="optionsAccessor"></param>
-        public FaluClient(HttpClient backChannel, IOptions<FaluClientOptions> optionsAccessor)
+        public FaluClient(HttpClient backChannel, IOptions<TOptions> optionsAccessor)
         {
             BackChannel = backChannel ?? throw new ArgumentNullException(nameof(backChannel));
             Options = optionsAccessor?.Value ?? throw new ArgumentNullException(nameof(optionsAccessor));
@@ -50,49 +50,62 @@ namespace Falu
         protected HttpClient BackChannel { get; }
 
         ///
-        protected FaluClientOptions Options { get; }
+        protected TOptions Options { get; }
 
         #region Services
 
         ///
-        public virtual EvaluationsService Evaluations { get; }
+        public virtual EvaluationsService Evaluations { get; protected set; }
 
         ///
-        public virtual EventsService Events { get; }
+        public virtual EventsService Events { get; protected set; }
 
         ///
-        public virtual IdentityService Identity { get; }
+        public virtual IdentityService Identity { get; protected set; }
 
         ///
-        public virtual MessagesService Messages { get; }
+        public virtual MessagesService Messages { get; protected set; }
 
         ///
-        public virtual MessageStreamsService MessageStreams { get; }
+        public virtual MessageStreamsService MessageStreams { get; protected set; }
 
         ///
-        public virtual MessageTemplatesService MessageTemplates { get; }
+        public virtual MessageTemplatesService MessageTemplates { get; protected set; }
 
         ///
-        public virtual MoneyBalancesService MoneyBalances { get; }
+        public virtual MoneyBalancesService MoneyBalances { get; protected set; }
 
         ///
-        public virtual PaymentsService Payments { get; }
+        public virtual PaymentsService Payments { get; protected set; }
 
         ///
-        public virtual PaymentAuthorizationsService PaymentAuthorizations { get; }
+        public virtual PaymentAuthorizationsService PaymentAuthorizations { get; protected set; }
 
         ///
-        public virtual PaymentRefundsService PaymentRefunds { get; }
+        public virtual PaymentRefundsService PaymentRefunds { get; protected set; }
 
         ///
-        public virtual TransfersService Transfers { get; }
+        public virtual TransfersService Transfers { get; protected set; }
 
         ///
-        public virtual TransferReversalsService TransferReversals { get; }
+        public virtual TransferReversalsService TransferReversals { get; protected set; }
 
         ///
-        public virtual WebhooksService Webhooks { get; }
+        public virtual WebhooksService Webhooks { get; protected set; }
 
         #endregion
+    }
+
+    /// <summary>
+    /// Official client for Falu API
+    /// </summary>
+    public class FaluClient : FaluClient<FaluClientOptions>
+    {
+        /// <summary>
+        /// Creates an instance of <see cref="FaluClient"/>
+        /// </summary>
+        /// <param name="backChannel"></param>
+        /// <param name="optionsAccessor"></param>
+        public FaluClient(HttpClient backChannel, IOptions<FaluClientOptions> optionsAccessor) : base(backChannel, optionsAccessor) { }
     }
 }

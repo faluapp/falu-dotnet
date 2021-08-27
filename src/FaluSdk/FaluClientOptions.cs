@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 namespace Falu
 {
     /// <summary>
-    /// Service configuration options for <see cref="FaluClient"/>
+    /// Service configuration options for <see cref="FaluClient{TOptions}"/>
     /// </summary>
     public class FaluClientOptions
     {

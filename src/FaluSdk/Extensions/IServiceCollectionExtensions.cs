@@ -12,7 +12,7 @@ using System.Net.Http;
 namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
-    /// Extensions for <see cref="IServiceCollection"/> relating to <see cref="FaluClient"/>
+    /// Extensions for <see cref="IServiceCollection"/> relating to <see cref="FaluClient"/> and <see cref="FaluClient{TOptions}"/>
     /// </summary>
     public static partial class IServiceCollectionExtensions
     {
@@ -81,9 +81,33 @@ namespace Microsoft.Extensions.DependencyInjection
                                                  Action<FaluClientOptions>? configure = null,
                                                  Action<IHttpClientBuilder>? configureBuilder = null)
         {
+            return services.AddFaluInner<FaluClient, FaluClientOptions>(configuration: configuration,
+                                                                        configure: configure,
+                                                                        configureBuilder: configureBuilder);
+        }
+
+        /// <summary>
+        /// Add client for Falu API
+        /// </summary>
+        /// <typeparam name="TClient"></typeparam>
+        /// <typeparam name="TClientOptions"></typeparam>
+        /// <param name="services">The <see cref="IServiceCollection"/> to be added to.</param>
+        /// <param name="configuration">
+        /// An <see cref="IConfiguration"/> containing the values of <typeparamref name="TClientOptions"/> at its root.
+        /// </param>
+        /// <param name="configure">An <see cref="Action{FaluClientOptions}"/> to configure the client options.</param>
+        /// <param name="configureBuilder">An <see cref="Action{IHttpClientBuilder}"/> to configure the HTTP client builder.</param>
+        /// <returns></returns>
+        public static IServiceCollection AddFaluInner<TClient, TClientOptions>(this IServiceCollection services,
+                                                                               IConfiguration? configuration = null,
+                                                                               Action<TClientOptions>? configure = null,
+                                                                               Action<IHttpClientBuilder>? configureBuilder = null)
+            where TClient : FaluClient
+            where TClientOptions : FaluClientOptions
+        {
             if (configuration is not null)
             {
-                services.Configure<FaluClientOptions>(configuration);
+                services.Configure<TClientOptions>(configuration);
             }
 
             if (configure != null)
@@ -92,13 +116,13 @@ namespace Microsoft.Extensions.DependencyInjection
             }
 
             // register post configuration for validation purposes
-            services.AddSingleton<IPostConfigureOptions<FaluClientOptions>, FaluClientOptionsPostConfigureOptions>();
+            services.AddSingleton<IPostConfigureOptions<TClientOptions>, PostConfigureFaluClientOptions<TClientOptions>>();
 
             // get the version from the assembly
-            var productVersion = typeof(FaluClient).Assembly.GetName().Version.ToString(3);
+            var productVersion = typeof(TClient).Assembly.GetName().Version.ToString(3);
 
             // setup client
-            var builder = services.AddHttpClient<FaluClient>()
+            var builder = services.AddHttpClient<TClient>()
                                   .ConfigureHttpClient((provider, client) =>
                                   {
                                       // set the base address
@@ -106,7 +130,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
                                       // prepare User-Agent value
                                       var userAgent = $"falu-dotnet/{productVersion}";
-                                      var options = provider.GetRequiredService<IOptions<FaluClientOptions>>().Value;
+                                      var options = provider.GetRequiredService<IOptions<TClientOptions>>().Value;
                                       if (options.Application is not null)
                                       {
                                           userAgent += $" {options.Application}";
@@ -119,7 +143,7 @@ namespace Microsoft.Extensions.DependencyInjection
             // setup retries
             builder.AddPolicyHandler((provider, request) =>
             {
-                var options = provider.GetRequiredService<IOptions<FaluClientOptions>>().Value;
+                var options = provider.GetRequiredService<IOptions<TClientOptions>>().Value;
                 var delays = Backoff.DecorrelatedJitterBackoffV2(medianFirstRetryDelay: TimeSpan.FromSeconds(0.5f),
                                                                  retryCount: options.Retries);
 

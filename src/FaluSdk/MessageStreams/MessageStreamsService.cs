@@ -95,15 +95,14 @@ namespace Falu.MessageStreams
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<MessageStream>> DeleteAsync(string id,
-                                                                               RequestOptions? options = null,
-                                                                               CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<object>> DeleteAsync(string id,
+                                                                        RequestOptions? options = null,
+                                                                        CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
             var uri = new Uri(BaseAddress, $"/v1/message_streams/{id}");
-            var request = new HttpRequestMessage(HttpMethod.Delete, uri);
-            return await SendAsync<MessageStream>(request, options, cancellationToken).ConfigureAwait(false);
+            return await DeleteAsync(uri, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

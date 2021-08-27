@@ -71,6 +71,15 @@ namespace Falu.Infrastructure
         }
 
         ///
+        protected virtual async Task<ResourceResponse<object>> DeleteAsync(Uri uri,
+                                                                           RequestOptions? options = null,
+                                                                           CancellationToken cancellationToken = default)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Delete, uri);
+            return await SendAsync<object>(request, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        ///
         protected virtual async Task<ResourceResponse<TResource>> SendAsync<TResource>(HttpRequestMessage request,
                                                                                        RequestOptions? options = null,
                                                                                        CancellationToken cancellationToken = default)
@@ -98,9 +107,10 @@ namespace Falu.Infrastructure
             return new ResourceResponse<TResource>(response: response, resource: resource, error: error);
         }
 
-        private async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
-                                                          RequestOptions? options = null,
-                                                          CancellationToken cancellationToken = default)
+        ///
+        protected virtual async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
+                                                                    RequestOptions? options = null,
+                                                                    CancellationToken cancellationToken = default)
         {
             // ensure request is not null
             if (request == null) throw new ArgumentNullException(nameof(request));

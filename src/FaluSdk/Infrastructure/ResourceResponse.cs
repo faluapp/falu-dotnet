@@ -46,7 +46,7 @@ namespace Falu.Infrastructure
         /// <summary>
         /// Gets an identifier to correlate the request between the client and the server, as returned by Falu.
         /// </summary>
-        public string? TraceId { get; set; }
+        public string? TraceId { get; }
 
         /// <summary>Gets the token to use to fetch more data, as returned by Falu.</summary>
         public string? ContinuationToken { get; }
@@ -76,12 +76,12 @@ namespace Falu.Infrastructure
         /// <summary>
         /// The resource extracted from the response body
         /// </summary>
-        public TResource? Resource { get; set; }
+        public TResource? Resource { get; }
 
         /// <summary>
         /// The error extracted from the response body
         /// </summary>
-        public FaluError? Error { get; set; }
+        public FaluError? Error { get; }
 
         /// <summary>
         /// Helper method to ensure the response was successful

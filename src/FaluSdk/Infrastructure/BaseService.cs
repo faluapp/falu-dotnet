@@ -47,10 +47,9 @@ namespace Falu.Infrastructure
                                                                                               RequestOptions? options = null,
                                                                                               CancellationToken cancellationToken = default)
         {
-            var request = new HttpRequestMessage(new HttpMethod("PATCH"), uri)
+            var request = new HttpRequestMessage(HttpMethod.Patch, uri)
             {
-                Content = await MakeJsonHttpContentAsync(patch, cancellationToken)
-.ConfigureAwait(false)
+                Content = await MakeJsonHttpContentAsync(patch, cancellationToken).ConfigureAwait(false)
             };
             return await SendAsync<TResource>(request, options, cancellationToken).ConfigureAwait(false);
         }

@@ -27,6 +27,6 @@
         /// For API key authentication, the key already identifies environment.
         /// This value is set in the <c>X-Live-Mode</c> request header.
         /// </summary>
-        public bool Live { get; set; }
+        public bool? Live { get; set; } = null;
     }
 }

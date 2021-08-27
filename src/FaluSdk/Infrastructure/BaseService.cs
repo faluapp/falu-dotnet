@@ -124,9 +124,9 @@ namespace Falu.Infrastructure
                 }
 
                 // only for user bearer token
-                if (options.Live)
+                if (options.Live is not null)
                 {
-                    request.Headers.Add(HeadersNames.XLiveMode, "true");
+                    request.Headers.Add(HeadersNames.XLiveMode, options.Live.Value.ToString().ToLowerInvariant());
                 }
             }
 

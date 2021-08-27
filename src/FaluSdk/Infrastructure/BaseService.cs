@@ -1,6 +1,7 @@
 ﻿using Falu.Core;
 using System;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -13,6 +14,15 @@ namespace Falu.Infrastructure
     ///
     public abstract class BaseService
     {
+        /// <summary>List of supported JSON content types</summary>
+        public static readonly string[] SupportedContentTypes = new[] {
+            "application/json",
+            "text/json",
+            "application/json-path+json",
+            "application/*+json",
+            "application/problem+json",
+        };
+
         private readonly string JsonContentType = System.Net.Mime.MediaTypeNames.Application.Json;
 
         ///
@@ -35,20 +45,19 @@ namespace Falu.Infrastructure
         #region Helpers
 
         ///
-        protected virtual async Task<ResourceResponse<TResource>> GetAsJsonAsync<TResource>(Uri uri,
-                                                                                            RequestOptions? options = null,
-                                                                                            CancellationToken cancellationToken = default)
+        protected virtual async Task<ResourceResponse<TResource>> GetAsync<TResource>(Uri uri,
+                                                                                      RequestOptions? options = null,
+                                                                                      CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, uri);
-            request.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(JsonContentType));
             return await SendAsync<TResource>(request, options, cancellationToken).ConfigureAwait(false);
         }
 
         ///
-        protected virtual async Task<ResourceResponse<TResource>> PatchAsJsonAsync<TResource>(Uri uri,
-                                                                                              object patch,
-                                                                                              RequestOptions? options = null,
-                                                                                              CancellationToken cancellationToken = default)
+        protected virtual async Task<ResourceResponse<TResource>> PatchAsync<TResource>(Uri uri,
+                                                                                        object patch,
+                                                                                        RequestOptions? options = null,
+                                                                                        CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(HttpMethod.Patch, uri)
             {
@@ -58,10 +67,10 @@ namespace Falu.Infrastructure
         }
 
         ///
-        protected virtual async Task<ResourceResponse<TResource>> PostAsJsonAsync<TResource>(Uri uri,
-                                                                                             object o,
-                                                                                             RequestOptions? options = null,
-                                                                                             CancellationToken cancellationToken = default)
+        protected virtual async Task<ResourceResponse<TResource>> PostAsync<TResource>(Uri uri,
+                                                                                       object o,
+                                                                                       RequestOptions? options = null,
+                                                                                       CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, uri)
             {
@@ -116,6 +125,7 @@ namespace Falu.Infrastructure
             if (request == null) throw new ArgumentNullException(nameof(request));
 
             request.Headers.Add(HeadersNames.XFaluVersion, FaluClientOptions.ApiVersion);
+            request.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(JsonContentType));
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Options.ApiKey);
 
             options ??= new RequestOptions(); // allows for code below to run
@@ -150,11 +160,11 @@ namespace Falu.Infrastructure
             var encoding = Encoding.UTF8;
             var stream = await SerializeAsync(o, cancellationToken).ConfigureAwait(false);
             var content = new StreamContent(stream);
-            content.Headers.ContentType = MediaTypeHeaderValue.Parse($"{JsonContentType};charset={encoding.BodyName}");
+            content.Headers.ContentType = new MediaTypeHeaderValue(JsonContentType) { CharSet = encoding.BodyName };
             return content;
         }
 
-        private async Task<T?> DeserializeAsync<T>(string? contentType, Stream stream, CancellationToken cancellationToken)
+        private async Task<T?> DeserializeAsync<T>(string? mediaType, Stream stream, CancellationToken cancellationToken)
         {
             using (stream)
             {
@@ -164,7 +174,9 @@ namespace Falu.Infrastructure
                 if (stream.Length == 0) return default;
 
                 // if content type is provided, it must match JSON
-                if (!string.IsNullOrWhiteSpace(contentType) && !contentType.Contains("json")) return default;
+                if (!string.IsNullOrWhiteSpace(mediaType)
+                    && !SupportedContentTypes.Contains(value: mediaType, comparer: StringComparer.OrdinalIgnoreCase))
+                    return default;
 
                 return await JsonSerializer.DeserializeAsync<T>(utf8Json: stream,
                                                                 options: Options.SerializerOptions,

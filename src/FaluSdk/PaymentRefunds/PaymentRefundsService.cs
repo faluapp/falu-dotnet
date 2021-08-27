@@ -31,7 +31,7 @@ namespace Falu.PaymentRefunds
 
             var query = QueryHelper.MakeQueryString(args);
             var uri = new Uri(BaseAddress, $"/v1/payment_reversals{query}");
-            return await GetAsJsonAsync<List<PaymentRefund>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
+            return await GetAsync<List<PaymentRefund>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Falu.PaymentRefunds
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
             var uri = new Uri(BaseAddress, $"/v1/payment_reversals/{id}");
-            return await GetAsJsonAsync<PaymentRefund>(uri, options, cancellationToken).ConfigureAwait(false);
+            return await GetAsync<PaymentRefund>(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Falu.PaymentRefunds
             if (reversal is null) throw new ArgumentNullException(nameof(reversal));
 
             var uri = new Uri(BaseAddress, "/v1/payment_reversals");
-            return await PostAsJsonAsync<PaymentRefund>(uri, reversal, options, cancellationToken).ConfigureAwait(false);
+            return await PostAsync<PaymentRefund>(uri, reversal, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Falu.PaymentRefunds
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
             var uri = new Uri(BaseAddress, $"/v1/payment_reversals/{id}");
-            return await PatchAsJsonAsync<PaymentRefund>(uri, patch, options, cancellationToken).ConfigureAwait(false);
+            return await PatchAsync<PaymentRefund>(uri, patch, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

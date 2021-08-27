@@ -32,7 +32,7 @@ namespace Falu.Evaluations
 
             var query = QueryHelper.MakeQueryString(args);
             var uri = new Uri(BaseAddress, $"/v1/evaluations{query}");
-            return await GetAsJsonAsync<List<Evaluation>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
+            return await GetAsync<List<Evaluation>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Falu.Evaluations
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
             var uri = new Uri(BaseAddress, $"/v1/evaluations/{id}");
-            return await GetAsJsonAsync<Evaluation>(uri, options, cancellationToken).ConfigureAwait(false);
+            return await GetAsync<Evaluation>(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Falu.Evaluations
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
             var uri = new Uri(BaseAddress, $"/v1/evaluations/{id}");
-            return await PatchAsJsonAsync<Evaluation>(uri, patch, options, cancellationToken).ConfigureAwait(false);
+            return await PatchAsync<Evaluation>(uri, patch, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Falu.Evaluations
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
             var uri = new Uri(BaseAddress, $"/v1/evaluations/{id}/score");
-            return await PostAsJsonAsync<Evaluation>(uri, new { }, options, cancellationToken).ConfigureAwait(false);
+            return await PostAsync<Evaluation>(uri, new { }, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

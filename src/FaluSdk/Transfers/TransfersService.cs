@@ -31,7 +31,7 @@ namespace Falu.Transfers
 
             var query = QueryHelper.MakeQueryString(args);
             var uri = new Uri(BaseAddress, $"/v1/transfers{query}");
-            return await GetAsJsonAsync<List<Transfer>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
+            return await GetAsync<List<Transfer>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Falu.Transfers
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
             var uri = new Uri(BaseAddress, $"/v1/transfers/{id}");
-            return await GetAsJsonAsync<Transfer>(uri, options, cancellationToken).ConfigureAwait(false);
+            return await GetAsync<Transfer>(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Falu.Transfers
             if (transfer is null) throw new ArgumentNullException(nameof(transfer));
 
             var uri = new Uri(BaseAddress, "/v1/transfers");
-            return await PostAsJsonAsync<Transfer>(uri, transfer, options, cancellationToken).ConfigureAwait(false);
+            return await PostAsync<Transfer>(uri, transfer, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Falu.Transfers
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
             var uri = new Uri(BaseAddress, $"/v1/transfers/{id}");
-            return await PatchAsJsonAsync<Transfer>(uri, patch, options, cancellationToken).ConfigureAwait(false);
+            return await PatchAsync<Transfer>(uri, patch, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

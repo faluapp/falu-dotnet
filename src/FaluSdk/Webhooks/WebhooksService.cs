@@ -31,7 +31,7 @@ namespace Falu.Webhooks
 
             var query = QueryHelper.MakeQueryString(args);
             var uri = new Uri(BaseAddress, $"/v1/webhooks/endpoints{query}");
-            return await GetAsJsonAsync<List<WebhookEndpoint>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
+            return await GetAsync<List<WebhookEndpoint>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Falu.Webhooks
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
             var uri = new Uri(BaseAddress, $"/v1/webhooks/endpoints/{id}");
-            return await GetAsJsonAsync<WebhookEndpoint>(uri, options, cancellationToken).ConfigureAwait(false);
+            return await GetAsync<WebhookEndpoint>(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Falu.Webhooks
             if (endpoint is null) throw new ArgumentNullException(nameof(endpoint));
 
             var uri = new Uri(BaseAddress, "/v1/webhooks/endpoints");
-            return await PostAsJsonAsync<WebhookEndpoint>(uri, endpoint, options, cancellationToken).ConfigureAwait(false);
+            return await PostAsync<WebhookEndpoint>(uri, endpoint, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Falu.Webhooks
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
             var uri = new Uri(BaseAddress, $"/v1/webhooks/endpoints/{id}");
-            return await PatchAsJsonAsync<WebhookEndpoint>(uri, patch, options, cancellationToken).ConfigureAwait(false);
+            return await PatchAsync<WebhookEndpoint>(uri, patch, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

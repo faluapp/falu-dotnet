@@ -102,7 +102,7 @@ namespace Microsoft.Extensions.DependencyInjection
                                                                                IConfiguration? configuration = null,
                                                                                Action<TClientOptions>? configure = null,
                                                                                Action<IHttpClientBuilder>? configureBuilder = null)
-            where TClient : FaluClient
+            where TClient : FaluClient<TClientOptions>
             where TClientOptions : FaluClientOptions
         {
             if (configuration is not null)

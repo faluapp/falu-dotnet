@@ -20,6 +20,11 @@ namespace Falu.Infrastructure
         public virtual string? Detail { get; set; }
 
         /// <summary>
+        /// A URL to more information about the error code reported.
+        /// </summary>
+        public virtual string? Url { get; set; }
+
+        /// <summary>
         /// Gets the validation errors associated the problem.
         /// </summary>
         public virtual IDictionary<string, string[]>? Errors { get; set; }

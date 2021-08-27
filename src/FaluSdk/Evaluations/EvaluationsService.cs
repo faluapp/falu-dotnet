@@ -69,7 +69,7 @@ namespace Falu.Evaluations
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
             var uri = new Uri(BaseAddress, $"/v1/evaluations/{id}");
-            return await PatchAsJsonAsync<Evaluation>(uri, patch, options, cancellationToken).ConfigureAwait(false);
+            return await PatchAsync<Evaluation>(uri, patch, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

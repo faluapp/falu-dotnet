@@ -85,7 +85,7 @@ namespace Falu.Payments
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
             var uri = new Uri(BaseAddress, $"/v1/payments/{id}");
-            return await PatchAsJsonAsync<Payment>(uri, patch, options, cancellationToken).ConfigureAwait(false);
+            return await PatchAsync<Payment>(uri, patch, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

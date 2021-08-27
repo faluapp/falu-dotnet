@@ -85,7 +85,7 @@ namespace Falu.TransferReversals
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
             var uri = new Uri(BaseAddress, $"/v1/transfer_reversals/{id}");
-            return await PatchAsJsonAsync<TransferReversal>(uri, patch, options, cancellationToken).ConfigureAwait(false);
+            return await PatchAsync<TransferReversal>(uri, patch, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

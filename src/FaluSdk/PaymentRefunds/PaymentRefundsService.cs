@@ -85,7 +85,7 @@ namespace Falu.PaymentRefunds
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
             var uri = new Uri(BaseAddress, $"/v1/payment_reversals/{id}");
-            return await PatchAsJsonAsync<PaymentRefund>(uri, patch, options, cancellationToken).ConfigureAwait(false);
+            return await PatchAsync<PaymentRefund>(uri, patch, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

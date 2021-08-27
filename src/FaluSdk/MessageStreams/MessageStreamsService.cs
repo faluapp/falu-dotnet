@@ -85,7 +85,7 @@ namespace Falu.MessageStreams
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
             var uri = new Uri(BaseAddress, $"/v1/message_streams/{id}");
-            return await PatchAsJsonAsync<MessageStream>(uri, patch, options, cancellationToken).ConfigureAwait(false);
+            return await PatchAsync<MessageStream>(uri, patch, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

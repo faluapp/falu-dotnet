@@ -86,7 +86,7 @@ namespace Falu.Messages
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
             var uri = new Uri(BaseAddress, $"/v1/messages/{id}");
-            return await PatchAsJsonAsync<Message>(uri, patch, options, cancellationToken).ConfigureAwait(false);
+            return await PatchAsync<Message>(uri, patch, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

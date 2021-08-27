@@ -45,10 +45,10 @@ namespace Falu.Infrastructure
         }
 
         ///
-        protected virtual async Task<ResourceResponse<TResource>> PatchAsJsonAsync<TResource>(Uri uri,
-                                                                                              object patch,
-                                                                                              RequestOptions? options = null,
-                                                                                              CancellationToken cancellationToken = default)
+        protected virtual async Task<ResourceResponse<TResource>> PatchAsync<TResource>(Uri uri,
+                                                                                        object patch,
+                                                                                        RequestOptions? options = null,
+                                                                                        CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(HttpMethod.Patch, uri)
             {

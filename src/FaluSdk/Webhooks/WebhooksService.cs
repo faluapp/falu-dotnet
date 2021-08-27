@@ -85,7 +85,7 @@ namespace Falu.Webhooks
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
             var uri = new Uri(BaseAddress, $"/v1/webhooks/endpoints/{id}");
-            return await PatchAsJsonAsync<WebhookEndpoint>(uri, patch, options, cancellationToken).ConfigureAwait(false);
+            return await PatchAsync<WebhookEndpoint>(uri, patch, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

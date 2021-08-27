@@ -30,6 +30,11 @@ namespace Falu.PaymentAuthorizations
         /// </summary>
         public PaymentAuthorizationStatus Status { get; set; }
 
+        /// <summary>
+        /// Reason for the given status of the payment authorization.
+        /// </summary>
+        public PaymentAuthorizationStatusReason? Reason { get; set; }
+
         /// <inheritdoc/>
         public DateTimeOffset Created { get; set; }
 

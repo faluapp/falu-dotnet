@@ -25,6 +25,11 @@ namespace Falu.Infrastructure
         public virtual string? Url { get; set; }
 
         /// <summary>
+        /// An identifier to correlate the request between the client and the server.
+        /// </summary>
+        public virtual string? TraceId { get; set; }
+
+        /// <summary>
         /// Gets the validation errors associated the problem.
         /// </summary>
         public virtual IDictionary<string, string[]>? Errors { get; set; }

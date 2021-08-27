@@ -35,7 +35,7 @@ namespace Falu.Infrastructure
             Error = error;
 
             RequestId = GetHeader(response.Headers, HeadersNames.XRequestId);
-            TraceId = GetHeader(response.Headers, HeadersNames.XTraceId);
+            TraceId = GetHeader(response.Headers, HeadersNames.XTraceId) ?? error?.TraceId;
             ContinuationToken = GetHeader(response.Headers, HeadersNames.XContinuationToken);
             CachedResponse = GetHeader<bool?>(response.Headers, HeadersNames.XCachedResponse);
         }
@@ -43,7 +43,9 @@ namespace Falu.Infrastructure
         /// <summary>Gets the ID of the request, as returned by Falu.</summary>
         public string? RequestId { get; }
 
-        /// <summary>Gets the ID of the trace, as returned by Falu.</summary>
+        /// <summary>
+        /// Gets an identifier to correlate the request between the client and the server, as returned by Falu.
+        /// </summary>
         public string? TraceId { get; set; }
 
         /// <summary>Gets the token to use to fetch more data, as returned by Falu.</summary>

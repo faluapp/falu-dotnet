@@ -35,9 +35,9 @@ namespace Falu.Infrastructure
         #region Helpers
 
         ///
-        protected virtual async Task<ResourceResponse<TResource>> GetAsJsonAsync<TResource>(Uri uri,
-                                                                                            RequestOptions? options = null,
-                                                                                            CancellationToken cancellationToken = default)
+        protected virtual async Task<ResourceResponse<TResource>> GetAsync<TResource>(Uri uri,
+                                                                                      RequestOptions? options = null,
+                                                                                      CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, uri);
             request.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(JsonContentType));

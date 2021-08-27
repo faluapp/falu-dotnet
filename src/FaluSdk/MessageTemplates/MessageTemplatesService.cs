@@ -31,7 +31,7 @@ namespace Falu.MessageTemplates
 
             var query = QueryHelper.MakeQueryString(args);
             var uri = new Uri(BaseAddress, $"/v1/message_templates{query}");
-            return await GetAsJsonAsync<List<MessageTemplate>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
+            return await GetAsync<List<MessageTemplate>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Falu.MessageTemplates
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
             var uri = new Uri(BaseAddress, $"/v1/message_templates/{id}");
-            return await GetAsJsonAsync<MessageTemplate>(uri, options, cancellationToken).ConfigureAwait(false);
+            return await GetAsync<MessageTemplate>(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

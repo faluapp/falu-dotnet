@@ -31,7 +31,7 @@ namespace Falu.Payments
 
             var query = QueryHelper.MakeQueryString(args);
             var uri = new Uri(BaseAddress, $"/v1/payments{query}");
-            return await GetAsJsonAsync<List<Payment>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
+            return await GetAsync<List<Payment>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Falu.Payments
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
             var uri = new Uri(BaseAddress, $"/v1/payments/{id}");
-            return await GetAsJsonAsync<Payment>(uri, options, cancellationToken).ConfigureAwait(false);
+            return await GetAsync<Payment>(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

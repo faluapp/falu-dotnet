@@ -65,7 +65,7 @@ namespace Falu.Webhooks
             if (endpoint is null) throw new ArgumentNullException(nameof(endpoint));
 
             var uri = new Uri(BaseAddress, "/v1/webhooks/endpoints");
-            return await PostAsJsonAsync<WebhookEndpoint>(uri, endpoint, options, cancellationToken).ConfigureAwait(false);
+            return await PostAsync<WebhookEndpoint>(uri, endpoint, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

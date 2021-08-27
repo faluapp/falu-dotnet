@@ -58,10 +58,10 @@ namespace Falu.Infrastructure
         }
 
         ///
-        protected virtual async Task<ResourceResponse<TResource>> PostAsJsonAsync<TResource>(Uri uri,
-                                                                                             object o,
-                                                                                             RequestOptions? options = null,
-                                                                                             CancellationToken cancellationToken = default)
+        protected virtual async Task<ResourceResponse<TResource>> PostAsync<TResource>(Uri uri,
+                                                                                       object o,
+                                                                                       RequestOptions? options = null,
+                                                                                       CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, uri)
             {

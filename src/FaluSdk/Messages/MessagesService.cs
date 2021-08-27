@@ -66,7 +66,7 @@ namespace Falu.Messages
             message.Template?.Model?.GetType().EnsureAllowedForMessageTemplateModel();
 
             var uri = new Uri(BaseAddress, "/v1/messages");
-            return await PostAsJsonAsync<Message>(uri, message, options, cancellationToken).ConfigureAwait(false);
+            return await PostAsync<Message>(uri, message, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Falu.Messages
             }
 
             var uri = new Uri(BaseAddress, "/v1/messages/bulk");
-            return await PostAsJsonAsync<List<Message>>(uri, messages, options, cancellationToken).ConfigureAwait(false);
+            return await PostAsync<List<Message>>(uri, messages, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

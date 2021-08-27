@@ -65,7 +65,7 @@ namespace Falu.Payments
             if (payment is null) throw new ArgumentNullException(nameof(payment));
 
             var uri = new Uri(BaseAddress, "/v1/payments");
-            return await PostAsJsonAsync<Payment>(uri, payment, options, cancellationToken).ConfigureAwait(false);
+            return await PostAsync<Payment>(uri, payment, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

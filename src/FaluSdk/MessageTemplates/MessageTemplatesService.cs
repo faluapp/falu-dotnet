@@ -65,7 +65,7 @@ namespace Falu.MessageTemplates
             if (template is null) throw new ArgumentNullException(nameof(template));
 
             var uri = new Uri(BaseAddress, "/v1/message_templates");
-            return await PostAsJsonAsync<MessageTemplate>(uri, template, options, cancellationToken).ConfigureAwait(false);
+            return await PostAsync<MessageTemplate>(uri, template, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Falu.MessageTemplates
             template.Model?.GetType().EnsureAllowedForMessageTemplateModel();
 
             var uri = new Uri(BaseAddress, "/v1/message_templates/validate");
-            return await PostAsJsonAsync<MessageTemplateValidationResponse>(uri, template, options, cancellationToken).ConfigureAwait(false);
+            return await PostAsync<MessageTemplateValidationResponse>(uri, template, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

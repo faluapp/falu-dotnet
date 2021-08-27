@@ -65,7 +65,7 @@ namespace Falu.TransferReversals
             if (reversal is null) throw new ArgumentNullException(nameof(reversal));
 
             var uri = new Uri(BaseAddress, "/v1/transfer_reversals");
-            return await PostAsJsonAsync<TransferReversal>(uri, reversal, options, cancellationToken).ConfigureAwait(false);
+            return await PostAsync<TransferReversal>(uri, reversal, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

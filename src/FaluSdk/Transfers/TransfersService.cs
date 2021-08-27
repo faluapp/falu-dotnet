@@ -65,7 +65,7 @@ namespace Falu.Transfers
             if (transfer is null) throw new ArgumentNullException(nameof(transfer));
 
             var uri = new Uri(BaseAddress, "/v1/transfers");
-            return await PostAsJsonAsync<Transfer>(uri, transfer, options, cancellationToken).ConfigureAwait(false);
+            return await PostAsync<Transfer>(uri, transfer, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

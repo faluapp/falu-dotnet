@@ -65,7 +65,7 @@ namespace Falu.PaymentRefunds
             if (reversal is null) throw new ArgumentNullException(nameof(reversal));
 
             var uri = new Uri(BaseAddress, "/v1/payment_reversals");
-            return await PostAsJsonAsync<PaymentRefund>(uri, reversal, options, cancellationToken).ConfigureAwait(false);
+            return await PostAsync<PaymentRefund>(uri, reversal, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

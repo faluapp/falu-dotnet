@@ -88,7 +88,7 @@ namespace Falu.PaymentAuthorizations
 
             model ??= new PaymentAuthorizationPatchModel();
             var uri = new Uri(BaseAddress, $"/v1/payment_authorizations/{id}/approve");
-            return await PostAsJsonAsync<PaymentAuthorization>(uri, model, options, cancellationToken).ConfigureAwait(false);
+            return await PostAsync<PaymentAuthorization>(uri, model, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Falu.PaymentAuthorizations
 
             model ??= new PaymentAuthorizationPatchModel();
             var uri = new Uri(BaseAddress, $"/v1/payment_authorizations/{id}/decline");
-            return await PostAsJsonAsync<PaymentAuthorization>(uri, model, options, cancellationToken).ConfigureAwait(false);
+            return await PostAsync<PaymentAuthorization>(uri, model, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

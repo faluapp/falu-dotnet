@@ -65,7 +65,7 @@ namespace Falu.MessageStreams
             if (stream is null) throw new ArgumentNullException(nameof(stream));
 
             var uri = new Uri(BaseAddress, "/v1/message_streams");
-            return await PostAsJsonAsync<MessageStream>(uri, stream, options, cancellationToken).ConfigureAwait(false);
+            return await PostAsync<MessageStream>(uri, stream, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

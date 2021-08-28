@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -128,16 +129,16 @@ namespace Microsoft.Extensions.DependencyInjection
                                       // set the base address
                                       client.BaseAddress = new Uri("https://api.falu.io/");
 
-                                      // prepare User-Agent value
-                                      var userAgent = $"falu-dotnet/{productVersion}";
+                                      // populate the User-Agent value for the SDK/library
+                                      client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("falu-dotnet", productVersion));
+
+                                      // populate the User-Agent for 3rd party providers
                                       var options = provider.GetRequiredService<IOptions<TClientOptions>>().Value;
                                       if (options.Application is not null)
                                       {
-                                          userAgent += $" {options.Application}";
+                                          var userAgent = options.Application.ToString();
+                                          client.DefaultRequestHeaders.Add("User-Agent", userAgent);
                                       }
-
-                                      // populate the User-Agent header
-                                      client.DefaultRequestHeaders.Add("User-Agent", userAgent);
                                   });
 
             // setup retries

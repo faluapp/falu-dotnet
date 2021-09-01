@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Falu.Events
 {
     ///
-    public class EventsService : BaseService<WebhookEvent>, ISupportsListing<WebhookEvent, BasicListOptions> // TODO: add custom listing options
+    public class EventsService : BaseService<WebhookEvent>, ISupportsListing<WebhookEvent, EventsListOptions>
     {
         ///
         public EventsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
@@ -23,7 +23,7 @@ namespace Falu.Events
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Task<ResourceResponse<List<WebhookEvent<T>>>> ListAsync<T>(BasicListOptions? options = null,
+        public virtual Task<ResourceResponse<List<WebhookEvent<T>>>> ListAsync<T>(EventsListOptions? options = null,
                                                                                   RequestOptions? requestOptions = null,
                                                                                   CancellationToken cancellationToken = default)
             where T : class
@@ -33,7 +33,7 @@ namespace Falu.Events
 
         /// <summary>Retrieve events.</summary>
         /// <inheritdoc/>
-        public virtual Task<ResourceResponse<List<WebhookEvent>>> ListAsync(BasicListOptions? options = null,
+        public virtual Task<ResourceResponse<List<WebhookEvent>>> ListAsync(EventsListOptions? options = null,
                                                                             RequestOptions? requestOptions = null,
                                                                             CancellationToken cancellationToken = default)
         {
@@ -42,11 +42,20 @@ namespace Falu.Events
 
         /// <summary>Retrieve events recursively.</summary>
         /// <inheritdoc/>
-        public virtual IAsyncEnumerable<WebhookEvent> ListRecursivelyAsync(BasicListOptions? options = null,
+        public virtual IAsyncEnumerable<WebhookEvent> ListRecursivelyAsync(EventsListOptions? options = null,
                                                                            RequestOptions? requestOptions = null,
                                                                            CancellationToken cancellationToken = default)
         {
             return ListResourcesRecursivelyAsync(options, requestOptions, cancellationToken);
+        }
+
+        /// <summary>Retrieve events recursively.</summary>
+        /// <inheritdoc/>
+        public virtual IAsyncEnumerable<WebhookEvent<T>> ListRecursivelyAsync<T>(EventsListOptions? options = null,
+                                                                                 RequestOptions? requestOptions = null,
+                                                                                 CancellationToken cancellationToken = default)
+        {
+            return ListResourcesRecursivelyAsync<WebhookEvent<T>>(options, requestOptions, cancellationToken);
         }
 
         /// <summary>

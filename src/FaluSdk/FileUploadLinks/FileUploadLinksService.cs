@@ -32,7 +32,7 @@ namespace Falu.FileUploadLinks
         }
 
         /// <summary>Retrieve a file upload link.</summary>
-        /// <param name="id">Unique identifier for the message stream</param>
+        /// <param name="id">Unique identifier for the file upload link.</param>
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>

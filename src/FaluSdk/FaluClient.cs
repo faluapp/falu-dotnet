@@ -1,5 +1,7 @@
 ﻿using Falu.Evaluations;
 using Falu.Events;
+using Falu.FileUploadLinks;
+using Falu.FileUploads;
 using Falu.Identity;
 using Falu.Messages;
 using Falu.MessageStreams;
@@ -13,7 +15,6 @@ using Falu.Webhooks;
 using Microsoft.Extensions.Options;
 using System;
 using System.Net.Http;
-using Falu.FileUploadLinks;
 
 namespace Falu
 {
@@ -34,6 +35,7 @@ namespace Falu
 
             Evaluations = new EvaluationsService(BackChannel, Options);
             Events = new EventsService(BackChannel, Options);
+            FileUploads = new FileUploadsService(BackChannel, Options);
             FileUploadLinks = new FileUploadLinksService(BackChannel, Options);
             Identity = new IdentityService(BackChannel, Options);
             Messages = new MessagesService(BackChannel, Options);
@@ -61,6 +63,9 @@ namespace Falu
 
         ///
         public virtual EventsService Events { get; protected set; }
+
+        ///
+        public virtual FileUploadsService FileUploads { get; protected set; }
 
         ///
         public virtual FileUploadLinksService FileUploadLinks { get; protected set; }

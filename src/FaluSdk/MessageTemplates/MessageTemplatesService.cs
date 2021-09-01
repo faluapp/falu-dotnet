@@ -10,7 +10,7 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.MessageTemplates
 {
     ///
-    public class MessageTemplatesService : BaseService<MessageTemplate>, ISupportsListing<MessageTemplate, BasicListOptions> // TODO: setup custom listing options
+    public class MessageTemplatesService : BaseService<MessageTemplate>, ISupportsListing<MessageTemplate, MessageTemplatesListOptions>
     {
         ///
         public MessageTemplatesService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
@@ -20,7 +20,7 @@ namespace Falu.MessageTemplates
 
         /// <summary>List message templates.</summary>
         /// <inheritdoc/>
-        public virtual Task<ResourceResponse<List<MessageTemplate>>> ListAsync(BasicListOptions? options = null,
+        public virtual Task<ResourceResponse<List<MessageTemplate>>> ListAsync(MessageTemplatesListOptions? options = null,
                                                                                RequestOptions? requestOptions = null,
                                                                                CancellationToken cancellationToken = default)
         {
@@ -29,7 +29,7 @@ namespace Falu.MessageTemplates
 
         /// <summary>List message templates recursively.</summary>
         /// <inheritdoc/>
-        public virtual IAsyncEnumerable<MessageTemplate> ListRecursivelyAsync(BasicListOptions? options = null,
+        public virtual IAsyncEnumerable<MessageTemplate> ListRecursivelyAsync(MessageTemplatesListOptions? options = null,
                                                                               RequestOptions? requestOptions = null,
                                                                               CancellationToken cancellationToken = default)
         {

@@ -136,14 +136,12 @@ namespace Falu.Evaluations
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<Evaluation>> ScoreAsync(string id,
-                                                                           RequestOptions? options = null,
-                                                                           CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<Evaluation>> ScoreAsync(string id,
+                                                                     RequestOptions? options = null,
+                                                                     CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
-
-            var uri = $"/v1/evaluations/{id}/score";
-            return await PostAsync<Evaluation>(uri, new { }, options, cancellationToken).ConfigureAwait(false);
+            var uri = $"{MakeResourcePath(id)}/score";
+            return RequestAsync<Evaluation>(uri, HttpMethod.Post, new { }, options, cancellationToken);
         }
     }
 }

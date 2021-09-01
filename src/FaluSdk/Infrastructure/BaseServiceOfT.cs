@@ -18,10 +18,7 @@ namespace Falu.Infrastructure
         {
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <example>/v1/events</example>
+        ///
         protected abstract string BasePath { get; }
 
         ///
@@ -41,7 +38,7 @@ namespace Falu.Infrastructure
             var args = new Dictionary<string, string>();
             options?.PopulateQueryValues(args);
 
-            var uri = MakePathAndQuery(args);
+            var uri = MakeRootPathWithQuery(args);
             return await RequestAsync<List<TResource>>(uri, HttpMethod.Get, null, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
@@ -52,7 +49,7 @@ namespace Falu.Infrastructure
         {
             if (resource is null) throw new ArgumentNullException(nameof(resource));
 
-            var uri = BasePath;
+            var uri = MakeRootPath();
             return RequestAsync<TResource>(uri, HttpMethod.Post, resource, options, cancellationToken);
         }
 
@@ -78,6 +75,10 @@ namespace Falu.Infrastructure
             return RequestAsync<object>(uri, HttpMethod.Delete, null, options, cancellationToken);
         }
 
+        /// <summary>Generate the root path.</summary>
+        /// <returns>The root path for resources.</returns>
+        protected virtual string MakeRootPath() => BasePath; // this method exists because we may change the api base so we we need a convinence
+
         /// <summary>Generate path for a resource.</summary>
         /// <param name="id">Unique identifier of the resource.</param>
         /// <returns>The path for the resource.</returns>
@@ -88,22 +89,22 @@ namespace Falu.Infrastructure
                 throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
             }
 
-            return $"{BasePath}/{id}";
+            return $"{MakeRootPath()}/{id}";
         }
 
         /// <summary>Combine path and query.</summary>
         /// <param name="args">The keys and values to put in the query.</param>
         /// <returns>The path and query combined.</returns>
-        protected virtual string MakePathAndQuery(Dictionary<string, string> args)
+        protected virtual string MakeRootPathWithQuery(Dictionary<string, string> args)
         {
             var query = QueryHelper.MakeQueryString(args);
-            return MakePathAndQuery(query);
+            return MakeRootPathWithQuery(query);
         }
 
         /// <summary>Combine path and query.</summary>
         /// <param name="query">The query to append.</param>
         /// <returns>The path and query combined.</returns>
-        protected virtual string MakePathAndQuery(string query)
+        protected virtual string MakeRootPathWithQuery(string query)
         {
             if (string.IsNullOrWhiteSpace(query))
             {
@@ -111,7 +112,7 @@ namespace Falu.Infrastructure
             }
 
             if (!query.StartsWith("?")) query = $"?{query}";
-            return $"{BasePath}{query}";
+            return $"{MakeRootPath()}{query}";
         }
     }
 }

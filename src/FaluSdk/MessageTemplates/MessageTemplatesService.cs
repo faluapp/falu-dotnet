@@ -97,16 +97,15 @@ namespace Falu.MessageTemplates
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<MessageTemplateValidationResponse>> ValidateAsync(MessageTemplateValidationRequest template,
-                                                                                                     RequestOptions? options = null,
-                                                                                                     CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<MessageTemplateValidationResponse>> ValidateAsync(MessageTemplateValidationRequest template,
+                                                                                               RequestOptions? options = null,
+                                                                                               CancellationToken cancellationToken = default)
         {
             if (template is null) throw new ArgumentNullException(nameof(template));
-
             template.Model?.GetType().EnsureAllowedForMessageTemplateModel();
 
-            var uri = "/v1/message_templates/validate";
-            return await PostAsync<MessageTemplateValidationResponse>(uri, template, options, cancellationToken).ConfigureAwait(false);
+            var uri = $"{MakeRootPath()}/validate";
+            return RequestAsync<MessageTemplateValidationResponse>(uri, HttpMethod.Post, template, options, cancellationToken);
         }
     }
 }

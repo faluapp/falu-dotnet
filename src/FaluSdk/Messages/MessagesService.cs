@@ -53,15 +53,14 @@ namespace Falu.Messages
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<Message>> CreateAsync(MessageCreateRequest message,
-                                                                         RequestOptions? options = null,
-                                                                         CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<Message>> CreateAsync(MessageCreateRequest message,
+                                                                   RequestOptions? options = null,
+                                                                   CancellationToken cancellationToken = default)
         {
             if (message is null) throw new ArgumentNullException(nameof(message));
             message.Template?.Model?.GetType().EnsureAllowedForMessageTemplateModel();
 
-            var uri = "/v1/messages";
-            return await PostAsync<Message>(uri, message, options, cancellationToken).ConfigureAwait(false);
+            return CreateResourceAsync(message, options, cancellationToken);
         }
 
         /// <summary>
@@ -87,9 +86,9 @@ namespace Falu.Messages
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<Message>>> CreateBatchAsync(IList<MessageCreateRequest> messages,
-                                                                                    RequestOptions? options = null,
-                                                                                    CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<List<Message>>> CreateBatchAsync(IList<MessageCreateRequest> messages,
+                                                                              RequestOptions? options = null,
+                                                                              CancellationToken cancellationToken = default)
         {
             if (messages is null) throw new ArgumentNullException(nameof(messages));
 
@@ -104,8 +103,8 @@ namespace Falu.Messages
                 m.Template?.Model?.GetType().EnsureAllowedForMessageTemplateModel();
             }
 
-            var uri = "/v1/messages/bulk";
-            return await PostAsync<List<Message>>(uri, messages, options, cancellationToken).ConfigureAwait(false);
+            var uri = $"{MakeRootPath()}/bulk";
+            return RequestAsync<List<Message>>(uri, HttpMethod.Post, messages, options, cancellationToken);
         }
     }
 }

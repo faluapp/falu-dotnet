@@ -38,9 +38,6 @@ namespace Falu.Infrastructure
         ///
         protected FaluClientOptions Options { get; }
 
-        ///
-        protected virtual Uri BaseAddress => BackChannel.BaseAddress;
-
 
         #region REST overloads
 

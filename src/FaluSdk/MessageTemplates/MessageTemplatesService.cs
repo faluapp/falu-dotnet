@@ -53,7 +53,7 @@ namespace Falu.MessageTemplates
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Task<ResourceResponse<MessageTemplate>> CreateAsync(MessageTemplatePatchModel template,
+        public virtual Task<ResourceResponse<MessageTemplate>> CreateAsync(MessageTemplateCreateRequest template,
                                                                            RequestOptions? options = null,
                                                                            CancellationToken cancellationToken = default)
         {

@@ -3,9 +3,9 @@
 namespace Falu.Transfers
 {
     /// <summary>
-    /// Information for initiating a transfer.
+    /// Information for creating a transfer.
     /// </summary>
-    public class TransferRequest : TransferPatchModel, IHasCurrency
+    public class TransferCreateRequest : TransferPatchModel, IHasCurrency
     {
         /// <inheritdoc/>
         public string? Currency { get; set; }
@@ -23,6 +23,6 @@ namespace Falu.Transfers
         /// <summary>
         /// Details about initiation of an MPESA transfer to a customer or another business.
         /// </summary>
-        public TransferRequestMpesa? Mpesa { get; set; }
+        public TransferCreateRequestMpesa? Mpesa { get; set; }
     }
 }

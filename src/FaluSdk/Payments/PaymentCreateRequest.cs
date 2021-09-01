@@ -3,9 +3,9 @@
 namespace Falu.Payments
 {
     /// <summary>
-    /// Information for initiating a payment.
+    /// Information for creating a payment.
     /// </summary>
-    public class PaymentRequest : PaymentPatchModel, IHasCurrency
+    public class PaymentCreateRequest : PaymentPatchModel, IHasCurrency
     {
         /// <inheritdoc/>
         public string? Currency { get; set; }
@@ -18,6 +18,6 @@ namespace Falu.Payments
         /// <summary>
         /// Details about initiation by MPESA's STK Push
         /// </summary>
-        public PaymentRequestMpesa? Mpesa { get; set; }
+        public PaymentCreateRequestMpesa? Mpesa { get; set; }
     }
 }

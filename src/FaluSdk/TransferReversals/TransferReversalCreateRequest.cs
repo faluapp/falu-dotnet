@@ -1,9 +1,9 @@
 ﻿namespace Falu.TransferReversals
 {
     /// <summary>
-    /// Information for initiating a reversal for a transfer.
+    /// Information for creating a transfer reversal.
     /// </summary>
-    public class TransferReversalRequest : TransferReversalPatchModel
+    public class TransferReversalCreateRequest : TransferReversalPatchModel
     {
         /// <summary>
         /// Identifier of the Transfer to reverse.

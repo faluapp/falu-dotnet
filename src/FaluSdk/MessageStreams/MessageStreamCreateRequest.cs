@@ -1,9 +1,9 @@
 ﻿namespace Falu.MessageStreams
 {
     /// <summary>
-    /// Model for creating a message stream.
+    /// Information for creating a message stream.
     /// </summary>
-    public class MessageStreamCreateModel : MessageStreamPatchModel
+    public class MessageStreamCreateRequest : MessageStreamPatchModel
     {
         /// <summary>
         /// A string of 3-50 characters used for easier identification of a message stream.

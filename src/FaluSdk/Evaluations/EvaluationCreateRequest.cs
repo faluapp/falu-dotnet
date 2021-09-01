@@ -4,9 +4,9 @@ using System.IO;
 namespace Falu.Evaluations
 {
     /// <summary>
-    /// Model for creating an evaluation.
+    /// Information for creating an evaluation.
     /// </summary>
-    public class EvaluationCreateModel : EvaluationPatchModel, IHasCurrency
+    public class EvaluationCreateRequest : EvaluationPatchModel, IHasCurrency
     {
         /// <inheritdoc/>
         public string? Currency { get; set; }

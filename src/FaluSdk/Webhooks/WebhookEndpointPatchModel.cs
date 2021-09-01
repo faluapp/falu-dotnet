@@ -27,11 +27,6 @@ namespace Falu.Webhooks
         /// </summary>
         public string? Url { get; set; }
 
-        /// <summary>
-        /// The format to use for webhook requests.
-        /// </summary>
-        public WebhookFormat Format { get; set; }
-
         /// <inheritdoc/>
         public Dictionary<string, string>? Metadata { get; set; }
     }

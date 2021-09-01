@@ -3,7 +3,7 @@
     /// <summary>
     /// Information for initiating a payment from a customer to the business via MPESA.
     /// </summary>
-    public class PaymentRequestMpesa
+    public class PaymentCreateRequestMpesa
     {
         /// <summary>
         /// The phone number representing the account to be charged.

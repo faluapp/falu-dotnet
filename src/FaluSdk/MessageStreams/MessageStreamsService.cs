@@ -52,7 +52,7 @@ namespace Falu.MessageStreams
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Task<ResourceResponse<MessageStream>> CreateAsync(MessageStreamCreateModel stream,
+        public virtual Task<ResourceResponse<MessageStream>> CreateAsync(MessageStreamCreateRequest stream,
                                                                          RequestOptions? options = null,
                                                                          CancellationToken cancellationToken = default)
         {

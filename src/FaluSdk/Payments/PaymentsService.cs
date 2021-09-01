@@ -52,7 +52,7 @@ namespace Falu.Payments
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Task<ResourceResponse<Payment>> CreateAsync(PaymentRequest payment,
+        public virtual Task<ResourceResponse<Payment>> CreateAsync(PaymentCreateRequest payment,
                                                                    RequestOptions? options = null,
                                                                    CancellationToken cancellationToken = default)
         {

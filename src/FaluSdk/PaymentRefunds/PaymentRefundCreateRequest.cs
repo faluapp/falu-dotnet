@@ -1,9 +1,9 @@
 ﻿namespace Falu.PaymentRefunds
 {
     /// <summary>
-    /// Information for initiating a payment refund.
+    /// Information for creating a payment refund.
     /// </summary>
-    public class PaymentRefundRequest : PaymentRefundPatchModel
+    public class PaymentRefundCreateRequest : PaymentRefundPatchModel
     {
         /// <summary>
         /// Identifier of the Payment to reverse.

@@ -10,7 +10,7 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.Messages
 {
     ///
-    public class MessagesService : BaseService<Message>
+    public class MessagesService : BaseService<Message>, ISupportsListing<Message, MessagesListOptions>
     {
         ///
         public MessagesService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
@@ -18,18 +18,22 @@ namespace Falu.Messages
         /// <inheritdoc/>
         protected override string BasePath => "/v1/messages";
 
-        /// <summary>
-        /// List messages.
-        /// </summary>
-        /// <param name="options">Options for filtering and pagination.</param>
-        /// <param name="requestOptions">Options to use for the request.</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <summary>List messages.</summary>
+        /// <inheritdoc/>
         public virtual Task<ResourceResponse<List<Message>>> ListAsync(MessagesListOptions? options = null,
                                                                        RequestOptions? requestOptions = null,
                                                                        CancellationToken cancellationToken = default)
         {
             return ListResourcesAsync(options, requestOptions, cancellationToken);
+        }
+
+        /// <summary>List messages recursively.</summary>
+        /// <inheritdoc/>
+        public virtual IAsyncEnumerable<Message> ListRecursivelyAsync(MessagesListOptions? options = null,
+                                                                      RequestOptions? requestOptions = null,
+                                                                      CancellationToken cancellationToken = default)
+        {
+            return ListResourcesRecursivelyAsync(options, requestOptions, cancellationToken);
         }
 
         /// <summary>

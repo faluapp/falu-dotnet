@@ -8,7 +8,7 @@ namespace Falu.Infrastructure
     /// <summary>
     /// Collection of helper methods for handling queries
     /// </summary>
-    internal static class QueryHelper
+    internal static class QueryHelper // TODO: reduce this helper to bare bones
     {
         /// <summary>
         /// Make a query string using the given query key and value.

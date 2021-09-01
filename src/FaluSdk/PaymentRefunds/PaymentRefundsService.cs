@@ -9,7 +9,7 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.PaymentRefunds
 {
     ///
-    public class PaymentRefundsService : BaseService<PaymentRefund>
+    public class PaymentRefundsService : BaseService<PaymentRefund>, ISupportsListing<PaymentRefund, PaymentRefundsListOptions>
     {
         ///
         public PaymentRefundsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
@@ -17,18 +17,22 @@ namespace Falu.PaymentRefunds
         /// <inheritdoc/>
         protected override string BasePath => "/v1/payment_refunds";
 
-        /// <summary>
-        /// List payment refunds.
-        /// </summary>
-        /// <param name="options">Options for filtering and pagination.</param>
-        /// <param name="requestOptions">Options to use for the request.</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <summary>List payment refunds.</summary>
+        /// <inheritdoc/>
         public virtual Task<ResourceResponse<List<PaymentRefund>>> ListAsync(PaymentRefundsListOptions? options = null,
                                                                              RequestOptions? requestOptions = null,
                                                                              CancellationToken cancellationToken = default)
         {
             return ListResourcesAsync(options, requestOptions, cancellationToken);
+        }
+
+        /// <summary>List payment refunds recursively.</summary>
+        /// <inheritdoc/>
+        public virtual IAsyncEnumerable<PaymentRefund> ListRecursivelyAsync(PaymentRefundsListOptions? options = null,
+                                                                            RequestOptions? requestOptions = null,
+                                                                            CancellationToken cancellationToken = default)
+        {
+            return ListResourcesRecursivelyAsync(options, requestOptions, cancellationToken);
         }
 
         /// <summary>

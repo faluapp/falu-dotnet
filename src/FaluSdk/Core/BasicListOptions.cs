@@ -7,7 +7,7 @@ namespace Falu.Core
     /// <summary>
     /// Standard options for filtering and pagination in list operations.
     /// </summary>
-    public class BasicListOptions
+    public record BasicListOptions
     {
         /// <summary>
         /// The order to use for sorting the objects returned.
@@ -59,5 +59,6 @@ namespace Falu.Core
         internal static string ConvertInt64(long i) => i.ToString();
         internal static string ConvertEnum<T>(T e) where T : Enum => e.GetEnumMemberAttrValueOrDefault();
         internal static string ConvertEnumList<T>(IList<T> list) where T : Enum => string.Join(",", list.Select(l => ConvertEnum(l)));
+        internal static string ConvertStringList(IList<string> list) => string.Join(",", list);
     }
 }

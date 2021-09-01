@@ -9,7 +9,7 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.Transfers
 {
     ///
-    public class TransfersService : BaseService<Transfer>
+    public class TransfersService : BaseService<Transfer>, ISupportsListing<Transfer, TransfersListOptions>
     {
         ///
         public TransfersService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
@@ -17,18 +17,22 @@ namespace Falu.Transfers
         /// <inheritdoc/>
         protected override string BasePath => "/v1/transfers";
 
-        /// <summary>
-        /// List transfers.
-        /// </summary>
-        /// <param name="options">Options for filtering and pagination.</param>
-        /// <param name="requestOptions">Options to use for the request.</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <summary>List transfers.</summary>
+        /// <inheritdoc/>
         public virtual Task<ResourceResponse<List<Transfer>>> ListAsync(TransfersListOptions? options = null,
                                                                         RequestOptions? requestOptions = null,
                                                                         CancellationToken cancellationToken = default)
         {
             return ListResourcesAsync(options, requestOptions, cancellationToken);
+        }
+
+        /// <summary>List transfers recursively.</summary>
+        /// <inheritdoc/>
+        public virtual IAsyncEnumerable<Transfer> ListRecursivelyAsync(TransfersListOptions? options = null,
+                                                                       RequestOptions? requestOptions = null,
+                                                                       CancellationToken cancellationToken = default)
+        {
+            return ListResourcesRecursivelyAsync(options, requestOptions, cancellationToken);
         }
 
         /// <summary>

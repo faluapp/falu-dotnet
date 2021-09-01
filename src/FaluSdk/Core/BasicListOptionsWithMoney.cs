@@ -5,7 +5,7 @@ namespace Falu.Core
     /// <summary>
     /// Standard options for filtering and pagination in list operations with money.
     /// </summary>
-    public class BasicListOptionsWithMoney : BasicListOptions, IHasCurrency
+    public record BasicListOptionsWithMoney : BasicListOptions, IHasCurrency
     {
         /// <inheritdoc/>
         public string? Currency { get; set; }

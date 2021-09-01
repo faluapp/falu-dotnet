@@ -1,23 +1,24 @@
 ﻿using Falu.Core;
 using System.Collections.Generic;
 
-namespace Falu.Payments
+namespace Falu.Events
 {
     /// <summary>
-    /// Options for filtering and pagination of list payments operation.
+    /// Options for filtering and pagination of events.
     /// </summary>
-    public record PaymentsListOptions : BasicListOptionsWithMoney
+    public record EventsListOptions : BasicListOptions
     {
         /// <summary>
-        /// Filter options for <code>status</code> property.
+        /// Filter options for <code>type</code> property.
         /// </summary>
-        public List<PaymentStatus>? Status { get; set; }
+        public List<string>? Type { get; set; }
 
         /// <inheritdoc/>
         internal override IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)
         {
             base.PopulateQueryValues(dictionary);
-            dictionary.AddIfNotNull("status", Status, ConvertEnumList);
+
+            dictionary.AddIfNotNull("type", Type, ConvertStringList);
 
             return dictionary;
         }

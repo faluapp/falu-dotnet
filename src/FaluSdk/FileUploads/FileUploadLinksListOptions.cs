@@ -6,7 +6,7 @@ namespace Falu.FileUploads
     /// <summary>
     /// Options for filtering and pagination of list flie uploads.
     /// </summary>
-    public class FileUploadsListOptions : BasicListOptions
+    public record FileUploadsListOptions : BasicListOptions
     {
         /// <summary>
         /// Filter options for <code>purpose</code> property.

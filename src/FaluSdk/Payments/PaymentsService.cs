@@ -9,7 +9,7 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.Payments
 {
     ///
-    public class PaymentsService : BaseService<Payment>
+    public class PaymentsService : BaseService<Payment>, ISupportsListing<Payment, PaymentsListOptions>
     {
         ///
         public PaymentsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
@@ -17,18 +17,22 @@ namespace Falu.Payments
         /// <inheritdoc/>
         protected override string BasePath => "/v1/payments";
 
-        /// <summary>
-        /// List payments.
-        /// </summary>
-        /// <param name="options">Options for filtering and pagination.</param>
-        /// <param name="requestOptions">Options to use for the request.</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <summary>List payments.</summary>
+        /// <inheritdoc/>
         public virtual Task<ResourceResponse<List<Payment>>> ListAsync(PaymentsListOptions? options = null,
                                                                        RequestOptions? requestOptions = null,
                                                                        CancellationToken cancellationToken = default)
         {
             return ListResourcesAsync(options, requestOptions, cancellationToken);
+        }
+
+        /// <summary>List payments recursively.</summary>
+        /// <inheritdoc/>
+        public virtual IAsyncEnumerable<Payment> ListRecursivelyAsync(PaymentsListOptions? options = null,
+                                                                      RequestOptions? requestOptions = null,
+                                                                      CancellationToken cancellationToken = default)
+        {
+            return ListResourcesRecursivelyAsync(options, requestOptions, cancellationToken);
         }
 
         /// <summary>

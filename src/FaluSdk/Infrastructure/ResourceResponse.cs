@@ -116,7 +116,7 @@ namespace Falu.Infrastructure
         /// The result is null when <typeparamref name="TResource"/> is not assignable from <see cref="IEnumerable"/>.
         /// Otherwise, true when <see cref="ContinuationToken"/> has a valueor false when it doesnt have a value.
         /// </summary>
-        public bool? HasMoreResults => typeof(IEnumerable).IsAssignableFrom(typeof(TResource)) ? ContinuationToken != null : (bool?)null;
+        public bool? HasMoreResults => typeof(IEnumerable).IsAssignableFrom(typeof(TResource)) ? ContinuationToken != null : null;
 
         internal static string? GetHeader(HttpResponseHeaders headers, string name)
         {

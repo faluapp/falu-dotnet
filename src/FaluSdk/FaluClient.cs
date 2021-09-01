@@ -13,6 +13,7 @@ using Falu.Webhooks;
 using Microsoft.Extensions.Options;
 using System;
 using System.Net.Http;
+using Falu.FileUploadLinks;
 
 namespace Falu
 {
@@ -32,17 +33,18 @@ namespace Falu
             Options = optionsAccessor?.Value ?? throw new ArgumentNullException(nameof(optionsAccessor));
 
             Evaluations = new EvaluationsService(BackChannel, Options);
+            Events = new EventsService(BackChannel, Options);
+            FileUploadLinks = new FileUploadLinksService(BackChannel, Options);
             Identity = new IdentityService(BackChannel, Options);
             Messages = new MessagesService(BackChannel, Options);
+            MessageStreams = new MessageStreamsService(BackChannel, Options);
+            MessageTemplates = new MessageTemplatesService(BackChannel, Options);
             MoneyBalances = new MoneyBalancesService(BackChannel, Options);
             Payments = new PaymentsService(BackChannel, Options);
             PaymentAuthorizations = new PaymentAuthorizationsService(BackChannel, Options);
             PaymentRefunds = new PaymentRefundsService(BackChannel, Options);
             Transfers = new TransfersService(BackChannel, Options);
             TransferReversals = new TransferReversalsService(BackChannel, Options);
-            MessageStreams = new MessageStreamsService(BackChannel, Options);
-            MessageTemplates = new MessageTemplatesService(BackChannel, Options);
-            Events = new EventsService(BackChannel, Options);
             Webhooks = new WebhooksService(BackChannel, Options);
         }
 
@@ -59,6 +61,9 @@ namespace Falu
 
         ///
         public virtual EventsService Events { get; protected set; }
+
+        ///
+        public virtual FileUploadLinksService FileUploadLinks { get; protected set; }
 
         ///
         public virtual IdentityService Identity { get; protected set; }

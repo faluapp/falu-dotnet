@@ -9,7 +9,7 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.MessageStreams
 {
     ///
-    public class MessageStreamsService : BaseService<MessageStream>
+    public class MessageStreamsService : BaseService<MessageStream>, ISupportsListing<MessageStream, BasicListOptions> // TODO: setup custom listing options
     {
         ///
         public MessageStreamsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }

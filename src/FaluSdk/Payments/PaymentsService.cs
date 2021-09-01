@@ -9,7 +9,7 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.Payments
 {
     ///
-    public class PaymentsService : BaseService<Payment>
+    public class PaymentsService : BaseService<Payment>, ISupportsListing<Payment, PaymentsListOptions>
     {
         ///
         public PaymentsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }

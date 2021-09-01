@@ -11,7 +11,7 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.Evaluations
 {
     ///
-    public class EvaluationsService : BaseService<Evaluation>
+    public class EvaluationsService : BaseService<Evaluation>, ISupportsListing<Evaluation, EvaluationsListOptions>
     {
         ///
         public EvaluationsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }

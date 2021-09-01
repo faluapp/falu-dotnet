@@ -9,7 +9,7 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.PaymentRefunds
 {
     ///
-    public class PaymentRefundsService : BaseService<PaymentRefund>
+    public class PaymentRefundsService : BaseService<PaymentRefund>, ISupportsListing<PaymentRefund, PaymentRefundsListOptions>
     {
         ///
         public PaymentRefundsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }

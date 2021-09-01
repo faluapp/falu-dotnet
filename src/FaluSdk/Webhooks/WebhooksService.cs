@@ -9,7 +9,7 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.Webhooks
 {
     ///
-    public class WebhooksService : BaseService<WebhookEndpoint>
+    public class WebhooksService : BaseService<WebhookEndpoint>, ISupportsListing<WebhookEndpoint, BasicListOptions> // TODO: add custom listing options
     {
         ///
         public WebhooksService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }

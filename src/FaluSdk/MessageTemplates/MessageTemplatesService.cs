@@ -10,7 +10,7 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.MessageTemplates
 {
     ///
-    public class MessageTemplatesService : BaseService<MessageTemplate>
+    public class MessageTemplatesService : BaseService<MessageTemplate>, ISupportsListing<MessageTemplate, BasicListOptions> // TODO: setup custom listing options
     {
         ///
         public MessageTemplatesService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }

@@ -102,7 +102,7 @@ namespace Falu.MessageTemplates
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
             var uri = $"/v1/message_templates/{id}";
-            return await DeleteAsync(uri, options, cancellationToken).ConfigureAwait(false);
+            return await DeleteResourceAsync(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

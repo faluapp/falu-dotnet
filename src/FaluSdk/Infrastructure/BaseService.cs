@@ -68,11 +68,11 @@ namespace Falu.Infrastructure
         }
 
         ///
-        protected virtual Task<ResourceResponse<TResource>> DeleteAsync<TResource>(string uri,
-                                                                                   RequestOptions? options = null,
-                                                                                   CancellationToken cancellationToken = default)
+        protected virtual Task<ResourceResponse<object>> DeleteResourceAsync(string uri,
+                                                                             RequestOptions? options = null,
+                                                                             CancellationToken cancellationToken = default)
         {
-            return RequestAsync<TResource>(uri, HttpMethod.Delete, null, options, cancellationToken);
+            return RequestAsync<object>(uri, HttpMethod.Delete, null, options, cancellationToken);
         }
 
         #endregion
@@ -88,16 +88,6 @@ namespace Falu.Infrastructure
         {
             var content = await MakeJsonHttpContentAsync(o, cancellationToken).ConfigureAwait(false);
             return await RequestAsync<TResource>(uri, method, content, options, cancellationToken).ConfigureAwait(false);
-        }
-
-        ///
-        protected virtual Task<ResourceResponse<object>> RequestAsync(string uri,
-                                                                      HttpMethod method,
-                                                                      HttpContent? content = null,
-                                                                      RequestOptions? options = null,
-                                                                      CancellationToken cancellationToken = default)
-        {
-            return RequestAsync<object>(uri, method, content, options, cancellationToken);
         }
 
         ///

@@ -30,8 +30,8 @@ namespace Falu.Messages
             options?.PopulateQueryValues(args);
 
             var query = QueryHelper.MakeQueryString(args);
-            var uri = new Uri(BaseAddress, $"/v1/messages{query}");
-            return await GetAsync<List<Message>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
+            var uri = $"/v1/messages{query}";
+            return await GetResourceAsync<List<Message>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -47,8 +47,8 @@ namespace Falu.Messages
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
-            var uri = new Uri(BaseAddress, $"/v1/messages/{id}");
-            return await GetAsync<Message>(uri, options, cancellationToken).ConfigureAwait(false);
+            var uri = $"/v1/messages/{id}";
+            return await GetResourceAsync<Message>(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Falu.Messages
             if (message is null) throw new ArgumentNullException(nameof(message));
             message.Template?.Model?.GetType().EnsureAllowedForMessageTemplateModel();
 
-            var uri = new Uri(BaseAddress, "/v1/messages");
+            var uri = "/v1/messages";
             return await PostAsync<Message>(uri, message, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -85,7 +85,7 @@ namespace Falu.Messages
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
-            var uri = new Uri(BaseAddress, $"/v1/messages/{id}");
+            var uri = $"/v1/messages/{id}";
             return await PatchAsync<Message>(uri, patch, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -113,7 +113,7 @@ namespace Falu.Messages
                 m.Template?.Model?.GetType().EnsureAllowedForMessageTemplateModel();
             }
 
-            var uri = new Uri(BaseAddress, "/v1/messages/bulk");
+            var uri = "/v1/messages/bulk";
             return await PostAsync<List<Message>>(uri, messages, options, cancellationToken).ConfigureAwait(false);
         }
     }

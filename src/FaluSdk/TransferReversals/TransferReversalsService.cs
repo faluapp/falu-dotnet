@@ -30,8 +30,8 @@ namespace Falu.TransferReversals
             options?.PopulateQueryValues(args);
 
             var query = QueryHelper.MakeQueryString(args);
-            var uri = new Uri(BaseAddress, $"/v1/transfer_reversals{query}");
-            return await GetAsync<List<TransferReversal>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
+            var uri = $"/v1/transfer_reversals{query}";
+            return await GetResourceAsync<List<TransferReversal>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -47,8 +47,8 @@ namespace Falu.TransferReversals
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
-            var uri = new Uri(BaseAddress, $"/v1/transfer_reversals/{id}");
-            return await GetAsync<TransferReversal>(uri, options, cancellationToken).ConfigureAwait(false);
+            var uri = $"/v1/transfer_reversals/{id}";
+            return await GetResourceAsync<TransferReversal>(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Falu.TransferReversals
         {
             if (reversal is null) throw new ArgumentNullException(nameof(reversal));
 
-            var uri = new Uri(BaseAddress, "/v1/transfer_reversals");
+            var uri = "/v1/transfer_reversals";
             return await PostAsync<TransferReversal>(uri, reversal, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -84,7 +84,7 @@ namespace Falu.TransferReversals
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
-            var uri = new Uri(BaseAddress, $"/v1/transfer_reversals/{id}");
+            var uri = $"/v1/transfer_reversals/{id}";
             return await PatchAsync<TransferReversal>(uri, patch, options, cancellationToken).ConfigureAwait(false);
         }
     }

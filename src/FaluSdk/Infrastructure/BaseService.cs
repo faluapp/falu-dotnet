@@ -53,27 +53,27 @@ namespace Falu.Infrastructure
         }
 
         ///
-        protected virtual Task<ResourceResponse<TResource>> PatchResourceAsync<TResource>(string uri,
-                                                                                          object patch,
-                                                                                          RequestOptions? options = null,
-                                                                                          CancellationToken cancellationToken = default)
+        protected virtual Task<ResourceResponse<TResource>> PatchAsync<TResource>(string uri,
+                                                                                  object patch,
+                                                                                  RequestOptions? options = null,
+                                                                                  CancellationToken cancellationToken = default)
         {
             return RequestAsync<TResource>(uri, HttpMethod.Patch, patch, options, cancellationToken);
         }
 
         ///
-        protected virtual Task<ResourceResponse<TResource>> PostResourceAsync<TResource>(string uri,
-                                                                                         object o,
-                                                                                         RequestOptions? options = null,
-                                                                                         CancellationToken cancellationToken = default)
+        protected virtual Task<ResourceResponse<TResource>> PostAsync<TResource>(string uri,
+                                                                                 object o,
+                                                                                 RequestOptions? options = null,
+                                                                                 CancellationToken cancellationToken = default)
         {
             return RequestAsync<TResource>(uri, HttpMethod.Post, o, options, cancellationToken);
         }
 
         ///
-        protected virtual Task<ResourceResponse<TResource>> DeleteResourceAsync<TResource>(string uri,
-                                                                                           RequestOptions? options = null,
-                                                                                           CancellationToken cancellationToken = default)
+        protected virtual Task<ResourceResponse<TResource>> DeleteAsync<TResource>(string uri,
+                                                                                   RequestOptions? options = null,
+                                                                                   CancellationToken cancellationToken = default)
         {
             return RequestAsync<TResource>(uri, HttpMethod.Delete, null, options, cancellationToken);
         }

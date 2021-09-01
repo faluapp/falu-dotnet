@@ -27,7 +27,7 @@ namespace Falu.Identity
         {
             if (search is null) throw new ArgumentNullException(nameof(search));
 
-            var uri = new Uri(BaseAddress, "/v1/identity/search");
+            var uri = "/v1/identity/search";
             return await PostAsync<IdentityRecord>(uri, search, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -47,7 +47,7 @@ namespace Falu.Identity
             options?.PopulateQueryValues(args);
 
             var query = QueryHelper.MakeQueryString(args);
-            var uri = new Uri(BaseAddress, $"/v1/identity/marketing{query}");
+            var uri = $"/v1/identity/marketing{query}";
             return await PostAsync<List<MarketingResult>>(uri, new { }, requestOptions, cancellationToken).ConfigureAwait(false);
         }
     }

@@ -30,8 +30,8 @@ namespace Falu.MessageTemplates
             options?.PopulateQueryValues(args);
 
             var query = QueryHelper.MakeQueryString(args);
-            var uri = new Uri(BaseAddress, $"/v1/message_templates{query}");
-            return await GetAsync<List<MessageTemplate>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
+            var uri = $"/v1/message_templates{query}";
+            return await GetResourceAsync<List<MessageTemplate>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -47,8 +47,8 @@ namespace Falu.MessageTemplates
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
-            var uri = new Uri(BaseAddress, $"/v1/message_templates/{id}");
-            return await GetAsync<MessageTemplate>(uri, options, cancellationToken).ConfigureAwait(false);
+            var uri = $"/v1/message_templates/{id}";
+            return await GetResourceAsync<MessageTemplate>(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Falu.MessageTemplates
         {
             if (template is null) throw new ArgumentNullException(nameof(template));
 
-            var uri = new Uri(BaseAddress, "/v1/message_templates");
+            var uri = "/v1/message_templates";
             return await PostAsync<MessageTemplate>(uri, template, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -84,7 +84,7 @@ namespace Falu.MessageTemplates
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
-            var uri = new Uri(BaseAddress, $"/v1/message_templates/{id}");
+            var uri = $"/v1/message_templates/{id}";
             return await PatchAsync<MessageTemplate>(uri, patch, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -101,7 +101,7 @@ namespace Falu.MessageTemplates
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
-            var uri = new Uri(BaseAddress, $"/v1/message_templates/{id}");
+            var uri = $"/v1/message_templates/{id}";
             return await DeleteAsync(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -120,7 +120,7 @@ namespace Falu.MessageTemplates
 
             template.Model?.GetType().EnsureAllowedForMessageTemplateModel();
 
-            var uri = new Uri(BaseAddress, "/v1/message_templates/validate");
+            var uri = "/v1/message_templates/validate";
             return await PostAsync<MessageTemplateValidationResponse>(uri, template, options, cancellationToken).ConfigureAwait(false);
         }
     }

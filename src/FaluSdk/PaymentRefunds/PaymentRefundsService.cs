@@ -30,8 +30,8 @@ namespace Falu.PaymentRefunds
             options?.PopulateQueryValues(args);
 
             var query = QueryHelper.MakeQueryString(args);
-            var uri = new Uri(BaseAddress, $"/v1/payment_reversals{query}");
-            return await GetAsync<List<PaymentRefund>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
+            var uri = $"/v1/payment_reversals{query}";
+            return await GetResourceAsync<List<PaymentRefund>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -47,8 +47,8 @@ namespace Falu.PaymentRefunds
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
-            var uri = new Uri(BaseAddress, $"/v1/payment_reversals/{id}");
-            return await GetAsync<PaymentRefund>(uri, options, cancellationToken).ConfigureAwait(false);
+            var uri = $"/v1/payment_reversals/{id}";
+            return await GetResourceAsync<PaymentRefund>(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Falu.PaymentRefunds
         {
             if (reversal is null) throw new ArgumentNullException(nameof(reversal));
 
-            var uri = new Uri(BaseAddress, "/v1/payment_reversals");
+            var uri = "/v1/payment_reversals";
             return await PostAsync<PaymentRefund>(uri, reversal, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -84,7 +84,7 @@ namespace Falu.PaymentRefunds
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
-            var uri = new Uri(BaseAddress, $"/v1/payment_reversals/{id}");
+            var uri = $"/v1/payment_reversals/{id}";
             return await PatchAsync<PaymentRefund>(uri, patch, options, cancellationToken).ConfigureAwait(false);
         }
     }

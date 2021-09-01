@@ -30,8 +30,8 @@ namespace Falu.Transfers
             options?.PopulateQueryValues(args);
 
             var query = QueryHelper.MakeQueryString(args);
-            var uri = new Uri(BaseAddress, $"/v1/transfers{query}");
-            return await GetAsync<List<Transfer>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
+            var uri = $"/v1/transfers{query}";
+            return await GetResourceAsync<List<Transfer>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -47,8 +47,8 @@ namespace Falu.Transfers
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
-            var uri = new Uri(BaseAddress, $"/v1/transfers/{id}");
-            return await GetAsync<Transfer>(uri, options, cancellationToken).ConfigureAwait(false);
+            var uri = $"/v1/transfers/{id}";
+            return await GetResourceAsync<Transfer>(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Falu.Transfers
         {
             if (transfer is null) throw new ArgumentNullException(nameof(transfer));
 
-            var uri = new Uri(BaseAddress, "/v1/transfers");
+            var uri = "/v1/transfers";
             return await PostAsync<Transfer>(uri, transfer, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -84,7 +84,7 @@ namespace Falu.Transfers
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
-            var uri = new Uri(BaseAddress, $"/v1/transfers/{id}");
+            var uri = $"/v1/transfers/{id}";
             return await PatchAsync<Transfer>(uri, patch, options, cancellationToken).ConfigureAwait(false);
         }
     }

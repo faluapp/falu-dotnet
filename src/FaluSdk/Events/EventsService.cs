@@ -30,8 +30,8 @@ namespace Falu.Events
             options?.PopulateQueryValues(args);
 
             var query = QueryHelper.MakeQueryString(args);
-            var uri = new Uri(BaseAddress, $"/v1/events{query}");
-            return await GetAsync<List<WebhookEvent<T>>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
+            var uri = $"/v1/events{query}";
+            return await GetResourceAsync<List<WebhookEvent<T>>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -49,8 +49,8 @@ namespace Falu.Events
             options?.PopulateQueryValues(args);
 
             var query = QueryHelper.MakeQueryString(args);
-            var uri = new Uri(BaseAddress, $"/v1/events{query}");
-            return await GetAsync<List<WebhookEvent>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
+            var uri = $"/v1/events{query}";
+            return await GetResourceAsync<List<WebhookEvent>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -67,8 +67,8 @@ namespace Falu.Events
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
-            var uri = new Uri(BaseAddress, $"/v1/events/{id}");
-            return await GetAsync<WebhookEvent<T>>(uri, options, cancellationToken).ConfigureAwait(false);
+            var uri = $"/v1/events/{id}";
+            return await GetResourceAsync<WebhookEvent<T>>(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -84,8 +84,8 @@ namespace Falu.Events
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
-            var uri = new Uri(BaseAddress, $"/v1/events/{id}");
-            return await GetAsync<WebhookEvent>(uri, options, cancellationToken).ConfigureAwait(false);
+            var uri = $"/v1/events/{id}";
+            return await GetResourceAsync<WebhookEvent>(uri, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

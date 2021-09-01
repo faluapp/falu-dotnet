@@ -31,8 +31,8 @@ namespace Falu.Evaluations
             options?.PopulateQueryValues(args);
 
             var query = QueryHelper.MakeQueryString(args);
-            var uri = new Uri(BaseAddress, $"/v1/evaluations{query}");
-            return await GetAsync<List<Evaluation>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
+            var uri = $"/v1/evaluations{query}";
+            return await GetResourceAsync<List<Evaluation>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -48,8 +48,8 @@ namespace Falu.Evaluations
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
-            var uri = new Uri(BaseAddress, $"/v1/evaluations/{id}");
-            return await GetAsync<Evaluation>(uri, options, cancellationToken).ConfigureAwait(false);
+            var uri = $"/v1/evaluations/{id}";
+            return await GetResourceAsync<Evaluation>(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Falu.Evaluations
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
-            var uri = new Uri(BaseAddress, $"/v1/evaluations/{id}");
+            var uri = $"/v1/evaluations/{id}";
             return await PatchAsync<Evaluation>(uri, patch, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -132,7 +132,7 @@ namespace Falu.Evaluations
                 }
             }
 
-            var uri = new Uri(BaseAddress, "/v1/evaluations");
+            var uri = "/v1/evaluations";
             var request = new HttpRequestMessage(HttpMethod.Post, uri) { Content = content };
             return await SendAsync<Evaluation>(request, options, cancellationToken).ConfigureAwait(false);
         }
@@ -151,7 +151,7 @@ namespace Falu.Evaluations
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
-            var uri = new Uri(BaseAddress, $"/v1/evaluations/{id}/score");
+            var uri = $"/v1/evaluations/{id}/score";
             return await PostAsync<Evaluation>(uri, new { }, options, cancellationToken).ConfigureAwait(false);
         }
     }

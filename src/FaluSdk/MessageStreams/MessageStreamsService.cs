@@ -30,8 +30,8 @@ namespace Falu.MessageStreams
             options?.PopulateQueryValues(args);
 
             var query = QueryHelper.MakeQueryString(args);
-            var uri = new Uri(BaseAddress, $"/v1/message_streams{query}");
-            return await GetAsync<List<MessageStream>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
+            var uri = $"/v1/message_streams{query}";
+            return await GetResourceAsync<List<MessageStream>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -47,8 +47,8 @@ namespace Falu.MessageStreams
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
-            var uri = new Uri(BaseAddress, $"/v1/message_streams/{id}");
-            return await GetAsync<MessageStream>(uri, options, cancellationToken).ConfigureAwait(false);
+            var uri = $"/v1/message_streams/{id}";
+            return await GetResourceAsync<MessageStream>(uri, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Falu.MessageStreams
         {
             if (stream is null) throw new ArgumentNullException(nameof(stream));
 
-            var uri = new Uri(BaseAddress, "/v1/message_streams");
+            var uri = "/v1/message_streams";
             return await PostAsync<MessageStream>(uri, stream, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -84,7 +84,7 @@ namespace Falu.MessageStreams
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
             if (patch is null) throw new ArgumentNullException(nameof(patch));
 
-            var uri = new Uri(BaseAddress, $"/v1/message_streams/{id}");
+            var uri = $"/v1/message_streams/{id}";
             return await PatchAsync<MessageStream>(uri, patch, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -101,7 +101,7 @@ namespace Falu.MessageStreams
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
 
-            var uri = new Uri(BaseAddress, $"/v1/message_streams/{id}");
+            var uri = $"/v1/message_streams/{id}";
             return await DeleteAsync(uri, options, cancellationToken).ConfigureAwait(false);
         }
     }

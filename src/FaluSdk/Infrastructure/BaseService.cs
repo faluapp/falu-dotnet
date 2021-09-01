@@ -23,7 +23,7 @@ namespace Falu.Infrastructure
             "application/problem+json",
         };
 
-        private readonly string JsonContentType = System.Net.Mime.MediaTypeNames.Application.Json;
+        private readonly string JsonContentType = SupportedContentTypes[0];
 
         ///
         protected BaseService(HttpClient backChannel, FaluClientOptions options)

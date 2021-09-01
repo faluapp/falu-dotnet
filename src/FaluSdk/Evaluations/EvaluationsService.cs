@@ -70,9 +70,9 @@ namespace Falu.Evaluations
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<Evaluation>> CreateAsync(EvaluationCreateModel evaluation,
-                                                                            RequestOptions? options = null,
-                                                                            CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<Evaluation>> CreateAsync(EvaluationCreateModel evaluation,
+                                                                      RequestOptions? options = null,
+                                                                      CancellationToken cancellationToken = default)
         {
             if (evaluation is null) throw new ArgumentNullException(nameof(evaluation));
             if (evaluation.Scope is null) throw new InvalidOperationException($"{nameof(evaluation.Scope)} cannot be null.");
@@ -123,9 +123,8 @@ namespace Falu.Evaluations
                 }
             }
 
-            var uri = "/v1/evaluations";
-            var request = new HttpRequestMessage(HttpMethod.Post, uri) { Content = content };
-            return await SendAsync<Evaluation>(request, options, cancellationToken).ConfigureAwait(false);
+            var uri = MakePath();
+            return RequestAsync<Evaluation>(uri, HttpMethod.Post, content, options, cancellationToken);
         }
 
 

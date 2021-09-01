@@ -50,15 +50,6 @@ namespace Falu.Infrastructure
         }
 
         ///
-        protected virtual Task<ResourceResponse<TResource>> PatchAsync<TResource>(string uri,
-                                                                                  object patch,
-                                                                                  RequestOptions? options = null,
-                                                                                  CancellationToken cancellationToken = default)
-        {
-            return RequestAsync<TResource>(uri, HttpMethod.Patch, patch, options, cancellationToken);
-        }
-
-        ///
         protected virtual Task<ResourceResponse<TResource>> PostAsync<TResource>(string uri,
                                                                                  object o,
                                                                                  RequestOptions? options = null,

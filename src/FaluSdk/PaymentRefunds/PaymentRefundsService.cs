@@ -10,11 +10,14 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.PaymentRefunds
 {
     ///
-    public class PaymentRefundsService : BaseService
+    public class PaymentRefundsService : BaseService<PaymentRefund>
     {
         ///
         public PaymentRefundsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
 
+        /// <inheritdoc/>
+        protected override string BasePath => "/v1/payment_refunds";
+        
         /// <summary>
         /// List payment refunds.
         /// </summary>
@@ -76,16 +79,12 @@ namespace Falu.PaymentRefunds
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<PaymentRefund>> UpdateAsync(string id,
-                                                                               JsonPatchDocument<PaymentRefundPatchModel> patch,
-                                                                               RequestOptions? options = null,
-                                                                               CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<PaymentRefund>> UpdateAsync(string id,
+                                                                         JsonPatchDocument<PaymentRefundPatchModel> patch,
+                                                                         RequestOptions? options = null,
+                                                                         CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
-            if (patch is null) throw new ArgumentNullException(nameof(patch));
-
-            var uri = $"/v1/payment_reversals/{id}";
-            return await PatchAsync<PaymentRefund>(uri, patch, options, cancellationToken).ConfigureAwait(false);
+            return UpdateResourceAsync(id, patch, options, cancellationToken);
         }
     }
 }

@@ -10,10 +10,13 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.Payments
 {
     ///
-    public class PaymentsService : BaseService
+    public class PaymentsService : BaseService<Payment>
     {
         ///
         public PaymentsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+
+        /// <inheritdoc/>
+        protected override string BasePath => "/v1/payments";
 
         /// <summary>
         /// List payments.
@@ -76,16 +79,12 @@ namespace Falu.Payments
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<Payment>> UpdateAsync(string id,
-                                                                         JsonPatchDocument<PaymentPatchModel> patch,
-                                                                         RequestOptions? options = null,
-                                                                         CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<Payment>> UpdateAsync(string id,
+                                                                   JsonPatchDocument<PaymentPatchModel> patch,
+                                                                   RequestOptions? options = null,
+                                                                   CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
-            if (patch is null) throw new ArgumentNullException(nameof(patch));
-
-            var uri = $"/v1/payments/{id}";
-            return await PatchAsync<Payment>(uri, patch, options, cancellationToken).ConfigureAwait(false);
+            return UpdateResourceAsync(id, patch, options, cancellationToken);
         }
     }
 }

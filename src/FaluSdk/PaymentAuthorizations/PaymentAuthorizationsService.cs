@@ -10,10 +10,13 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.PaymentAuthorizations
 {
     ///
-    public class PaymentAuthorizationsService : BaseService
+    public class PaymentAuthorizationsService : BaseService<PaymentAuthorization>
     {
         ///
         public PaymentAuthorizationsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+
+        /// <inheritdoc/>
+        protected override string BasePath => "/v1/payment_authorizations";
 
         /// <summary>
         /// List payment authorizations.
@@ -59,16 +62,12 @@ namespace Falu.PaymentAuthorizations
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<PaymentAuthorization>> UpdateAsync(string id,
-                                                                                      JsonPatchDocument<PaymentAuthorizationPatchModel> patch,
-                                                                                      RequestOptions? options = null,
-                                                                                      CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<PaymentAuthorization>> UpdateAsync(string id,
+                                                                                JsonPatchDocument<PaymentAuthorizationPatchModel> patch,
+                                                                                RequestOptions? options = null,
+                                                                                CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
-            if (patch is null) throw new ArgumentNullException(nameof(patch));
-
-            var uri = $"/v1/payment_authorizations/{id}";
-            return await PatchAsync<PaymentAuthorization>(uri, patch, options, cancellationToken).ConfigureAwait(false);
+            return UpdateResourceAsync(id, patch, options, cancellationToken);
         }
 
         /// <summary>

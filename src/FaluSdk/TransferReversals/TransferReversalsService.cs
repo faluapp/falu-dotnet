@@ -10,10 +10,13 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.TransferReversals
 {
     ///
-    public class TransferReversalsService : BaseService
+    public class TransferReversalsService : BaseService<TransferReversal>
     {
         ///
         public TransferReversalsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+
+        /// <inheritdoc/>
+        protected override string BasePath => "/v1/transfer_reversals";
 
         /// <summary>
         /// List transfer reversals.
@@ -76,16 +79,12 @@ namespace Falu.TransferReversals
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<TransferReversal>> UpdateAsync(string id,
-                                                                                  JsonPatchDocument<TransferReversalPatchModel> patch,
-                                                                                  RequestOptions? options = null,
-                                                                                  CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<TransferReversal>> UpdateAsync(string id,
+                                                                            JsonPatchDocument<TransferReversalPatchModel> patch,
+                                                                            RequestOptions? options = null,
+                                                                            CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
-            if (patch is null) throw new ArgumentNullException(nameof(patch));
-
-            var uri = $"/v1/transfer_reversals/{id}";
-            return await PatchAsync<TransferReversal>(uri, patch, options, cancellationToken).ConfigureAwait(false);
+            return UpdateResourceAsync(id, patch, options, cancellationToken);
         }
     }
 }

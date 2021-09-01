@@ -10,10 +10,13 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.Messages
 {
     ///
-    public class MessagesService : BaseService
+    public class MessagesService : BaseService<Message>
     {
         ///
         public MessagesService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+
+        /// <inheritdoc/>
+        protected override string BasePath => "/v1/messages";
 
         /// <summary>
         /// List messages.
@@ -77,16 +80,12 @@ namespace Falu.Messages
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<Message>> UpdateAsync(string id,
-                                                                         JsonPatchDocument<MessagePatchModel> patch,
-                                                                         RequestOptions? options = null,
-                                                                         CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<Message>> UpdateAsync(string id,
+                                                                   JsonPatchDocument<MessagePatchModel> patch,
+                                                                   RequestOptions? options = null,
+                                                                   CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
-            if (patch is null) throw new ArgumentNullException(nameof(patch));
-
-            var uri = $"/v1/messages/{id}";
-            return await PatchAsync<Message>(uri, patch, options, cancellationToken).ConfigureAwait(false);
+            return UpdateResourceAsync(id, patch, options, cancellationToken);
         }
 
         /// <summary>

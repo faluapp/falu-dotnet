@@ -31,18 +31,22 @@ namespace Falu.Events
             return ListResourcesAsync<WebhookEvent<T>>(options, requestOptions, cancellationToken);
         }
 
-        /// <summary>
-        /// Retrieve events.
-        /// </summary>
-        /// <param name="options">Options for filtering and pagination.</param>
-        /// <param name="requestOptions">Options to use for the request.</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <summary>Retrieve events.</summary>
+        /// <inheritdoc/>
         public virtual Task<ResourceResponse<List<WebhookEvent>>> ListAsync(BasicListOptions? options = null,
                                                                             RequestOptions? requestOptions = null,
                                                                             CancellationToken cancellationToken = default)
         {
             return ListResourcesAsync(options, requestOptions, cancellationToken);
+        }
+
+        /// <summary>Retrieve events recursively.</summary>
+        /// <inheritdoc/>
+        public virtual IAsyncEnumerable<WebhookEvent> ListRecursivelyAsync(BasicListOptions? options = null,
+                                                                           RequestOptions? requestOptions = null,
+                                                                           CancellationToken cancellationToken = default)
+        {
+            return ListResourcesRecursivelyAsync(options, requestOptions, cancellationToken);
         }
 
         /// <summary>

@@ -18,18 +18,22 @@ namespace Falu.MessageTemplates
         /// <inheritdoc/>
         protected override string BasePath => "/v1/message_templates";
 
-        /// <summary>
-        /// List message templates.
-        /// </summary>
-        /// <param name="options">Options for filtering and pagination.</param>
-        /// <param name="requestOptions">Options to use for the request.</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <summary>List message templates.</summary>
+        /// <inheritdoc/>
         public virtual Task<ResourceResponse<List<MessageTemplate>>> ListAsync(BasicListOptions? options = null,
                                                                                RequestOptions? requestOptions = null,
                                                                                CancellationToken cancellationToken = default)
         {
             return ListResourcesAsync(options, requestOptions, cancellationToken);
+        }
+
+        /// <summary>List message templates recursively.</summary>
+        /// <inheritdoc/>
+        public virtual IAsyncEnumerable<MessageTemplate> ListRecursivelyAsync(BasicListOptions? options = null,
+                                                                              RequestOptions? requestOptions = null,
+                                                                              CancellationToken cancellationToken = default)
+        {
+            return ListResourcesRecursivelyAsync(options, requestOptions, cancellationToken);
         }
 
         /// <summary>

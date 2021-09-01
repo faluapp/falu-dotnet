@@ -17,18 +17,22 @@ namespace Falu.PaymentAuthorizations
         /// <inheritdoc/>
         protected override string BasePath => "/v1/payment_authorizations";
 
-        /// <summary>
-        /// List payment authorizations.
-        /// </summary>
-        /// <param name="options">Options for filtering and pagination.</param>
-        /// <param name="requestOptions">Options to use for the request.</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <summary>List payment authorizations.</summary>
+        /// <inheritdoc/>
         public virtual Task<ResourceResponse<List<PaymentAuthorization>>> ListAsync(PaymentAuthorizationsListOptions? options = null,
                                                                                     RequestOptions? requestOptions = null,
                                                                                     CancellationToken cancellationToken = default)
         {
             return ListResourcesAsync(options, requestOptions, cancellationToken);
+        }
+
+        /// <summary>List payment authorizations recursively.</summary>
+        /// <inheritdoc/>
+        public virtual IAsyncEnumerable<PaymentAuthorization> ListRecursivelyAsync(PaymentAuthorizationsListOptions? options = null,
+                                                                                   RequestOptions? requestOptions = null,
+                                                                                   CancellationToken cancellationToken = default)
+        {
+            return ListResourcesRecursivelyAsync(options, requestOptions, cancellationToken);
         }
 
         /// <summary>

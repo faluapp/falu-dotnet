@@ -19,18 +19,22 @@ namespace Falu.Evaluations
         /// <inheritdoc/>
         protected override string BasePath => "/v1/evaluations";
 
-        /// <summary>
-        /// List evaluations.
-        /// </summary>
-        /// <param name="options">Options for filtering and pagination.</param>
-        /// <param name="requestOptions">Options to use for the request.</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <summary>List evaluations.</summary>
+        /// <inheritdoc/>
         public virtual Task<ResourceResponse<List<Evaluation>>> ListAsync(EvaluationsListOptions? options = null,
                                                                           RequestOptions? requestOptions = null,
                                                                           CancellationToken cancellationToken = default)
         {
             return ListResourcesAsync(options, requestOptions, cancellationToken);
+        }
+
+        /// <summary>List evaluations recursively.</summary>
+        /// <inheritdoc/>
+        public IAsyncEnumerable<Evaluation> ListRecursivelyAsync(EvaluationsListOptions? options = null,
+                                                                 RequestOptions? requestOptions = null,
+                                                                 CancellationToken cancellationToken = default)
+        {
+            return ListResourcesRecursivelyAsync(options, requestOptions, cancellationToken);
         }
 
         /// <summary>

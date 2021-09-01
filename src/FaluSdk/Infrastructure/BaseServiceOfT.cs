@@ -91,7 +91,7 @@ namespace Falu.Infrastructure
 
         ///
         protected async IAsyncEnumerable<T> ListResourcesRecursivelyAsync<T>(BasicListOptions? options,
-                                                                             RequestOptions requestOptions,
+                                                                             RequestOptions? requestOptions,
                                                                              [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             // TODO: consider cloning (or using record) so that the caller does not change while iterating asynchronously
@@ -136,7 +136,7 @@ namespace Falu.Infrastructure
 
         ///
         protected IAsyncEnumerable<TResource> ListResourcesRecursivelyAsync(BasicListOptions? options,
-                                                                            RequestOptions requestOptions,
+                                                                            RequestOptions? requestOptions,
                                                                             CancellationToken cancellationToken = default)
         {
             return ListResourcesRecursivelyAsync<TResource>(options, requestOptions, cancellationToken);

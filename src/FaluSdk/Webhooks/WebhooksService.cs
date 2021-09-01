@@ -17,18 +17,22 @@ namespace Falu.Webhooks
         /// <inheritdoc/>
         protected override string BasePath => "/v1/webhooks/endpoints";
 
-        /// <summary>
-        /// List webhook endpoints.
-        /// </summary>
-        /// <param name="options">Options for filtering and pagination.</param>
-        /// <param name="requestOptions">Options to use for the request.</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <summary>List webhook endpoints.</summary>
+        /// <inheritdoc/>
         public virtual Task<ResourceResponse<List<WebhookEndpoint>>> ListAsync(BasicListOptions? options = null,
                                                                                RequestOptions? requestOptions = null,
                                                                                CancellationToken cancellationToken = default)
         {
             return ListResourcesAsync(options, requestOptions, cancellationToken);
+        }
+
+        /// <summary>List webhook endpoints recursively.</summary>
+        /// <inheritdoc/>
+        public virtual IAsyncEnumerable<WebhookEndpoint> ListRecursivelyAsync(BasicListOptions? options = null,
+                                                                              RequestOptions? requestOptions = null,
+                                                                              CancellationToken cancellationToken = default)
+        {
+            return ListResourcesRecursivelyAsync(options, requestOptions, cancellationToken);
         }
 
         /// <summary>

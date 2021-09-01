@@ -17,18 +17,22 @@ namespace Falu.MessageStreams
         /// <inheritdoc/>
         protected override string BasePath => "/v1/message_streams";
 
-        /// <summary>
-        /// List message streams.
-        /// </summary>
-        /// <param name="options">Options for filtering and pagination.</param>
-        /// <param name="requestOptions">Options to use for the request.</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <summary>List message streams.</summary>
+        /// <inheritdoc/>
         public virtual Task<ResourceResponse<List<MessageStream>>> ListAsync(BasicListOptions? options = null,
                                                                              RequestOptions? requestOptions = null,
                                                                              CancellationToken cancellationToken = default)
         {
             return ListResourcesAsync(options, requestOptions, cancellationToken);
+        }
+
+        /// <summary>List message streams recursively.</summary>
+        /// <inheritdoc/>
+        public virtual IAsyncEnumerable<MessageStream> ListRecursivelyAsync(BasicListOptions? options = null,
+                                                                            RequestOptions? requestOptions = null,
+                                                                            CancellationToken cancellationToken = default)
+        {
+            return ListResourcesRecursivelyAsync(options, requestOptions, cancellationToken);
         }
 
         /// <summary>

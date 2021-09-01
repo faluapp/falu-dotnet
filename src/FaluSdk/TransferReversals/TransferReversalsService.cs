@@ -17,18 +17,22 @@ namespace Falu.TransferReversals
         /// <inheritdoc/>
         protected override string BasePath => "/v1/transfer_reversals";
 
-        /// <summary>
-        /// List transfer reversals.
-        /// </summary>
-        /// <param name="options">Options for filtering and pagination.</param>
-        /// <param name="requestOptions">Options to use for the request.</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <summary>List transfer reversals.</summary>
+        /// <inheritdoc/>
         public virtual Task<ResourceResponse<List<TransferReversal>>> ListAsync(TransferReversalsListOptions? options = null,
                                                                                 RequestOptions? requestOptions = null,
                                                                                 CancellationToken cancellationToken = default)
         {
             return ListResourcesAsync(options, requestOptions, cancellationToken);
+        }
+
+        /// <summary>List transfer reversals recursively.</summary>
+        /// <inheritdoc/>
+        public virtual IAsyncEnumerable<TransferReversal> ListRecursivelyAsync(TransferReversalsListOptions? options = null,
+                                                                               RequestOptions? requestOptions = null,
+                                                                               CancellationToken cancellationToken = default)
+        {
+            return ListResourcesRecursivelyAsync(options, requestOptions, cancellationToken);
         }
 
         /// <summary>

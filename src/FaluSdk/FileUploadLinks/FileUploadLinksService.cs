@@ -20,15 +20,21 @@ namespace Falu.FileUploadLinks
         protected override string BasePath => "/v1/file_upload_links";
 
         /// <summary>List file upload links.</summary>
-        /// <param name="options">Options for filtering and pagination.</param>
-        /// <param name="requestOptions">Options to use for the request.</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public virtual Task<ResourceResponse<List<FileUploadLink>>> ListAsync(FileUploadLinksListOptions? options = null,
                                                                               RequestOptions? requestOptions = null,
                                                                               CancellationToken cancellationToken = default)
         {
             return ListResourcesAsync(options, requestOptions, cancellationToken);
+        }
+
+        /// <summary>List file upload links recursively.</summary>
+        /// <inheritdoc/>
+        public virtual IAsyncEnumerable<FileUploadLink> ListRecursivelyAsync(FileUploadLinksListOptions? options = null,
+                                                                             RequestOptions? requestOptions = null,
+                                                                             CancellationToken cancellationToken = default)
+        {
+            return ListResourcesRecursivelyAsync(options, requestOptions, cancellationToken);
         }
 
         /// <summary>Retrieve a file upload link.</summary>

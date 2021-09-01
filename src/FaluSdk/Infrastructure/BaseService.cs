@@ -65,15 +65,15 @@ namespace Falu.Infrastructure
                 request.Content = content;
             }
 
-            return await SendAsync<TResource>(request, options, cancellationToken).ConfigureAwait(false);
+            return await RequestCoreAsync<TResource>(request, options, cancellationToken).ConfigureAwait(false);
         }
 
         ///
-        protected virtual async Task<ResourceResponse<TResource>> SendAsync<TResource>(HttpRequestMessage request,
-                                                                                       RequestOptions? options = null,
-                                                                                       CancellationToken cancellationToken = default)
+        protected virtual async Task<ResourceResponse<TResource>> RequestCoreAsync<TResource>(HttpRequestMessage request,
+                                                                                              RequestOptions? options = null,
+                                                                                              CancellationToken cancellationToken = default)
         {
-            var response = await SendAsync(request, options, cancellationToken).ConfigureAwait(false);
+            var response = await RequestCoreAsync(request, options, cancellationToken).ConfigureAwait(false);
             var resource = default(TResource);
             var error = default(FaluError);
 
@@ -97,9 +97,9 @@ namespace Falu.Infrastructure
         }
 
         ///
-        protected virtual async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
-                                                                    RequestOptions? options = null,
-                                                                    CancellationToken cancellationToken = default)
+        protected virtual async Task<HttpResponseMessage> RequestCoreAsync(HttpRequestMessage request,
+                                                                           RequestOptions? options = null,
+                                                                           CancellationToken cancellationToken = default)
         {
             // ensure request is not null
             if (request == null) throw new ArgumentNullException(nameof(request));

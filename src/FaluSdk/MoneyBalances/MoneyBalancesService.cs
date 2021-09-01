@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 namespace Falu.Payments
 {
     ///
-    public class MoneyBalancesService : BaseService
+    public class MoneyBalancesService : BaseService<MoneyBalances>
     {
         ///
         public MoneyBalancesService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+
+        /// <inheritdoc/>
+        protected override string BasePath => "/v1/money_balances";
 
         /// <summary>
         /// Retrieve balance.
@@ -21,8 +24,8 @@ namespace Falu.Payments
         public virtual async Task<ResourceResponse<MoneyBalances>> GetAsync(RequestOptions? options = null,
                                                                              CancellationToken cancellationToken = default)
         {
-            var uri = "/v1/money_balances";
-            return await GetResourceAsync<MoneyBalances>(uri, options, cancellationToken).ConfigureAwait(false);
+            var uri = MakeRootPath();
+            return await RequestAsync<MoneyBalances>(uri, HttpMethod.Get, null, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -34,8 +37,8 @@ namespace Falu.Payments
         public virtual async Task<ResourceResponse<object>> RefreshAsync(RequestOptions? options = null,
                                                                          CancellationToken cancellationToken = default)
         {
-            var uri = "/v1/money_balances/refresh";
-            return await PostAsync<object>(uri, new { }, options, cancellationToken).ConfigureAwait(false);
+            var uri = $"{MakeRootPath()}/refresh";
+            return await RequestAsync<object>(uri, HttpMethod.Post, new { }, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

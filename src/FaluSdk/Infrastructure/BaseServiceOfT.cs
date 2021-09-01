@@ -33,7 +33,7 @@ namespace Falu.Infrastructure
                                                                                         RequestOptions? requestOptions = null,
                                                                                         CancellationToken cancellationToken = default)
         {
-            var uri = MakePathWithQuery(options, null);
+            var uri = MakePathWithQuery(null, options);
             return await RequestAsync<List<TResource>>(uri, HttpMethod.Get, null, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
@@ -89,23 +89,23 @@ namespace Falu.Infrastructure
         }
 
         /// <summary>Combine path and query.</summary>
-        /// <param name="options">The options to generate keys and values for the query.</param>
         /// <param name="subPath">The sub path to add before the query.</param>
+        /// <param name="options">The options to generate keys and values for the query.</param>
         /// <returns>The path and query combined.</returns>
-        protected virtual string MakePathWithQuery(BasicListOptions? options, string? subPath)
+        protected virtual string MakePathWithQuery(string? subPath, BasicListOptions? options)
         {
             var args = new Dictionary<string, string>();
             options?.PopulateQueryValues(args);
 
             var query = QueryHelper.MakeQueryString(args);
-            return MakePathWithQuery(query: query, subPath: subPath);
+            return MakePathWithQuery(subPath: subPath, query: query);
         }
 
         /// <summary>Combine path and query.</summary>
-        /// <param name="query">The query to append.</param>
         /// <param name="subPath">The sub path to add before the query.</param>
+        /// <param name="query">The query to append.</param>
         /// <returns>The path and query combined.</returns>
-        protected virtual string MakePathWithQuery(string query, string? subPath)
+        protected virtual string MakePathWithQuery(string? subPath, string query)
         {
             if (string.IsNullOrWhiteSpace(query))
             {

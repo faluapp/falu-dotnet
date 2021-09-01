@@ -25,16 +25,11 @@ namespace Falu.Transfers
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<Transfer>>> ListAsync(TransfersListOptions? options = null,
-                                                                              RequestOptions? requestOptions = null,
-                                                                              CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<List<Transfer>>> ListAsync(TransfersListOptions? options = null,
+                                                                        RequestOptions? requestOptions = null,
+                                                                        CancellationToken cancellationToken = default)
         {
-            var args = new Dictionary<string, string>();
-            options?.PopulateQueryValues(args);
-
-            var query = QueryHelper.MakeQueryString(args);
-            var uri = $"/v1/transfers{query}";
-            return await GetResourceAsync<List<Transfer>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
+            return ListResourcesAsync(options, requestOptions, cancellationToken);
         }
 
         /// <summary>

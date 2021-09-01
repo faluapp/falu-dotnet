@@ -25,16 +25,11 @@ namespace Falu.PaymentAuthorizations
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<PaymentAuthorization>>> ListAsync(PaymentAuthorizationsListOptions? options = null,
-                                                                                          RequestOptions? requestOptions = null,
-                                                                                          CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<List<PaymentAuthorization>>> ListAsync(PaymentAuthorizationsListOptions? options = null,
+                                                                                    RequestOptions? requestOptions = null,
+                                                                                    CancellationToken cancellationToken = default)
         {
-            var args = new Dictionary<string, string>();
-            options?.PopulateQueryValues(args);
-
-            var query = QueryHelper.MakeQueryString(args);
-            var uri = $"/v1/payment_authorizations{query}";
-            return await GetResourceAsync<List<PaymentAuthorization>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
+            return ListResourcesAsync(options, requestOptions, cancellationToken);
         }
 
         /// <summary>

@@ -25,16 +25,11 @@ namespace Falu.MessageTemplates
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<MessageTemplate>>> ListAsync(BasicListOptions? options = null,
-                                                                                     RequestOptions? requestOptions = null,
-                                                                                     CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<List<MessageTemplate>>> ListAsync(BasicListOptions? options = null,
+                                                                               RequestOptions? requestOptions = null,
+                                                                               CancellationToken cancellationToken = default)
         {
-            var args = new Dictionary<string, string>();
-            options?.PopulateQueryValues(args);
-
-            var query = QueryHelper.MakeQueryString(args);
-            var uri = $"/v1/message_templates{query}";
-            return await GetResourceAsync<List<MessageTemplate>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
+            return ListResourcesAsync(options, requestOptions, cancellationToken);
         }
 
         /// <summary>

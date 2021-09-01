@@ -33,6 +33,18 @@ namespace Falu.Infrastructure
             return RequestAsync<TResource>(uri, HttpMethod.Get, null, options, cancellationToken);
         }
 
+        ///
+        public virtual async Task<ResourceResponse<List<TResource>>> ListResourcesAsync(BasicListOptions? options = null,
+                                                                                        RequestOptions? requestOptions = null,
+                                                                                        CancellationToken cancellationToken = default)
+        {
+            var args = new Dictionary<string, string>();
+            options?.PopulateQueryValues(args);
+
+            var uri = MakePathAndQuery(args);
+            return await RequestAsync<List<TResource>>(uri, HttpMethod.Get, null, requestOptions, cancellationToken).ConfigureAwait(false);
+        }
+
 
         ///
         protected virtual Task<ResourceResponse<TResource>> UpdateResourceAsync(string id,
@@ -69,5 +81,27 @@ namespace Falu.Infrastructure
             return $"{BasePath}/{id}";
         }
 
+        /// <summary>Combine path and query.</summary>
+        /// <param name="args">The keys and values to put in the query.</param>
+        /// <returns>The path and query combined.</returns>
+        protected virtual string MakePathAndQuery(Dictionary<string, string> args)
+        {
+            var query = QueryHelper.MakeQueryString(args);
+            return MakePathAndQuery(query);
+        }
+
+        /// <summary>Combine path and query.</summary>
+        /// <param name="query">The query to append.</param>
+        /// <returns>The path and query combined.</returns>
+        protected virtual string MakePathAndQuery(string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                throw new ArgumentException($"'{nameof(query)}' cannot be null or whitespace.", nameof(query));
+            }
+
+            if (!query.StartsWith("?")) query = $"?{query}";
+            return $"{BasePath}{query}";
+        }
     }
 }

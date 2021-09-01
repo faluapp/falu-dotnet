@@ -25,16 +25,11 @@ namespace Falu.Messages
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<Message>>> ListAsync(MessagesListOptions? options = null,
-                                                                             RequestOptions? requestOptions = null,
-                                                                             CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<List<Message>>> ListAsync(MessagesListOptions? options = null,
+                                                                       RequestOptions? requestOptions = null,
+                                                                       CancellationToken cancellationToken = default)
         {
-            var args = new Dictionary<string, string>();
-            options?.PopulateQueryValues(args);
-
-            var query = QueryHelper.MakeQueryString(args);
-            var uri = $"/v1/messages{query}";
-            return await GetResourceAsync<List<Message>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
+            return ListResourcesAsync(options, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -44,14 +39,11 @@ namespace Falu.Messages
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<Message>> GetAsync(string id,
-                                                                      RequestOptions? options = null,
-                                                                      CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<Message>> GetAsync(string id,
+                                                                RequestOptions? options = null,
+                                                                CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
-
-            var uri = $"/v1/messages/{id}";
-            return await GetResourceAsync<Message>(uri, options, cancellationToken).ConfigureAwait(false);
+            return GetResourceAsync(id, options, cancellationToken);
         }
 
         /// <summary>

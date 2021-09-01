@@ -45,6 +45,16 @@ namespace Falu.Infrastructure
             return await RequestAsync<List<TResource>>(uri, HttpMethod.Get, null, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
+        ///
+        protected virtual Task<ResourceResponse<TResource>> CreateResourceAsync(object resource,
+                                                                                RequestOptions? options = null,
+                                                                                CancellationToken cancellationToken = default)
+        {
+            if (resource is null) throw new ArgumentNullException(nameof(resource));
+
+            var uri = BasePath;
+            return RequestAsync<TResource>(uri, HttpMethod.Post, resource, options, cancellationToken);
+        }
 
         ///
         protected virtual Task<ResourceResponse<TResource>> UpdateResourceAsync(string id,

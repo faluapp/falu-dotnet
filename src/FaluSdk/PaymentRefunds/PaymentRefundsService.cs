@@ -49,18 +49,15 @@ namespace Falu.PaymentRefunds
         /// <summary>
         /// Create payment refund.
         /// </summary>
-        /// <param name="reversal"></param>
+        /// <param name="refund"></param>
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<PaymentRefund>> CreateAsync(PaymentRefundRequest reversal,
-                                                                               RequestOptions? options = null,
-                                                                               CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<PaymentRefund>> CreateAsync(PaymentRefundRequest refund,
+                                                                         RequestOptions? options = null,
+                                                                         CancellationToken cancellationToken = default)
         {
-            if (reversal is null) throw new ArgumentNullException(nameof(reversal));
-
-            var uri = "/v1/payment_reversals";
-            return await PostAsync<PaymentRefund>(uri, reversal, options, cancellationToken).ConfigureAwait(false);
+            return CreateResourceAsync(refund, options, cancellationToken);
         }
 
         /// <summary>

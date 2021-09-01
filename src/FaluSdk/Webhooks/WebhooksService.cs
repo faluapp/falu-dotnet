@@ -53,14 +53,11 @@ namespace Falu.Webhooks
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<WebhookEndpoint>> CreateAsync(WebhookEndpointPatchModel endpoint,
-                                                                                 RequestOptions? options = null,
-                                                                                 CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<WebhookEndpoint>> CreateAsync(WebhookEndpointPatchModel endpoint,
+                                                                           RequestOptions? options = null,
+                                                                           CancellationToken cancellationToken = default)
         {
-            if (endpoint is null) throw new ArgumentNullException(nameof(endpoint));
-
-            var uri = "/v1/webhooks/endpoints";
-            return await PostAsync<WebhookEndpoint>(uri, endpoint, options, cancellationToken).ConfigureAwait(false);
+            return CreateResourceAsync(endpoint, options, cancellationToken);
         }
 
         /// <summary>

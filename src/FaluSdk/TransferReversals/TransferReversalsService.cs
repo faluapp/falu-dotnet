@@ -53,14 +53,11 @@ namespace Falu.TransferReversals
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<TransferReversal>> CreateAsync(TransferReversalRequest reversal,
-                                                                                  RequestOptions? options = null,
-                                                                                  CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<TransferReversal>> CreateAsync(TransferReversalRequest reversal,
+                                                                            RequestOptions? options = null,
+                                                                            CancellationToken cancellationToken = default)
         {
-            if (reversal is null) throw new ArgumentNullException(nameof(reversal));
-
-            var uri = "/v1/transfer_reversals";
-            return await PostAsync<TransferReversal>(uri, reversal, options, cancellationToken).ConfigureAwait(false);
+            return CreateResourceAsync(reversal, options, cancellationToken);
         }
 
         /// <summary>

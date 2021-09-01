@@ -53,14 +53,11 @@ namespace Falu.Transfers
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<Transfer>> CreateAsync(TransferRequest transfer,
-                                                                          RequestOptions? options = null,
-                                                                          CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<Transfer>> CreateAsync(TransferRequest transfer,
+                                                                    RequestOptions? options = null,
+                                                                    CancellationToken cancellationToken = default)
         {
-            if (transfer is null) throw new ArgumentNullException(nameof(transfer));
-
-            var uri = "/v1/transfers";
-            return await PostAsync<Transfer>(uri, transfer, options, cancellationToken).ConfigureAwait(false);
+            return CreateResourceAsync(transfer, options, cancellationToken);
         }
 
         /// <summary>

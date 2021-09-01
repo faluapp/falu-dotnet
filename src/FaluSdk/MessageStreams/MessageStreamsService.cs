@@ -53,14 +53,11 @@ namespace Falu.MessageStreams
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<MessageStream>> CreateAsync(MessageStreamCreateModel stream,
-                                                                               RequestOptions? options = null,
-                                                                               CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<MessageStream>> CreateAsync(MessageStreamCreateModel stream,
+                                                                         RequestOptions? options = null,
+                                                                         CancellationToken cancellationToken = default)
         {
-            if (stream is null) throw new ArgumentNullException(nameof(stream));
-
-            var uri = "/v1/message_streams";
-            return await PostAsync<MessageStream>(uri, stream, options, cancellationToken).ConfigureAwait(false);
+            return CreateResourceAsync(stream, options, cancellationToken);
         }
 
         /// <summary>

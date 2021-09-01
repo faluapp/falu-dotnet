@@ -53,14 +53,11 @@ namespace Falu.Payments
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<Payment>> CreateAsync(PaymentRequest payment,
-                                                                         RequestOptions? options = null,
-                                                                         CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<Payment>> CreateAsync(PaymentRequest payment,
+                                                                   RequestOptions? options = null,
+                                                                   CancellationToken cancellationToken = default)
         {
-            if (payment is null) throw new ArgumentNullException(nameof(payment));
-
-            var uri = "/v1/payments";
-            return await PostAsync<Payment>(uri, payment, options, cancellationToken).ConfigureAwait(false);
+            return CreateResourceAsync(payment, options, cancellationToken);
         }
 
         /// <summary>

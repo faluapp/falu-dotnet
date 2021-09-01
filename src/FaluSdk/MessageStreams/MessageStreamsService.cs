@@ -9,7 +9,7 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.MessageStreams
 {
     ///
-    public class MessageStreamsService : BaseService<MessageStream>, ISupportsListing<MessageStream, BasicListOptions> // TODO: setup custom listing options
+    public class MessageStreamsService : BaseService<MessageStream>, ISupportsListing<MessageStream, MessageStreamsListOptions>
     {
         ///
         public MessageStreamsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
@@ -19,7 +19,7 @@ namespace Falu.MessageStreams
 
         /// <summary>List message streams.</summary>
         /// <inheritdoc/>
-        public virtual Task<ResourceResponse<List<MessageStream>>> ListAsync(BasicListOptions? options = null,
+        public virtual Task<ResourceResponse<List<MessageStream>>> ListAsync(MessageStreamsListOptions? options = null,
                                                                              RequestOptions? requestOptions = null,
                                                                              CancellationToken cancellationToken = default)
         {
@@ -28,7 +28,7 @@ namespace Falu.MessageStreams
 
         /// <summary>List message streams recursively.</summary>
         /// <inheritdoc/>
-        public virtual IAsyncEnumerable<MessageStream> ListRecursivelyAsync(BasicListOptions? options = null,
+        public virtual IAsyncEnumerable<MessageStream> ListRecursivelyAsync(MessageStreamsListOptions? options = null,
                                                                             RequestOptions? requestOptions = null,
                                                                             CancellationToken cancellationToken = default)
         {

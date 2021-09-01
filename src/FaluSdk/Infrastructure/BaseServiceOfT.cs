@@ -130,7 +130,7 @@ namespace Falu.Infrastructure
                 // set the continuation token for the next batch request
                 // nothing else should be changed in the options so that
                 // the continunation token works as expected
-                options.Token = response.ContinuationToken;
+                options.ContinuationToken = response.ContinuationToken;
             } while (true);
         }
 

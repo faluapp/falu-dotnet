@@ -16,7 +16,7 @@ namespace Falu.Tests
                 Sorting = SortingOrder.Descending,
                 Count = 12,
                 Created = null,
-                Token = "123",
+                ContinuationToken = "123",
                 Updated = null,
                 Authorized = false,
                 Status = new List<PaymentAuthorizationStatus>

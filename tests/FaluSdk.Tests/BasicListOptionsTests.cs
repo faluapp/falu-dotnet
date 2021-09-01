@@ -16,7 +16,7 @@ namespace Falu.Tests
                 Sorting = SortingOrder.Descending,
                 Count = 12,
                 Created = null,
-                Token = "123",
+                ContinuationToken = "123",
                 Updated = null,
             };
 
@@ -38,7 +38,7 @@ namespace Falu.Tests
             {
                 Sorting = null,
                 Count = null,
-                Token = null,
+                ContinuationToken = null,
                 Updated = null,
                 Created = new RangeFilteringOptions<DateTimeOffset>
                 {

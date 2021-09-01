@@ -27,7 +27,7 @@ namespace Falu.Core
         /// a <code>X-Continuation-Token</code> header with value <c>bravo</c>, your subsequent
         /// call can include <code>ct=bravo</code>.
         /// </summary>
-        public string? Token { get; set; }
+        public string? ContinuationToken { get; set; }
 
         /// <summary>
         /// Range filter options for <code>created</code> property.
@@ -45,7 +45,7 @@ namespace Falu.Core
 
             dictionary.AddIfNotNull("sort", Sorting, ConvertEnum)
                       .AddIfNotNull("count", Count, ConvertInt32)
-                      .AddIfNotNull("ct", Token);
+                      .AddIfNotNull("ct", ContinuationToken);
 
             Created?.PopulateQueryValues("created", dictionary, ConvertDate);
             Updated?.PopulateQueryValues("updated", dictionary, ConvertDate);

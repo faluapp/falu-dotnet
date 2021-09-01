@@ -10,10 +10,13 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.Webhooks
 {
     ///
-    public class WebhooksService : BaseService
+    public class WebhooksService : BaseService<WebhookEndpoint>
     {
         ///
         public WebhooksService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+
+        /// <inheritdoc/>
+        protected override string BasePath => "/v1/webhooks/endpoints";
 
         /// <summary>
         /// List webhook endpoints.
@@ -99,10 +102,7 @@ namespace Falu.Webhooks
                                                                         RequestOptions? options = null,
                                                                         CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
-
-            var uri = $"/v1/webhooks/endpoints/{id}";
-            return await DeleteResourceAsync(uri, options, cancellationToken).ConfigureAwait(false);
+            return await DeleteResourceAsync(id, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

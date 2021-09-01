@@ -10,10 +10,13 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.MessageStreams
 {
     ///
-    public class MessageStreamsService : BaseService
+    public class MessageStreamsService : BaseService<MessageStream>
     {
         ///
         public MessageStreamsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+
+        /// <inheritdoc/>
+        protected override string BasePath => "/v1/message_streams";
 
         /// <summary>
         /// List message streams.
@@ -95,14 +98,11 @@ namespace Falu.MessageStreams
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<object>> DeleteAsync(string id,
-                                                                        RequestOptions? options = null,
-                                                                        CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<object>> DeleteAsync(string id,
+                                                                  RequestOptions? options = null,
+                                                                  CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
-
-            var uri = $"/v1/message_streams/{id}";
-            return await DeleteResourceAsync(uri, options, cancellationToken).ConfigureAwait(false);
+            return DeleteResourceAsync(id, options, cancellationToken);
         }
     }
 }

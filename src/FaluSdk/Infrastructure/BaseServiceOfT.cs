@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Tingle.Extensions.JsonPatch;
 
 namespace Falu.Infrastructure
 {
@@ -22,6 +23,19 @@ namespace Falu.Infrastructure
         /// </summary>
         /// <example>/v1/events</example>
         protected abstract string BasePath { get; }
+
+        ///
+        protected virtual Task<ResourceResponse<TResource>> UpdateResourceAsync(string id,
+                                                                                IJsonPatchDocument patch,
+                                                                                RequestOptions? options = null,
+                                                                                CancellationToken cancellationToken = default)
+        {
+            if (patch is null) throw new ArgumentNullException(nameof(patch));
+
+            var uri = MakeResourcePath(id);
+            return RequestAsync<TResource>(uri, HttpMethod.Patch, patch, options, cancellationToken);
+        }
+
 
         ///
         protected virtual Task<ResourceResponse<object>> DeleteResourceAsync(string id,

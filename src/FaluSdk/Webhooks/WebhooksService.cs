@@ -79,16 +79,12 @@ namespace Falu.Webhooks
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<WebhookEndpoint>> UpdateAsync(string id,
-                                                                                 JsonPatchDocument<WebhookEndpointPatchModel> patch,
-                                                                                 RequestOptions? options = null,
-                                                                                 CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<WebhookEndpoint>> UpdateAsync(string id,
+                                                                           JsonPatchDocument<WebhookEndpointPatchModel> patch,
+                                                                           RequestOptions? options = null,
+                                                                           CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
-            if (patch is null) throw new ArgumentNullException(nameof(patch));
-
-            var uri = $"/v1/webhooks/endpoints/{id}";
-            return await PatchAsync<WebhookEndpoint>(uri, patch, options, cancellationToken).ConfigureAwait(false);
+            return UpdateResourceAsync(id, patch, options, cancellationToken);
         }
 
         /// <summary>

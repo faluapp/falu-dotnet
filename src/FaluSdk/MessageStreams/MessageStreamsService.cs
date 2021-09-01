@@ -88,5 +88,36 @@ namespace Falu.MessageStreams
         {
             return DeleteResourceAsync(id, options, cancellationToken);
         }
+
+
+        /// <summary>
+        /// Archive a message stream.
+        /// </summary>
+        /// <param name="id">Unique identifier for the message stream</param>
+        /// <param name="options">Options to use for the request.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Task<ResourceResponse<MessageStream>> ArchiveAsync(string id,
+                                                                          RequestOptions? options = null,
+                                                                          CancellationToken cancellationToken = default)
+        {
+            var uri = $"{MakeResourcePath(id)}/archive";
+            return RequestAsync<MessageStream>(uri, HttpMethod.Post, new { }, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Unarchive a message stream.
+        /// </summary>
+        /// <param name="id">Unique identifier for the message stream</param>
+        /// <param name="options">Options to use for the request.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Task<ResourceResponse<MessageStream>> UnarchiveAsync(string id,
+                                                                          RequestOptions? options = null,
+                                                                          CancellationToken cancellationToken = default)
+        {
+            var uri = $"{MakeResourcePath(id)}/unarchive";
+            return RequestAsync<MessageStream>(uri, HttpMethod.Post, new { }, options, cancellationToken);
+        }
     }
 }

@@ -20,21 +20,37 @@ namespace Falu.Infrastructure
         protected abstract string BasePath { get; }
 
         ///
+        protected virtual Task<ResourceResponse<T>> GetResourceAsync<T>(string id,
+                                                                        RequestOptions? options = null,
+                                                                        CancellationToken cancellationToken = default)
+        {
+            var uri = MakeResourcePath(id);
+            return RequestAsync<T>(uri, HttpMethod.Get, null, options, cancellationToken);
+        }
+
+        ///
         protected virtual Task<ResourceResponse<TResource>> GetResourceAsync(string id,
                                                                              RequestOptions? options = null,
                                                                              CancellationToken cancellationToken = default)
         {
-            var uri = MakeResourcePath(id);
-            return RequestAsync<TResource>(uri, HttpMethod.Get, null, options, cancellationToken);
+            return GetResourceAsync<TResource>(id, options, cancellationToken);
         }
 
         ///
-        public virtual async Task<ResourceResponse<List<TResource>>> ListResourcesAsync(BasicListOptions? options = null,
-                                                                                        RequestOptions? requestOptions = null,
-                                                                                        CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceResponse<List<T>>> ListResourcesAsync<T>(BasicListOptions? options = null,
+                                                                                   RequestOptions? requestOptions = null,
+                                                                                   CancellationToken cancellationToken = default)
         {
             var uri = MakePathWithQuery(null, options);
-            return await RequestAsync<List<TResource>>(uri, HttpMethod.Get, null, requestOptions, cancellationToken).ConfigureAwait(false);
+            return await RequestAsync<List<T>>(uri, HttpMethod.Get, null, requestOptions, cancellationToken).ConfigureAwait(false);
+        }
+
+        ///
+        public virtual Task<ResourceResponse<List<TResource>>> ListResourcesAsync(BasicListOptions? options = null,
+                                                                                  RequestOptions? requestOptions = null,
+                                                                                  CancellationToken cancellationToken = default)
+        {
+            return ListResourcesAsync<TResource>(options, requestOptions, cancellationToken);
         }
 
         ///
@@ -69,6 +85,8 @@ namespace Falu.Infrastructure
             var uri = MakeResourcePath(id);
             return RequestAsync<object>(uri, HttpMethod.Delete, null, options, cancellationToken);
         }
+
+        #region Helpers
 
         /// <summary>Generate a path.</summary>
         /// <param name="subPath">The sub path to add at the end.</param>
@@ -115,5 +133,8 @@ namespace Falu.Infrastructure
             if (!query.StartsWith("?")) query = $"?{query}";
             return $"{MakePath(subPath)}{query}";
         }
+
+        #endregion
+
     }
 }

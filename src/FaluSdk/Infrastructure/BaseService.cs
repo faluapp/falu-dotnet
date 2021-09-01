@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Falu.Infrastructure
 {
     ///
-    public abstract class BaseService
+    public abstract class BaseService // This class exists because not all service clients may be based on a resource
     {
         /// <summary>List of supported JSON content types</summary>
         public static readonly string[] SupportedContentTypes = new[] {
@@ -38,18 +38,6 @@ namespace Falu.Infrastructure
         ///
         protected FaluClientOptions Options { get; }
 
-
-        #region REST overloads
-
-        ///
-        protected virtual Task<ResourceResponse<TResource>> GetResourceAsync<TResource>(string uri,
-                                                                                        RequestOptions? options = null,
-                                                                                        CancellationToken cancellationToken = default)
-        {
-            return RequestAsync<TResource>(uri, HttpMethod.Get, null, options, cancellationToken);
-        }
-
-        #endregion
 
         #region Helpers
 

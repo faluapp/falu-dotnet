@@ -5,7 +5,7 @@ namespace Falu.Webhooks
     /// <summary>
     /// Options for filtering and pagination of webhook endpoints.
     /// </summary>
-    public class WebhookEndpointsListOptions : BasicListOptions
+    public record WebhookEndpointsListOptions : BasicListOptions
     {
         // intentionally left blank
     }

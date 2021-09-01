@@ -94,8 +94,8 @@ namespace Falu.Infrastructure
                                                                              RequestOptions? requestOptions,
                                                                              [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            // TODO: consider cloning (or using record) so that the caller does not change while iterating asynchronously
-            options ??= new BasicListOptions();
+            // cloning prevents the underlying values from being changed while we iterate
+            options = options is null ? new BasicListOptions() : options with { };
 
             do
             {

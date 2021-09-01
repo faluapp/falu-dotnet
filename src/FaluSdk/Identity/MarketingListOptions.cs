@@ -7,7 +7,7 @@ namespace Falu.Identity
     /// <summary>
     /// Options for filtering and pagination of list identity marketing data operation.
     /// </summary>
-    public class MarketingListOptions : BasicListOptions
+    public record MarketingListOptions : BasicListOptions
     {
         /// <inheritdoc/>
         public string Country { get; set; } = "ken";

@@ -7,7 +7,7 @@ namespace Falu.Messages
     /// <summary>
     /// Options for filtering and pagination of list messages operation.
     /// </summary>
-    public class MessagesListOptions : BasicListOptions
+    public record MessagesListOptions : BasicListOptions
     {
         /// <summary>
         /// Range filter options for <code>delivered</code> property.

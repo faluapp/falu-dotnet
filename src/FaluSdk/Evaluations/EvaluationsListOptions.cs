@@ -6,7 +6,7 @@ namespace Falu.Evaluations
     /// <summary>
     /// Options for filtering and pagination of list evaluations operation.
     /// </summary>
-    public class EvaluationsListOptions : BasicListOptions
+    public record EvaluationsListOptions : BasicListOptions
     {
         /// <summary>
         /// Email address of the evaluations.

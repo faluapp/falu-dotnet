@@ -7,7 +7,7 @@ namespace Falu.Core
     /// <summary>
     /// Standard options for filtering and pagination in list operations.
     /// </summary>
-    public class BasicListOptions
+    public record BasicListOptions
     {
         /// <summary>
         /// The order to use for sorting the objects returned.

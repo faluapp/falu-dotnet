@@ -6,7 +6,7 @@ namespace Falu.Events
     /// <summary>
     /// Options for filtering and pagination of events.
     /// </summary>
-    public class EventsListOptions : BasicListOptions
+    public record EventsListOptions : BasicListOptions
     {
         /// <summary>
         /// Filter options for <code>type</code> property.

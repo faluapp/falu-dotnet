@@ -6,7 +6,7 @@ namespace Falu.Payments
     /// <summary>
     /// Options for filtering and pagination of list payments operation.
     /// </summary>
-    public class PaymentsListOptions : BasicListOptionsWithMoney
+    public record PaymentsListOptions : BasicListOptionsWithMoney
     {
         /// <summary>
         /// Filter options for <code>status</code> property.

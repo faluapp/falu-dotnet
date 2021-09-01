@@ -42,50 +42,81 @@ namespace Falu.Infrastructure
         protected virtual Uri BaseAddress => BackChannel.BaseAddress;
 
 
-        #region Helpers
+        #region REST overloads
 
         ///
-        protected virtual async Task<ResourceResponse<TResource>> GetAsync<TResource>(string uri,
-                                                                                      RequestOptions? options = null,
-                                                                                      CancellationToken cancellationToken = default)
-        {
-            var request = new HttpRequestMessage(HttpMethod.Get, uri);
-            return await SendAsync<TResource>(request, options, cancellationToken).ConfigureAwait(false);
-        }
-
-        ///
-        protected virtual async Task<ResourceResponse<TResource>> PatchAsync<TResource>(string uri,
-                                                                                        object patch,
+        protected virtual Task<ResourceResponse<TResource>> GetResourceAsync<TResource>(string uri,
                                                                                         RequestOptions? options = null,
                                                                                         CancellationToken cancellationToken = default)
         {
-            var request = new HttpRequestMessage(HttpMethod.Patch, uri)
-            {
-                Content = await MakeJsonHttpContentAsync(patch, cancellationToken).ConfigureAwait(false)
-            };
-            return await SendAsync<TResource>(request, options, cancellationToken).ConfigureAwait(false);
+            return RequestAsync<TResource>(uri, HttpMethod.Get, null, options, cancellationToken);
         }
 
         ///
-        protected virtual async Task<ResourceResponse<TResource>> PostAsync<TResource>(string uri,
-                                                                                       object o,
-                                                                                       RequestOptions? options = null,
-                                                                                       CancellationToken cancellationToken = default)
+        protected virtual Task<ResourceResponse<TResource>> PatchResourceAsync<TResource>(string uri,
+                                                                                          object patch,
+                                                                                          RequestOptions? options = null,
+                                                                                          CancellationToken cancellationToken = default)
         {
-            var request = new HttpRequestMessage(HttpMethod.Post, uri)
-            {
-                Content = await MakeJsonHttpContentAsync(o, cancellationToken).ConfigureAwait(false),
-            };
-            return await SendAsync<TResource>(request, options, cancellationToken).ConfigureAwait(false);
+            return RequestAsync<TResource>(uri, HttpMethod.Patch, patch, options, cancellationToken);
         }
 
         ///
-        protected virtual async Task<ResourceResponse<object>> DeleteAsync(string uri,
-                                                                           RequestOptions? options = null,
-                                                                           CancellationToken cancellationToken = default)
+        protected virtual Task<ResourceResponse<TResource>> PostResourceAsync<TResource>(string uri,
+                                                                                         object o,
+                                                                                         RequestOptions? options = null,
+                                                                                         CancellationToken cancellationToken = default)
         {
-            var request = new HttpRequestMessage(HttpMethod.Delete, uri);
-            return await SendAsync<object>(request, options, cancellationToken).ConfigureAwait(false);
+            return RequestAsync<TResource>(uri, HttpMethod.Post, o, options, cancellationToken);
+        }
+
+        ///
+        protected virtual Task<ResourceResponse<TResource>> DeleteResourceAsync<TResource>(string uri,
+                                                                                           RequestOptions? options = null,
+                                                                                           CancellationToken cancellationToken = default)
+        {
+            return RequestAsync<TResource>(uri, HttpMethod.Delete, null, options, cancellationToken);
+        }
+
+        #endregion
+
+        #region Helpers
+
+        ///
+        protected virtual async Task<ResourceResponse<TResource>> RequestAsync<TResource>(string uri,
+                                                                                          HttpMethod method,
+                                                                                          object o,
+                                                                                          RequestOptions? options = null,
+                                                                                          CancellationToken cancellationToken = default)
+        {
+            var content = await MakeJsonHttpContentAsync(o, cancellationToken).ConfigureAwait(false);
+            return await RequestAsync<TResource>(uri, method, content, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        ///
+        protected virtual Task<ResourceResponse<object>> RequestAsync(string uri,
+                                                                      HttpMethod method,
+                                                                      HttpContent? content = null,
+                                                                      RequestOptions? options = null,
+                                                                      CancellationToken cancellationToken = default)
+        {
+            return RequestAsync<object>(uri, method, content, options, cancellationToken);
+        }
+
+        ///
+        protected virtual async Task<ResourceResponse<TResource>> RequestAsync<TResource>(string uri,
+                                                                                          HttpMethod method,
+                                                                                          HttpContent? content = null,
+                                                                                          RequestOptions? options = null,
+                                                                                          CancellationToken cancellationToken = default)
+        {
+            var request = new HttpRequestMessage(method, uri);
+            if (content is not null)
+            {
+                request.Content = content;
+            }
+
+            return await SendAsync<TResource>(request, options, cancellationToken).ConfigureAwait(false);
         }
 
         ///

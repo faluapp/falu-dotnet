@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Tingle.Extensions.JsonPatch;
@@ -85,6 +86,63 @@ namespace Falu.Infrastructure
             var uri = MakeResourcePath(id);
             return RequestAsync<object>(uri, HttpMethod.Delete, null, options, cancellationToken);
         }
+
+        #region List Recursively
+
+        ///
+        protected async IAsyncEnumerable<T> ListResourcesRecursivelyAsync<T>(BasicListOptions? options,
+                                                                             RequestOptions requestOptions,
+                                                                             [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        {
+            // TODO: consider cloning (or using record) so that the caller does not change while iterating asynchronously
+            options ??= new BasicListOptions();
+
+            do
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                // list next batch
+                var response = await ListResourcesAsync<T>(options: options,
+                                                           requestOptions: requestOptions,
+                                                           cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                // ensure the request succeeded
+                response.EnsureSuccess();
+
+                // produce results for the batch
+                var items = response.Resource!;
+                foreach (var item in items)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+
+                    // We do not expect null but for safety, skip them
+                    if (item is null) continue;
+
+                    yield return item;
+                }
+
+                // if there are no more results, break the loop
+                if (response.HasMoreResults != true)
+                {
+                    break;
+                }
+
+                // set the continuation token for the next batch request
+                // nothing else should be changed in the options so that
+                // the continunation token works as expected
+                options.Token = response.ContinuationToken;
+            } while (true);
+        }
+
+        ///
+        protected IAsyncEnumerable<TResource> ListResourcesRecursivelyAsync(BasicListOptions? options,
+                                                                            RequestOptions requestOptions,
+                                                                            CancellationToken cancellationToken = default)
+        {
+            return ListResourcesRecursivelyAsync<TResource>(options, requestOptions, cancellationToken);
+        }
+
+        #endregion
 
         #region Helpers
 

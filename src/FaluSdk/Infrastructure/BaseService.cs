@@ -45,7 +45,7 @@ namespace Falu.Infrastructure
         #region Helpers
 
         ///
-        protected virtual async Task<ResourceResponse<TResource>> GetAsync<TResource>(Uri uri,
+        protected virtual async Task<ResourceResponse<TResource>> GetAsync<TResource>(string uri,
                                                                                       RequestOptions? options = null,
                                                                                       CancellationToken cancellationToken = default)
         {
@@ -54,7 +54,7 @@ namespace Falu.Infrastructure
         }
 
         ///
-        protected virtual async Task<ResourceResponse<TResource>> PatchAsync<TResource>(Uri uri,
+        protected virtual async Task<ResourceResponse<TResource>> PatchAsync<TResource>(string uri,
                                                                                         object patch,
                                                                                         RequestOptions? options = null,
                                                                                         CancellationToken cancellationToken = default)
@@ -67,7 +67,7 @@ namespace Falu.Infrastructure
         }
 
         ///
-        protected virtual async Task<ResourceResponse<TResource>> PostAsync<TResource>(Uri uri,
+        protected virtual async Task<ResourceResponse<TResource>> PostAsync<TResource>(string uri,
                                                                                        object o,
                                                                                        RequestOptions? options = null,
                                                                                        CancellationToken cancellationToken = default)
@@ -80,7 +80,7 @@ namespace Falu.Infrastructure
         }
 
         ///
-        protected virtual async Task<ResourceResponse<object>> DeleteAsync(Uri uri,
+        protected virtual async Task<ResourceResponse<object>> DeleteAsync(string uri,
                                                                            RequestOptions? options = null,
                                                                            CancellationToken cancellationToken = default)
         {

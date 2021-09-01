@@ -104,7 +104,7 @@ namespace Falu.MessageTemplates
             if (template is null) throw new ArgumentNullException(nameof(template));
             template.Model?.GetType().EnsureAllowedForMessageTemplateModel();
 
-            var uri = $"{MakeRootPath()}/validate";
+            var uri = MakePath("/validate");
             return RequestAsync<MessageTemplateValidationResponse>(uri, HttpMethod.Post, template, options, cancellationToken);
         }
     }

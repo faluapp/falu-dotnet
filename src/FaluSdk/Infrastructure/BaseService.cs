@@ -49,15 +49,6 @@ namespace Falu.Infrastructure
             return RequestAsync<TResource>(uri, HttpMethod.Get, null, options, cancellationToken);
         }
 
-        ///
-        protected virtual Task<ResourceResponse<TResource>> PostAsync<TResource>(string uri,
-                                                                                 object o,
-                                                                                 RequestOptions? options = null,
-                                                                                 CancellationToken cancellationToken = default)
-        {
-            return RequestAsync<TResource>(uri, HttpMethod.Post, o, options, cancellationToken);
-        }
-
         #endregion
 
         #region Helpers

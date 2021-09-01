@@ -1,9 +1,7 @@
 ﻿using Falu.Core;
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Tingle.Extensions.JsonPatch;
@@ -35,10 +33,7 @@ namespace Falu.Infrastructure
                                                                                         RequestOptions? requestOptions = null,
                                                                                         CancellationToken cancellationToken = default)
         {
-            var args = new Dictionary<string, string>();
-            options?.PopulateQueryValues(args);
-
-            var uri = MakeRootPathWithQuery(args);
+            var uri = MakePathWithQuery(options, null);
             return await RequestAsync<List<TResource>>(uri, HttpMethod.Get, null, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
@@ -49,7 +44,7 @@ namespace Falu.Infrastructure
         {
             if (resource is null) throw new ArgumentNullException(nameof(resource));
 
-            var uri = MakeRootPath();
+            var uri = MakePath();
             return RequestAsync<TResource>(uri, HttpMethod.Post, resource, options, cancellationToken);
         }
 
@@ -75,9 +70,10 @@ namespace Falu.Infrastructure
             return RequestAsync<object>(uri, HttpMethod.Delete, null, options, cancellationToken);
         }
 
-        /// <summary>Generate the root path.</summary>
-        /// <returns>The root path for resources.</returns>
-        protected virtual string MakeRootPath() => BasePath; // this method exists because we may change the api base so we we need a convinence
+        /// <summary>Generate a path.</summary>
+        /// <param name="subPath">The sub path to add at the end.</param>
+        /// <returns>The generated path.</returns>
+        protected virtual string MakePath(string? subPath = null) => $"{BasePath}{subPath}";
 
         /// <summary>Generate path for a resource.</summary>
         /// <param name="id">Unique identifier of the resource.</param>
@@ -89,22 +85,27 @@ namespace Falu.Infrastructure
                 throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
             }
 
-            return $"{MakeRootPath()}/{id}";
+            return $"{MakePath()}/{id}";
         }
 
         /// <summary>Combine path and query.</summary>
-        /// <param name="args">The keys and values to put in the query.</param>
+        /// <param name="options">The options to generate keys and values for the query.</param>
+        /// <param name="subPath">The sub path to add before the query.</param>
         /// <returns>The path and query combined.</returns>
-        protected virtual string MakeRootPathWithQuery(Dictionary<string, string> args)
+        protected virtual string MakePathWithQuery(BasicListOptions? options, string? subPath)
         {
+            var args = new Dictionary<string, string>();
+            options?.PopulateQueryValues(args);
+
             var query = QueryHelper.MakeQueryString(args);
-            return MakeRootPathWithQuery(query);
+            return MakePathWithQuery(query: query, subPath: subPath);
         }
 
         /// <summary>Combine path and query.</summary>
         /// <param name="query">The query to append.</param>
+        /// <param name="subPath">The sub path to add before the query.</param>
         /// <returns>The path and query combined.</returns>
-        protected virtual string MakeRootPathWithQuery(string query)
+        protected virtual string MakePathWithQuery(string query, string? subPath)
         {
             if (string.IsNullOrWhiteSpace(query))
             {
@@ -112,7 +113,7 @@ namespace Falu.Infrastructure
             }
 
             if (!query.StartsWith("?")) query = $"?{query}";
-            return $"{MakeRootPath()}{query}";
+            return $"{MakePath(subPath)}{query}";
         }
     }
 }

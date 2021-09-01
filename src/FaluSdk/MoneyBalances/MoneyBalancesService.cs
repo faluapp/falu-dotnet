@@ -24,7 +24,7 @@ namespace Falu.Payments
         public virtual async Task<ResourceResponse<MoneyBalances>> GetAsync(RequestOptions? options = null,
                                                                              CancellationToken cancellationToken = default)
         {
-            var uri = MakeRootPath();
+            var uri = MakePath();
             return await RequestAsync<MoneyBalances>(uri, HttpMethod.Get, null, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -37,7 +37,7 @@ namespace Falu.Payments
         public virtual async Task<ResourceResponse<object>> RefreshAsync(RequestOptions? options = null,
                                                                          CancellationToken cancellationToken = default)
         {
-            var uri = $"{MakeRootPath()}/refresh";
+            var uri = MakePath("/refresh");
             return await RequestAsync<object>(uri, HttpMethod.Post, new { }, options, cancellationToken).ConfigureAwait(false);
         }
     }

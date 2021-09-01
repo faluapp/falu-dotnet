@@ -98,12 +98,12 @@ namespace Falu.Messages
                                                       message: "The service does not support more than 10,000 (10k) messages");
             }
 
-            foreach(var m in messages)
+            foreach (var m in messages)
             {
                 m.Template?.Model?.GetType().EnsureAllowedForMessageTemplateModel();
             }
 
-            var uri = $"{MakeRootPath()}/bulk";
+            var uri = MakePath("/bulk");
             return RequestAsync<List<Message>>(uri, HttpMethod.Post, messages, options, cancellationToken);
         }
     }

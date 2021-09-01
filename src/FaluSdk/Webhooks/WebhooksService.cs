@@ -9,7 +9,7 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.Webhooks
 {
     ///
-    public class WebhooksService : BaseService<WebhookEndpoint>, ISupportsListing<WebhookEndpoint, BasicListOptions> // TODO: add custom listing options
+    public class WebhooksService : BaseService<WebhookEndpoint>, ISupportsListing<WebhookEndpoint, WebhookEndpointsListOptions>
     {
         ///
         public WebhooksService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
@@ -19,7 +19,7 @@ namespace Falu.Webhooks
 
         /// <summary>List webhook endpoints.</summary>
         /// <inheritdoc/>
-        public virtual Task<ResourceResponse<List<WebhookEndpoint>>> ListAsync(BasicListOptions? options = null,
+        public virtual Task<ResourceResponse<List<WebhookEndpoint>>> ListAsync(WebhookEndpointsListOptions? options = null,
                                                                                RequestOptions? requestOptions = null,
                                                                                CancellationToken cancellationToken = default)
         {
@@ -28,7 +28,7 @@ namespace Falu.Webhooks
 
         /// <summary>List webhook endpoints recursively.</summary>
         /// <inheritdoc/>
-        public virtual IAsyncEnumerable<WebhookEndpoint> ListRecursivelyAsync(BasicListOptions? options = null,
+        public virtual IAsyncEnumerable<WebhookEndpoint> ListRecursivelyAsync(WebhookEndpointsListOptions? options = null,
                                                                               RequestOptions? requestOptions = null,
                                                                               CancellationToken cancellationToken = default)
         {

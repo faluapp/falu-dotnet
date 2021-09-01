@@ -24,7 +24,7 @@ namespace Falu.FileUploadLinks
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Task<ResourceResponse<List<FileUploadLink>>> ListAsync(BasicListOptions? options = null,
+        public virtual Task<ResourceResponse<List<FileUploadLink>>> ListAsync(FileUploadLinksListOptions? options = null,
                                                                               RequestOptions? requestOptions = null,
                                                                               CancellationToken cancellationToken = default)
         {

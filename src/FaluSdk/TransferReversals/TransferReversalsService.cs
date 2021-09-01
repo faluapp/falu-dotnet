@@ -1,6 +1,5 @@
 ﻿using Falu.Core;
 using Falu.Infrastructure;
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
@@ -10,10 +9,13 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.TransferReversals
 {
     ///
-    public class TransferReversalsService : BaseService
+    public class TransferReversalsService : BaseService<TransferReversal>
     {
         ///
         public TransferReversalsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+
+        /// <inheritdoc/>
+        protected override string BasePath => "/v1/transfer_reversals";
 
         /// <summary>
         /// List transfer reversals.
@@ -22,16 +24,11 @@ namespace Falu.TransferReversals
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<TransferReversal>>> ListAsync(TransferReversalsListOptions? options = null,
-                                                                                      RequestOptions? requestOptions = null,
-                                                                                      CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<List<TransferReversal>>> ListAsync(TransferReversalsListOptions? options = null,
+                                                                                RequestOptions? requestOptions = null,
+                                                                                CancellationToken cancellationToken = default)
         {
-            var args = new Dictionary<string, string>();
-            options?.PopulateQueryValues(args);
-
-            var query = QueryHelper.MakeQueryString(args);
-            var uri = new Uri(BaseAddress, $"/v1/transfer_reversals{query}");
-            return await GetAsync<List<TransferReversal>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
+            return ListResourcesAsync(options, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -41,14 +38,11 @@ namespace Falu.TransferReversals
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<TransferReversal>> GetAsync(string id,
-                                                                               RequestOptions? options = null,
-                                                                               CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<TransferReversal>> GetAsync(string id,
+                                                                         RequestOptions? options = null,
+                                                                         CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
-
-            var uri = new Uri(BaseAddress, $"/v1/transfer_reversals/{id}");
-            return await GetAsync<TransferReversal>(uri, options, cancellationToken).ConfigureAwait(false);
+            return GetResourceAsync(id, options, cancellationToken);
         }
 
         /// <summary>
@@ -58,14 +52,11 @@ namespace Falu.TransferReversals
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<TransferReversal>> CreateAsync(TransferReversalRequest reversal,
-                                                                                  RequestOptions? options = null,
-                                                                                  CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<TransferReversal>> CreateAsync(TransferReversalRequest reversal,
+                                                                            RequestOptions? options = null,
+                                                                            CancellationToken cancellationToken = default)
         {
-            if (reversal is null) throw new ArgumentNullException(nameof(reversal));
-
-            var uri = new Uri(BaseAddress, "/v1/transfer_reversals");
-            return await PostAsync<TransferReversal>(uri, reversal, options, cancellationToken).ConfigureAwait(false);
+            return CreateResourceAsync(reversal, options, cancellationToken);
         }
 
         /// <summary>
@@ -76,16 +67,12 @@ namespace Falu.TransferReversals
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<TransferReversal>> UpdateAsync(string id,
-                                                                                  JsonPatchDocument<TransferReversalPatchModel> patch,
-                                                                                  RequestOptions? options = null,
-                                                                                  CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<TransferReversal>> UpdateAsync(string id,
+                                                                            JsonPatchDocument<TransferReversalPatchModel> patch,
+                                                                            RequestOptions? options = null,
+                                                                            CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
-            if (patch is null) throw new ArgumentNullException(nameof(patch));
-
-            var uri = new Uri(BaseAddress, $"/v1/transfer_reversals/{id}");
-            return await PatchAsync<TransferReversal>(uri, patch, options, cancellationToken).ConfigureAwait(false);
+            return UpdateResourceAsync(id, patch, options, cancellationToken);
         }
     }
 }

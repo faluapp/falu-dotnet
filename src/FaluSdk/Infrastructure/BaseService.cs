@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Falu.Infrastructure
 {
     ///
-    public abstract class BaseService
+    public abstract class BaseService // This class exists because not all service clients may be based on a resource
     {
         /// <summary>List of supported JSON content types</summary>
         public static readonly string[] SupportedContentTypes = new[] {
@@ -23,7 +23,7 @@ namespace Falu.Infrastructure
             "application/problem+json",
         };
 
-        private readonly string JsonContentType = System.Net.Mime.MediaTypeNames.Application.Json;
+        private readonly string JsonContentType = SupportedContentTypes[0];
 
         ///
         protected BaseService(HttpClient backChannel, FaluClientOptions options)
@@ -38,62 +38,42 @@ namespace Falu.Infrastructure
         ///
         protected FaluClientOptions Options { get; }
 
-        ///
-        protected virtual Uri BaseAddress => BackChannel.BaseAddress;
-
 
         #region Helpers
 
         ///
-        protected virtual async Task<ResourceResponse<TResource>> GetAsync<TResource>(Uri uri,
-                                                                                      RequestOptions? options = null,
-                                                                                      CancellationToken cancellationToken = default)
+        protected virtual async Task<ResourceResponse<TResource>> RequestAsync<TResource>(string uri,
+                                                                                          HttpMethod method,
+                                                                                          object o,
+                                                                                          RequestOptions? options = null,
+                                                                                          CancellationToken cancellationToken = default)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, uri);
-            return await SendAsync<TResource>(request, options, cancellationToken).ConfigureAwait(false);
+            var content = await MakeJsonHttpContentAsync(o, cancellationToken).ConfigureAwait(false);
+            return await RequestAsync<TResource>(uri, method, content, options, cancellationToken).ConfigureAwait(false);
         }
 
         ///
-        protected virtual async Task<ResourceResponse<TResource>> PatchAsync<TResource>(Uri uri,
-                                                                                        object patch,
-                                                                                        RequestOptions? options = null,
-                                                                                        CancellationToken cancellationToken = default)
+        protected virtual async Task<ResourceResponse<TResource>> RequestAsync<TResource>(string uri,
+                                                                                          HttpMethod method,
+                                                                                          HttpContent? content = null,
+                                                                                          RequestOptions? options = null,
+                                                                                          CancellationToken cancellationToken = default)
         {
-            var request = new HttpRequestMessage(HttpMethod.Patch, uri)
+            var request = new HttpRequestMessage(method, uri);
+            if (content is not null)
             {
-                Content = await MakeJsonHttpContentAsync(patch, cancellationToken).ConfigureAwait(false)
-            };
-            return await SendAsync<TResource>(request, options, cancellationToken).ConfigureAwait(false);
+                request.Content = content;
+            }
+
+            return await RequestCoreAsync<TResource>(request, options, cancellationToken).ConfigureAwait(false);
         }
 
         ///
-        protected virtual async Task<ResourceResponse<TResource>> PostAsync<TResource>(Uri uri,
-                                                                                       object o,
-                                                                                       RequestOptions? options = null,
-                                                                                       CancellationToken cancellationToken = default)
+        protected virtual async Task<ResourceResponse<TResource>> RequestCoreAsync<TResource>(HttpRequestMessage request,
+                                                                                              RequestOptions? options = null,
+                                                                                              CancellationToken cancellationToken = default)
         {
-            var request = new HttpRequestMessage(HttpMethod.Post, uri)
-            {
-                Content = await MakeJsonHttpContentAsync(o, cancellationToken).ConfigureAwait(false),
-            };
-            return await SendAsync<TResource>(request, options, cancellationToken).ConfigureAwait(false);
-        }
-
-        ///
-        protected virtual async Task<ResourceResponse<object>> DeleteAsync(Uri uri,
-                                                                           RequestOptions? options = null,
-                                                                           CancellationToken cancellationToken = default)
-        {
-            var request = new HttpRequestMessage(HttpMethod.Delete, uri);
-            return await SendAsync<object>(request, options, cancellationToken).ConfigureAwait(false);
-        }
-
-        ///
-        protected virtual async Task<ResourceResponse<TResource>> SendAsync<TResource>(HttpRequestMessage request,
-                                                                                       RequestOptions? options = null,
-                                                                                       CancellationToken cancellationToken = default)
-        {
-            var response = await SendAsync(request, options, cancellationToken).ConfigureAwait(false);
+            var response = await RequestCoreAsync(request, options, cancellationToken).ConfigureAwait(false);
             var resource = default(TResource);
             var error = default(FaluError);
 
@@ -117,9 +97,9 @@ namespace Falu.Infrastructure
         }
 
         ///
-        protected virtual async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
-                                                                    RequestOptions? options = null,
-                                                                    CancellationToken cancellationToken = default)
+        protected virtual async Task<HttpResponseMessage> RequestCoreAsync(HttpRequestMessage request,
+                                                                           RequestOptions? options = null,
+                                                                           CancellationToken cancellationToken = default)
         {
             // ensure request is not null
             if (request == null) throw new ArgumentNullException(nameof(request));

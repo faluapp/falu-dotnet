@@ -1,6 +1,5 @@
 ﻿using Falu.Core;
 using Falu.Infrastructure;
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
@@ -9,10 +8,13 @@ using System.Threading.Tasks;
 namespace Falu.Identity
 {
     ///
-    public class IdentityService : BaseService
+    public class IdentityService : BaseService<IdentityRecord>
     {
         ///
         public IdentityService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+
+        /// <inheritdoc/>
+        protected override string BasePath => "/v1/identity";
 
         /// <summary>
         /// Search for an entity's identity.
@@ -21,14 +23,12 @@ namespace Falu.Identity
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<IdentityRecord>> SearchAsync(IdentitySearchModel search,
-                                                                                RequestOptions? options = null,
-                                                                                CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<IdentityRecord>> SearchAsync(IdentitySearchModel search,
+                                                                          RequestOptions? options = null,
+                                                                          CancellationToken cancellationToken = default)
         {
-            if (search is null) throw new ArgumentNullException(nameof(search));
-
-            var uri = new Uri(BaseAddress, "/v1/identity/search");
-            return await PostAsync<IdentityRecord>(uri, search, options, cancellationToken).ConfigureAwait(false);
+            var uri = MakePath("/search");
+            return RequestAsync<IdentityRecord>(uri, HttpMethod.Post, search, options, cancellationToken);
         }
 
         /// <summary>
@@ -39,16 +39,12 @@ namespace Falu.Identity
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<MarketingResult>>> MarketingAsync(MarketingListOptions? options = null,
-                                                                                          RequestOptions? requestOptions = null,
-                                                                                          CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<List<MarketingResult>>> MarketingAsync(MarketingListOptions? options = null,
+                                                                                    RequestOptions? requestOptions = null,
+                                                                                    CancellationToken cancellationToken = default)
         {
-            var args = new Dictionary<string, string>();
-            options?.PopulateQueryValues(args);
-
-            var query = QueryHelper.MakeQueryString(args);
-            var uri = new Uri(BaseAddress, $"/v1/identity/marketing{query}");
-            return await PostAsync<List<MarketingResult>>(uri, new { }, requestOptions, cancellationToken).ConfigureAwait(false);
+            var uri = MakePathWithQuery("/marketing", options);
+            return RequestAsync<List<MarketingResult>>(uri, HttpMethod.Post, new { }, requestOptions, cancellationToken);
         }
     }
 }

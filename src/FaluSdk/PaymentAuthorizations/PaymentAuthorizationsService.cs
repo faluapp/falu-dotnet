@@ -1,6 +1,5 @@
 ﻿using Falu.Core;
 using Falu.Infrastructure;
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
@@ -10,10 +9,13 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.PaymentAuthorizations
 {
     ///
-    public class PaymentAuthorizationsService : BaseService
+    public class PaymentAuthorizationsService : BaseService<PaymentAuthorization>
     {
         ///
         public PaymentAuthorizationsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+
+        /// <inheritdoc/>
+        protected override string BasePath => "/v1/payment_authorizations";
 
         /// <summary>
         /// List payment authorizations.
@@ -22,16 +24,11 @@ namespace Falu.PaymentAuthorizations
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<PaymentAuthorization>>> ListAsync(PaymentAuthorizationsListOptions? options = null,
-                                                                                          RequestOptions? requestOptions = null,
-                                                                                          CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<List<PaymentAuthorization>>> ListAsync(PaymentAuthorizationsListOptions? options = null,
+                                                                                    RequestOptions? requestOptions = null,
+                                                                                    CancellationToken cancellationToken = default)
         {
-            var args = new Dictionary<string, string>();
-            options?.PopulateQueryValues(args);
-
-            var query = QueryHelper.MakeQueryString(args);
-            var uri = new Uri(BaseAddress, $"/v1/payment_authorizations{query}");
-            return await GetAsync<List<PaymentAuthorization>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
+            return ListResourcesAsync(options, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -41,14 +38,11 @@ namespace Falu.PaymentAuthorizations
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<PaymentAuthorization>> GetAsync(string id,
-                                                                                   RequestOptions? options = null,
-                                                                                   CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<PaymentAuthorization>> GetAsync(string id,
+                                                                             RequestOptions? options = null,
+                                                                             CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
-
-            var uri = new Uri(BaseAddress, $"/v1/payment_authorizations/{id}");
-            return await GetAsync<PaymentAuthorization>(uri, options, cancellationToken).ConfigureAwait(false);
+            return GetResourceAsync(id, options, cancellationToken);
         }
 
         /// <summary>
@@ -59,16 +53,12 @@ namespace Falu.PaymentAuthorizations
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<PaymentAuthorization>> UpdateAsync(string id,
-                                                                                      JsonPatchDocument<PaymentAuthorizationPatchModel> patch,
-                                                                                      RequestOptions? options = null,
-                                                                                      CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<PaymentAuthorization>> UpdateAsync(string id,
+                                                                                JsonPatchDocument<PaymentAuthorizationPatchModel> patch,
+                                                                                RequestOptions? options = null,
+                                                                                CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
-            if (patch is null) throw new ArgumentNullException(nameof(patch));
-
-            var uri = new Uri(BaseAddress, $"/v1/payment_authorizations/{id}");
-            return await PatchAsync<PaymentAuthorization>(uri, patch, options, cancellationToken).ConfigureAwait(false);
+            return UpdateResourceAsync(id, patch, options, cancellationToken);
         }
 
         /// <summary>
@@ -79,16 +69,14 @@ namespace Falu.PaymentAuthorizations
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<PaymentAuthorization>> ApproveAsync(string id,
-                                                                                       PaymentAuthorizationPatchModel? model = null,
-                                                                                       RequestOptions? options = null,
-                                                                                       CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<PaymentAuthorization>> ApproveAsync(string id,
+                                                                                 PaymentAuthorizationPatchModel? model = null,
+                                                                                 RequestOptions? options = null,
+                                                                                 CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
-
+            var uri = $"{MakeResourcePath(id)}/approve";
             model ??= new PaymentAuthorizationPatchModel();
-            var uri = new Uri(BaseAddress, $"/v1/payment_authorizations/{id}/approve");
-            return await PostAsync<PaymentAuthorization>(uri, model, options, cancellationToken).ConfigureAwait(false);
+            return RequestAsync<PaymentAuthorization>(uri, HttpMethod.Post, model, options, cancellationToken);
         }
 
         /// <summary>
@@ -99,16 +87,14 @@ namespace Falu.PaymentAuthorizations
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<PaymentAuthorization>> DeclineAsync(string id,
-                                                                                       PaymentAuthorizationPatchModel? model = null,
-                                                                                       RequestOptions? options = null,
-                                                                                       CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<PaymentAuthorization>> DeclineAsync(string id,
+                                                                                 PaymentAuthorizationPatchModel? model = null,
+                                                                                 RequestOptions? options = null,
+                                                                                 CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
-
+            var uri = $"{MakeResourcePath(id)}/decline";
             model ??= new PaymentAuthorizationPatchModel();
-            var uri = new Uri(BaseAddress, $"/v1/payment_authorizations/{id}/decline");
-            return await PostAsync<PaymentAuthorization>(uri, model, options, cancellationToken).ConfigureAwait(false);
+            return RequestAsync<PaymentAuthorization>(uri, HttpMethod.Post, model, options, cancellationToken);
         }
     }
 }

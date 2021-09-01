@@ -10,10 +10,13 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.Messages
 {
     ///
-    public class MessagesService : BaseService
+    public class MessagesService : BaseService<Message>
     {
         ///
         public MessagesService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+
+        /// <inheritdoc/>
+        protected override string BasePath => "/v1/messages";
 
         /// <summary>
         /// List messages.
@@ -22,16 +25,11 @@ namespace Falu.Messages
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<Message>>> ListAsync(MessagesListOptions? options = null,
-                                                                             RequestOptions? requestOptions = null,
-                                                                             CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<List<Message>>> ListAsync(MessagesListOptions? options = null,
+                                                                       RequestOptions? requestOptions = null,
+                                                                       CancellationToken cancellationToken = default)
         {
-            var args = new Dictionary<string, string>();
-            options?.PopulateQueryValues(args);
-
-            var query = QueryHelper.MakeQueryString(args);
-            var uri = new Uri(BaseAddress, $"/v1/messages{query}");
-            return await GetAsync<List<Message>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
+            return ListResourcesAsync(options, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -41,14 +39,11 @@ namespace Falu.Messages
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<Message>> GetAsync(string id,
-                                                                      RequestOptions? options = null,
-                                                                      CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<Message>> GetAsync(string id,
+                                                                RequestOptions? options = null,
+                                                                CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
-
-            var uri = new Uri(BaseAddress, $"/v1/messages/{id}");
-            return await GetAsync<Message>(uri, options, cancellationToken).ConfigureAwait(false);
+            return GetResourceAsync(id, options, cancellationToken);
         }
 
         /// <summary>
@@ -58,15 +53,14 @@ namespace Falu.Messages
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<Message>> CreateAsync(MessageCreateRequest message,
-                                                                         RequestOptions? options = null,
-                                                                         CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<Message>> CreateAsync(MessageCreateRequest message,
+                                                                   RequestOptions? options = null,
+                                                                   CancellationToken cancellationToken = default)
         {
             if (message is null) throw new ArgumentNullException(nameof(message));
             message.Template?.Model?.GetType().EnsureAllowedForMessageTemplateModel();
 
-            var uri = new Uri(BaseAddress, "/v1/messages");
-            return await PostAsync<Message>(uri, message, options, cancellationToken).ConfigureAwait(false);
+            return CreateResourceAsync(message, options, cancellationToken);
         }
 
         /// <summary>
@@ -77,16 +71,12 @@ namespace Falu.Messages
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<Message>> UpdateAsync(string id,
-                                                                         JsonPatchDocument<MessagePatchModel> patch,
-                                                                         RequestOptions? options = null,
-                                                                         CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<Message>> UpdateAsync(string id,
+                                                                   JsonPatchDocument<MessagePatchModel> patch,
+                                                                   RequestOptions? options = null,
+                                                                   CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
-            if (patch is null) throw new ArgumentNullException(nameof(patch));
-
-            var uri = new Uri(BaseAddress, $"/v1/messages/{id}");
-            return await PatchAsync<Message>(uri, patch, options, cancellationToken).ConfigureAwait(false);
+            return UpdateResourceAsync(id, patch, options, cancellationToken);
         }
 
         /// <summary>
@@ -96,9 +86,9 @@ namespace Falu.Messages
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<Message>>> CreateBatchAsync(IList<MessageCreateRequest> messages,
-                                                                                    RequestOptions? options = null,
-                                                                                    CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<List<Message>>> CreateBatchAsync(IList<MessageCreateRequest> messages,
+                                                                              RequestOptions? options = null,
+                                                                              CancellationToken cancellationToken = default)
         {
             if (messages is null) throw new ArgumentNullException(nameof(messages));
 
@@ -108,13 +98,13 @@ namespace Falu.Messages
                                                       message: "The service does not support more than 10,000 (10k) messages");
             }
 
-            foreach(var m in messages)
+            foreach (var m in messages)
             {
                 m.Template?.Model?.GetType().EnsureAllowedForMessageTemplateModel();
             }
 
-            var uri = new Uri(BaseAddress, "/v1/messages/bulk");
-            return await PostAsync<List<Message>>(uri, messages, options, cancellationToken).ConfigureAwait(false);
+            var uri = MakePath("/bulk");
+            return RequestAsync<List<Message>>(uri, HttpMethod.Post, messages, options, cancellationToken);
         }
     }
 }

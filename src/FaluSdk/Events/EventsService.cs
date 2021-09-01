@@ -1,6 +1,5 @@
 ﻿using Falu.Core;
 using Falu.Infrastructure;
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
@@ -9,30 +8,13 @@ using System.Threading.Tasks;
 namespace Falu.Events
 {
     ///
-    public class EventsService : BaseService
+    public class EventsService : BaseService<WebhookEvent>
     {
         ///
         public EventsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
 
-        /// <summary>
-        /// Retrieve events.
-        /// </summary>
-        /// <param name="options">Options for filtering and pagination.</param>
-        /// <param name="requestOptions">Options to use for the request.</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<WebhookEvent<T>>>> ListAsync<T>(BasicListOptions? options = null,
-                                                                                        RequestOptions? requestOptions = null,
-                                                                                        CancellationToken cancellationToken = default)
-            where T : class
-        {
-            var args = new Dictionary<string, string>();
-            options?.PopulateQueryValues(args);
-
-            var query = QueryHelper.MakeQueryString(args);
-            var uri = new Uri(BaseAddress, $"/v1/events{query}");
-            return await GetAsync<List<WebhookEvent<T>>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
-        }
+        /// <inheritdoc/>
+        protected override string BasePath => "/v1/events";
 
         /// <summary>
         /// Retrieve events.
@@ -41,34 +23,26 @@ namespace Falu.Events
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<WebhookEvent>>> ListAsync(BasicListOptions? options = null,
+        public virtual Task<ResourceResponse<List<WebhookEvent<T>>>> ListAsync<T>(BasicListOptions? options = null,
                                                                                   RequestOptions? requestOptions = null,
                                                                                   CancellationToken cancellationToken = default)
-        {
-            var args = new Dictionary<string, string>();
-            options?.PopulateQueryValues(args);
-
-            var query = QueryHelper.MakeQueryString(args);
-            var uri = new Uri(BaseAddress, $"/v1/events{query}");
-            return await GetAsync<List<WebhookEvent>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get an event.
-        /// </summary>
-        /// <param name="id">Unique identifier for the event</param>
-        /// <param name="options">Options to use for the request.</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual async Task<ResourceResponse<WebhookEvent<T>>> GetAsync<T>(string id,
-                                                                                 RequestOptions? options = null,
-                                                                                 CancellationToken cancellationToken = default)
             where T : class
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
+            return ListResourcesAsync<WebhookEvent<T>>(options, requestOptions, cancellationToken);
+        }
 
-            var uri = new Uri(BaseAddress, $"/v1/events/{id}");
-            return await GetAsync<WebhookEvent<T>>(uri, options, cancellationToken).ConfigureAwait(false);
+        /// <summary>
+        /// Retrieve events.
+        /// </summary>
+        /// <param name="options">Options for filtering and pagination.</param>
+        /// <param name="requestOptions">Options to use for the request.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Task<ResourceResponse<List<WebhookEvent>>> ListAsync(BasicListOptions? options = null,
+                                                                            RequestOptions? requestOptions = null,
+                                                                            CancellationToken cancellationToken = default)
+        {
+            return ListResourcesAsync(options, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -78,14 +52,26 @@ namespace Falu.Events
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<WebhookEvent>> GetAsync(string id,
+        public virtual Task<ResourceResponse<WebhookEvent<T>>> GetAsync<T>(string id,
                                                                            RequestOptions? options = null,
                                                                            CancellationToken cancellationToken = default)
+            where T : class
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
+            return GetResourceAsync<WebhookEvent<T>>(id, options, cancellationToken);
+        }
 
-            var uri = new Uri(BaseAddress, $"/v1/events/{id}");
-            return await GetAsync<WebhookEvent>(uri, options, cancellationToken).ConfigureAwait(false);
+        /// <summary>
+        /// Get an event.
+        /// </summary>
+        /// <param name="id">Unique identifier for the event</param>
+        /// <param name="options">Options to use for the request.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Task<ResourceResponse<WebhookEvent>> GetAsync(string id,
+                                                                     RequestOptions? options = null,
+                                                                     CancellationToken cancellationToken = default)
+        {
+            return GetResourceAsync(id, options, cancellationToken);
         }
     }
 }

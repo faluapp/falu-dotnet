@@ -11,10 +11,13 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.Evaluations
 {
     ///
-    public class EvaluationsService : BaseService
+    public class EvaluationsService : BaseService<Evaluation>
     {
         ///
         public EvaluationsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+
+        /// <inheritdoc/>
+        protected override string BasePath => "/v1/evaluations";
 
         /// <summary>
         /// List evaluations.
@@ -23,16 +26,11 @@ namespace Falu.Evaluations
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<List<Evaluation>>> ListAsync(EvaluationsListOptions? options = null,
-                                                                                RequestOptions? requestOptions = null,
-                                                                                CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<List<Evaluation>>> ListAsync(EvaluationsListOptions? options = null,
+                                                                          RequestOptions? requestOptions = null,
+                                                                          CancellationToken cancellationToken = default)
         {
-            var args = new Dictionary<string, string>();
-            options?.PopulateQueryValues(args);
-
-            var query = QueryHelper.MakeQueryString(args);
-            var uri = new Uri(BaseAddress, $"/v1/evaluations{query}");
-            return await GetAsync<List<Evaluation>>(uri, requestOptions, cancellationToken).ConfigureAwait(false);
+            return ListResourcesAsync(options, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -42,14 +40,11 @@ namespace Falu.Evaluations
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<Evaluation>> GetAsync(string id,
-                                                                         RequestOptions? options = null,
-                                                                         CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<Evaluation>> GetAsync(string id,
+                                                                   RequestOptions? options = null,
+                                                                   CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
-
-            var uri = new Uri(BaseAddress, $"/v1/evaluations/{id}");
-            return await GetAsync<Evaluation>(uri, options, cancellationToken).ConfigureAwait(false);
+            return GetResourceAsync(id, options, cancellationToken);
         }
 
         /// <summary>
@@ -60,16 +55,12 @@ namespace Falu.Evaluations
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<Evaluation>> UpdateAsync(string id,
-                                                                            JsonPatchDocument<EvaluationPatchModel> patch,
-                                                                            RequestOptions? options = null,
-                                                                            CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<Evaluation>> UpdateAsync(string id,
+                                                                      JsonPatchDocument<EvaluationPatchModel> patch,
+                                                                      RequestOptions? options = null,
+                                                                      CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
-            if (patch is null) throw new ArgumentNullException(nameof(patch));
-
-            var uri = new Uri(BaseAddress, $"/v1/evaluations/{id}");
-            return await PatchAsync<Evaluation>(uri, patch, options, cancellationToken).ConfigureAwait(false);
+            return UpdateResourceAsync(id, patch, options, cancellationToken);
         }
 
         /// <summary>
@@ -79,9 +70,9 @@ namespace Falu.Evaluations
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<Evaluation>> CreateAsync(EvaluationCreateModel evaluation,
-                                                                            RequestOptions? options = null,
-                                                                            CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<Evaluation>> CreateAsync(EvaluationCreateModel evaluation,
+                                                                      RequestOptions? options = null,
+                                                                      CancellationToken cancellationToken = default)
         {
             if (evaluation is null) throw new ArgumentNullException(nameof(evaluation));
             if (evaluation.Scope is null) throw new InvalidOperationException($"{nameof(evaluation.Scope)} cannot be null.");
@@ -132,9 +123,8 @@ namespace Falu.Evaluations
                 }
             }
 
-            var uri = new Uri(BaseAddress, "/v1/evaluations");
-            var request = new HttpRequestMessage(HttpMethod.Post, uri) { Content = content };
-            return await SendAsync<Evaluation>(request, options, cancellationToken).ConfigureAwait(false);
+            var uri = MakePath();
+            return RequestAsync<Evaluation>(uri, HttpMethod.Post, content, options, cancellationToken);
         }
 
 
@@ -145,14 +135,12 @@ namespace Falu.Evaluations
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<Evaluation>> ScoreAsync(string id,
-                                                                           RequestOptions? options = null,
-                                                                           CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<Evaluation>> ScoreAsync(string id,
+                                                                     RequestOptions? options = null,
+                                                                     CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
-
-            var uri = new Uri(BaseAddress, $"/v1/evaluations/{id}/score");
-            return await PostAsync<Evaluation>(uri, new { }, options, cancellationToken).ConfigureAwait(false);
+            var uri = $"{MakeResourcePath(id)}/score";
+            return RequestAsync<Evaluation>(uri, HttpMethod.Post, new { }, options, cancellationToken);
         }
     }
 }

@@ -25,6 +25,16 @@ namespace Falu.Infrastructure
         protected abstract string BasePath { get; }
 
         ///
+        protected virtual Task<ResourceResponse<TResource>> GetResourceAsync(string id,
+                                                                             RequestOptions? options = null,
+                                                                             CancellationToken cancellationToken = default)
+        {
+            var uri = MakeResourcePath(id);
+            return RequestAsync<TResource>(uri, HttpMethod.Get, null, options, cancellationToken);
+        }
+
+
+        ///
         protected virtual Task<ResourceResponse<TResource>> UpdateResourceAsync(string id,
                                                                                 IJsonPatchDocument patch,
                                                                                 RequestOptions? options = null,

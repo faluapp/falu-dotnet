@@ -17,7 +17,7 @@ namespace Falu.PaymentRefunds
 
         /// <inheritdoc/>
         protected override string BasePath => "/v1/payment_refunds";
-        
+
         /// <summary>
         /// List payment refunds.
         /// </summary>
@@ -44,14 +44,11 @@ namespace Falu.PaymentRefunds
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<PaymentRefund>> GetAsync(string id,
-                                                                            RequestOptions? options = null,
-                                                                            CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<PaymentRefund>> GetAsync(string id,
+                                                                      RequestOptions? options = null,
+                                                                      CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
-
-            var uri = $"/v1/payment_reversals/{id}";
-            return await GetResourceAsync<PaymentRefund>(uri, options, cancellationToken).ConfigureAwait(false);
+            return GetResourceAsync(id, options, cancellationToken);
         }
 
         /// <summary>

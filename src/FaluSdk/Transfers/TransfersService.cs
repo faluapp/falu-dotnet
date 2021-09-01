@@ -44,14 +44,11 @@ namespace Falu.Transfers
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<Transfer>> GetAsync(string id,
-                                                                       RequestOptions? options = null,
-                                                                       CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<Transfer>> GetAsync(string id,
+                                                                 RequestOptions? options = null,
+                                                                 CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
-
-            var uri = $"/v1/transfers/{id}";
-            return await GetResourceAsync<Transfer>(uri, options, cancellationToken).ConfigureAwait(false);
+            return GetResourceAsync(id, options, cancellationToken);
         }
 
         /// <summary>

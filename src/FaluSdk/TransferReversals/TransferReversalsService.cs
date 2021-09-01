@@ -44,14 +44,11 @@ namespace Falu.TransferReversals
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<TransferReversal>> GetAsync(string id,
-                                                                               RequestOptions? options = null,
-                                                                               CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<TransferReversal>> GetAsync(string id,
+                                                                         RequestOptions? options = null,
+                                                                         CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
-
-            var uri = $"/v1/transfer_reversals/{id}";
-            return await GetResourceAsync<TransferReversal>(uri, options, cancellationToken).ConfigureAwait(false);
+            return GetResourceAsync(id, options, cancellationToken);
         }
 
         /// <summary>

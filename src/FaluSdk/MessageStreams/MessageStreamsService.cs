@@ -44,14 +44,11 @@ namespace Falu.MessageStreams
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<MessageStream>> GetAsync(string id,
-                                                                            RequestOptions? options = null,
-                                                                            CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<MessageStream>> GetAsync(string id,
+                                                                      RequestOptions? options = null,
+                                                                      CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
-
-            var uri = $"/v1/message_streams/{id}";
-            return await GetResourceAsync<MessageStream>(uri, options, cancellationToken).ConfigureAwait(false);
+            return GetResourceAsync(id, options, cancellationToken);
         }
 
         /// <summary>

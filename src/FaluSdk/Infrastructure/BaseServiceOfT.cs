@@ -38,18 +38,18 @@ namespace Falu.Infrastructure
         }
 
         ///
-        public virtual async Task<ResourceResponse<List<T>>> ListResourcesAsync<T>(BasicListOptions? options = null,
-                                                                                   RequestOptions? requestOptions = null,
-                                                                                   CancellationToken cancellationToken = default)
+        protected virtual async Task<ResourceResponse<List<T>>> ListResourcesAsync<T>(BasicListOptions? options = null,
+                                                                                      RequestOptions? requestOptions = null,
+                                                                                      CancellationToken cancellationToken = default)
         {
             var uri = MakePathWithQuery(null, options);
             return await RequestAsync<List<T>>(uri, HttpMethod.Get, null, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         ///
-        public virtual Task<ResourceResponse<List<TResource>>> ListResourcesAsync(BasicListOptions? options = null,
-                                                                                  RequestOptions? requestOptions = null,
-                                                                                  CancellationToken cancellationToken = default)
+        protected virtual Task<ResourceResponse<List<TResource>>> ListResourcesAsync(BasicListOptions? options = null,
+                                                                                     RequestOptions? requestOptions = null,
+                                                                                     CancellationToken cancellationToken = default)
         {
             return ListResourcesAsync<TResource>(options, requestOptions, cancellationToken);
         }

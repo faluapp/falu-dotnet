@@ -82,11 +82,11 @@ namespace Falu.Webhooks
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ResourceResponse<object>> DeleteAsync(string id,
-                                                                        RequestOptions? options = null,
-                                                                        CancellationToken cancellationToken = default)
+        public virtual Task<ResourceResponse<object>> DeleteAsync(string id,
+                                                                  RequestOptions? options = null,
+                                                                  CancellationToken cancellationToken = default)
         {
-            return await DeleteResourceAsync(id, options, cancellationToken).ConfigureAwait(false);
+            return DeleteResourceAsync(id, options, cancellationToken);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Falu.Tests
                 "count",
                 "ct",
                 "status",
-                "authorized",
+                "approved",
             }, dictionary.Keys);
             Assert.Equal(new[] {
                 "descending",

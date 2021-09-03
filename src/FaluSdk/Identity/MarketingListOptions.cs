@@ -1,6 +1,6 @@
 ﻿using Falu.Core;
+using Falu.Infrastructure;
 using System;
-using System.Collections.Generic;
 
 namespace Falu.Identity
 {
@@ -29,14 +29,13 @@ namespace Falu.Identity
         public RangeFilteringOptions<DateTimeOffset>? Birthday { get; set; }
 
         /// <inheritdoc/>
-        internal override IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)
+        internal override void Populate(QueryValues values)
         {
-            base.PopulateQueryValues(dictionary);
-            dictionary.AddIfNotNull("country", Country)
-                      .AddIfNotNull("gender", Gender, ConvertEnum)
-                      .AddIfNotNull("age", Age, ConvertInt32)
-                      .AddIfNotNull("birthday", Birthday, ConvertDate);
-            return dictionary;
+            base.Populate(values);
+            values.Add("country", Country)
+                  .Add("gender", Gender)
+                  .Add("age", QueryValues.FromRange(Age))
+                  .Add("birthday", QueryValues.FromRange(Birthday));
         }
     }
 }

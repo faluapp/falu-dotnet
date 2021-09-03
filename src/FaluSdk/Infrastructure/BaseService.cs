@@ -1,12 +1,10 @@
 ﻿using Falu.Core;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -177,25 +175,6 @@ namespace Falu.Infrastructure
             // make the produced payload readable
             payload.Position = 0;
             return payload;
-        }
-
-        /// <summary>Make a query string using the given keys and values.</summary>
-        /// <param name="parameters">A collection of name value query pairs to use.</param>
-        /// <returns>The query.</returns>
-        protected internal static string MakeQueryString(in IReadOnlyDictionary<string, string> parameters)
-        {
-            var first = true;
-            var builder = new StringBuilder();
-            foreach (var parameter in parameters)
-            {
-                builder.Append(first ? '?' : '&');
-                builder.Append(UrlEncoder.Default.Encode(parameter.Key));
-                builder.Append('=');
-                builder.Append(UrlEncoder.Default.Encode(parameter.Value));
-                first = false;
-            }
-
-            return builder.ToString();
         }
 
         #endregion

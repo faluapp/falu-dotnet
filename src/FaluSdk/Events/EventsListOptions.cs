@@ -1,4 +1,5 @@
 ﻿using Falu.Core;
+using Falu.Infrastructure;
 using System.Collections.Generic;
 
 namespace Falu.Events
@@ -10,13 +11,10 @@ namespace Falu.Events
         public List<string>? Type { get; set; }
 
         /// <inheritdoc/>
-        internal override IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)
+        internal override void Populate(QueryValues values)
         {
-            base.PopulateQueryValues(dictionary);
-
-            dictionary.AddIfNotNull("type", Type, ConvertStringList);
-
-            return dictionary;
+            base.Populate(values);
+            values.Add("type", Type);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Falu.Core;
-using System.Collections.Generic;
+using Falu.Infrastructure;
 
 namespace Falu.FileUploadLinks
 {
@@ -13,13 +13,11 @@ namespace Falu.FileUploadLinks
         public bool? Expired { get; set; }
 
         /// <inheritdoc/>
-        internal override IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)
+        internal override void Populate(QueryValues values)
         {
-            base.PopulateQueryValues(dictionary);
-            dictionary.AddIfNotNull("upload", FileUpload);
-            dictionary.AddIfNotNull("expired", Expired, ConvertBool);
-
-            return dictionary;
+            base.Populate(values);
+            values.Add("upload", FileUpload)
+                  .Add("expired", Expired);
         }
     }
 }

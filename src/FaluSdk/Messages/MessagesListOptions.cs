@@ -1,4 +1,5 @@
 ﻿using Falu.Core;
+using Falu.Infrastructure;
 using System;
 using System.Collections.Generic;
 
@@ -18,12 +19,11 @@ namespace Falu.Messages
         public List<MessageStatus>? Status { get; set; }
 
         /// <inheritdoc/>
-        internal override IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)
+        internal override void Populate(QueryValues values)
         {
-            base.PopulateQueryValues(dictionary);
-            dictionary.AddIfNotNull("status", Status, ConvertEnumList)
-                      .AddIfNotNull("delivered", Delivered, ConvertDate);
-            return dictionary;
+            base.Populate(values);
+            values.Add("status", Status)
+                  .Add("delivered", QueryValues.FromRange(Delivered));
         }
     }
 }

@@ -1,57 +1,7 @@
-﻿using Falu.Core;
-
-namespace System.Collections.Generic
+﻿namespace System.Collections.Generic
 {
     internal static class CollectionExtensions
     {
-        public static IDictionary<string, string> AddIfNotNull<T>(this IDictionary<string, string> dictionary,
-                                                                  string property,
-                                                                  RangeFilteringOptions<T>? rfo,
-                                                                  Func<T, string> converter)
-            where T : struct, IComparable<T>, IEquatable<T>
-        {
-            if (rfo is not null)
-            {
-                var opt = rfo.Value;
-                dictionary.AddIfNotNull($"{property}.lt", opt.LessThan, converter)
-                          .AddIfNotNull($"{property}.lte", opt.LessThanOrEqualTo, converter)
-                          .AddIfNotNull($"{property}.gt", opt.GreaterThan, converter)
-                          .AddIfNotNull($"{property}.gte", opt.GreaterThanOrEqualTo, converter);
-            }
-
-            return dictionary;
-        }
-
-        public static IDictionary<string, string> AddIfNotNull<T>(this IDictionary<string, string> dictionary,
-                                                                  string key,
-                                                                  T? value,
-                                                                  Func<T, string> converter)
-            where T : struct
-        {
-            return dictionary.AddIfNotNull(key, value is null ? null : converter(value.Value));
-        }
-
-        public static IDictionary<string, string> AddIfNotNull<T>(this IDictionary<string, string> dictionary,
-                                                                  string key,
-                                                                  T? value,
-                                                                  Func<T, string> converter)
-            where T : class
-        {
-            return dictionary.AddIfNotNull(key, value is null ? null : converter(value));
-        }
-
-        public static IDictionary<string, string> AddIfNotNull(this IDictionary<string, string> dictionary, string key, string? value)
-        {
-            if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
-
-            if (!string.IsNullOrWhiteSpace(value))
-            {
-                dictionary.Add(key, value);
-            }
-
-            return dictionary;
-        }
-
         public static T AddIf<T>(this T collection, bool condition, string value) where T : ICollection<string>
         {
             return condition ? collection.AddIfNotNull(value) : collection;

@@ -1,4 +1,5 @@
 ﻿using Falu.Core;
+using Falu.Infrastructure;
 using System.Collections.Generic;
 
 namespace Falu.Transfers
@@ -10,12 +11,10 @@ namespace Falu.Transfers
         public List<TransferStatus>? Status { get; set; }
 
         /// <inheritdoc/>
-        internal override IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)
+        internal override void Populate(QueryValues values)
         {
-            base.PopulateQueryValues(dictionary);
-            dictionary.AddIfNotNull("status", Status, ConvertEnumList);
-
-            return dictionary;
+            base.Populate(values);
+            values.Add("status", Status);
         }
     }
 }

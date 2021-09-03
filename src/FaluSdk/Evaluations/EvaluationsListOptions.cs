@@ -1,4 +1,5 @@
 ﻿using Falu.Core;
+using Falu.Infrastructure;
 using System.Collections.Generic;
 
 namespace Falu.Evaluations
@@ -16,15 +17,12 @@ namespace Falu.Evaluations
         public List<EvaluationStatus>? Status { get; set; }
 
         /// <inheritdoc/>
-        internal override IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)
+        internal override void Populate(QueryValues values)
         {
-            base.PopulateQueryValues(dictionary);
-
-            dictionary.AddIfNotNull("email", Email)
-                      .AddIfNotNull("phone", Phone)
-                      .AddIfNotNull("status", Status, ConvertEnumList);
-
-            return dictionary;
+            base.Populate(values);
+            values.Add("email", Email)
+                  .Add("phone", Phone)
+                  .Add("status", Status);
         }
     }
 }

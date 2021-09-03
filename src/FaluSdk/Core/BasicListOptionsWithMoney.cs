@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using Falu.Infrastructure;
 
 namespace Falu.Core
 {
@@ -15,12 +15,12 @@ namespace Falu.Core
         /// </summary>
         public RangeFilteringOptions<long>? Amount { get; set; }
 
-        internal override IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)
+        /// <inheritdoc/>
+        internal override void Populate(QueryValues values)
         {
-            base.PopulateQueryValues(dictionary);
-            dictionary.AddIfNotNull("currency", Currency)
-                      .AddIfNotNull("amount", Amount, ConvertInt64);
-            return dictionary;
+            base.Populate(values);
+            values.Add("currency", Currency)
+                  .Add("amount", QueryValues.FromRange(Amount));
         }
     }
 }

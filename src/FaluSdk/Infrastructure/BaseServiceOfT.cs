@@ -170,10 +170,10 @@ namespace Falu.Infrastructure
         /// <returns>The path and query combined.</returns>
         protected virtual string MakePathWithQuery(string? subPath, BasicListOptions? options)
         {
-            var args = new Dictionary<string, string>();
-            options?.PopulateQueryValues(args);
+            var args = new QueryValues();
+            options?.Populate(args);
 
-            var query = MakeQueryString(args);
+            var query = args.ToString();
             return MakePathWithQuery(subPath: subPath, query: query);
         }
 

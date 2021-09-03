@@ -1,4 +1,5 @@
 ﻿using Falu.Core;
+using Falu.Infrastructure;
 using System.Collections.Generic;
 
 namespace Falu.PaymentAuthorizations
@@ -13,13 +14,11 @@ namespace Falu.PaymentAuthorizations
         public bool? Approved { get; set; }
 
         /// <inheritdoc/>
-        internal override IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)
+        internal override void Populate(QueryValues values)
         {
-            base.PopulateQueryValues(dictionary);
-            dictionary.AddIfNotNull("status", Status, ConvertEnumList);
-            dictionary.AddIfNotNull("approved", Approved, ConvertBool);
-
-            return dictionary;
+            base.Populate(values);
+            values.Add("status", Status)
+                  .Add("approved", Approved);
         }
     }
 }

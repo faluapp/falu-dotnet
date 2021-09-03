@@ -1,4 +1,5 @@
 ﻿using Falu.Core;
+using Falu.Infrastructure;
 using Falu.PaymentAuthorizations;
 using System.Collections.Generic;
 using Xunit;
@@ -27,10 +28,11 @@ namespace Falu.Tests
             };
 
             // Act
-            var dictionary = new Dictionary<string, string>();
-            options.PopulateQueryValues(dictionary);
+            var query = new QueryValues();
+            options.Populate(query);
 
             // Assert
+            var dictionary = query.ToDictionary();
             Assert.NotEmpty(dictionary);
             Assert.Equal(new[] {
                 "sort",

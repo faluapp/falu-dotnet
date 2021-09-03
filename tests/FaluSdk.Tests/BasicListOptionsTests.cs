@@ -1,4 +1,5 @@
 ﻿using Falu.Core;
+using Falu.Infrastructure;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -21,10 +22,11 @@ namespace Falu.Tests
             };
 
             // Act
-            var dictionary = new Dictionary<string, string>();
-            options.PopulateQueryValues(dictionary);
+            var query = new QueryValues();
+            options.Populate(query);
 
             // Assert
+            var dictionary = query.ToDictionary();
             Assert.NotEmpty(dictionary);
             Assert.Equal(new[] { "sort", "count", "ct", }, dictionary.Keys);
             Assert.Equal(new[] { "descending", "12", "123", }, dictionary.Values);
@@ -50,10 +52,11 @@ namespace Falu.Tests
             };
 
             // Act
-            var dictionary = new Dictionary<string, string>();
-            options.PopulateQueryValues(dictionary);
+            var query = new QueryValues();
+            options.Populate(query);
 
             // Assert
+            var dictionary = query.ToDictionary();
             Assert.NotEmpty(dictionary);
             Assert.Equal(new[] {
                 "created.lt",

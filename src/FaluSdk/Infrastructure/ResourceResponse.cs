@@ -96,10 +96,10 @@ namespace Falu.Infrastructure
                 Error?.Detail ?? Error?.Title ?? $"Request failed - {StatusCode} ({(int)StatusCode})",
                 $"StatusCode: {(int)StatusCode} ({StatusCode})"
             };
-            lines.AddIf(!string.IsNullOrWhiteSpace(RequestId), $"RequestId: {RequestId}");
-            lines.AddIf(!string.IsNullOrWhiteSpace(TraceId), $"TraceId: {TraceId}");
-            lines.AddIf(!string.IsNullOrWhiteSpace(Error?.Title), $"Error: {Error?.Title}");
-            lines.AddIf(!string.IsNullOrWhiteSpace(Error?.Detail), $"Message: {Error?.Detail}");
+            AddIf(lines, RequestId, "RequestId: {0}", RequestId);
+            AddIf(lines, TraceId, "TraceId: {0}", TraceId);
+            AddIf(lines, Error?.Title, "Error: {0}", Error?.Title);
+            AddIf(lines, Error?.Detail, "Message: {0}", Error?.Detail);
             var message = string.Join("\r\n", lines);
 
             throw new FaluException(statusCode: StatusCode, message: message)
@@ -109,6 +109,14 @@ namespace Falu.Infrastructure
                 TraceId = TraceId,
                 Error = Error,
             };
+        }
+
+        private static void AddIf(IList<string> collection, string? value, string format, params string?[] args)
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                collection.Add(string.Format(format, args));
+            }
         }
 
         /// <summary>

@@ -173,7 +173,7 @@ namespace Falu.Infrastructure
             var args = new Dictionary<string, string>();
             options?.PopulateQueryValues(args);
 
-            var query = QueryHelper.MakeQueryString(args);
+            var query = MakeQueryString(args);
             return MakePathWithQuery(subPath: subPath, query: query);
         }
 

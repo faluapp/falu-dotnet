@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using Falu.Infrastructure;
 
 namespace Falu.Core
 {
-    /// <summary>
-    /// Standard options for filtering and pagination in list operations with money.
-    /// </summary>
+    /// <summary>Standard options for filtering and pagination in list operations with money.</summary>
     public record BasicListOptionsWithMoney : BasicListOptions, IHasCurrency
     {
-        /// <inheritdoc/>
+        /// <summary>
+        /// Filter options for <see cref="IHasCurrency.Currency"/> property.
+        /// </summary>
         public string? Currency { get; set; }
 
         /// <summary>
@@ -15,13 +15,12 @@ namespace Falu.Core
         /// </summary>
         public RangeFilteringOptions<long>? Amount { get; set; }
 
-        internal override IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)
+        /// <inheritdoc/>
+        internal override void Populate(QueryValues values)
         {
-            base.PopulateQueryValues(dictionary);
-            dictionary.AddIfNotNull("currency", Currency);
-            Amount?.PopulateQueryValues("amount", dictionary, ConvertInt64);
-
-            return dictionary;
+            base.Populate(values);
+            values.Add("currency", Currency)
+                  .Add("amount", QueryValues.FromRange(Amount));
         }
     }
 }

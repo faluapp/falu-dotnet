@@ -1,31 +1,29 @@
 ﻿using Falu.Core;
+using Falu.Infrastructure;
 using System;
 using System.Collections.Generic;
 
 namespace Falu.Messages
 {
-    /// <summary>
-    /// Options for filtering and pagination of list messages operation.
-    /// </summary>
+    /// <summary>Options for filtering and pagination of messages.</summary>
     public record MessagesListOptions : BasicListOptions
     {
         /// <summary>
-        /// Range filter options for <code>delivered</code> property.
+        /// Range filter options for <see cref="Message.Delivered"/> property.
         /// </summary>
         public RangeFilteringOptions<DateTimeOffset>? Delivered { get; set; }
 
         /// <summary>
-        /// Filter options for <code>status</code> property.
+        /// Filter options for <see cref="Message.Status"/> property.
         /// </summary>
         public List<MessageStatus>? Status { get; set; }
 
         /// <inheritdoc/>
-        internal override IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)
+        internal override void Populate(QueryValues values)
         {
-            base.PopulateQueryValues(dictionary);
-            Delivered?.PopulateQueryValues("delivered", dictionary, ConvertDate);
-            dictionary.AddIfNotNull("status", Status, ConvertEnumList);
-            return dictionary;
+            base.Populate(values);
+            values.Add("status", Status)
+                  .Add("delivered", QueryValues.FromRange(Delivered));
         }
     }
 }

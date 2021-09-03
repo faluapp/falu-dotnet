@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Falu.Core
 {
-    /// <summary>
-    /// Standard options for range filtering.
-    /// </summary>
+    /// <summary>Standard options for range filtering.</summary>
     /// <typeparam name="T"></typeparam>
     public readonly struct RangeFilteringOptions<T> where T : struct, IComparable<T>, IEquatable<T>
     {
         /// <summary>
-        /// 
+        /// Creates an instance <see cref="RangeFilteringOptions{T}"/>.
         /// </summary>
         /// <param name="lt">Option for less than (&lt;).</param>
         /// <param name="lte">Option for less than or equal to (&lt;=).</param>
@@ -24,38 +21,16 @@ namespace Falu.Core
             GreaterThanOrEqualTo = gte;
         }
 
-        /// <summary>
-        /// Option for less than (&lt;).
-        /// </summary>
+        /// <summary>Option for less than (&lt;).</summary>
         public T? LessThan { get; init; }
 
-        /// <summary>
-        /// Option for less than or equal to (&lt;=).
-        /// </summary>
+        /// <summary>Option for less than or equal to (&lt;=).</summary>
         public T? LessThanOrEqualTo { get; init; }
 
-        /// <summary>
-        /// Option for greater than (&gt;).
-        /// </summary>
+        /// <summary>Option for greater than (&gt;).</summary>
         public T? GreaterThan { get; init; }
 
-        /// <summary>
-        /// Option for greater than or equal to (&gt;=).
-        /// </summary>
+        /// <summary>Option for greater than or equal to (&gt;=).</summary>
         public T? GreaterThanOrEqualTo { get; init; }
-
-        internal IDictionary<string, string> PopulateQueryValues(string property, IDictionary<string, string> dictionary, Func<T, string> converter)
-        {
-            if (string.IsNullOrEmpty(property)) throw new ArgumentException($"'{nameof(property)}' cannot be null or empty", nameof(property));
-            if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
-            if (converter is null) throw new ArgumentNullException(nameof(converter));
-
-            dictionary.AddIfNotNull(property, "lt", LessThan, converter)
-                      .AddIfNotNull(property, "lte", LessThanOrEqualTo, converter)
-                      .AddIfNotNull(property, "gt", GreaterThan, converter)
-                      .AddIfNotNull(property, "gte", GreaterThanOrEqualTo, converter);
-
-            return dictionary;
-        }
     }
 }

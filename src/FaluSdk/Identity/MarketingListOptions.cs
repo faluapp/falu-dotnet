@@ -1,12 +1,10 @@
 ﻿using Falu.Core;
+using Falu.Infrastructure;
 using System;
-using System.Collections.Generic;
 
 namespace Falu.Identity
 {
-    /// <summary>
-    /// Options for filtering and pagination of list identity marketing data operation.
-    /// </summary>
+    /// <summary>Options for filtering and pagination of identity marketing data.</summary>
     public record MarketingListOptions : BasicListOptions
     {
         /// <inheritdoc/>
@@ -31,14 +29,13 @@ namespace Falu.Identity
         public RangeFilteringOptions<DateTimeOffset>? Birthday { get; set; }
 
         /// <inheritdoc/>
-        internal override IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)
+        internal override void Populate(QueryValues values)
         {
-            base.PopulateQueryValues(dictionary);
-            dictionary.AddIfNotNull("country", Country);
-            dictionary.AddIfNotNull("gender", Gender, ConvertEnum);
-            Age?.PopulateQueryValues("age", dictionary, ConvertInt32);
-            Birthday?.PopulateQueryValues("birthday", dictionary, ConvertDate);
-            return dictionary;
+            base.Populate(values);
+            values.Add("country", Country)
+                  .Add("gender", Gender)
+                  .Add("age", QueryValues.FromRange(Age))
+                  .Add("birthday", QueryValues.FromRange(Birthday));
         }
     }
 }

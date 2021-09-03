@@ -1,25 +1,20 @@
 ﻿using Falu.Core;
+using Falu.Infrastructure;
 using System.Collections.Generic;
 
 namespace Falu.TransferReversals
 {
-    /// <summary>
-    /// Options for filtering and pagination of list transfer reversals operation.
-    /// </summary>
+    /// <summary>Options for filtering and pagination of transfer reversals.</summary>
     public record TransferReversalsListOptions : BasicListOptionsWithMoney
     {
-        /// <summary>
-        /// Filter options for <code>status</code> property.
-        /// </summary>
+        /// <summary>Filter options for <see cref="TransferReversal.Status"/> property.</summary>
         public List<TransferReversalStatus>? Status { get; set; }
 
         /// <inheritdoc/>
-        internal override IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)
+        internal override void Populate(QueryValues values)
         {
-            base.PopulateQueryValues(dictionary);
-            dictionary.AddIfNotNull("status", Status, ConvertEnumList);
-
-            return dictionary;
+            base.Populate(values);
+            values.Add("status", Status);
         }
     }
 }

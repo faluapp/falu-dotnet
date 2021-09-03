@@ -1,15 +1,25 @@
-﻿namespace System.Collections.Generic
+﻿using Falu.Core;
+
+namespace System.Collections.Generic
 {
     internal static class CollectionExtensions
     {
         public static IDictionary<string, string> AddIfNotNull<T>(this IDictionary<string, string> dictionary,
                                                                   string property,
-                                                                  string field,
-                                                                  T? value,
+                                                                  RangeFilteringOptions<T>? rfo,
                                                                   Func<T, string> converter)
-            where T : struct
+            where T : struct, IComparable<T>, IEquatable<T>
         {
-            return dictionary.AddIfNotNull($"{property}.{field}", value, converter);
+            if (rfo is not null)
+            {
+                var opt = rfo.Value;
+                dictionary.AddIfNotNull($"{property}.lt", opt.LessThan, converter)
+                          .AddIfNotNull($"{property}.lte", opt.LessThanOrEqualTo, converter)
+                          .AddIfNotNull($"{property}.gt", opt.GreaterThan, converter)
+                          .AddIfNotNull($"{property}.gte", opt.GreaterThanOrEqualTo, converter);
+            }
+
+            return dictionary;
         }
 
         public static IDictionary<string, string> AddIfNotNull<T>(this IDictionary<string, string> dictionary,

@@ -2,12 +2,12 @@
 
 namespace Falu.Core
 {
-    /// <summary>
-    /// Standard options for filtering and pagination in list operations with money.
-    /// </summary>
+    /// <summary>Standard options for filtering and pagination in list operations with money.</summary>
     public record BasicListOptionsWithMoney : BasicListOptions, IHasCurrency
     {
-        /// <inheritdoc/>
+        /// <summary>
+        /// Filter options for <see cref="IHasCurrency.Currency"/> property.
+        /// </summary>
         public string? Currency { get; set; }
 
         /// <summary>
@@ -18,9 +18,8 @@ namespace Falu.Core
         internal override IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)
         {
             base.PopulateQueryValues(dictionary);
-            dictionary.AddIfNotNull("currency", Currency);
-            Amount?.PopulateQueryValues("amount", dictionary, ConvertInt64);
-
+            dictionary.AddIfNotNull("currency", Currency)
+                      .AddIfNotNull("amount", Amount, ConvertInt64);
             return dictionary;
         }
     }

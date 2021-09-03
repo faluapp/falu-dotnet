@@ -18,7 +18,7 @@ namespace Falu.Tests
                 Created = null,
                 ContinuationToken = "123",
                 Updated = null,
-                Authorized = false,
+                Approved = false,
                 Status = new List<PaymentAuthorizationStatus>
                 {
                     PaymentAuthorizationStatus.Pending,

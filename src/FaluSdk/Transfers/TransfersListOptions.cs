@@ -3,14 +3,10 @@ using System.Collections.Generic;
 
 namespace Falu.Transfers
 {
-    /// <summary>
-    /// Options for filtering and pagination of list transfer operation.
-    /// </summary>
+    /// <summary>Options for filtering and pagination of transfers.</summary>
     public record TransfersListOptions : BasicListOptionsWithMoney
     {
-        /// <summary>
-        /// Filter options for <code>status</code> property.
-        /// </summary>
+        /// <summary>Filter options for <see cref="Transfer.Status"/> property.</summary>
         public List<TransferStatus>? Status { get; set; }
 
         /// <inheritdoc/>

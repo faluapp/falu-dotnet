@@ -3,14 +3,10 @@ using System.Collections.Generic;
 
 namespace Falu.FileUploads
 {
-    /// <summary>
-    /// Options for filtering and pagination of list flie uploads.
-    /// </summary>
+    /// <summary>Options for filtering and pagination of list file uploads.</summary>
     public record FileUploadsListOptions : BasicListOptions
     {
-        /// <summary>
-        /// Filter options for <code>purpose</code> property.
-        /// </summary>
+        /// <summary>Filter options for <code>purpose</code> property.</summary>
         public List<FileUploadPurpose>? Purpose { get; set; }
 
         /// <inheritdoc/>

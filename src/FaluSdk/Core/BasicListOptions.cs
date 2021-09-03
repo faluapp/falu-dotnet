@@ -9,15 +9,10 @@ namespace Falu.Core
     /// </summary>
     public record BasicListOptions
     {
-        /// <summary>
-        /// The order to use for sorting the objects returned.
-        /// Optional, defaults to <see cref="SortingOrder.Descending"/>.
-        /// </summary>
+        /// <summary>The order to use for sorting the objects returned.</summary>
         public SortingOrder? Sorting { get; set; }
 
-        /// <summary>
-        /// The maximum number of objects to return.
-        /// </summary>
+        /// <summary>The maximum number of objects to return.</summary>
         public int? Count { get; set; }
 
         /// <summary>
@@ -29,14 +24,10 @@ namespace Falu.Core
         /// </summary>
         public string? ContinuationToken { get; set; }
 
-        /// <summary>
-        /// Range filter options for <code>created</code> property.
-        /// </summary>
+        /// <summary>Range filter options for <see cref="IHasCreated.Created"/> property.</summary>
         public RangeFilteringOptions<DateTimeOffset>? Created { get; set; }
 
-        /// <summary>
-        /// Range filter options for <code>updated</code> property.
-        /// </summary>
+        /// <summary>Range filter options for <see cref="IHasUpdated.Updated"/> property.</summary>
         public RangeFilteringOptions<DateTimeOffset>? Updated { get; set; }
 
         internal virtual IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)
@@ -45,10 +36,9 @@ namespace Falu.Core
 
             dictionary.AddIfNotNull("sort", Sorting, ConvertEnum)
                       .AddIfNotNull("count", Count, ConvertInt32)
-                      .AddIfNotNull("ct", ContinuationToken);
-
-            Created?.PopulateQueryValues("created", dictionary, ConvertDate);
-            Updated?.PopulateQueryValues("updated", dictionary, ConvertDate);
+                      .AddIfNotNull("ct", ContinuationToken)
+                      .AddIfNotNull("created", Created, ConvertDate)
+                      .AddIfNotNull("updated", Updated, ConvertDate);
 
             return dictionary;
         }

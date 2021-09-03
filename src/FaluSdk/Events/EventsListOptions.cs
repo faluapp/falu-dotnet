@@ -3,14 +3,10 @@ using System.Collections.Generic;
 
 namespace Falu.Events
 {
-    /// <summary>
-    /// Options for filtering and pagination of events.
-    /// </summary>
+    /// <summary>Options for filtering and pagination of events.</summary>
     public record EventsListOptions : BasicListOptions
     {
-        /// <summary>
-        /// Filter options for <code>type</code> property.
-        /// </summary>
+        /// <summary>Filter options for <see cref="WebhookEvent{TObject}.Type"/> property.</summary>
         public List<string>? Type { get; set; }
 
         /// <inheritdoc/>

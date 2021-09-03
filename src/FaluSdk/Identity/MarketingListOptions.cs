@@ -4,9 +4,7 @@ using System.Collections.Generic;
 
 namespace Falu.Identity
 {
-    /// <summary>
-    /// Options for filtering and pagination of list identity marketing data operation.
-    /// </summary>
+    /// <summary>Options for filtering and pagination of identity marketing data.</summary>
     public record MarketingListOptions : BasicListOptions
     {
         /// <inheritdoc/>
@@ -34,10 +32,10 @@ namespace Falu.Identity
         internal override IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)
         {
             base.PopulateQueryValues(dictionary);
-            dictionary.AddIfNotNull("country", Country);
-            dictionary.AddIfNotNull("gender", Gender, ConvertEnum);
-            Age?.PopulateQueryValues("age", dictionary, ConvertInt32);
-            Birthday?.PopulateQueryValues("birthday", dictionary, ConvertDate);
+            dictionary.AddIfNotNull("country", Country)
+                      .AddIfNotNull("gender", Gender, ConvertEnum)
+                      .AddIfNotNull("age", Age, ConvertInt32)
+                      .AddIfNotNull("birthday", Birthday, ConvertDate);
             return dictionary;
         }
     }

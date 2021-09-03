@@ -3,19 +3,13 @@ using System.Collections.Generic;
 
 namespace Falu.FileUploadLinks
 {
-    /// <summary>
-    /// Options for filtering and pagination of list flie upload links.
-    /// </summary>
+    /// <summary>Options for filtering and pagination of list flie upload links.</summary>
     public record FileUploadLinksListOptions : BasicListOptions
     {
-        /// <summary>
-        /// Unique identifier of the file upload.
-        /// </summary>
+        /// <summary>Unique identifier of the file upload.</summary>
         public string? FileUpload { get; set; }
 
-        /// <summary>
-        /// Filter options for <code>expired</code> property.
-        /// </summary>
+        /// <summary>Filter options for <see cref="FileUploadLink.Expired"/> property.</summary>
         public bool? Expired { get; set; }
 
         /// <inheritdoc/>

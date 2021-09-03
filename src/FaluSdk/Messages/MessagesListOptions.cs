@@ -4,18 +4,16 @@ using System.Collections.Generic;
 
 namespace Falu.Messages
 {
-    /// <summary>
-    /// Options for filtering and pagination of list messages operation.
-    /// </summary>
+    /// <summary>Options for filtering and pagination of messages.</summary>
     public record MessagesListOptions : BasicListOptions
     {
         /// <summary>
-        /// Range filter options for <code>delivered</code> property.
+        /// Range filter options for <see cref="Message.Delivered"/> property.
         /// </summary>
         public RangeFilteringOptions<DateTimeOffset>? Delivered { get; set; }
 
         /// <summary>
-        /// Filter options for <code>status</code> property.
+        /// Filter options for <see cref="Message.Status"/> property.
         /// </summary>
         public List<MessageStatus>? Status { get; set; }
 
@@ -23,8 +21,8 @@ namespace Falu.Messages
         internal override IDictionary<string, string> PopulateQueryValues(IDictionary<string, string> dictionary)
         {
             base.PopulateQueryValues(dictionary);
-            Delivered?.PopulateQueryValues("delivered", dictionary, ConvertDate);
-            dictionary.AddIfNotNull("status", Status, ConvertEnumList);
+            dictionary.AddIfNotNull("status", Status, ConvertEnumList)
+                      .AddIfNotNull("delivered", Delivered, ConvertDate);
             return dictionary;
         }
     }

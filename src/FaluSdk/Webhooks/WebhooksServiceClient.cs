@@ -1,35 +1,34 @@
 ﻿using Falu.Core;
 using Falu.Infrastructure;
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Tingle.Extensions.JsonPatch;
 
-namespace Falu.MessageTemplates
+namespace Falu.Webhooks
 {
     ///
-    public class MessageTemplatesService : BaseService<MessageTemplate>, ISupportsListing<MessageTemplate, MessageTemplatesListOptions>
+    public class WebhooksServiceClient : BaseServiceClient<WebhookEndpoint>, ISupportsListing<WebhookEndpoint, WebhookEndpointsListOptions>
     {
         ///
-        public MessageTemplatesService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+        public WebhooksServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
 
         /// <inheritdoc/>
-        protected override string BasePath => "/v1/message_templates";
+        protected override string BasePath => "/v1/webhooks/endpoints";
 
-        /// <summary>List message templates.</summary>
+        /// <summary>List webhook endpoints.</summary>
         /// <inheritdoc/>
-        public virtual Task<ResourceResponse<List<MessageTemplate>>> ListAsync(MessageTemplatesListOptions? options = null,
+        public virtual Task<ResourceResponse<List<WebhookEndpoint>>> ListAsync(WebhookEndpointsListOptions? options = null,
                                                                                RequestOptions? requestOptions = null,
                                                                                CancellationToken cancellationToken = default)
         {
             return ListResourcesAsync(options, requestOptions, cancellationToken);
         }
 
-        /// <summary>List message templates recursively.</summary>
+        /// <summary>List webhook endpoints recursively.</summary>
         /// <inheritdoc/>
-        public virtual IAsyncEnumerable<MessageTemplate> ListRecursivelyAsync(MessageTemplatesListOptions? options = null,
+        public virtual IAsyncEnumerable<WebhookEndpoint> ListRecursivelyAsync(WebhookEndpointsListOptions? options = null,
                                                                               RequestOptions? requestOptions = null,
                                                                               CancellationToken cancellationToken = default)
         {
@@ -37,13 +36,13 @@ namespace Falu.MessageTemplates
         }
 
         /// <summary>
-        /// Retrieve a message template.
+        /// Retrieve a webhook endpoint.
         /// </summary>
-        /// <param name="id">Unique identifier for the message template</param>
+        /// <param name="id">Unique identifier for the webhook endpoint</param>
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Task<ResourceResponse<MessageTemplate>> GetAsync(string id,
+        public virtual Task<ResourceResponse<WebhookEndpoint>> GetAsync(string id,
                                                                         RequestOptions? options = null,
                                                                         CancellationToken cancellationToken = default)
         {
@@ -51,29 +50,29 @@ namespace Falu.MessageTemplates
         }
 
         /// <summary>
-        /// Create a message template.
+        /// Create a webhook endpoint.
         /// </summary>
-        /// <param name="template"></param>
+        /// <param name="endpoint"></param>
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Task<ResourceResponse<MessageTemplate>> CreateAsync(MessageTemplateCreateRequest template,
+        public virtual Task<ResourceResponse<WebhookEndpoint>> CreateAsync(WebhookEndpointCreateRequest endpoint,
                                                                            RequestOptions? options = null,
                                                                            CancellationToken cancellationToken = default)
         {
-            return CreateResourceAsync(template, options, cancellationToken);
+            return CreateResourceAsync(endpoint, options, cancellationToken);
         }
 
         /// <summary>
-        /// Update a message template.
+        /// Update a webhook endpoint.
         /// </summary>
-        /// <param name="id">Unique identifier for the message template</param>
+        /// <param name="id">Unique identifier for the webhook endpoint</param>
         /// <param name="patch"></param>
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Task<ResourceResponse<MessageTemplate>> UpdateAsync(string id,
-                                                                           JsonPatchDocument<MessageTemplatePatchModel> patch,
+        public virtual Task<ResourceResponse<WebhookEndpoint>> UpdateAsync(string id,
+                                                                           JsonPatchDocument<WebhookEndpointPatchModel> patch,
                                                                            RequestOptions? options = null,
                                                                            CancellationToken cancellationToken = default)
         {
@@ -81,9 +80,9 @@ namespace Falu.MessageTemplates
         }
 
         /// <summary>
-        /// Delete a message template.
+        /// Delete a webhook endpoint.
         /// </summary>
-        /// <param name="id">Unique identifier for the message template</param>
+        /// <param name="id">Unique identifier for the webhook endpoint.</param>
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
@@ -92,24 +91,6 @@ namespace Falu.MessageTemplates
                                                                   CancellationToken cancellationToken = default)
         {
             return DeleteResourceAsync(id, options, cancellationToken);
-        }
-
-        /// <summary>
-        /// Validate a message template.
-        /// </summary>
-        /// <param name="template"></param>
-        /// <param name="options">Options to use for the request.</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual Task<ResourceResponse<MessageTemplateValidationResponse>> ValidateAsync(MessageTemplateValidationRequest template,
-                                                                                               RequestOptions? options = null,
-                                                                                               CancellationToken cancellationToken = default)
-        {
-            if (template is null) throw new ArgumentNullException(nameof(template));
-            template.Model?.GetType().EnsureAllowedForMessageTemplateModel();
-
-            var uri = MakePath("/validate");
-            return RequestAsync<MessageTemplateValidationResponse>(uri, HttpMethod.Post, template, options, cancellationToken);
         }
     }
 }

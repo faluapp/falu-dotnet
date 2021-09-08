@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 namespace Falu.Identity
 {
     ///
-    public class IdentityService : BaseService<IdentityRecord>
+    public class IdentityServiceClient : BaseServiceClient<IdentityRecord>
     {
         ///
-        public IdentityService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+        public IdentityServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
 
         /// <inheritdoc/>
         protected override string BasePath => "/v1/identity";

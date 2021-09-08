@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 namespace Falu.FileUploads
 {
     ///
-    public class FileUploadsService : BaseService<FileUpload>, ISupportsListing<FileUpload, FileUploadsListOptions>
+    public class FileUploadsServiceClient : BaseServiceClient<FileUpload>, ISupportsListing<FileUpload, FileUploadsListOptions>
     {
         ///
-        public FileUploadsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options)
+        public FileUploadsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options)
         {
         }
 

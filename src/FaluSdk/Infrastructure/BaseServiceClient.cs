@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Falu.Infrastructure
 {
     ///
-    public abstract class BaseService // This class exists because not all service clients may be based on a resource
+    public abstract class BaseServiceClient // This class exists because not all service clients may be based on a resource
     {
         /// <summary>List of supported JSON content types</summary>
         public static readonly string[] SupportedContentTypes = new[] {
@@ -26,7 +26,7 @@ namespace Falu.Infrastructure
         private readonly string JsonContentType = SupportedContentTypes[0];
 
         ///
-        protected BaseService(HttpClient backChannel, FaluClientOptions options)
+        protected BaseServiceClient(HttpClient backChannel, FaluClientOptions options)
         {
             BackChannel = backChannel ?? throw new ArgumentNullException(nameof(backChannel));
             Options = options ?? throw new ArgumentNullException(nameof(options));

@@ -1,4 +1,4 @@
-﻿using Falu.Core;
+﻿using Falu.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Tingle.Extensions.JsonPatch;
 
-namespace Falu.Infrastructure
+namespace Falu.Core
 {
     ///
     public abstract class BaseServiceClient<TResource> : BaseServiceClient

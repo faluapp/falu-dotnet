@@ -1,6 +1,4 @@
-﻿using Falu.Infrastructure;
-
-namespace Falu.Core
+﻿namespace Falu.Core
 {
     /// <summary>Standard options for filtering and pagination in list operations with money.</summary>
     public record BasicListOptionsWithMoney : BasicListOptions, IHasCurrency

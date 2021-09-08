@@ -1,12 +1,11 @@
-﻿using Falu.Core;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 
-namespace Falu.Infrastructure
+namespace Falu.Core
 {
     /// <summary>Helper for handling query values.</summary>
     public sealed class QueryValues : IEnumerable<KeyValuePair<string, string>>

@@ -1,5 +1,4 @@
 ﻿using Falu.Core;
-using Falu.Infrastructure;
 
 namespace Falu.FileUploadLinks
 {

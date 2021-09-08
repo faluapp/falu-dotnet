@@ -1,4 +1,4 @@
-﻿using Falu.Core;
+﻿using Falu.Infrastructure;
 using System;
 using System.IO;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Falu.Infrastructure
+namespace Falu.Core
 {
     ///
     public abstract class BaseServiceClient // This class exists because not all service clients may be based on a resource
@@ -37,7 +37,6 @@ namespace Falu.Infrastructure
 
         ///
         protected FaluClientOptions Options { get; }
-
 
         #region Helpers
 

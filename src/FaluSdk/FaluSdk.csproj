@@ -12,9 +12,6 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="FaluSdk.Tests" />
-    <!-- FaluCli is references via git submodule and requires internal access -->
-    <InternalsVisibleTo Include="FaluCli" />
-    <InternalsVisibleTo Include="FaluCli.Tests" />
   </ItemGroup>
 
   <ItemGroup>

@@ -9,7 +9,7 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.TransferReversals
 {
     ///
-    public class TransferReversalsService : BaseService<TransferReversal>, ISupportsListing<TransferReversal, TransferReversalsListOptions>
+    public class TransferReversalsService : BaseServiceClient<TransferReversal>, ISupportsListing<TransferReversal, TransferReversalsListOptions>
     {
         ///
         public TransferReversalsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }

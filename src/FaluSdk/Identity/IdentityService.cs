@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Falu.Identity
 {
     ///
-    public class IdentityService : BaseService<IdentityRecord>
+    public class IdentityService : BaseServiceClient<IdentityRecord>
     {
         ///
         public IdentityService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }

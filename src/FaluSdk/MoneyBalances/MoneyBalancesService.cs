@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Falu.Payments
 {
     ///
-    public class MoneyBalancesService : BaseService<MoneyBalances>
+    public class MoneyBalancesService : BaseServiceClient<MoneyBalances>
     {
         ///
         public MoneyBalancesService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Falu.Events
 {
     ///
-    public class EventsService : BaseService<WebhookEvent>, ISupportsListing<WebhookEvent, EventsListOptions>
+    public class EventsService : BaseServiceClient<WebhookEvent>, ISupportsListing<WebhookEvent, EventsListOptions>
     {
         ///
         public EventsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }

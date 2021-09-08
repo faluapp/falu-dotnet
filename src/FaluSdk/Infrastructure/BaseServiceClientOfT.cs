@@ -10,10 +10,10 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.Infrastructure
 {
     ///
-    public abstract class BaseService<TResource> : BaseService
+    public abstract class BaseServiceClient<TResource> : BaseServiceClient
     {
         /// <inheritdoc/>
-        public BaseService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options)
+        public BaseServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options)
         {
         }
 

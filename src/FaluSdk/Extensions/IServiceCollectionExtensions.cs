@@ -82,9 +82,9 @@ namespace Microsoft.Extensions.DependencyInjection
                                                  Action<FaluClientOptions>? configure = null,
                                                  Action<IHttpClientBuilder>? configureBuilder = null)
         {
-            return services.AddFaluInner<FaluClient, FaluClientOptions>(configuration: configuration,
-                                                                        configure: configure,
-                                                                        configureBuilder: configureBuilder);
+            return services.AddFalu<FaluClient, FaluClientOptions>(configuration: configuration,
+                                                                   configure: configure,
+                                                                   configureBuilder: configureBuilder);
         }
 
         /// <summary>
@@ -99,10 +99,10 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="configure">An <see cref="Action{FaluClientOptions}"/> to configure the client options.</param>
         /// <param name="configureBuilder">An <see cref="Action{IHttpClientBuilder}"/> to configure the HTTP client builder.</param>
         /// <returns></returns>
-        public static IServiceCollection AddFaluInner<TClient, TClientOptions>(this IServiceCollection services,
-                                                                               IConfiguration? configuration = null,
-                                                                               Action<TClientOptions>? configure = null,
-                                                                               Action<IHttpClientBuilder>? configureBuilder = null)
+        public static IServiceCollection AddFalu<TClient, TClientOptions>(this IServiceCollection services,
+                                                                          IConfiguration? configuration = null,
+                                                                          Action<TClientOptions>? configure = null,
+                                                                          Action<IHttpClientBuilder>? configureBuilder = null)
             where TClient : FaluClient<TClientOptions>
             where TClientOptions : FaluClientOptions
         {

@@ -28,7 +28,7 @@ namespace System
                 }
             }
 
-            if (type.IsPrimitive || type.IsArray || otherPrimitives.Contains(type) || type.IsEnum) return false;
+            if (type.IsPrimitive || otherPrimitives.Contains(type) || type.IsEnum || type.IsArray) return false;
             return !typeof(IEnumerable).IsAssignableFrom(type) || typeof(IDictionary).IsAssignableFrom(type);
         }
 

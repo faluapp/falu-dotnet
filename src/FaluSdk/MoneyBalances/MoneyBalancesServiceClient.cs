@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace Falu.Payments
 {
     ///
-    public class MoneyBalancesService : BaseServiceClient<MoneyBalances>
+    public class MoneyBalancesServiceClient : BaseServiceClient<MoneyBalances>
     {
         ///
-        public MoneyBalancesService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+        public MoneyBalancesServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
 
         /// <inheritdoc/>
         protected override string BasePath => "/v1/money_balances";

@@ -9,10 +9,10 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.MessageStreams
 {
     ///
-    public class MessageStreamsService : BaseServiceClient<MessageStream>, ISupportsListing<MessageStream, MessageStreamsListOptions>
+    public class MessageStreamsServiceClient : BaseServiceClient<MessageStream>, ISupportsListing<MessageStream, MessageStreamsListOptions>
     {
         ///
-        public MessageStreamsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+        public MessageStreamsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
 
         /// <inheritdoc/>
         protected override string BasePath => "/v1/message_streams";

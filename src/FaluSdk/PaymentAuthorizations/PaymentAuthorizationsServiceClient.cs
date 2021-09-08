@@ -9,10 +9,10 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.PaymentAuthorizations
 {
     ///
-    public class PaymentAuthorizationsService : BaseServiceClient<PaymentAuthorization>, ISupportsListing<PaymentAuthorization, PaymentAuthorizationsListOptions>
+    public class PaymentAuthorizationsServiceClient : BaseServiceClient<PaymentAuthorization>, ISupportsListing<PaymentAuthorization, PaymentAuthorizationsListOptions>
     {
         ///
-        public PaymentAuthorizationsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+        public PaymentAuthorizationsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
 
         /// <inheritdoc/>
         protected override string BasePath => "/v1/payment_authorizations";

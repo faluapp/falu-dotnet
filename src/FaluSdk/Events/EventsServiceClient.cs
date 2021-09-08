@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 namespace Falu.Events
 {
     ///
-    public class EventsService : BaseServiceClient<WebhookEvent>, ISupportsListing<WebhookEvent, EventsListOptions>
+    public class EventsServiceClient : BaseServiceClient<WebhookEvent>, ISupportsListing<WebhookEvent, EventsListOptions>
     {
         ///
-        public EventsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+        public EventsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
 
         /// <inheritdoc/>
         protected override string BasePath => "/v1/events";

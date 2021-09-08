@@ -9,10 +9,10 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.PaymentRefunds
 {
     ///
-    public class PaymentRefundsService : BaseServiceClient<PaymentRefund>, ISupportsListing<PaymentRefund, PaymentRefundsListOptions>
+    public class PaymentRefundsServiceClient : BaseServiceClient<PaymentRefund>, ISupportsListing<PaymentRefund, PaymentRefundsListOptions>
     {
         ///
-        public PaymentRefundsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+        public PaymentRefundsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
 
         /// <inheritdoc/>
         protected override string BasePath => "/v1/payment_refunds";

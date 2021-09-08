@@ -11,10 +11,10 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.Evaluations
 {
     ///
-    public class EvaluationsService : BaseServiceClient<Evaluation>, ISupportsListing<Evaluation, EvaluationsListOptions>
+    public class EvaluationsServiceClient : BaseServiceClient<Evaluation>, ISupportsListing<Evaluation, EvaluationsListOptions>
     {
         ///
-        public EvaluationsService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+        public EvaluationsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
 
         /// <inheritdoc/>
         protected override string BasePath => "/v1/evaluations";

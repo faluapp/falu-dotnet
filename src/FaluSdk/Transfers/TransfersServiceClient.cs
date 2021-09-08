@@ -9,10 +9,10 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.Transfers
 {
     ///
-    public class TransfersService : BaseServiceClient<Transfer>, ISupportsListing<Transfer, TransfersListOptions>
+    public class TransfersServiceClient : BaseServiceClient<Transfer>, ISupportsListing<Transfer, TransfersListOptions>
     {
         ///
-        public TransfersService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+        public TransfersServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
 
         /// <inheritdoc/>
         protected override string BasePath => "/v1/transfers";

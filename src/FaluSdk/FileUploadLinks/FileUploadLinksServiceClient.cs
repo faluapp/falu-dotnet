@@ -9,10 +9,10 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.FileUploadLinks
 {
     ///
-    public class FileUploadLinksService : BaseServiceClient<FileUploadLink>, ISupportsListing<FileUploadLink, FileUploadLinksListOptions>
+    public class FileUploadLinksServiceClient : BaseServiceClient<FileUploadLink>, ISupportsListing<FileUploadLink, FileUploadLinksListOptions>
     {
         ///
-        public FileUploadLinksService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options)
+        public FileUploadLinksServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options)
         {
         }
 

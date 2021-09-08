@@ -1,9 +1,8 @@
-﻿using Falu.Core;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Falu.Infrastructure
+namespace Falu.Core
 {
     ///
     public interface ISupportsListing<TResource, TResourceListOptions>

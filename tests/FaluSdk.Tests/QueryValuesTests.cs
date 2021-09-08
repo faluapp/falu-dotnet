@@ -1,6 +1,5 @@
 ﻿using Falu.Core;
 using Falu.Identity;
-using Falu.Infrastructure;
 using Falu.PaymentAuthorizations;
 using System;
 using System.Collections.Generic;

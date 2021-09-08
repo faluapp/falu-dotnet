@@ -1,4 +1,4 @@
-﻿namespace Falu.Infrastructure
+﻿namespace Falu.Core
 {
     internal static class HeadersNames
     {

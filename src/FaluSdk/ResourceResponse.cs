@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Falu.Core;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,14 +7,14 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
-namespace Falu.Infrastructure
+namespace Falu
 {
     /// <summary>
     /// Model of a HTTP response to an API with typed Error and Resource
     /// </summary>
     /// <typeparam name="TResource">the type of resource</typeparam>
     /// <remarks>
-    /// There is no need to implement <see cref="System.IDisposable"/> because there are no unmanaged resources in use
+    /// There is no need to implement <see cref="IDisposable"/> because there are no unmanaged resources in use
     /// and there are no resources that the Garbage Collector does not know how to release.
     /// The instance of <see cref="HttpResponseMessage"/> referenced by <see cref="Response"/> is automatically disposed
     /// once an instance of <see cref="ResourceResponse{TResource}"/> is no longer in use.

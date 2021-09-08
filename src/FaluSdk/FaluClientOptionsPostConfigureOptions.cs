@@ -1,5 +1,4 @@
-﻿using Falu.Infrastructure;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 
 namespace Falu
 {

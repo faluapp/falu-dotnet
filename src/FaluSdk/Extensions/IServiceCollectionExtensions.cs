@@ -1,5 +1,5 @@
 ﻿using Falu;
-using Falu.Infrastructure;
+using Falu.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Polly;

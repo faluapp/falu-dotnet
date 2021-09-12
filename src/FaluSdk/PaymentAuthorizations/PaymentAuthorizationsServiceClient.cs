@@ -34,9 +34,7 @@ namespace Falu.PaymentAuthorizations
             return ListResourcesRecursivelyAsync(options, requestOptions, cancellationToken);
         }
 
-        /// <summary>
-        /// Retrieve a payment authorization.
-        /// </summary>
+        /// <summary>Retrieve a payment authorization.</summary>
         /// <param name="id">Unique identifier for the payment authorization</param>
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
@@ -48,9 +46,7 @@ namespace Falu.PaymentAuthorizations
             return GetResourceAsync(id, options, cancellationToken);
         }
 
-        /// <summary>
-        /// Update a payment authorization.
-        /// </summary>
+        /// <summary>Update a payment authorization.</summary>
         /// <param name="id">Unique identifier for the payment authorization</param>
         /// <param name="patch"></param>
         /// <param name="options">Options to use for the request.</param>
@@ -64,11 +60,9 @@ namespace Falu.PaymentAuthorizations
             return UpdateResourceAsync(id, patch, options, cancellationToken);
         }
 
-        /// <summary>
-        /// Approve a payment authorization.
-        /// </summary>
-        /// <param name="id">Unique identifier for the payment authorization</param>
-        /// <param name="options">Update details for the payment authorization</param>
+        /// <summary>Approve a payment authorization.</summary>
+        /// <param name="id">Unique identifier for the payment authorization.</param>
+        /// <param name="options">Options for approving the payment authorization.</param>
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
@@ -82,11 +76,9 @@ namespace Falu.PaymentAuthorizations
             return RequestAsync<PaymentAuthorization>(uri, HttpMethod.Post, options, requestOptions, cancellationToken);
         }
 
-        /// <summary>
-        /// Decline a payment authorization.
-        /// </summary>
-        /// <param name="id">Unique identifier for the payment authorization</param>
-        /// <param name="options">Update details for the payment authorization</param>
+        /// <summary>Decline a payment authorization.</summary>
+        /// <param name="id">Unique identifier for the payment authorization.</param>
+        /// <param name="options">Options for declining the payment authorization.</param>
         /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>

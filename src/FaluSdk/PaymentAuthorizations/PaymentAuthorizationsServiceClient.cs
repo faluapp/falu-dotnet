@@ -68,36 +68,36 @@ namespace Falu.PaymentAuthorizations
         /// Approve a payment authorization.
         /// </summary>
         /// <param name="id">Unique identifier for the payment authorization</param>
-        /// <param name="model">Update details for the payment authorization</param>
-        /// <param name="options">Options to use for the request.</param>
+        /// <param name="options">Update details for the payment authorization</param>
+        /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual Task<ResourceResponse<PaymentAuthorization>> ApproveAsync(string id,
-                                                                                 PaymentAuthorizationPatchModel? model = null,
-                                                                                 RequestOptions? options = null,
+                                                                                 PaymentAuthorizationApproveOptions? options = null,
+                                                                                 RequestOptions? requestOptions = null,
                                                                                  CancellationToken cancellationToken = default)
         {
             var uri = $"{MakeResourcePath(id)}/approve";
-            model ??= new PaymentAuthorizationPatchModel();
-            return RequestAsync<PaymentAuthorization>(uri, HttpMethod.Post, model, options, cancellationToken);
+            options ??= new PaymentAuthorizationApproveOptions();
+            return RequestAsync<PaymentAuthorization>(uri, HttpMethod.Post, options, requestOptions, cancellationToken);
         }
 
         /// <summary>
         /// Decline a payment authorization.
         /// </summary>
         /// <param name="id">Unique identifier for the payment authorization</param>
-        /// <param name="model">Update details for the payment authorization</param>
-        /// <param name="options">Options to use for the request.</param>
+        /// <param name="options">Update details for the payment authorization</param>
+        /// <param name="requestOptions">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual Task<ResourceResponse<PaymentAuthorization>> DeclineAsync(string id,
-                                                                                 PaymentAuthorizationPatchModel? model = null,
-                                                                                 RequestOptions? options = null,
+                                                                                 PaymentAuthorizationDeclineOptions? options = null,
+                                                                                 RequestOptions? requestOptions = null,
                                                                                  CancellationToken cancellationToken = default)
         {
             var uri = $"{MakeResourcePath(id)}/decline";
-            model ??= new PaymentAuthorizationPatchModel();
-            return RequestAsync<PaymentAuthorization>(uri, HttpMethod.Post, model, options, cancellationToken);
+            options ??= new PaymentAuthorizationDeclineOptions();
+            return RequestAsync<PaymentAuthorization>(uri, HttpMethod.Post, options, requestOptions, cancellationToken);
         }
     }
 }

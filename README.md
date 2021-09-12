@@ -1,4 +1,8 @@
-# Falu SDK for .NET
+<a href="https://www.falu.io">
+    <img src="falu-logo.png" alt="Falu Logo" title="Falu" width="120" height="120" align="right">
+</a>
+
+# Falu .NET
 
 [![NuGet](https://img.shields.io/nuget/v/Falu.svg)](https://www.nuget.org/packages/Falu/)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/tinglesoftware/falu-sdk-dotnet/Build%20and%20Publish?style=flat-square)

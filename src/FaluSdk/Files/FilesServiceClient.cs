@@ -5,43 +5,43 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Falu.FileUploads
+namespace Falu.Files
 {
     ///
-    public class FileUploadsServiceClient : BaseServiceClient<FileUpload>, ISupportsListing<FileUpload, FileUploadsListOptions>
+    public class FilesServiceClient : BaseServiceClient<File>, ISupportsListing<File, FilesListOptions>
     {
         ///
-        public FileUploadsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options)
+        public FilesServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options)
         {
         }
 
         ///
         protected override string BasePath => "/v1/file_uploads";
 
-        /// <summary>List file uploads.</summary>
+        /// <summary>List files.</summary>
         /// <inheritdoc/>
-        public virtual Task<ResourceResponse<List<FileUpload>>> ListAsync(FileUploadsListOptions? options = null,
+        public virtual Task<ResourceResponse<List<File>>> ListAsync(FilesListOptions? options = null,
                                                                           RequestOptions? requestOptions = null,
                                                                           CancellationToken cancellationToken = default)
         {
             return ListResourcesAsync(options, requestOptions, cancellationToken);
         }
 
-        /// <summary>List file uploads recursively.</summary>
+        /// <summary>List files recursively.</summary>
         /// <inheritdoc/>
-        public virtual IAsyncEnumerable<FileUpload> ListRecursivelyAsync(FileUploadsListOptions? options = null,
+        public virtual IAsyncEnumerable<File> ListRecursivelyAsync(FilesListOptions? options = null,
                                                                          RequestOptions? requestOptions = null,
                                                                          CancellationToken cancellationToken = default)
         {
             return ListResourcesRecursivelyAsync(options, requestOptions, cancellationToken);
         }
 
-        /// <summary>Retrieve a file upload.</summary>
-        /// <param name="id">Unique identifier for the file upload.</param>
+        /// <summary>Retrieve a file.</summary>
+        /// <param name="id">Unique identifier for the file.</param>
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Task<ResourceResponse<FileUpload>> GetAsync(string id,
+        public virtual Task<ResourceResponse<File>> GetAsync(string id,
                                                                    RequestOptions? options = null,
                                                                    CancellationToken cancellationToken = default)
         {
@@ -53,7 +53,7 @@ namespace Falu.FileUploads
         /// <param name="options">Options to use for the request.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Task<ResourceResponse<FileUpload>> CreateAsync(FileUploadCreateRequest file,
+        public virtual Task<ResourceResponse<File>> CreateAsync(FileCreateRequest file,
                                                                       RequestOptions? options = null,
                                                                       CancellationToken cancellationToken = default)
         {
@@ -87,7 +87,7 @@ namespace Falu.FileUploads
             }
 
             var uri = MakePath();
-            return RequestAsync<FileUpload>(uri, HttpMethod.Post, content, options, cancellationToken);
+            return RequestAsync<File>(uri, HttpMethod.Post, content, options, cancellationToken);
         }
     }
 }

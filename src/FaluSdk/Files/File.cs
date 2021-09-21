@@ -1,12 +1,10 @@
 ﻿using Falu.Core;
 using System;
 
-namespace Falu.FileUploads
+namespace Falu.Files
 {
-    /// <summary>
-    /// A file upload link.
-    /// </summary>
-    public class FileUpload : IHasId, IHasCreated, IHasUpdated, IHasDescription, IHasWorkspaceId, IHasLive, IHasEtag
+    /// <summary>A file on Falu's servers.</summary>
+    public class File : IHasId, IHasCreated, IHasUpdated, IHasDescription, IHasWorkspaceId, IHasLive, IHasEtag
     {
         /// <inheritdoc/>
         public string? Id { get; set; }
@@ -20,30 +18,20 @@ namespace Falu.FileUploads
         /// <inheritdoc/>
         public string? Description { get; set; }
 
-        /// <summary>
-        /// Purpose of the uploade file
-        /// </summary>
-        public FileUploadPurpose Purpose { get; set; }
+        /// <summary>Purpose of the file.</summary>
+        public FilePurpose Purpose { get; set; }
 
-        /// <summary>
-        /// Type of file uploaded.
-        /// </summary>
+        /// <summary>Type of file.</summary>
         /// <example>image/png</example>
         public string? Type { get; set; }
 
-        /// <summary>
-        /// A name of the upload suitable for saving to a filesystem.
-        /// </summary>
+        /// <summary>A name of the file suitable for saving to a filesystem.</summary>
         public string? Filename { get; set; }
 
-        /// <summary>
-        /// Size in bytes of the uploaded file.
-        /// </summary>
+        /// <summary>Size in bytes of the file.</summary>
         public long Size { get; set; }
 
-        /// <summary>
-        /// Time at which the upload expires.
-        /// </summary>
+        /// <summary>Time at which the file expires.</summary>
         public DateTimeOffset? Expires { get; set; }
 
         /// <inheritdoc/>

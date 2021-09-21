@@ -41,13 +41,8 @@ namespace Falu.Evaluations
         public string? Password { get; set; }
 
         /// <summary>
-        /// The name of the file when uploading from a browser form
+        /// Unique identifier of the file containing the sstatement
         /// </summary>
-        public string FileName { get; set; } = "statement.pdf";
-
-        /// <summary>
-        /// The stream content of the statement file.
-        /// </summary>
-        public Stream? Content { get; set; }
+        public string? FileId { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace Falu.FileLinks
         public DateTimeOffset Updated { get; set; }
 
         /// <summary>Unique identifier of the file.</summary>
-        public string? FileUploadId { get; set; }
+        public string? FileId { get; set; }
 
         /// <summary>Publicly accessible URL to download the file.</summary>
         public string? Url { get; set; }

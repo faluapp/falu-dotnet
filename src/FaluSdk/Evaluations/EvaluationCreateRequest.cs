@@ -33,7 +33,7 @@ namespace Falu.Evaluations
         public string? Phone { get; set; }
 
         /// <summary>
-        /// Password to open the uploaded file.
+        /// Password to open the statement file.
         /// Only required for password protected files.
         /// Certain providers only provide password protected files.
         /// In such cases the password should always be provided.

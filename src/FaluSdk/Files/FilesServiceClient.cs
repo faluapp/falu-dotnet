@@ -16,13 +16,13 @@ namespace Falu.Files
         }
 
         ///
-        protected override string BasePath => "/v1/file_uploads";
+        protected override string BasePath => "/v1/files";
 
         /// <summary>List files.</summary>
         /// <inheritdoc/>
         public virtual Task<ResourceResponse<List<File>>> ListAsync(FilesListOptions? options = null,
-                                                                          RequestOptions? requestOptions = null,
-                                                                          CancellationToken cancellationToken = default)
+                                                                    RequestOptions? requestOptions = null,
+                                                                    CancellationToken cancellationToken = default)
         {
             return ListResourcesAsync(options, requestOptions, cancellationToken);
         }
@@ -30,8 +30,8 @@ namespace Falu.Files
         /// <summary>List files recursively.</summary>
         /// <inheritdoc/>
         public virtual IAsyncEnumerable<File> ListRecursivelyAsync(FilesListOptions? options = null,
-                                                                         RequestOptions? requestOptions = null,
-                                                                         CancellationToken cancellationToken = default)
+                                                                   RequestOptions? requestOptions = null,
+                                                                   CancellationToken cancellationToken = default)
         {
             return ListResourcesRecursivelyAsync(options, requestOptions, cancellationToken);
         }
@@ -42,8 +42,8 @@ namespace Falu.Files
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual Task<ResourceResponse<File>> GetAsync(string id,
-                                                                   RequestOptions? options = null,
-                                                                   CancellationToken cancellationToken = default)
+                                                             RequestOptions? options = null,
+                                                             CancellationToken cancellationToken = default)
         {
             return GetResourceAsync(id, options, cancellationToken);
         }
@@ -54,8 +54,8 @@ namespace Falu.Files
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual Task<ResourceResponse<File>> CreateAsync(FileCreateRequest file,
-                                                                      RequestOptions? options = null,
-                                                                      CancellationToken cancellationToken = default)
+                                                                RequestOptions? options = null,
+                                                                CancellationToken cancellationToken = default)
         {
             if (file is null) throw new ArgumentNullException(nameof(file));
             if (file.Purpose is null) throw new InvalidOperationException($"{nameof(file.Purpose)} cannot be null.");

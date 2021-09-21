@@ -3,7 +3,7 @@
 namespace Falu.Files
 {
     /// <summary>
-    /// Purpose for uploading a file.
+    /// Purpose for a file.
     /// </summary>
     public enum FilePurpose
     {

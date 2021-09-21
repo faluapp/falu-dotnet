@@ -16,13 +16,13 @@ namespace Falu.FileLinks
         }
 
         ///
-        protected override string BasePath => "/v1/file_upload_links";
+        protected override string BasePath => "/v1/file_links";
 
         /// <summary>List file links.</summary>
         /// <inheritdoc/>
         public virtual Task<ResourceResponse<List<FileLink>>> ListAsync(FileLinksListOptions? options = null,
-                                                                              RequestOptions? requestOptions = null,
-                                                                              CancellationToken cancellationToken = default)
+                                                                        RequestOptions? requestOptions = null,
+                                                                        CancellationToken cancellationToken = default)
         {
             return ListResourcesAsync(options, requestOptions, cancellationToken);
         }
@@ -30,8 +30,8 @@ namespace Falu.FileLinks
         /// <summary>List file links recursively.</summary>
         /// <inheritdoc/>
         public virtual IAsyncEnumerable<FileLink> ListRecursivelyAsync(FileLinksListOptions? options = null,
-                                                                             RequestOptions? requestOptions = null,
-                                                                             CancellationToken cancellationToken = default)
+                                                                       RequestOptions? requestOptions = null,
+                                                                       CancellationToken cancellationToken = default)
         {
             return ListResourcesRecursivelyAsync(options, requestOptions, cancellationToken);
         }
@@ -42,8 +42,8 @@ namespace Falu.FileLinks
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual Task<ResourceResponse<FileLink>> GetAsync(string id,
-                                                                      RequestOptions? options = null,
-                                                                      CancellationToken cancellationToken = default)
+                                                                 RequestOptions? options = null,
+                                                                 CancellationToken cancellationToken = default)
         {
             return GetResourceAsync(id, options, cancellationToken);
         }
@@ -54,8 +54,8 @@ namespace Falu.FileLinks
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual Task<ResourceResponse<FileLink>> CreateAsync(FileLinkCreateRequest link,
-                                                                          RequestOptions? options = null,
-                                                                          CancellationToken cancellationToken = default)
+                                                                    RequestOptions? options = null,
+                                                                    CancellationToken cancellationToken = default)
         {
             return CreateResourceAsync(link, options, cancellationToken);
         }
@@ -67,9 +67,9 @@ namespace Falu.FileLinks
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual Task<ResourceResponse<FileLink>> UpdateAsync(string id,
-                                                                          JsonPatchDocument<FileLinkPatchModel> patch,
-                                                                          RequestOptions? options = null,
-                                                                          CancellationToken cancellationToken = default)
+                                                                    JsonPatchDocument<FileLinkPatchModel> patch,
+                                                                    RequestOptions? options = null,
+                                                                    CancellationToken cancellationToken = default)
         {
             return UpdateResourceAsync(id, patch, options, cancellationToken);
         }

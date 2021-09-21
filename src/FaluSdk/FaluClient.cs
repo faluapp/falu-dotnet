@@ -1,6 +1,6 @@
 ﻿using Falu.Evaluations;
 using Falu.Events;
-using Falu.FileUploadLinks;
+using Falu.FileLinks;
 using Falu.FileUploads;
 using Falu.Identity;
 using Falu.Messages;
@@ -36,7 +36,7 @@ namespace Falu
             Evaluations = new EvaluationsServiceClient(BackChannel, Options);
             Events = new EventsServiceClient(BackChannel, Options);
             FileUploads = new FileUploadsServiceClient(BackChannel, Options);
-            FileUploadLinks = new FileUploadLinksServiceClient(BackChannel, Options);
+            FileLinks = new FileLinksServiceClient(BackChannel, Options);
             Identity = new IdentityServiceClient(BackChannel, Options);
             Messages = new MessagesServiceClient(BackChannel, Options);
             MessageStreams = new MessageStreamsServiceClient(BackChannel, Options);
@@ -68,7 +68,7 @@ namespace Falu
         public virtual FileUploadsServiceClient FileUploads { get; protected set; }
 
         ///
-        public virtual FileUploadLinksServiceClient FileUploadLinks { get; protected set; }
+        public virtual FileLinksServiceClient FileLinks { get; protected set; }
 
         ///
         public virtual IdentityServiceClient Identity { get; protected set; }

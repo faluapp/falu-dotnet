@@ -1,11 +1,11 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Falu.FileUploads
+namespace Falu.Files
 {
     /// <summary>
-    /// Purpose for uploading a file.
+    /// Purpose for a file.
     /// </summary>
-    public enum FileUploadPurpose
+    public enum FilePurpose
     {
         /// <summary>A business icon.</summary>
         [EnumMember(Value = "business.icon")]

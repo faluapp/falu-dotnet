@@ -12,7 +12,7 @@ namespace Falu
         /// The ApiVersion that the SDK conforms to.
         /// For internal-use only.
         /// </summary>
-        public const string ApiVersion = "2020-09-08";
+        public const string ApiVersion = "2021-09-03";
 
         /// <summary>
         /// Serialization options.

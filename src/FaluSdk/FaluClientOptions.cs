@@ -8,16 +8,10 @@ namespace Falu
     /// </summary>
     public class FaluClientOptions
     {
-        /// <summary>
-        /// The ApiVersion that the SDK conforms to.
-        /// For internal-use only.
-        /// </summary>
-        public const string ApiVersion = "2021-09-03";
+        /// <summary>The ApiVersion that the SDK conforms to.</summary>
+        internal const string ApiVersion = "2021-09-03";
 
-        /// <summary>
-        /// Serialization options.
-        /// For internal-use only;
-        /// </summary>
+        /// <summary>Serialization options.</summary>
         internal JsonSerializerOptions SerializerOptions { get; } = CreateSerializerOptions();
 
         /// <summary>

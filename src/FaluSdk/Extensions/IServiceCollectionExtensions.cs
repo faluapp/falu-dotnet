@@ -1,4 +1,4 @@
-using Falu;
+﻿using Falu;
 using Falu.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -167,12 +167,26 @@ namespace Microsoft.Extensions.DependencyInjection
                                                                     return Task.CompletedTask;
                                                                 });
 
+                return Policy.WrapAsync(generalRetryPolicy, retryAfterPolicy);
             });
 
             // continue configuring the IHttpClientBuilder
             configureBuilder?.Invoke(builder);
 
             return services;
+        }
+
+        private static TimeSpan GetServerWaitDuration(int retryCount, 
+                                                      DelegateResult<HttpResponseMessage> response, 
+                                                      Context context)
+        {
+            var retryAfter = response?.Result?.Headers?.RetryAfter;
+            if (retryAfter == null)
+                return TimeSpan.Zero;
+
+            return retryAfter.Date.HasValue
+                ? retryAfter.Date.Value - DateTime.UtcNow
+                : retryAfter.Delta.GetValueOrDefault(TimeSpan.Zero);
         }
 
         private static bool ShouldRetry(HttpResponseMessage response)

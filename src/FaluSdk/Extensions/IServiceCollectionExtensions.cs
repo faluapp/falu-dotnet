@@ -1,4 +1,4 @@
-﻿using Falu;
+using Falu;
 using Falu.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -152,7 +153,19 @@ namespace Microsoft.Extensions.DependencyInjection
                 var policy = Policy<HttpResponseMessage>.Handle<HttpRequestException>()
                                                         .OrResult(ShouldRetry)
                                                         .WaitAndRetryAsync(delays);
-                return policy;
+                // Server has returned a header telling us when to retry if we're making too many requests
+                var retryAfterPolicy = Policy.HandleResult<HttpResponseMessage>(r => r?.Headers?.RetryAfter != null)
+                                             .WaitAndRetryAsync(retryCount: options.Retries,
+                                                                sleepDurationProvider: (retryCount, response, context) => GetServerWaitDuration(retryCount, response, context), 
+                                                                onRetryAsync: (result, timeSpan, retryCount, context) => 
+                                                                {
+                                                                    // Include the retry count in the context, thus can be accessed to log events for example
+                                                                    context["retry-count"] = retryCount;
+
+                                                                    // We could also add any logs for diagnosis here
+                                                                    return Task.CompletedTask;
+                                                                });
+
             });
 
             // continue configuring the IHttpClientBuilder

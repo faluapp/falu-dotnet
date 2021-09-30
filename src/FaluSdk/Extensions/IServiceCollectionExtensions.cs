@@ -150,9 +150,10 @@ namespace Microsoft.Extensions.DependencyInjection
                                                                  retryCount: options.Retries);
 
                 // Network failures are handled via HttpRequestException, other errors are handled in the ShouldRetry method
-                var policy = Policy<HttpResponseMessage>.Handle<HttpRequestException>()
-                                                        .OrResult(ShouldRetry)
-                                                        .WaitAndRetryAsync(delays);
+                var generalRetryPolicy = Policy<HttpResponseMessage>.Handle<HttpRequestException>()
+                                                                    .OrResult(ShouldRetry)
+                                                                    .WaitAndRetryAsync(delays);
+
                 // Server has returned a header telling us when to retry if we're making too many requests
                 var retryAfterPolicy = Policy.HandleResult<HttpResponseMessage>(r => r?.Headers?.RetryAfter != null)
                                              .WaitAndRetryAsync(retryCount: options.Retries,

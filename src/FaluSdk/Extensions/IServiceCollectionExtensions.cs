@@ -157,7 +157,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 // Server has returned a header telling us when to retry if we're making too many requests
                 var retryAfterPolicy = Policy.HandleResult<HttpResponseMessage>(r => r?.Headers?.RetryAfter != null)
                                              .WaitAndRetryAsync(retryCount: options.Retries,
-                                                                sleepDurationProvider: (retryCount, response, context) => GetServerWaitDuration(retryCount, response, context), 
+                                                                sleepDurationProvider: GetServerWaitDuration, 
                                                                 onRetryAsync: (result, timeSpan, retryCount, context) => 
                                                                 {
                                                                     // Include the retry count in the context, thus can be accessed to log events for example
@@ -184,9 +184,8 @@ namespace Microsoft.Extensions.DependencyInjection
             if (retryAfter == null)
                 return TimeSpan.Zero;
 
-            return retryAfter.Date.HasValue
-                ? retryAfter.Date.Value - DateTime.UtcNow
-                : retryAfter.Delta.GetValueOrDefault(TimeSpan.Zero);
+            return retryAfter.Date.HasValue ? retryAfter.Date.Value - DateTime.UtcNow
+                                            : retryAfter.Delta.GetValueOrDefault(TimeSpan.Zero);
         }
 
         private static bool ShouldRetry(HttpResponseMessage response)

@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Falu.Tests
+namespace Falu.Tests.RetryPolicy
 {
     public class GeneralRetryPolicyTests
     {

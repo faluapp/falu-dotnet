@@ -67,7 +67,7 @@ namespace Falu.Tests
             });
         }
 
-        public class HttpResponseData 
+        class HttpResponseData 
         {
             public static IEnumerable<object[]> Data => new List<object[]> 
             {

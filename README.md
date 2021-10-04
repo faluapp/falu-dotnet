@@ -96,9 +96,6 @@ public void ConfigureServices(IServiceCollection services)
    // Add client
    services.AddFalu(Configuration["Falu:ApiKey"]);
 
-   //// You can also use whole configuration section
-   // services.AddFalu(Configuration.GetSection("Falu"));
-
    // The sample service we'll use to demonstrate usage
    // It is recommended the service be consumed in a service with scoped or transient lifetime and not in a singleton one
    // If you have to consume in a singleton service, inject an instance of IServiceProvider and get an instance from there when needed

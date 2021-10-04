@@ -1,6 +1,5 @@
 ﻿using Falu;
 using Falu.Core;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
@@ -46,25 +45,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new ArgumentNullException(nameof(configure));
             }
 
-            return services.AddFalu(configuration: null, configure: configure, configureBuilder: null);
-        }
-
-        /// <summary>
-        /// Add client for Falu API
-        /// </summary>
-        /// <param name="services">The <see cref="IServiceCollection"/> to be added to.</param>
-        /// <param name="configuration">
-        /// An <see cref="IConfiguration"/> containing the values of <see cref="FaluClientOptions"/> at its root.
-        /// </param>
-        /// <returns></returns>
-        public static IServiceCollection AddFalu(this IServiceCollection services, IConfiguration configuration)
-        {
-            if (configuration is null)
-            {
-                throw new ArgumentNullException(nameof(configuration));
-            }
-
-            return services.AddFalu(configuration: configuration, configure: null, configureBuilder: null);
+            return services.AddFalu(configure: configure, configureBuilder: null);
         }
 
         /// <summary>
@@ -78,12 +59,10 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="configureBuilder">An <see cref="Action{IHttpClientBuilder}"/> to configure the HTTP client builder.</param>
         /// <returns></returns>
         public static IServiceCollection AddFalu(this IServiceCollection services,
-                                                 IConfiguration? configuration = null,
                                                  Action<FaluClientOptions>? configure = null,
                                                  Action<IHttpClientBuilder>? configureBuilder = null)
         {
-            return services.AddFalu<FaluClient, FaluClientOptions>(configuration: configuration,
-                                                                   configure: configure,
+            return services.AddFalu<FaluClient, FaluClientOptions>(configure: configure,
                                                                    configureBuilder: configureBuilder);
         }
 
@@ -100,16 +79,16 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="configureBuilder">An <see cref="Action{IHttpClientBuilder}"/> to configure the HTTP client builder.</param>
         /// <returns></returns>
         public static IServiceCollection AddFalu<TClient, TClientOptions>(this IServiceCollection services,
-                                                                          IConfiguration? configuration = null,
                                                                           Action<TClientOptions>? configure = null,
                                                                           Action<IHttpClientBuilder>? configureBuilder = null)
             where TClient : FaluClient<TClientOptions>
             where TClientOptions : FaluClientOptions
         {
-            if (configuration is not null)
-            {
-                services.Configure<TClientOptions>(configuration);
-            }
+            /*
+             * Binding options from an IConfiguration instance is not used to reduce dependencies and leave that to the caller.
+             * Should the implementor/user require this, they can add it using:
+             * services.AddFalu(options => Configuration.GetSection("Falu").Bind(options));
+             */
 
             if (configure != null)
             {

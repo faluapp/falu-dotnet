@@ -120,10 +120,10 @@ namespace Microsoft.Extensions.DependencyInjection
             var policy = Policy.HandleResult<HttpResponseMessage>(r => r?.Headers?.RetryAfter != null)
                                .WaitAndRetryAsync(retryCount: retryCount,
                                                   sleepDurationProvider: GetServerWaitDuration,
-                                                  onRetryAsync: (result, timeSpan, retryCount, context) =>
+                                                  onRetryAsync: (result, timeSpan, attempts, context) =>
                                                   {
-                                                      // Include the retry count in the context, thus can be accessed to log events for example
-                                                      context[Attempts] = retryCount;
+                                                      // Include the attempts in the context, thus can be accessed to log events for example
+                                                      context[Attempts] = attempts;
 
                                                       // We could also add any logs for diagnosis here
                                                       return Task.CompletedTask;
@@ -136,7 +136,15 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             var policy = Policy<HttpResponseMessage>.Handle<HttpRequestException>()
                                                     .OrResult(ShouldRetry)
-                                                    .WaitAndRetryAsync(delays);
+                                                    .WaitAndRetryAsync(sleepDurations: delays, 
+                                                                       onRetryAsync: (result, timeSpan, attempts, context) =>
+                                                                       {
+                                                                           // Include the attempts in the context, thus can be accessed to log events for example
+                                                                           context[Attempts] = attempts;
+
+                                                                           // We could also add any logs for diagnosis here
+                                                                           return Task.CompletedTask;
+                                                                       });
 
             return policy;
         }

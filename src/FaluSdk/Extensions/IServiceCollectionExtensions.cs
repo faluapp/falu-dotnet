@@ -3,11 +3,14 @@ using Falu.Core;
 using Microsoft.Extensions.Options;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
+using Polly.Retry;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -16,6 +19,8 @@ namespace Microsoft.Extensions.DependencyInjection
     /// </summary>
     public static partial class IServiceCollectionExtensions
     {
+        internal const string RetryCount = "retry-count";
+
         /// <summary>
         /// Add client for Falu API
         /// </summary>
@@ -99,13 +104,53 @@ namespace Microsoft.Extensions.DependencyInjection
                                                                  retryCount: options.Retries);
 
                 // Network failures are handled via HttpRequestException, other errors are handled in the ShouldRetry method
-                var policy = Policy<HttpResponseMessage>.Handle<HttpRequestException>()
-                                                        .OrResult(ShouldRetry)
-                                                        .WaitAndRetryAsync(delays);
-                return policy;
+                var generalRetryPolicy = GetGeneralRetryPolicy(delays);
+
+                // Server has returned a header telling us when to retry if we're making too many requests
+                var retryAfterPolicy = GetRetryAfterPolicy(options.Retries);
+
+                return Policy.WrapAsync(generalRetryPolicy, retryAfterPolicy);
             });
 
             return builder;
+        }
+
+        internal static AsyncRetryPolicy<HttpResponseMessage> GetRetryAfterPolicy(int retryCount) 
+        {
+            var policy = Policy.HandleResult<HttpResponseMessage>(r => r?.Headers?.RetryAfter != null)
+                               .WaitAndRetryAsync(retryCount: retryCount,
+                                                  sleepDurationProvider: GetServerWaitDuration,
+                                                  onRetryAsync: (result, timeSpan, retryCount, context) =>
+                                                  {
+                                                      // Include the retry count in the context, thus can be accessed to log events for example
+                                                      context[RetryCount] = retryCount;
+
+                                                      // We could also add any logs for diagnosis here
+                                                      return Task.CompletedTask;
+                                                  });
+
+            return policy;
+        }
+
+        internal static AsyncRetryPolicy<HttpResponseMessage> GetGeneralRetryPolicy(IEnumerable<TimeSpan> delays) 
+        {
+            var policy = Policy<HttpResponseMessage>.Handle<HttpRequestException>()
+                                                    .OrResult(ShouldRetry)
+                                                    .WaitAndRetryAsync(delays);
+
+            return policy;
+        }
+
+        private static TimeSpan GetServerWaitDuration(int retryCount, 
+                                                      DelegateResult<HttpResponseMessage> response, 
+                                                      Context context)
+        {
+            var retryAfter = response?.Result?.Headers?.RetryAfter;
+            if (retryAfter == null)
+                return TimeSpan.Zero;
+
+            return retryAfter.Date.HasValue ? retryAfter.Date.Value - DateTimeOffset.UtcNow
+                                            : retryAfter.Delta.GetValueOrDefault(TimeSpan.Zero);
         }
 
         private static bool ShouldRetry(HttpResponseMessage response)

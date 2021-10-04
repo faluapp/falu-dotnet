@@ -21,7 +21,7 @@ namespace Falu.Tests.RetryPolicy
 
         [Theory]
         [MemberData(nameof(HttpResponseData.Data), MemberType = typeof(HttpResponseData))]
-        public async Task GeneralRetryPolicy_Works(HttpResponseMessage message, bool retried) 
+        public async Task GeneralRetryPolicy_Works(HttpResponseMessage message, bool shouldRetry) 
         {
             var handler = new DynamicHttpMessageHandler((request, ct) =>
             {
@@ -33,14 +33,14 @@ namespace Falu.Tests.RetryPolicy
 
             await TestAsync(policy, handler, (attempts) =>
             {
-                var retries = retried ? delays.Length : 0;
+                var retries = shouldRetry ? delays.Length : 0;
                 Assert.Equal(retries, attempts);
             });
         }
 
         [Theory]
         [MemberData(nameof(HttpResponseData.Data), MemberType = typeof(HttpResponseData))]
-        public async Task WrappedGeneralRetryPolicy_Works(HttpResponseMessage message, bool retried)
+        public async Task WrappedGeneralRetryPolicy_Works(HttpResponseMessage message, bool shouldRetry)
         {
             var handler = new DynamicHttpMessageHandler((request, ct) =>
             {
@@ -55,7 +55,7 @@ namespace Falu.Tests.RetryPolicy
 
             await TestAsync(policy, handler, (attempts) =>
             {
-                var retries = retried ? delays.Length : 0;
+                var retries = shouldRetry ? delays.Length : 0;
                 Assert.Equal(retries, attempts);
             });
         }

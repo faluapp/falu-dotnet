@@ -11,10 +11,12 @@ namespace Falu.Tests
         public void TestAddFaluWithoutApiKey()
         {
             // Arrange
-            var services = new ServiceCollection().AddFalu(options => { }).BuildServiceProvider();
+            var services = new ServiceCollection();
+            services.AddFalu(options => { });
+            var provider = services.BuildServiceProvider();
 
             // Act && Assert
-            Assert.Throws<FaluException>(() => services.GetRequiredService<FaluClient>());
+            Assert.Throws<FaluException>(() => provider.GetRequiredService<FaluClient>());
         }
 
         [Fact]
@@ -28,7 +30,7 @@ namespace Falu.Tests
 
             // Assert
             Assert.NotNull(builder);
-            Assert.IsAssignableFrom<IServiceCollection>(builder);
+            Assert.IsAssignableFrom<IHttpClientBuilder>(builder);
         }
 
         [Fact]
@@ -50,12 +52,12 @@ namespace Falu.Tests
         public void TestAddFaluCanResolveFaluClientOptions()
         {
             // Arrange
-            var services = new ServiceCollection()
-                .AddFalu(options => options.ApiKey = "FAKE_APIKEY")
-                .BuildServiceProvider();
+            var services = new ServiceCollection();
+            services.AddFalu(options => options.ApiKey = "FAKE_APIKEY");
+            var provider = services.BuildServiceProvider();
 
             // Act
-            var options = services.GetService<IOptions<FaluClientOptions>>();
+            var options = provider.GetService<IOptions<FaluClientOptions>>();
 
             // Assert
             Assert.NotNull(options);
@@ -65,12 +67,12 @@ namespace Falu.Tests
         public void TestAddFaluCanResolveFaluClient()
         {
             // Arrange
-            var services = new ServiceCollection()
-                .AddFalu(options => options.ApiKey = "FAKE_APIKEY")
-                .BuildServiceProvider();
+            var services = new ServiceCollection();
+            services.AddFalu(options => options.ApiKey = "FAKE_APIKEY");
+            var provider = services.BuildServiceProvider();
 
             // Act
-            var client = services.GetService<FaluClient>();
+            var client = provider.GetService<FaluClient>();
 
             // Assert
             Assert.NotNull(client);

@@ -70,14 +70,14 @@ namespace Falu.Tests.RetryPolicy
                 new object[] { new HttpResponseMessage(HttpStatusCode.OK), false},
                 new object[] { new HttpResponseMessage(HttpStatusCode.InternalServerError), true },
                 new object[] { new HttpResponseMessage(HttpStatusCode.Conflict), true},
-                new object[] { new HttpResponseMessage(HttpStatusCode.RequestTimeout), true},
-                new object[] { new HttpResponseMessage(HttpStatusCode.GatewayTimeout), true},
-                new object[] { new HttpResponseMessage(HttpStatusCode.MethodNotAllowed), false},
-                new object[] { new HttpResponseMessage(HttpStatusCode.UnsupportedMediaType), false},
-                new object[] { new HttpResponseMessage(HttpStatusCode.Unauthorized), false},
+                new object[] { new HttpResponseMessage(HttpStatusCode.RequestTimeout), true },
+                new object[] { new HttpResponseMessage(HttpStatusCode.GatewayTimeout), true },
+                new object[] { new HttpResponseMessage(HttpStatusCode.MethodNotAllowed), false },
+                new object[] { new HttpResponseMessage(HttpStatusCode.UnsupportedMediaType), false },
+                new object[] { new HttpResponseMessage(HttpStatusCode.Unauthorized), false },
                 new object[] { new HttpResponseMessage(HttpStatusCode.Forbidden), false },
-                new object[] { new HttpResponseMessage(HttpStatusCode.NoContent), false},
-                new object[] { new HttpResponseMessage(HttpStatusCode.NotFound), false}
+                new object[] { new HttpResponseMessage(HttpStatusCode.NoContent), false },
+                new object[] { new HttpResponseMessage(HttpStatusCode.NotFound), false }
             };
         }
 

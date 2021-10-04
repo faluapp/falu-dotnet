@@ -28,7 +28,7 @@ namespace Falu
         /// </summary>
         /// <param name="backChannel"></param>
         /// <param name="optionsAccessor"></param>
-        public FaluClient(HttpClient backChannel, IOptions<TOptions> optionsAccessor)
+        public FaluClient(HttpClient backChannel, IOptionsSnapshot<TOptions> optionsAccessor)
         {
             BackChannel = backChannel ?? throw new ArgumentNullException(nameof(backChannel));
             Options = optionsAccessor?.Value ?? throw new ArgumentNullException(nameof(optionsAccessor));
@@ -116,6 +116,6 @@ namespace Falu
         /// </summary>
         /// <param name="backChannel"></param>
         /// <param name="optionsAccessor"></param>
-        public FaluClient(HttpClient backChannel, IOptions<FaluClientOptions> optionsAccessor) : base(backChannel, optionsAccessor) { }
+        public FaluClient(HttpClient backChannel, IOptionsSnapshot<FaluClientOptions> optionsAccessor) : base(backChannel, optionsAccessor) { }
     }
 }

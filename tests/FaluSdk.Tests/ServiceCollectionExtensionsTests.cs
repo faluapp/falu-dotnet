@@ -49,21 +49,6 @@ namespace Falu.Tests
         }
 
         [Fact]
-        public void TestAddFaluCanResolveFaluClientOptions()
-        {
-            // Arrange
-            var services = new ServiceCollection();
-            services.AddFalu(options => options.ApiKey = "FAKE_APIKEY");
-            var provider = services.BuildServiceProvider();
-
-            // Act
-            var options = provider.GetService<IOptions<FaluClientOptions>>();
-
-            // Assert
-            Assert.NotNull(options);
-        }
-
-        [Fact]
         public void TestAddFaluCanResolveFaluClient()
         {
             // Arrange
@@ -76,6 +61,42 @@ namespace Falu.Tests
 
             // Assert
             Assert.NotNull(client);
+        }
+
+        [Fact]
+        public void TestFaluClientOptionsAreTheSame()
+        {
+            // Arrange
+            var services = new ServiceCollection();
+            services.AddFalu(options => options.ApiKey = "FAKE_APIKEY");
+            var provider = services.BuildServiceProvider();
+
+            // Act
+            var options1 = provider.GetService<IOptionsSnapshot<FaluClientOptions>>();
+            var options2 = provider.GetService<IOptionsSnapshot<FaluClientOptions>>();
+
+            // Assert
+            Assert.Equal(options1, options2);
+        }
+
+        [Fact]
+        public void TestFaluClientOptionsAreDifferent()
+        {
+            // Arrange
+            var services = new ServiceCollection();
+            services.AddFalu(options => options.ApiKey = "FAKE_APIKEY");
+            var provider = services.BuildServiceProvider();
+
+            // Act
+            using var scope1 = provider.CreateScope();
+            var provider1 = scope1.ServiceProvider;
+            var options1 = provider1.GetService<IOptionsSnapshot<FaluClientOptions>>();
+            using var scope2 = provider.CreateScope();
+            var provider2 = scope2.ServiceProvider;
+            var options2 = provider2.GetService<IOptionsSnapshot<FaluClientOptions>>();
+
+            // Assert
+            Assert.NotEqual(options1, options2);
         }
     }
 }

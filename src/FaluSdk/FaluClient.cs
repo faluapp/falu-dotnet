@@ -28,10 +28,18 @@ namespace Falu
         /// </summary>
         /// <param name="backChannel"></param>
         /// <param name="optionsAccessor"></param>
-        public FaluClient(HttpClient backChannel, IOptions<TOptions> optionsAccessor)
+        public FaluClient(HttpClient backChannel, IOptionsSnapshot<TOptions> optionsAccessor)
         {
             BackChannel = backChannel ?? throw new ArgumentNullException(nameof(backChannel));
             Options = optionsAccessor?.Value ?? throw new ArgumentNullException(nameof(optionsAccessor));
+
+
+            // populate the User-Agent for 3rd party providers
+            if (Options.Application is not null)
+            {
+                var userAgent = Options.Application.ToString();
+                BackChannel.DefaultRequestHeaders.Add("User-Agent", userAgent);
+            }
 
             Evaluations = new EvaluationsServiceClient(BackChannel, Options);
             Events = new EventsServiceClient(BackChannel, Options);
@@ -116,6 +124,6 @@ namespace Falu
         /// </summary>
         /// <param name="backChannel"></param>
         /// <param name="optionsAccessor"></param>
-        public FaluClient(HttpClient backChannel, IOptions<FaluClientOptions> optionsAccessor) : base(backChannel, optionsAccessor) { }
+        public FaluClient(HttpClient backChannel, IOptionsSnapshot<FaluClientOptions> optionsAccessor) : base(backChannel, optionsAccessor) { }
     }
 }

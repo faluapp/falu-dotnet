@@ -22,7 +22,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="services">the collection to be added to</param>
         /// <param name="apiKey"></param>
         /// <returns></returns>
-        public static IServiceCollection AddFalu(this IServiceCollection services, string apiKey)
+        public static IHttpClientBuilder AddFalu(this IServiceCollection services, string apiKey)
         {
             if (string.IsNullOrWhiteSpace(apiKey))
             {
@@ -38,32 +38,9 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="services">The <see cref="IServiceCollection"/> to be added to.</param>
         /// <param name="configure">An <see cref="Action{FaluClientOptions}"/> to configure the client options.</param>
         /// <returns></returns>
-        public static IServiceCollection AddFalu(this IServiceCollection services, Action<FaluClientOptions> configure)
+        public static IHttpClientBuilder AddFalu(this IServiceCollection services, Action<FaluClientOptions>? configure = null)
         {
-            if (configure is null)
-            {
-                throw new ArgumentNullException(nameof(configure));
-            }
-
-            return services.AddFalu(configure: configure, configureBuilder: null);
-        }
-
-        /// <summary>
-        /// Add client for Falu API
-        /// </summary>
-        /// <param name="services">The <see cref="IServiceCollection"/> to be added to.</param>
-        /// <param name="configuration">
-        /// An <see cref="IConfiguration"/> containing the values of <see cref="FaluClientOptions"/> at its root.
-        /// </param>
-        /// <param name="configure">An <see cref="Action{FaluClientOptions}"/> to configure the client options.</param>
-        /// <param name="configureBuilder">An <see cref="Action{IHttpClientBuilder}"/> to configure the HTTP client builder.</param>
-        /// <returns></returns>
-        public static IServiceCollection AddFalu(this IServiceCollection services,
-                                                 Action<FaluClientOptions>? configure = null,
-                                                 Action<IHttpClientBuilder>? configureBuilder = null)
-        {
-            return services.AddFalu<FaluClient, FaluClientOptions>(configure: configure,
-                                                                   configureBuilder: configureBuilder);
+            return services.AddFalu<FaluClient, FaluClientOptions>(configure);
         }
 
         /// <summary>
@@ -72,15 +49,9 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <typeparam name="TClient"></typeparam>
         /// <typeparam name="TClientOptions"></typeparam>
         /// <param name="services">The <see cref="IServiceCollection"/> to be added to.</param>
-        /// <param name="configuration">
-        /// An <see cref="IConfiguration"/> containing the values of <typeparamref name="TClientOptions"/> at its root.
-        /// </param>
         /// <param name="configure">An <see cref="Action{FaluClientOptions}"/> to configure the client options.</param>
-        /// <param name="configureBuilder">An <see cref="Action{IHttpClientBuilder}"/> to configure the HTTP client builder.</param>
         /// <returns></returns>
-        public static IServiceCollection AddFalu<TClient, TClientOptions>(this IServiceCollection services,
-                                                                          Action<TClientOptions>? configure = null,
-                                                                          Action<IHttpClientBuilder>? configureBuilder = null)
+        public static IHttpClientBuilder AddFalu<TClient, TClientOptions>(this IServiceCollection services, Action<TClientOptions>? configure = null)
             where TClient : FaluClient<TClientOptions>
             where TClientOptions : FaluClientOptions
         {
@@ -134,10 +105,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 return policy;
             });
 
-            // continue configuring the IHttpClientBuilder
-            configureBuilder?.Invoke(builder);
-
-            return services;
+            return builder;
         }
 
         private static bool ShouldRetry(HttpResponseMessage response)

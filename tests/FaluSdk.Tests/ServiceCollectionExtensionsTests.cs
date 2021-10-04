@@ -57,7 +57,7 @@ namespace Falu.Tests
             var provider = services.BuildServiceProvider();
 
             // Act
-            var options = provider.GetService<IOptions<FaluClientOptions>>();
+            var options = provider.GetService<IOptionsSnapshot<FaluClientOptions>>();
 
             // Assert
             Assert.NotNull(options);

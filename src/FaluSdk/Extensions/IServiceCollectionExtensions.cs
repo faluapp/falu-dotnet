@@ -89,9 +89,12 @@ namespace Microsoft.Extensions.DependencyInjection
                                   });
 
             // setup retries
-            builder.AddPolicyHandler((provider, request) =>
+            builder.AddPolicyHandler((sp, request) =>
             {
-                var options = provider.GetRequiredService<IOptions<TClientOptions>>().Value;
+                // Using scope otherwise the IOptionsSnapshot<T> instance will be singleton, never changing
+                using var scope = sp.CreateScope();
+                var provider = scope.ServiceProvider;
+                var options = provider.GetRequiredService<IOptionsSnapshot<TClientOptions>>().Value;
                 var delays = Backoff.DecorrelatedJitterBackoffV2(medianFirstRetryDelay: TimeSpan.FromSeconds(0.5f),
                                                                  retryCount: options.Retries);
 

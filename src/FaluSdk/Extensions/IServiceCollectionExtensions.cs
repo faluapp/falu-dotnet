@@ -1,4 +1,4 @@
-﻿using Falu;
+using Falu;
 using Falu.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -184,7 +184,7 @@ namespace Microsoft.Extensions.DependencyInjection
             if (retryAfter == null)
                 return TimeSpan.Zero;
 
-            return retryAfter.Date.HasValue ? retryAfter.Date.Value - DateTime.UtcNow
+            return retryAfter.Date.HasValue ? retryAfter.Date.Value - DateTimeOffset.UtcNow
                                             : retryAfter.Delta.GetValueOrDefault(TimeSpan.Zero);
         }
 

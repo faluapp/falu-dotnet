@@ -149,18 +149,6 @@ namespace Microsoft.Extensions.DependencyInjection
             return policy;
         }
 
-        private static TimeSpan GetServerWaitDuration(int retryCount, 
-                                                      DelegateResult<HttpResponseMessage> response, 
-                                                      Context context)
-        {
-            var retryAfter = response?.Result?.Headers?.RetryAfter;
-            if (retryAfter == null)
-                return TimeSpan.Zero;
-
-            return retryAfter.Date.HasValue ? retryAfter.Date.Value - DateTimeOffset.UtcNow
-                                            : retryAfter.Delta.GetValueOrDefault(TimeSpan.Zero);
-        }
-
         internal static bool ShouldRetry(HttpResponseMessage response)
         {
             if (response is null)
@@ -183,6 +171,18 @@ namespace Microsoft.Extensions.DependencyInjection
 
             // Retry on 500, 503, and other internal errors.
             return (int)response.StatusCode >= 500;
+        }
+
+        private static TimeSpan GetServerWaitDuration(int retryCount, 
+                                                      DelegateResult<HttpResponseMessage> response, 
+                                                      Context context)
+        {
+            var retryAfter = response?.Result?.Headers?.RetryAfter;
+            if (retryAfter == null)
+                return TimeSpan.Zero;
+
+            return retryAfter.Date.HasValue ? retryAfter.Date.Value - DateTimeOffset.UtcNow
+                                            : retryAfter.Delta.GetValueOrDefault(TimeSpan.Zero);
         }
     }
 }

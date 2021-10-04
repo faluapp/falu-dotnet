@@ -19,7 +19,7 @@ namespace Microsoft.Extensions.DependencyInjection
     /// </summary>
     public static partial class IServiceCollectionExtensions
     {
-        internal const string RetryCount = "retry-count";
+        internal const string Attempts = "attempts";
 
         /// <summary>
         /// Add client for Falu API
@@ -123,7 +123,7 @@ namespace Microsoft.Extensions.DependencyInjection
                                                   onRetryAsync: (result, timeSpan, retryCount, context) =>
                                                   {
                                                       // Include the retry count in the context, thus can be accessed to log events for example
-                                                      context[RetryCount] = retryCount;
+                                                      context[Attempts] = retryCount;
 
                                                       // We could also add any logs for diagnosis here
                                                       return Task.CompletedTask;

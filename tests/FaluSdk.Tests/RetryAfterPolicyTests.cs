@@ -95,7 +95,7 @@ namespace Falu.Tests
             var factory = sp.GetRequiredService<IHttpClientFactory>();
             var client = factory.CreateClient(nameof(FaluClient));
 
-            var retryCountKey = IServiceCollectionExtensions.RetryCount;
+            var retryCountKey = IServiceCollectionExtensions.Attempts;
             var context = new Context
             {
                 {retryCountKey, 0}

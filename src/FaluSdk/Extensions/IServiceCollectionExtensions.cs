@@ -84,6 +84,12 @@ namespace Microsoft.Extensions.DependencyInjection
             where TClient : FaluClient<TClientOptions>
             where TClientOptions : FaluClientOptions
         {
+            /*
+             * Binding options from an IConfiguration instance is not used to reduce dependencies and leave that to the caller.
+             * Should the implementor/user require this, they can add it using:
+             * services.AddFalu(options => Configuration.GetSection("Falu").Bind(options));
+             */
+
             if (configure != null)
             {
                 services.Configure(configure);

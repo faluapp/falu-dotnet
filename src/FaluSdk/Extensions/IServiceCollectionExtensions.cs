@@ -86,14 +86,6 @@ namespace Microsoft.Extensions.DependencyInjection
 
                                       // populate the User-Agent value for the SDK/library
                                       client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("falu-dotnet", productVersion));
-
-                                      // populate the User-Agent for 3rd party providers
-                                      var options = provider.GetRequiredService<IOptions<TClientOptions>>().Value;
-                                      if (options.Application is not null)
-                                      {
-                                          var userAgent = options.Application.ToString();
-                                          client.DefaultRequestHeaders.Add("User-Agent", userAgent);
-                                      }
                                   });
 
             // setup retries

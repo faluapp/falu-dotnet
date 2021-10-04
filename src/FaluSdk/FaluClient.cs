@@ -33,6 +33,14 @@ namespace Falu
             BackChannel = backChannel ?? throw new ArgumentNullException(nameof(backChannel));
             Options = optionsAccessor?.Value ?? throw new ArgumentNullException(nameof(optionsAccessor));
 
+
+            // populate the User-Agent for 3rd party providers
+            if (Options.Application is not null)
+            {
+                var userAgent = Options.Application.ToString();
+                BackChannel.DefaultRequestHeaders.Add("User-Agent", userAgent);
+            }
+
             Evaluations = new EvaluationsServiceClient(BackChannel, Options);
             Events = new EventsServiceClient(BackChannel, Options);
             Files = new FilesServiceClient(BackChannel, Options);

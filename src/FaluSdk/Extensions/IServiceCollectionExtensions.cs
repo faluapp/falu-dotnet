@@ -161,7 +161,7 @@ namespace Microsoft.Extensions.DependencyInjection
                                             : retryAfter.Delta.GetValueOrDefault(TimeSpan.Zero);
         }
 
-        private static bool ShouldRetry(HttpResponseMessage response)
+        internal static bool ShouldRetry(HttpResponseMessage response)
         {
             if (response is null)
             {

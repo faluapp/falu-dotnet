@@ -19,7 +19,7 @@ namespace Microsoft.Extensions.DependencyInjection
     /// </summary>
     public static partial class IServiceCollectionExtensions
     {
-        internal const string RetryCount = "retry-count";
+        internal const string Attempts = "attempts";
 
         /// <summary>
         /// Add client for Falu API
@@ -115,10 +115,10 @@ namespace Microsoft.Extensions.DependencyInjection
             var policy = Policy.HandleResult<HttpResponseMessage>(r => r?.Headers?.RetryAfter != null)
                                .WaitAndRetryAsync(retryCount: retryCount,
                                                   sleepDurationProvider: GetServerWaitDuration,
-                                                  onRetryAsync: (result, timeSpan, retryCount, context) =>
+                                                  onRetryAsync: (result, timeSpan, attempts, context) =>
                                                   {
-                                                      // Include the retry count in the context, thus can be accessed to log events for example
-                                                      context[RetryCount] = retryCount;
+                                                      // Include the attempts in the context, thus can be accessed to log events for example
+                                                      context[Attempts] = attempts;
 
                                                       // We could also add any logs for diagnosis here
                                                       return Task.CompletedTask;
@@ -131,24 +131,20 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             var policy = Policy<HttpResponseMessage>.Handle<HttpRequestException>()
                                                     .OrResult(ShouldRetry)
-                                                    .WaitAndRetryAsync(delays);
+                                                    .WaitAndRetryAsync(sleepDurations: delays, 
+                                                                       onRetryAsync: (result, timeSpan, attempts, context) =>
+                                                                       {
+                                                                           // Include the attempts in the context, thus can be accessed to log events for example
+                                                                           context[Attempts] = attempts;
+
+                                                                           // We could also add any logs for diagnosis here
+                                                                           return Task.CompletedTask;
+                                                                       });
 
             return policy;
         }
 
-        private static TimeSpan GetServerWaitDuration(int retryCount, 
-                                                      DelegateResult<HttpResponseMessage> response, 
-                                                      Context context)
-        {
-            var retryAfter = response?.Result?.Headers?.RetryAfter;
-            if (retryAfter == null)
-                return TimeSpan.Zero;
-
-            return retryAfter.Date.HasValue ? retryAfter.Date.Value - DateTimeOffset.UtcNow
-                                            : retryAfter.Delta.GetValueOrDefault(TimeSpan.Zero);
-        }
-
-        private static bool ShouldRetry(HttpResponseMessage response)
+        internal static bool ShouldRetry(HttpResponseMessage response)
         {
             if (response is null)
             {
@@ -170,6 +166,18 @@ namespace Microsoft.Extensions.DependencyInjection
 
             // Retry on 500, 503, and other internal errors.
             return (int)response.StatusCode >= 500;
+        }
+
+        private static TimeSpan GetServerWaitDuration(int retryCount, 
+                                                      DelegateResult<HttpResponseMessage> response, 
+                                                      Context context)
+        {
+            var retryAfter = response?.Result?.Headers?.RetryAfter;
+            if (retryAfter == null)
+                return TimeSpan.Zero;
+
+            return retryAfter.Date.HasValue ? retryAfter.Date.Value - DateTimeOffset.UtcNow
+                                            : retryAfter.Delta.GetValueOrDefault(TimeSpan.Zero);
         }
     }
 }

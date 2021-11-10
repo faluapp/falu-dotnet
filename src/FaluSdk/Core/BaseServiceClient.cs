@@ -85,6 +85,7 @@ namespace Falu.Core
 #else
             var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
 #endif
+
             // if the response was a success then deserialize the body as TResource otherwise TError
             if (response.IsSuccessStatusCode)
             {

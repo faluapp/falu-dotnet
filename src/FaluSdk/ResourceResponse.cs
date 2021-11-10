@@ -150,7 +150,7 @@ namespace Falu
                 t = Nullable.GetUnderlyingType(t);
             }
 
-            return (T)Convert.ChangeType(value, t);
+            return (T?)Convert.ChangeType(value, t!);
         }
     }
 }

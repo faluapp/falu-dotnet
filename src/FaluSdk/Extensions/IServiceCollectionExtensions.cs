@@ -75,7 +75,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<IPostConfigureOptions<TClientOptions>, PostConfigureFaluClientOptions<TClientOptions>>();
 
             // get the version from the assembly
-            var productVersion = typeof(TClient).Assembly.GetName().Version.ToString(3);
+            var productVersion = typeof(TClient).Assembly.GetName().Version!.ToString(3);
 
             // setup client
             var builder = services.AddHttpClient<TClient>()

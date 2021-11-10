@@ -68,7 +68,7 @@ namespace Falu.Events
         public static void ValidateSignature(string json, string signature, string secret, long? tolerance = null, long? utcNow = null)
         {
             var actualItems = ParseSignature(signature);
-            var expected = ComputeSignature(secret, actualItems["t"].FirstOrDefault(), json);
+            var expected = ComputeSignature(secret, actualItems["t"].FirstOrDefault(""), json);
 
             if (!IsSignaturePresent(expected, actualItems["sha256"]))
             {

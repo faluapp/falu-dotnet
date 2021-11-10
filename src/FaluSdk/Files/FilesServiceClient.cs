@@ -65,10 +65,11 @@ namespace Falu.Files
                 throw new InvalidOperationException($"{nameof(file.FileName)} cannot be null or whitespace.");
             }
 
+            var purpose = file.Purpose!.Value;
             var content = new MultipartFormDataContent
             {
                 // populate fields of the model as key value pairs
-                { new StringContent(file.Purpose?.GetEnumMemberAttrValueOrDefault()), "purpose" },
+                { new StringContent(purpose.GetEnumMemberAttrValueOrDefault()), "purpose" },
 
                 // populate the file stream
                 { new StreamContent(file.Content), "file", file.FileName },

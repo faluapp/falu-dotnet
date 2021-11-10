@@ -98,7 +98,7 @@ namespace Falu.Events
             return signatures.Any(key => string.Equals(key, signature, StringComparison.Ordinal));
         }
 
-        private static string ComputeSignature(string secret, string timestamp, string payload)
+        private static string ComputeSignature(string secret, string? timestamp, string payload)
         {
             var secretBytes = Encoding.UTF8.GetBytes(secret);
             var payloadBytes = Encoding.UTF8.GetBytes($"{timestamp}.{payload}");

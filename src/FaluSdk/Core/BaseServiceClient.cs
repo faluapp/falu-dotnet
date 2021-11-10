@@ -80,7 +80,11 @@ namespace Falu.Core
 
             // get a stream reference for the content
             // the stream may still be being incoming and thus we should only read when necessary
+#if NET5_0_OR_GREATER
+            var stream = await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
+#else
             var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+#endif
 
             // if the response was a success then deserialize the body as TResource otherwise TError
             if (response.IsSuccessStatusCode)

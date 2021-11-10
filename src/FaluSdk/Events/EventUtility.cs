@@ -68,7 +68,7 @@ namespace Falu.Events
         public static void ValidateSignature(string json, string signature, string secret, long? tolerance = null, long? utcNow = null)
         {
             var actualItems = ParseSignature(signature);
-            var expected = ComputeSignature(secret, actualItems["t"].FirstOrDefault(""), json);
+            var expected = ComputeSignature(secret, actualItems["t"].FirstOrDefault(), json);
 
             if (!IsSignaturePresent(expected, actualItems["sha256"]))
             {
@@ -98,7 +98,7 @@ namespace Falu.Events
             return signatures.Any(key => string.Equals(key, signature, StringComparison.Ordinal));
         }
 
-        private static string ComputeSignature(string secret, string timestamp, string payload)
+        private static string ComputeSignature(string secret, string? timestamp, string payload)
         {
             var secretBytes = Encoding.UTF8.GetBytes(secret);
             var payloadBytes = Encoding.UTF8.GetBytes($"{timestamp}.{payload}");

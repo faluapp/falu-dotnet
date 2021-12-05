@@ -1,11 +1,10 @@
-﻿namespace Falu.Evaluations
+﻿namespace Falu.Evaluations;
+
+/// <summary>
+/// The provider for a financial statement
+/// </summary>
+public enum StatementProvider
 {
-    /// <summary>
-    /// The provider for a financial statement
-    /// </summary>
-    public enum StatementProvider
-    {
-        ///
-        Mpesa
-    }
+    ///
+    Mpesa
 }

@@ -1,14 +1,13 @@
-﻿namespace Falu.Identity
-{
-    /// <summary>
-    /// 
-    /// </summary>
-    public enum Gender
-    {
-        /// 
-        Male,
+﻿namespace Falu.Identity;
 
-        /// 
-        Female,
-    }
+/// <summary>
+/// 
+/// </summary>
+public enum Gender
+{
+    /// 
+    Male,
+
+    /// 
+    Female,
 }

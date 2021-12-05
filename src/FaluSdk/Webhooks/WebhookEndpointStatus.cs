@@ -1,14 +1,13 @@
-﻿namespace Falu.Webhooks
-{
-    /// <summary>
-    /// The active status of a Webhook
-    /// </summary>
-    public enum WebhookEndpointStatus
-    {
-        ///
-        Enabled,
+﻿namespace Falu.Webhooks;
 
-        ///
-        Disabled
-    }
+/// <summary>
+/// The active status of a Webhook
+/// </summary>
+public enum WebhookEndpointStatus
+{
+    ///
+    Enabled,
+
+    ///
+    Disabled
 }

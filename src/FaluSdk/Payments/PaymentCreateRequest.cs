@@ -1,23 +1,22 @@
 ﻿using Falu.Core;
 
-namespace Falu.Payments
+namespace Falu.Payments;
+
+/// <summary>
+/// Information for creating a payment.
+/// </summary>
+public class PaymentCreateRequest : PaymentPatchModel, IHasCurrency
 {
+    /// <inheritdoc/>
+    public string? Currency { get; set; }
+
     /// <summary>
-    /// Information for creating a payment.
+    /// Amount of the payment in smallest currency unit.
     /// </summary>
-    public class PaymentCreateRequest : PaymentPatchModel, IHasCurrency
-    {
-        /// <inheritdoc/>
-        public string? Currency { get; set; }
+    public long Amount { get; set; }
 
-        /// <summary>
-        /// Amount of the payment in smallest currency unit.
-        /// </summary>
-        public long Amount { get; set; }
-
-        /// <summary>
-        /// Details about initiation by MPESA's STK Push
-        /// </summary>
-        public PaymentCreateRequestMpesa? Mpesa { get; set; }
-    }
+    /// <summary>
+    /// Details about initiation by MPESA's STK Push
+    /// </summary>
+    public PaymentCreateRequestMpesa? Mpesa { get; set; }
 }

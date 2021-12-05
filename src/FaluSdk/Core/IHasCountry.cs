@@ -1,14 +1,13 @@
-﻿namespace Falu.Core
+﻿namespace Falu.Core;
+
+/// <summary>
+/// Interface that identifies objects with a <c>Country</c> property.
+/// </summary>
+public interface IHasCountry
 {
     /// <summary>
-    /// Interface that identifies objects with a <c>Country</c> property.
+    /// Three-letter <see href="https://www.iso.org/iso-3166-country-codes.html">ISO country code</see>,
+    /// in lowercase, where to the record exists.
     /// </summary>
-    public interface IHasCountry
-    {
-        /// <summary>
-        /// Three-letter <see href="https://www.iso.org/iso-3166-country-codes.html">ISO country code</see>,
-        /// in lowercase, where to the record exists.
-        /// </summary>
-        string? Country { get; set; }
-    }
+    string? Country { get; set; }
 }

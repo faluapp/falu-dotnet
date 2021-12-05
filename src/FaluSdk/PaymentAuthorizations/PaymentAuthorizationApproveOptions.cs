@@ -1,14 +1,12 @@
 ﻿using Falu.Core;
-using System.Collections.Generic;
 
-namespace Falu.PaymentAuthorizations
+namespace Falu.PaymentAuthorizations;
+
+/// <summary>
+/// Represents the options for approving a payment authorization.
+/// </summary>
+public class PaymentAuthorizationApproveOptions : IHasMetadata
 {
-    /// <summary>
-    /// Represents the options for approving a payment authorization.
-    /// </summary>
-    public class PaymentAuthorizationApproveOptions : IHasMetadata
-    {
-        /// <inheritdoc/>
-        public Dictionary<string, string>? Metadata { get; set; }
-    }
+    /// <inheritdoc/>
+    public Dictionary<string, string>? Metadata { get; set; }
 }

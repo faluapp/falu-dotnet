@@ -1,10 +1,9 @@
 ﻿using Falu.Core;
 
-namespace Falu.MessageStreams
+namespace Falu.MessageStreams;
+
+/// <summary>Options for filtering and pagination of message streams.</summary>
+public record MessageStreamsListOptions : BasicListOptions
 {
-    /// <summary>Options for filtering and pagination of message streams.</summary>
-    public record MessageStreamsListOptions : BasicListOptions
-    {
-        // intentionally left blank
-    }
+    // intentionally left blank
 }

@@ -1,74 +1,72 @@
 ﻿using Falu.Core;
-using System;
 
-namespace Falu.Transfers
+namespace Falu.Transfers;
+
+/// <summary>
+/// Represents a transaction made by the business to customer or another business.
+/// </summary>
+public class Transfer : TransferPatchModel, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
 {
+    /// <inheritdoc/>
+    public string? Id { get; set; }
+
+    /// <inheritdoc/>
+    public string? Currency { get; set; }
+
     /// <summary>
-    /// Represents a transaction made by the business to customer or another business.
+    /// Amount of the transfer in smallest currency unit.
     /// </summary>
-    public class Transfer : TransferPatchModel, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
-    {
-        /// <inheritdoc/>
-        public string? Id { get; set; }
+    public long Amount { get; set; }
 
-        /// <inheritdoc/>
-        public string? Currency { get; set; }
+    /// <summary>
+    /// Status of the transfer
+    /// </summary>
+    public TransferStatus Status { get; set; }
 
-        /// <summary>
-        /// Amount of the transfer in smallest currency unit.
-        /// </summary>
-        public long Amount { get; set; }
+    /// <inheritdoc/>
+    public DateTimeOffset Created { get; set; }
 
-        /// <summary>
-        /// Status of the transfer
-        /// </summary>
-        public TransferStatus Status { get; set; }
+    /// <inheritdoc/>
+    public DateTimeOffset Updated { get; set; }
 
-        /// <inheritdoc/>
-        public DateTimeOffset Created { get; set; }
+    /// <summary>
+    /// Time at which the transfer succeeded. Only populated when successful.
+    /// </summary>
+    public DateTimeOffset? Succeeded { get; set; }
 
-        /// <inheritdoc/>
-        public DateTimeOffset Updated { get; set; }
+    /// <summary>
+    /// The type of the Transfer.
+    /// An additional property is populated on the Transfer with a name matching this value.
+    /// It contains additional information specific to the Transfer type.
+    /// </summary>
+    public TransferType Type { get; set; }
 
-        /// <summary>
-        /// Time at which the transfer succeeded. Only populated when successful.
-        /// </summary>
-        public DateTimeOffset? Succeeded { get; set; }
+    /// <summary>
+    /// Purpose of the transfer.
+    /// </summary>
+    public TransferPurpose Purpose { get; set; }
 
-        /// <summary>
-        /// The type of the Transfer.
-        /// An additional property is populated on the Transfer with a name matching this value.
-        /// It contains additional information specific to the Transfer type.
-        /// </summary>
-        public TransferType Type { get; set; }
+    /// <summary>
+    /// If this is an MPESA transfer, this contains details about the MPESA transfer.
+    /// </summary>
+    public TransferMpesaDetails? Mpesa { get; set; }
 
-        /// <summary>
-        /// Purpose of the transfer.
-        /// </summary>
-        public TransferPurpose Purpose { get; set; }
+    /// <summary>
+    /// Details about failure if the transfer is in failed state.
+    /// </summary>
+    public TransferFailureDetails? Failure { get; set; }
 
-        /// <summary>
-        /// If this is an MPESA transfer, this contains details about the MPESA transfer.
-        /// </summary>
-        public TransferMpesaDetails? Mpesa { get; set; }
+    /// <summary>
+    /// Identifier of the reversal, if transfer has been reversed.
+    /// </summary>
+    public string? ReversalId { get; set; }
 
-        /// <summary>
-        /// Details about failure if the transfer is in failed state.
-        /// </summary>
-        public TransferFailureDetails? Failure { get; set; }
+    /// <inheritdoc/>
+    public string? WorkspaceId { get; set; }
 
-        /// <summary>
-        /// Identifier of the reversal, if transfer has been reversed.
-        /// </summary>
-        public string? ReversalId { get; set; }
+    /// <inheritdoc/>
+    public bool Live { get; set; }
 
-        /// <inheritdoc/>
-        public string? WorkspaceId { get; set; }
-
-        /// <inheritdoc/>
-        public bool Live { get; set; }
-
-        /// <inheritdoc/>
-        public string? Etag { get; set; }
-    }
+    /// <inheritdoc/>
+    public string? Etag { get; set; }
 }

@@ -1,17 +1,15 @@
 ﻿using Falu.Core;
-using System.Collections.Generic;
 
-namespace Falu.Transfers
+namespace Falu.Transfers;
+
+/// <summary>
+/// A model representing details that can be changed about a transfer.
+/// </summary>
+public class TransferPatchModel : IHasDescription, IHasMetadata
 {
-    /// <summary>
-    /// A model representing details that can be changed about a transfer.
-    /// </summary>
-    public class TransferPatchModel : IHasDescription, IHasMetadata
-    {
-        /// <inheritdoc/>
-        public string? Description { get; set; }
+    /// <inheritdoc/>
+    public string? Description { get; set; }
 
-        /// <inheritdoc/>
-        public Dictionary<string, string>? Metadata { get; set; }
-    }
+    /// <inheritdoc/>
+    public Dictionary<string, string>? Metadata { get; set; }
 }

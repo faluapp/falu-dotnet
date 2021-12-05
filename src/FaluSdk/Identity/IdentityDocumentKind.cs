@@ -1,23 +1,22 @@
-﻿namespace Falu.Identity
+﻿namespace Falu.Identity;
+
+/// <summary>
+/// The identification document type
+/// </summary>
+public enum IdentityDocumentKind
 {
-    /// <summary>
-    /// The identification document type
-    /// </summary>
-    public enum IdentityDocumentKind
-    {
-        /// 
-        NationalId = 0,
+    /// 
+    NationalId = 0,
 
-        /// 
-        Passport = 1,
+    /// 
+    Passport = 1,
 
-        /// 
-        MilitaryId = 2,
+    /// 
+    MilitaryId = 2,
 
-        /// 
-        AlienId = 3,
+    /// 
+    AlienId = 3,
 
-        /// 
-        DrivingLicense = 4,
-    }
+    /// 
+    DrivingLicense = 4,
 }

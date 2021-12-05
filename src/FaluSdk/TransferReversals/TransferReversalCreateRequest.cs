@@ -1,18 +1,17 @@
-﻿namespace Falu.TransferReversals
+﻿namespace Falu.TransferReversals;
+
+/// <summary>
+/// Information for creating a transfer reversal.
+/// </summary>
+public class TransferReversalCreateRequest : TransferReversalPatchModel
 {
     /// <summary>
-    /// Information for creating a transfer reversal.
+    /// Identifier of the Transfer to reverse.
     /// </summary>
-    public class TransferReversalCreateRequest : TransferReversalPatchModel
-    {
-        /// <summary>
-        /// Identifier of the Transfer to reverse.
-        /// </summary>
-        public string? TransferId { get; set; }
+    public string? TransferId { get; set; }
 
-        /// <summary>
-        /// Reason for the reversal.
-        /// </summary>
-        public TransferReversalReason Reason { get; set; }
-    }
+    /// <summary>
+    /// Reason for the reversal.
+    /// </summary>
+    public TransferReversalReason Reason { get; set; }
 }

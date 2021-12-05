@@ -1,17 +1,16 @@
-﻿namespace Falu.Transfers
+﻿namespace Falu.Transfers;
+
+/// <summary>
+/// The purpose of a transfer.
+/// </summary>
+public enum TransferPurpose
 {
-    /// <summary>
-    /// The purpose of a transfer.
-    /// </summary>
-    public enum TransferPurpose
-    {
-        ///
-        Business,
+    ///
+    Business,
 
-        ///
-        Salary,
+    ///
+    Salary,
 
-        ///
-        Promotion,
-    }
+    ///
+    Promotion,
 }

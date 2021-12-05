@@ -1,20 +1,19 @@
-﻿namespace Falu.Transfers
+﻿namespace Falu.Transfers;
+
+/// <summary>
+/// The status of a transfer.
+/// </summary>
+public enum TransferStatus
 {
-    /// <summary>
-    /// The status of a transfer.
-    /// </summary>
-    public enum TransferStatus
-    {
-        ///
-        Pending,
+    ///
+    Pending,
 
-        ///
-        InTransit,
+    ///
+    InTransit,
 
-        ///
-        Succeeded,
+    ///
+    Succeeded,
 
-        ///
-        Failed,
-    }
+    ///
+    Failed,
 }

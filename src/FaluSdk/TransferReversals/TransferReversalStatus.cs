@@ -1,20 +1,19 @@
-﻿namespace Falu.TransferReversals
+﻿namespace Falu.TransferReversals;
+
+/// <summary>
+/// The status of a transfer reversal.
+/// </summary>
+public enum TransferReversalStatus
 {
-    /// <summary>
-    /// The status of a transfer reversal.
-    /// </summary>
-    public enum TransferReversalStatus
-    {
-        ///
-        Pending,
+    ///
+    Pending,
 
-        ///
-        InTransit,
+    ///
+    InTransit,
 
-        ///
-        Succeeded,
+    ///
+    Succeeded,
 
-        ///
-        Failed,
-    }
+    ///
+    Failed,
 }

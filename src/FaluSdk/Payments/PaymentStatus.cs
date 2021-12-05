@@ -1,17 +1,16 @@
-﻿namespace Falu.Payments
+﻿namespace Falu.Payments;
+
+/// <summary>
+/// The status of a payment.
+/// </summary>
+public enum PaymentStatus
 {
-    /// <summary>
-    /// The status of a payment.
-    /// </summary>
-    public enum PaymentStatus
-    {
-        ///
-        Pending,
+    ///
+    Pending,
 
-        ///
-        Succeeded,
+    ///
+    Succeeded,
 
-        ///
-        Failed,
-    }
+    ///
+    Failed,
 }

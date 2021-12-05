@@ -12,6 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Using Remove="System.IO" />
+  </ItemGroup>
+
+  <ItemGroup>
     <InternalsVisibleTo Include="FaluSdk.Tests" />
   </ItemGroup>
 

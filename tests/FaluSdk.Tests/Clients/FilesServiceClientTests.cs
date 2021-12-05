@@ -1,116 +1,112 @@
 ﻿using Falu.Core;
 using Falu.Files;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using Xunit;
 
-namespace Falu.Tests.Clients
+namespace Falu.Tests.Clients;
+
+public class FilesServiceClientTests : BaseServiceClientTests<File>
 {
-    public class FilesServiceClientTests : BaseServiceClientTests<File>
+    public FilesServiceClientTests() : base(new()
     {
-        public FilesServiceClientTests() : base(new()
-        {
-            Id = "file_123",
-            Created = DateTimeOffset.UtcNow,
-            Updated = DateTimeOffset.UtcNow,
-            Type = "image/png",
-            Filename = "test.png",
-            Size = 1024,
-            WorkspaceId = WorkspaceId
-        }, "/v1/files") { }
+        Id = "file_123",
+        Created = DateTimeOffset.UtcNow,
+        Updated = DateTimeOffset.UtcNow,
+        Type = "image/png",
+        Filename = "test.png",
+        Size = 1024,
+        WorkspaceId = WorkspaceId
+    }, "/v1/files")
+    { }
 
-        [Theory]
-        [MemberData(nameof(RequestOptionsData))]
-        public async Task GetAsync_Works(RequestOptions options)
-        {
-            var handler = GetAsync_Handler(options);
+    [Theory]
+    [MemberData(nameof(RequestOptionsData))]
+    public async Task GetAsync_Works(RequestOptions options)
+    {
+        var handler = GetAsync_Handler(options);
 
-            await TestAsync(handler, async (client) =>
+        await TestAsync(handler, async (client) =>
+        {
+            var response = await client.Files.GetAsync(Data!.Id!, options);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(response.Resource);
+            Assert.Equal(Data!.Id!, response!.Resource!.Id!);
+        });
+    }
+
+    [Theory]
+    [MemberData(nameof(RequestOptionsWithHasContinuationTokenData))]
+    public async Task ListAsync_Works(RequestOptions options, bool hasContinuationToken)
+    {
+        var handler = ListAsync_Handler(hasContinuationToken, options);
+
+        await TestAsync(handler, async (client) =>
+        {
+            var opt = new FilesListOptions
             {
-                var response = await client.Files.GetAsync(Data!.Id!, options);
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                Assert.NotNull(response.Resource);
-                Assert.Equal(Data!.Id!, response!.Resource!.Id!);
-            });
-        }
+                Count = 1
+            };
 
-        [Theory]
-        [MemberData(nameof(RequestOptionsWithHasContinuationTokenData))]
-        public async Task ListAsync_Works(RequestOptions options, bool hasContinuationToken)
+            var response = await client.Files.ListAsync(opt, options);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(response.Resource);
+            Assert.Single(response.Resource);
+
+            if (hasContinuationToken) Assert.NotNull(response.ContinuationToken);
+            else Assert.Null(response.ContinuationToken);
+
+            var file = response!.Resource!.Single();
+
+            Assert.Equal(Data!.Id!, file.Id);
+        });
+    }
+
+    [Theory]
+    [MemberData(nameof(RequestOptionsData))]
+    public async Task ListRecursivelyAsync_Works(RequestOptions options)
+    {
+        var handler = ListAsync_Handler(options: options);
+
+        await TestAsync(handler, async (client) =>
         {
-            var handler = ListAsync_Handler(hasContinuationToken, options);
-
-            await TestAsync(handler, async (client) =>
+            var opt = new FilesListOptions
             {
-                var opt = new FilesListOptions
-                {
-                    Count = 1
-                };
+                Count = 1
+            };
 
-                var response = await client.Files.ListAsync(opt, options);
+            var results = new List<File>();
 
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                Assert.NotNull(response.Resource);
-                Assert.Single(response.Resource);
+            await foreach (var item in client.Files.ListRecursivelyAsync(opt, options))
+            {
+                results.Add(item);
+            }
 
-                if (hasContinuationToken) Assert.NotNull(response.ContinuationToken);
-                else Assert.Null(response.ContinuationToken);
+            Assert.Single(results);
+            var ev = results.Single();
+            Assert.Equal(Data!.Id!, ev.Id);
+        });
+    }
 
-                var file = response!.Resource!.Single();
+    [Theory]
+    [MemberData(nameof(RequestOptionsData))]
+    public async Task CreateAsync_Works(RequestOptions options)
+    {
+        var handler = CreateAsync_Handler(options);
 
-                Assert.Equal(Data!.Id!, file.Id);
-            });
-        }
-
-        [Theory]
-        [MemberData(nameof(RequestOptionsData))]
-        public async Task ListRecursivelyAsync_Works(RequestOptions options)
+        await TestAsync(handler, async (client) =>
         {
-            var handler = ListAsync_Handler(options: options);
-
-            await TestAsync(handler, async (client) =>
+            var model = new FileCreateRequest
             {
-                var opt = new FilesListOptions
-                {
-                    Count = 1
-                };
+                FileName = Data!.Filename,
+                Content = new System.IO.MemoryStream(Guid.NewGuid().ToByteArray()),
+                Purpose = Data!.Purpose
+            };
 
-                var results = new List<File>();
+            var response = await client.Files.CreateAsync(model, options);
 
-                await foreach (var item in client.Files.ListRecursivelyAsync(opt, options))
-                {
-                    results.Add(item);
-                }
-
-                Assert.Single(results);
-                var ev = results.Single();
-                Assert.Equal(Data!.Id!, ev.Id);
-            });
-        }
-
-        [Theory]
-        [MemberData(nameof(RequestOptionsData))]
-        public async Task CreateAsync_Works(RequestOptions options)
-        {
-            var handler = CreateAsync_Handler(options);
-
-            await TestAsync(handler, async (client) =>
-            {
-                var model = new FileCreateRequest 
-                {
-                    FileName = Data!.Filename,
-                    Content = new System.IO.MemoryStream(Guid.NewGuid().ToByteArray()),
-                    Purpose = Data!.Purpose
-                };
-
-                var response = await client.Files.CreateAsync(model, options);
-
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                Assert.NotNull(response.Resource);
-            });
-        }
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(response.Resource);
+        });
     }
 }

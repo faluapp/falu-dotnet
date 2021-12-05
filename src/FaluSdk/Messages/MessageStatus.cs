@@ -1,23 +1,22 @@
-﻿namespace Falu.Messages
+﻿namespace Falu.Messages;
+
+/// <summary>
+/// The status of a message.
+/// </summary>
+public enum MessageStatus
 {
-    /// <summary>
-    /// The status of a message.
-    /// </summary>
-    public enum MessageStatus
-    {
-        ///
-        Accepted,
+    ///
+    Accepted,
 
-        ///
-        Sending,
+    ///
+    Sending,
 
-        ///
-        Sent,
+    ///
+    Sent,
 
-        ///
-        Failed,
+    ///
+    Failed,
 
-        ///
-        Delivered,
-    }
+    ///
+    Delivered,
 }

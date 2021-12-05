@@ -1,15 +1,12 @@
-﻿using System;
+﻿namespace Falu.Core;
 
-namespace Falu.Core
+/// <summary>
+/// Interface that identifies objects with an <c>Updated</c> property.
+/// </summary>
+public interface IHasUpdated
 {
     /// <summary>
-    /// Interface that identifies objects with an <c>Updated</c> property.
+    /// Time at which the object was last updated.
     /// </summary>
-    public interface IHasUpdated
-    {
-        /// <summary>
-        /// Time at which the object was last updated.
-        /// </summary>
-        public DateTimeOffset Updated { get; set; }
-    }
+    public DateTimeOffset Updated { get; set; }
 }

@@ -76,28 +76,28 @@ public static partial class IServiceCollectionExtensions
         var builder = services.AddHttpClient<TClient>()
                               .ConfigureHttpClient((provider, client) =>
                               {
-                                      // set the base address
-                                      client.BaseAddress = new Uri("https://api.falu.io/");
+                                  // set the base address
+                                  client.BaseAddress = new Uri("https://api.falu.io/");
 
-                                      // populate the User-Agent value for the SDK/library
-                                      client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("falu-dotnet", productVersion));
+                                  // populate the User-Agent value for the SDK/library
+                                  client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("falu-dotnet", productVersion));
                               });
 
         // setup retries
         builder.AddPolicyHandler((sp, request) =>
         {
-                // Using scope otherwise the IOptionsSnapshot<T> instance will be singleton, never changing
-                using var scope = sp.CreateScope();
+            // Using scope otherwise the IOptionsSnapshot<T> instance will be singleton, never changing
+            using var scope = sp.CreateScope();
             var provider = scope.ServiceProvider;
             var options = provider.GetRequiredService<IOptionsSnapshot<TClientOptions>>().Value;
             var delays = Backoff.DecorrelatedJitterBackoffV2(medianFirstRetryDelay: TimeSpan.FromSeconds(0.5f),
                                                              retryCount: options.Retries);
 
-                // Network failures are handled via HttpRequestException, other errors are handled in the ShouldRetry method
-                var generalRetryPolicy = GetGeneralRetryPolicy(delays);
+            // Network failures are handled via HttpRequestException, other errors are handled in the ShouldRetry method
+            var generalRetryPolicy = GetGeneralRetryPolicy(delays);
 
-                // Server has returned a header telling us when to retry if we're making too many requests
-                var retryAfterPolicy = GetRetryAfterPolicy(options.Retries);
+            // Server has returned a header telling us when to retry if we're making too many requests
+            var retryAfterPolicy = GetRetryAfterPolicy(options.Retries);
 
             return Policy.WrapAsync(generalRetryPolicy, retryAfterPolicy);
         });
@@ -112,11 +112,11 @@ public static partial class IServiceCollectionExtensions
                                               sleepDurationProvider: GetServerWaitDuration,
                                               onRetryAsync: (result, timeSpan, attempts, context) =>
                                               {
-                                                      // Include the attempts in the context, thus can be accessed to log events for example
-                                                      context[Attempts] = attempts;
+                                                  // Include the attempts in the context, thus can be accessed to log events for example
+                                                  context[Attempts] = attempts;
 
-                                                      // We could also add any logs for diagnosis here
-                                                      return Task.CompletedTask;
+                                                  // We could also add any logs for diagnosis here
+                                                  return Task.CompletedTask;
                                               });
 
         return policy;
@@ -129,11 +129,11 @@ public static partial class IServiceCollectionExtensions
                                                 .WaitAndRetryAsync(sleepDurations: delays,
                                                                    onRetryAsync: (result, timeSpan, attempts, context) =>
                                                                    {
-                                                                           // Include the attempts in the context, thus can be accessed to log events for example
-                                                                           context[Attempts] = attempts;
+                                                                       // Include the attempts in the context, thus can be accessed to log events for example
+                                                                       context[Attempts] = attempts;
 
-                                                                           // We could also add any logs for diagnosis here
-                                                                           return Task.CompletedTask;
+                                                                       // We could also add any logs for diagnosis here
+                                                                       return Task.CompletedTask;
                                                                    });
 
         return policy;

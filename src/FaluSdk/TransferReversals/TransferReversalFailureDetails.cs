@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Falu.TransferReversals
+﻿namespace Falu.TransferReversals
 {
     /// <summary>
     /// Details about failure of a transfer reversal.

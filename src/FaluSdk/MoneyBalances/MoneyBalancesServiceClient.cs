@@ -1,7 +1,4 @@
 ﻿using Falu.Core;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Falu.Payments
 {

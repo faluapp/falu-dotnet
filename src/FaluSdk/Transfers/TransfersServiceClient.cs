@@ -1,8 +1,4 @@
 ﻿using Falu.Core;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 using Tingle.Extensions.JsonPatch;
 
 namespace Falu.Transfers

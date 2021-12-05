@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Falu.Payments
+﻿namespace Falu.Payments
 {
     /// <summary>
     /// Details about failure of a payment.

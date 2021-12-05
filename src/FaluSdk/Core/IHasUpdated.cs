@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Falu.Core
+﻿namespace Falu.Core
 {
     /// <summary>
     /// Interface that identifies objects with an <c>Updated</c> property.

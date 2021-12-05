@@ -1,8 +1,6 @@
 ﻿using Falu.Core;
 using Falu.Identity;
 using Falu.PaymentAuthorizations;
-using System;
-using System.Collections.Generic;
 using Xunit;
 
 namespace Falu.Tests

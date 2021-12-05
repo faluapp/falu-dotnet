@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Falu.Transfers
+﻿namespace Falu.Transfers
 {
     /// <summary>
     /// Details about failure of a transfer.

@@ -1,6 +1,4 @@
 ﻿using Falu.Core;
-using System;
-using System.Collections.Generic;
 
 namespace Falu.Payments
 {

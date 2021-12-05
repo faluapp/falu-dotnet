@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Falu.Core
+﻿namespace Falu.Core
 {
     /// <summary>
     /// Interface that identifies objects with a Metadata property of type <see cref="Dictionary{TKey, TValue}"/>.

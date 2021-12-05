@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Falu.PaymentRefunds
+﻿namespace Falu.PaymentRefunds
 {
     /// <summary>
     /// Details about failure of a payment refund.

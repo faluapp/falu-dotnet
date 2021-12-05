@@ -13,8 +13,6 @@ using Falu.TransferReversals;
 using Falu.Transfers;
 using Falu.Webhooks;
 using Microsoft.Extensions.Options;
-using System;
-using System.Net.Http;
 
 namespace Falu
 {

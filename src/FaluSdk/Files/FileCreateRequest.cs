@@ -1,6 +1,4 @@
 ﻿using Falu.Core;
-using System;
-using System.IO;
 
 namespace Falu.Files
 {

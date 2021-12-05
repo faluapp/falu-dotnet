@@ -1,9 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Threading.Tasks;
-using Xunit;
-
-namespace Falu.Tests
+﻿namespace Falu.Tests
 {
     public class FaluClientTests
     {

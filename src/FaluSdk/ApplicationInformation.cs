@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Falu
+﻿namespace Falu
 {
     /// <summary>
     /// Information about the application ("app") which owns this integration.

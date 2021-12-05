@@ -1,5 +1,4 @@
 ﻿using Falu.Core;
-using System.Collections.Generic;
 
 namespace Falu.MessageStreams
 {

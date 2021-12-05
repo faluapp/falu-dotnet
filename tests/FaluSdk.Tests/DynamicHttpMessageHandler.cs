@@ -1,9 +1,4 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace Falu.Tests
+﻿namespace Falu.Tests
 {
     public class DynamicHttpMessageHandler : HttpMessageHandler
     {

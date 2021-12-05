@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Falu.Evaluations
+﻿namespace Falu.Evaluations
 {
     /// <summary>
     /// Represents the scoring done for an evaluation

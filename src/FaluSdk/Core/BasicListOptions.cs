@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Falu.Core
+﻿namespace Falu.Core
 {
     /// <summary>
     /// Standard options for filtering and pagination in list operations.

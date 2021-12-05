@@ -1,5 +1,4 @@
 ﻿using Falu.MessageTemplates;
-using System;
 using Xunit;
 
 namespace Falu.Tests

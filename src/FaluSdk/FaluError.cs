@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Falu
+﻿namespace Falu
 {
     /// <summary>
     /// A representation of an error.

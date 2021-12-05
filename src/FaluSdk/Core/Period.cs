@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Falu.Core
+﻿namespace Falu.Core
 {
     ///
     public class Period

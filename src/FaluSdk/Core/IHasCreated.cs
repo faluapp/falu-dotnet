@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Falu.Core
+﻿namespace Falu.Core
 {
     /// <summary>
     /// Interface that identifies objects with a <c>Created</c> property.

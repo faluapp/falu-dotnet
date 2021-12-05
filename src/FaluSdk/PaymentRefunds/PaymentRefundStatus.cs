@@ -1,20 +1,19 @@
-﻿namespace Falu.PaymentRefunds
+﻿namespace Falu.PaymentRefunds;
+
+/// <summary>
+/// The status of a payment refund.
+/// </summary>
+public enum PaymentRefundStatus
 {
-    /// <summary>
-    /// The status of a payment refund.
-    /// </summary>
-    public enum PaymentRefundStatus
-    {
-        ///
-        Pending,
+    ///
+    Pending,
 
-        ///
-        InTransit,
+    ///
+    InTransit,
 
-        ///
-        Succeeded,
+    ///
+    Succeeded,
 
-        ///
-        Failed,
-    }
+    ///
+    Failed,
 }

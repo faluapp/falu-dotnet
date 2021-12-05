@@ -1,13 +1,12 @@
-﻿namespace Falu.Core
+﻿namespace Falu.Core;
+
+/// <summary>
+/// Interface that identifies objects with an <c>Id</c> property.
+/// </summary>
+public interface IHasId
 {
     /// <summary>
-    /// Interface that identifies objects with an <c>Id</c> property.
+    /// Unique identifier for the object.
     /// </summary>
-    public interface IHasId
-    {
-        /// <summary>
-        /// Unique identifier for the object.
-        /// </summary>
-        public string? Id { get; set; }
-    }
+    public string? Id { get; set; }
 }

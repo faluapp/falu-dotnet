@@ -1,31 +1,30 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Falu.Transfers
+namespace Falu.Transfers;
+
+/// <summary>
+/// Reason for failure of a transfer.
+/// </summary>
+public enum TransferFailureReason
 {
-    /// <summary>
-    /// Reason for failure of a transfer.
-    /// </summary>
-    public enum TransferFailureReason
-    {
-        ///
-        Unknown,
+    ///
+    Unknown,
 
-        ///
-        [EnumMember(Value = "insufficient_balance")]
-        InsufficientBalance,
+    ///
+    [EnumMember(Value = "insufficient_balance")]
+    InsufficientBalance,
 
-        ///
-        [EnumMember(Value = "authentication_error")]
-        AuthenticationError,
+    ///
+    [EnumMember(Value = "authentication_error")]
+    AuthenticationError,
 
-        ///
-        [EnumMember(Value = "amount_out_of_bound")]
-        AmountOutOfBound,
+    ///
+    [EnumMember(Value = "amount_out_of_bound")]
+    AmountOutOfBound,
 
-        ///
-        Timeout,
+    ///
+    Timeout,
 
-        ///
-        Other,
-    }
+    ///
+    Other,
 }

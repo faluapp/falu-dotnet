@@ -1,20 +1,19 @@
-﻿namespace Falu.Evaluations
+﻿namespace Falu.Evaluations;
+
+/// <summary>
+/// The status of an evaluation.
+/// </summary>
+public enum EvaluationStatus
 {
-    /// <summary>
-    /// The status of an evaluation.
-    /// </summary>
-    public enum EvaluationStatus
-    {
-        ///
-        Created,
+    ///
+    Created,
 
-        ///
-        Scoring,
+    ///
+    Scoring,
 
-        ///
-        Completed,
+    ///
+    Completed,
 
-        ///
-        Failed,
-    }
+    ///
+    Failed,
 }

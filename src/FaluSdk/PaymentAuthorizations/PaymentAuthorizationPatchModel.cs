@@ -1,13 +1,12 @@
 ﻿using Falu.Core;
 
-namespace Falu.PaymentAuthorizations
+namespace Falu.PaymentAuthorizations;
+
+/// <summary>
+/// Represents the details that can be patched in a payment authorization.
+/// </summary>
+public class PaymentAuthorizationPatchModel : IHasMetadata
 {
-    /// <summary>
-    /// Represents the details that can be patched in a payment authorization.
-    /// </summary>
-    public class PaymentAuthorizationPatchModel : IHasMetadata
-    {
-        /// <inheritdoc/>
-        public Dictionary<string, string>? Metadata { get; set; }
-    }
+    /// <inheritdoc/>
+    public Dictionary<string, string>? Metadata { get; set; }
 }

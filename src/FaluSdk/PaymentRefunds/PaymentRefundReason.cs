@@ -1,20 +1,19 @@
-﻿namespace Falu.PaymentRefunds
+﻿namespace Falu.PaymentRefunds;
+
+/// <summary>
+/// The reason for reversing a payment.
+/// </summary>
+public enum PaymentRefundReason
 {
-    /// <summary>
-    /// The reason for reversing a payment.
-    /// </summary>
-    public enum PaymentRefundReason
-    {
-        ///
-        Duplicate,
+    ///
+    Duplicate,
 
-        ///
-        Fraudulent,
+    ///
+    Fraudulent,
 
-        ///
-        CustomerRequested,
+    ///
+    CustomerRequested,
 
-        ///
-        Other,
-    }
+    ///
+    Other,
 }

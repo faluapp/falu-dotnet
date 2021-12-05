@@ -1,31 +1,30 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Falu.Payments
+namespace Falu.Payments;
+
+/// <summary>
+/// Reason for failure of a payment.
+/// </summary>
+public enum PaymentFailureReason
 {
-    /// <summary>
-    /// Reason for failure of a payment.
-    /// </summary>
-    public enum PaymentFailureReason
-    {
-        ///
-        Unknown,
+    ///
+    Unknown,
 
-        ///
-        [EnumMember(Value = "insufficient_balance")]
-        InsufficientBalance,
+    ///
+    [EnumMember(Value = "insufficient_balance")]
+    InsufficientBalance,
 
-        ///
-        [EnumMember(Value = "authentication_error")]
-        AuthenticationError,
+    ///
+    [EnumMember(Value = "authentication_error")]
+    AuthenticationError,
 
-        ///
-        [EnumMember(Value = "amount_out_of_bound")]
-        AmountOutOfBound,
+    ///
+    [EnumMember(Value = "amount_out_of_bound")]
+    AmountOutOfBound,
 
-        ///
-        Timeout,
+    ///
+    Timeout,
 
-        ///
-        Other,
-    }
+    ///
+    Other,
 }

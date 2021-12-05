@@ -1,31 +1,30 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Falu.TransferReversals
+namespace Falu.TransferReversals;
+
+/// <summary>
+/// Reason for failure of a transfer reversal.
+/// </summary>
+public enum TransferReversalFailureReason
 {
-    /// <summary>
-    /// Reason for failure of a transfer reversal.
-    /// </summary>
-    public enum TransferReversalFailureReason
-    {
-        ///
-        Unknown,
+    ///
+    Unknown,
 
-        ///
-        [EnumMember(Value = "insufficient_balance")]
-        InsufficientBalance,
+    ///
+    [EnumMember(Value = "insufficient_balance")]
+    InsufficientBalance,
 
-        ///
-        [EnumMember(Value = "authentication_error")]
-        AuthenticationError,
+    ///
+    [EnumMember(Value = "authentication_error")]
+    AuthenticationError,
 
-        ///
-        [EnumMember(Value = "amount_out_of_bound")]
-        AmountOutOfBound,
+    ///
+    [EnumMember(Value = "amount_out_of_bound")]
+    AmountOutOfBound,
 
-        ///
-        Timeout,
+    ///
+    Timeout,
 
-        ///
-        Other,
-    }
+    ///
+    Other,
 }

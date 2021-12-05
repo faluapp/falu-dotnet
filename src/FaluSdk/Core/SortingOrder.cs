@@ -1,14 +1,13 @@
-﻿namespace Falu.Core
-{
-    /// <summary>
-    /// The sorting order for a list operation.
-    /// </summary>
-    public enum SortingOrder
-    {
-        ///
-        Ascending,
+﻿namespace Falu.Core;
 
-        ///
-        Descending,
-    }
+/// <summary>
+/// The sorting order for a list operation.
+/// </summary>
+public enum SortingOrder
+{
+    ///
+    Ascending,
+
+    ///
+    Descending,
 }

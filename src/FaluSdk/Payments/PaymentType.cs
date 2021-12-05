@@ -1,21 +1,20 @@
-﻿namespace Falu.Payments
+﻿namespace Falu.Payments;
+
+/// <summary>
+/// The type of payment.
+/// Usually represent the medium used to make payment.
+/// </summary>
+public enum PaymentType
 {
-    /// <summary>
-    /// The type of payment.
-    /// Usually represent the medium used to make payment.
-    /// </summary>
-    public enum PaymentType
-    {
-        ///
-        Mpesa,
+    ///
+    Mpesa,
 
-        ///
-        Airtelmoney,
+    ///
+    Airtelmoney,
 
-        ///
-        Mtnmoney,
+    ///
+    Mtnmoney,
 
-        ///
-        Pesalink,
-    }
+    ///
+    Pesalink,
 }

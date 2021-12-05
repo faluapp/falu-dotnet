@@ -1,17 +1,16 @@
-﻿namespace Falu.MessageStreams
+﻿namespace Falu.MessageStreams;
+
+/// <summary>
+/// Represents the types of streams for messages.
+/// </summary>
+public enum MessageStreamType
 {
-    /// <summary>
-    /// Represents the types of streams for messages.
-    /// </summary>
-    public enum MessageStreamType
-    {
-        ///
-        Transactional,
+    ///
+    Transactional,
 
-        ///
-        Inbound,
+    ///
+    Inbound,
 
-        ///
-        Broadcasts,
-    }
+    ///
+    Broadcasts,
 }

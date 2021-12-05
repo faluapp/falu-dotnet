@@ -1,20 +1,19 @@
-﻿namespace Falu.TransferReversals
+﻿namespace Falu.TransferReversals;
+
+/// <summary>
+/// The reason for reversing a transfer.
+/// </summary>
+public enum TransferReversalReason
 {
-    /// <summary>
-    /// The reason for reversing a transfer.
-    /// </summary>
-    public enum TransferReversalReason
-    {
-        ///
-        Duplicate,
+    ///
+    Duplicate,
 
-        ///
-        Fraudulent,
+    ///
+    Fraudulent,
 
-        ///
-        CustomerRequested,
+    ///
+    CustomerRequested,
 
-        ///
-        Other,
-    }
+    ///
+    Other,
 }

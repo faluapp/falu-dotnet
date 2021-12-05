@@ -1,29 +1,27 @@
-﻿namespace Falu.PaymentAuthorizations
+﻿namespace Falu.PaymentAuthorizations;
+
+/// <summary>
+/// Reason for a given status of payment authorization.
+/// </summary>
+public enum PaymentAuthorizationStatusReason
 {
     /// <summary>
-    /// Reason for a given status of payment authorization.
+    /// No authorization webhook endpoint is set.
     /// </summary>
-    public enum PaymentAuthorizationStatusReason
-    {
-        /// <summary>
-        /// No authorization webhook endpoint is set.
-        /// </summary>
-        Default,
+    Default,
 
-        /// <summary>
-        /// Authorization webhook endpoint is invalid.
-        /// </summary>
-        Invalid,
+    /// <summary>
+    /// Authorization webhook endpoint is invalid.
+    /// </summary>
+    Invalid,
 
-        /// <summary>
-        /// Authorization webhook endpoint was used to approve or decline.
-        /// </summary>
-        Realtime,
+    /// <summary>
+    /// Authorization webhook endpoint was used to approve or decline.
+    /// </summary>
+    Realtime,
 
-        /// <summary>
-        /// Synchronous webhook delivery to the authorization webhook endpoint failed.
-        /// </summary>
-        Failed,
-    }
-
+    /// <summary>
+    /// Synchronous webhook delivery to the authorization webhook endpoint failed.
+    /// </summary>
+    Failed,
 }

@@ -90,10 +90,10 @@ public class MessagesServiceClient : BaseServiceClient<Message>, ISupportsListin
     {
         if (messages is null) throw new ArgumentNullException(nameof(messages));
 
-        if (messages.Count > 10_000)
+        if (messages.Count > 1_000)
         {
             throw new ArgumentOutOfRangeException(paramName: nameof(messages),
-                                                  message: "The service does not support more than 10,000 (10k) messages");
+                                                  message: "The service does not support more than 1,000 (1k) messages");
         }
 
         foreach (var m in messages)

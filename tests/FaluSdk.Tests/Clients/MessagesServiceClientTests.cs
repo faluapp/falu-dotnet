@@ -93,7 +93,7 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
 
     [Theory]
     [MemberData(nameof(RequestOptionsData))]
-    public async Task CreateAsync_Works(RequestOptions options)
+    public async Task SendAsync_Works(RequestOptions options)
     {
         var handler = CreateAsync_Handler(options);
 
@@ -104,7 +104,7 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
                 To = new[] { Data!.To!, },
                 Body = Data!.Body
             };
-            var response = await client.Messages.CreateAsync(model, options);
+            var response = await client.Messages.SendAsync(model, options);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -113,7 +113,7 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
 
     [Theory]
     [MemberData(nameof(RequestOptionsData))]
-    public async Task CreateBatchAsync_Works(RequestOptions options)
+    public async Task SendBatchAsync_Works(RequestOptions options)
     {
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
@@ -145,7 +145,7 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
                 Body = Data!.Body
             };
 
-            var response = await client.Messages.CreateBatchAsync(new[] { model }, options);
+            var response = await client.Messages.SendBatchAsync(new[] { model }, options);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);

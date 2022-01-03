@@ -49,9 +49,9 @@ public class MessagesServiceClient : BaseServiceClient<Message>, ISupportsListin
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<MessageCreateResponse>> CreateAsync(MessageCreateRequest message,
-                                                                             RequestOptions? options = null,
-                                                                             CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<MessageCreateResponse>> SendAsync(MessageCreateRequest message,
+                                                                           RequestOptions? options = null,
+                                                                           CancellationToken cancellationToken = default)
     {
         if (message is null) throw new ArgumentNullException(nameof(message));
         message.Template?.Model?.GetType().EnsureAllowedForMessageTemplateModel();
@@ -78,9 +78,9 @@ public class MessagesServiceClient : BaseServiceClient<Message>, ISupportsListin
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<MessageCreateResponse>> CreateBatchAsync(IList<MessageCreateRequest> messages,
-                                                                                  RequestOptions? options = null,
-                                                                                  CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<MessageCreateResponse>> SendBatchAsync(IList<MessageCreateRequest> messages,
+                                                                                RequestOptions? options = null,
+                                                                                CancellationToken cancellationToken = default)
     {
         if (messages is null) throw new ArgumentNullException(nameof(messages));
 

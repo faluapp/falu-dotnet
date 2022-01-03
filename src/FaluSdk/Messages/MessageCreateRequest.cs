@@ -6,10 +6,10 @@
 public class MessageCreateRequest : MessagePatchModel
 {
     /// <summary>
-    /// Destination phone number in <see href="https://en.wikipedia.org/wiki/E.164">E.164 format</see>.
+    /// Destination phone numbers in <see href="https://en.wikipedia.org/wiki/E.164">E.164 format</see>.
+    /// You can provide up to 500 numbers in one request.
     /// </summary>
-    /// <example>+254722000000</example>
-    public string? To { get; set; }
+    public IList<string>? To { get; set; }
 
     /// <summary>
     /// Actual message content to be sent.

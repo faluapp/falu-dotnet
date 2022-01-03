@@ -11,6 +11,12 @@ updates:
       interval: "weekly"
       time: "05:00"
     open-pull-requests-limit: 10
+    ignore:
+      # Ignore patch updates for some packages
+      - dependency-name: "Microsoft.*"
+        update-types: ["version-update:semver-patch"]
+      - dependency-name: "System.*"
+        update-types: ["version-update:semver-patch"]
   - package-ecosystem: "github-actions" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:

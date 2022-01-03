@@ -53,10 +53,18 @@ public abstract class BaseServiceClient<TResource> : BaseServiceClient
                                                                             RequestOptions? options = null,
                                                                             CancellationToken cancellationToken = default)
     {
+        return CreateResourceAsync<TResource>(resource, options, cancellationToken);
+    }
+
+    ///
+    protected virtual Task<ResourceResponse<T>> CreateResourceAsync<T>(object resource,
+                                                                       RequestOptions? options = null,
+                                                                       CancellationToken cancellationToken = default)
+    {
         if (resource is null) throw new ArgumentNullException(nameof(resource));
 
         var uri = MakePath();
-        return RequestAsync<TResource>(uri, HttpMethod.Post, resource, options, cancellationToken);
+        return RequestAsync<T>(uri, HttpMethod.Post, resource, options, cancellationToken);
     }
 
     ///

@@ -93,7 +93,7 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
 
     [Theory]
     [MemberData(nameof(RequestOptionsData))]
-    public async Task CreateAsync_Works(RequestOptions options)
+    public async Task SendAsync_Works(RequestOptions options)
     {
         var handler = CreateAsync_Handler(options);
 
@@ -101,10 +101,10 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
         {
             var model = new MessageCreateRequest
             {
-                To = Data!.To,
+                To = new[] { Data!.To!, },
                 Body = Data!.Body
             };
-            var response = await client.Messages.CreateAsync(model, options);
+            var response = await client.Messages.SendAsync(model, options);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -113,16 +113,22 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
 
     [Theory]
     [MemberData(nameof(RequestOptionsData))]
-    public async Task CreateBatchAsync_Works(RequestOptions options)
+    public async Task SendBatchAsync_Works(RequestOptions options)
     {
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Post, req.Method);
-            Assert.Equal($"{BasePath}/bulk", req.RequestUri!.AbsolutePath);
+            Assert.Equal($"{BasePath}/batch", req.RequestUri!.AbsolutePath);
 
             AssertRequestHeaders(req, options);
 
-            var content = new List<Message> { Data! };
+            var content = new MessageCreateResponse
+            {
+                Created = Data.Created,
+                Ids = new[] { Data.Id!, },
+                Live = Data.Live,
+                WorkspaceId = Data.WorkspaceId,
+            };
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, MediaTypeNames.Application.Json)
@@ -135,15 +141,15 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
         {
             var model = new MessageCreateRequest
             {
-                To = Data!.To,
+                To = new[] { Data!.To!, },
                 Body = Data!.Body
             };
 
-            var response = await client.Messages.CreateBatchAsync(new[] { model }, options);
+            var response = await client.Messages.SendBatchAsync(new[] { model }, options);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
-            Assert.Single(response.Resource);
+            Assert.Single(response.Resource!.Ids);
         });
     }
 

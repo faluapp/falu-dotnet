@@ -9,7 +9,7 @@ namespace Falu;
 public class FaluClientOptions
 {
     /// <summary>The ApiVersion that the SDK conforms to.</summary>
-    internal const string ApiVersion = "2021-09-03";
+    internal const string ApiVersion = "2022-01-01";
 
     /// <summary>Serialization options.</summary>
     internal JsonSerializerOptions SerializerOptions { get; } = CreateSerializerOptions();

@@ -44,26 +44,22 @@ public class MessagesServiceClient : BaseServiceClient<Message>, ISupportsListin
         return GetResourceAsync(id, options, cancellationToken);
     }
 
-    /// <summary>
-    /// Send a message.
-    /// </summary>
+    /// <summary>Send a message.</summary>
     /// <param name="message"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<Message>> CreateAsync(MessageCreateRequest message,
-                                                               RequestOptions? options = null,
-                                                               CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<MessageCreateResponse>> SendAsync(MessageCreateRequest message,
+                                                                           RequestOptions? options = null,
+                                                                           CancellationToken cancellationToken = default)
     {
         if (message is null) throw new ArgumentNullException(nameof(message));
         message.Template?.Model?.GetType().EnsureAllowedForMessageTemplateModel();
 
-        return CreateResourceAsync(message, options, cancellationToken);
+        return CreateResourceAsync<MessageCreateResponse>(message, options, cancellationToken);
     }
 
-    /// <summary>
-    /// Update a message.
-    /// </summary>
+    /// <summary>Update a message.</summary>
     /// <param name="id">Unique identifier for the message</param>
     /// <param name="patch"></param>
     /// <param name="options">Options to use for the request.</param>
@@ -77,23 +73,21 @@ public class MessagesServiceClient : BaseServiceClient<Message>, ISupportsListin
         return UpdateResourceAsync(id, patch, options, cancellationToken);
     }
 
-    /// <summary>
-    /// Send a batch of messages.
-    /// </summary>
+    /// <summary>Send a batch of messages.</summary>
     /// <param name="messages"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<List<Message>>> CreateBatchAsync(IList<MessageCreateRequest> messages,
-                                                                          RequestOptions? options = null,
-                                                                          CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<MessageCreateResponse>> SendBatchAsync(IList<MessageCreateRequest> messages,
+                                                                                RequestOptions? options = null,
+                                                                                CancellationToken cancellationToken = default)
     {
         if (messages is null) throw new ArgumentNullException(nameof(messages));
 
-        if (messages.Count > 10_000)
+        if (messages.Count > 1_000)
         {
             throw new ArgumentOutOfRangeException(paramName: nameof(messages),
-                                                  message: "The service does not support more than 10,000 (10k) messages");
+                                                  message: "The service does not support more than 1,000 (1k) messages");
         }
 
         foreach (var m in messages)
@@ -101,7 +95,7 @@ public class MessagesServiceClient : BaseServiceClient<Message>, ISupportsListin
             m.Template?.Model?.GetType().EnsureAllowedForMessageTemplateModel();
         }
 
-        var uri = MakePath("/bulk");
-        return RequestAsync<List<Message>>(uri, HttpMethod.Post, messages, options, cancellationToken);
+        var uri = MakePath("/batch");
+        return RequestAsync<MessageCreateResponse>(uri, HttpMethod.Post, messages, options, cancellationToken);
     }
 }

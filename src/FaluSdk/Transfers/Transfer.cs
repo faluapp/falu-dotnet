@@ -39,7 +39,7 @@ public class Transfer : TransferPatchModel, IHasId, IHasCurrency, IHasCreated, I
     /// An additional property is populated on the Transfer with a name matching this value.
     /// It contains additional information specific to the Transfer type.
     /// </summary>
-    public TransferType Type { get; set; }
+    public string? Type { get; set; }
 
     /// <summary>
     /// Purpose of the transfer.

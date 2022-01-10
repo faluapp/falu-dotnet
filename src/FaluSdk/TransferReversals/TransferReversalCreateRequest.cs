@@ -13,5 +13,5 @@ public class TransferReversalCreateRequest : TransferReversalPatchModel
     /// <summary>
     /// Reason for the reversal.
     /// </summary>
-    public TransferReversalReason Reason { get; set; }
+    public string? Reason { get; set; }
 }

@@ -1,5 +1,4 @@
-﻿using CloudNative.CloudEvents;
-using Falu.Core;
+﻿using Falu.Core;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -55,31 +54,6 @@ public static class EventUtility
         return System.Text.Json.JsonSerializer.Deserialize<WebhookEvent<T>>(json, options);
     }
 
-    /// <summary>
-    /// Parses a <see cref="CloudEvent"/> from a webhook into a <see cref="WebhookEvent{TObject}"/> object.
-    /// <br/>
-    /// When using <see cref="CloudEvent"/> to receive webhooks, it is recommended to use the
-    /// <see href="https://www.nuget.org/packages/CloudNative.CloudEvents.AspNetCore/">CloudNative.CloudEvents.AspNetCore</see>
-    /// package.
-    /// </summary>
-    /// <param name="event">The received <see cref="CloudEvent"/>.</param>
-    /// <returns>The deserialized <see cref="WebhookEvent{TObject}"/>.</returns>
-    /// <remarks>
-    /// This method doesn't verify <a href="https://docs.falu.io/webhooks/signatures">webhook
-    /// signatures</a>. It's recommended that you use
-    /// <see cref="ValidateSignature(string, string, string, long?, long?)"/> instead in your authentication/authorization pipeline.
-    /// </remarks>
-    public static WebhookEvent<T>? ParseEvent<T>(CloudEvent @event)
-    {
-        var data = @event.Data;
-        return data switch
-        {
-            string json => ParseEvent<T>(json),
-            byte[] raw => ParseEvent<T>(Encoding.UTF8.GetString(raw)),
-            _ => throw new InvalidOperationException($"Event data of type '{data?.GetType().FullName}' cannot be parsed."),
-        };
-    }
-
     /// <summary>Validate a signature provided alongside a webhook event.</summary>
     /// <param name="payload">The body payload.</param>
     /// <param name="signature">The value of the <see cref="HeadersNames.XFaluSignature"/> header from the webhook request.</param>
@@ -95,6 +69,9 @@ public static class EventUtility
     /// <param name="secret">The webhook endpoint's signing secret.</param>
     /// <param name="tolerance">The time tolerance, in seconds. Defaults to 300 seconds.</param>
     /// <param name="utcNow">The timestamp to use for the current time. Defaults to current time.</param>
+    /// <remarks>
+    /// Use this to validate the signature in your request pipeline.
+    /// </remarks>
     public static void ValidateSignature(byte[] payload, string signature, string secret, long? tolerance = null, long? utcNow = null)
     {
         var actualItems = ParseSignature(signature);

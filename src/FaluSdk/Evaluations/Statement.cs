@@ -10,7 +10,7 @@ public class Statement
     /// <summary>
     /// Provider of the statement.
     /// </summary>
-    public StatementProvider Provider { get; set; }
+    public string? Provider { get; set; }
 
     /// <summary>
     /// Email found in the statement.

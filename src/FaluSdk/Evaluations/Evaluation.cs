@@ -16,7 +16,7 @@ public class Evaluation : EvaluationPatchModel, IHasId, IHasCurrency, IHasCreate
     /// <summary>
     /// Scope of the evaluation.
     /// </summary>
-    public EvaluationScope Scope { get; set; }
+    public string? Scope { get; set; }
 
     /// <inheritdoc/>
     public DateTimeOffset Created { get; set; }
@@ -27,7 +27,7 @@ public class Evaluation : EvaluationPatchModel, IHasId, IHasCurrency, IHasCreate
     /// <summary>
     /// Status of the evaluation.
     /// </summary>
-    public EvaluationStatus Status { get; set; }
+    public string? Status { get; set; }
 
     /// <summary>
     /// Statement used for the evaluation.

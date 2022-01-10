@@ -13,12 +13,12 @@ public class EvaluationCreateRequest : EvaluationPatchModel, IHasCurrency
     /// <summary>
     /// Scope of the evaluation.
     /// </summary>
-    public EvaluationScope? Scope { get; set; }
+    public string? Scope { get; set; }
 
     /// <summary>
     /// Provider of the statement.
     /// </summary>
-    public StatementProvider? Provider { get; set; }
+    public string? Provider { get; set; }
 
     /// <summary>
     /// Full name of the owner of the statement.
@@ -27,7 +27,7 @@ public class EvaluationCreateRequest : EvaluationPatchModel, IHasCurrency
 
     /// <summary>
     /// Phone number for attached to the statement.
-    /// Only required for statements generated against a phone number such as <see cref="StatementProvider.Mpesa"/>
+    /// Only required for statements generated against a phone number such as <c>mpesa</c>.
     /// </summary>
     public string? Phone { get; set; }
 

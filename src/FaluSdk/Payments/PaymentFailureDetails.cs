@@ -8,7 +8,7 @@ public class PaymentFailureDetails
     /// <summary>
     /// Reason for failure.
     /// </summary>
-    public PaymentFailureReason Reason { get; set; }
+    public string? Reason { get; set; }
 
     /// <summary>
     /// Time at which failure occurred.

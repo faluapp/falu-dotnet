@@ -13,7 +13,7 @@ public class FileCreateRequest : IHasDescription
     public Stream? Content { get; set; }
 
     /// <summary>Purpose of the file.</summary>
-    public FilePurpose? Purpose { get; set; }
+    public string? Purpose { get; set; }
 
     /// <inheritdoc/>
     public string? Description { get; set; }

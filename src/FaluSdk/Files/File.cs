@@ -18,7 +18,7 @@ public class File : IHasId, IHasCreated, IHasUpdated, IHasDescription, IHasWorks
     public string? Description { get; set; }
 
     /// <summary>Purpose of the file.</summary>
-    public FilePurpose Purpose { get; set; }
+    public string? Purpose { get; set; }
 
     /// <summary>Type of file.</summary>
     /// <example>image/png</example>

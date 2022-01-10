@@ -21,7 +21,7 @@ public class Transfer : TransferPatchModel, IHasId, IHasCurrency, IHasCreated, I
     /// <summary>
     /// Status of the transfer
     /// </summary>
-    public TransferStatus Status { get; set; }
+    public string? Status { get; set; }
 
     /// <inheritdoc/>
     public DateTimeOffset Created { get; set; }
@@ -44,7 +44,7 @@ public class Transfer : TransferPatchModel, IHasId, IHasCurrency, IHasCreated, I
     /// <summary>
     /// Purpose of the transfer.
     /// </summary>
-    public TransferPurpose Purpose { get; set; }
+    public string? Purpose { get; set; }
 
     /// <summary>
     /// If this is an MPESA transfer, this contains details about the MPESA transfer.

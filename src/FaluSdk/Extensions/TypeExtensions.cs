@@ -5,13 +5,13 @@ namespace System;
 internal static class TypeExtensions
 {
     private static readonly Type[] otherPrimitives = new[] {
-            typeof(string),
-            typeof(decimal),
-            typeof(DateTime),
-            typeof(DateTimeOffset),
-            typeof(TimeSpan),
-            typeof(Guid),
-        };
+        typeof(string),
+        typeof(decimal),
+        typeof(DateTime),
+        typeof(DateTimeOffset),
+        typeof(TimeSpan),
+        typeof(Guid),
+    };
 
     public static bool IsAllowedForMessageTemplateModel(this Type type)
     {

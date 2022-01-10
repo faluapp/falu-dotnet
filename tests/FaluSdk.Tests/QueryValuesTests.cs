@@ -99,7 +99,7 @@ public class QueryValuesTests
             ContinuationToken = "123",
             Updated = null,
             Country = "uga",
-            Gender = Gender.Female,
+            Gender = "female",
             Age = new RangeFilteringOptions<int>
             {
                 GreaterThanOrEqualTo = 29,

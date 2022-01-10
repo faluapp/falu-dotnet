@@ -16,11 +16,11 @@ public class IdentityServiceClientTests : BaseServiceClientTests
         Id = "idt_123",
         Created = DateTimeOffset.UtcNow,
         Updated = DateTimeOffset.UtcNow,
-        DocumentType = IdentityDocumentKind.NationalId,
+        DocumentType = "nationalId",
         DocumentNumber = "123",
         Name = "cake",
         Birthday = DateTimeOffset.UtcNow.AddYears(-25),
-        Gender = Gender.Male
+        Gender = "male"
     };
 
     private readonly MarketingResult marketing = new()
@@ -93,7 +93,7 @@ public class IdentityServiceClientTests : BaseServiceClientTests
                     GreaterThan = 24,
                     LessThanOrEqualTo = 30
                 },
-                Gender = Gender.Male
+                Gender = "male"
             };
 
             var response = await client.Identity.MarketingAsync(marketing_options, options);

@@ -21,7 +21,7 @@ public class IdentitySearchModel : IHasCountry
     /// The kind of document to search for.
     /// Required if <see cref="Phone"/> is not specified.
     /// </summary>
-    public IdentityDocumentKind? DocumentType { get; set; }
+    public string? DocumentType { get; set; }
 
     /// <summary>
     /// The identification document number to search.

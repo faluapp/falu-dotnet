@@ -42,7 +42,7 @@ public class MarketingResult : IHasId, IHasCreated, IHasUpdated, IHasCountry, IH
     /// This value may be fixed or predicted.
     /// Check <code>GenderConfidence</code> for more information.
     /// </summary>
-    public Gender? Gender { get; set; }
+    public string? Gender { get; set; }
 
     /// <inheritdoc/>
     public string? Etag { get; set; }

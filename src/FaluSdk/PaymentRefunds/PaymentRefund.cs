@@ -27,7 +27,7 @@ public class PaymentRefund : PaymentRefundPatchModel, IHasId, IHasCurrency, IHas
     /// <summary>
     /// Reason for the reversal.
     /// </summary>
-    public PaymentRefundReason Reason { get; set; }
+    public string? Reason { get; set; }
 
     /// <summary>
     /// Status of the reversal.

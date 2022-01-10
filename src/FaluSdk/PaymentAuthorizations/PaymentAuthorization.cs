@@ -27,12 +27,12 @@ public class PaymentAuthorization : PaymentAuthorizationPatchModel, IHasId, IHas
     /// <summary>
     /// Status of the payment authorization.
     /// </summary>
-    public PaymentAuthorizationStatus Status { get; set; }
+    public string? Status { get; set; }
 
     /// <summary>
     /// Reason for the given status of the payment authorization.
     /// </summary>
-    public PaymentAuthorizationStatusReason? Reason { get; set; }
+    public string? Reason { get; set; }
 
     /// <inheritdoc/>
     public DateTimeOffset Created { get; set; }

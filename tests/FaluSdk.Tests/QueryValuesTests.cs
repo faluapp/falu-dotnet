@@ -149,11 +149,11 @@ public class QueryValuesTests
             ContinuationToken = "123",
             Updated = null,
             Approved = false,
-            Status = new List<PaymentAuthorizationStatus>
-                {
-                    PaymentAuthorizationStatus.Pending,
-                    PaymentAuthorizationStatus.Closed
-                },
+            Status = new List<string>
+            {
+                "pending",
+                "closed",
+            },
         };
 
         // Act

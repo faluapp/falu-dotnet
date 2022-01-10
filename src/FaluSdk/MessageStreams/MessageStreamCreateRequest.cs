@@ -16,10 +16,10 @@ public class MessageStreamCreateRequest : MessageStreamPatchModel
     /// <summary>
     /// Type of stream.
     /// </summary>
-    public MessageStreamType? Type { get; set; }
+    public string? Type { get; set; }
 
     /// <summary>
     /// Provider to be used.
     /// </summary>
-    public MessageStreamProviderType? Provider { get; set; }
+    public string? Provider { get; set; }
 }

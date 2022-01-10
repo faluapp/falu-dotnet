@@ -19,7 +19,7 @@ public class Message : MessagePatchModel, IHasId, IHasCreated, IHasUpdated, IHas
     /// <summary>
     /// Status of the message.
     /// </summary>
-    public MessageStatus Status { get; set; }
+    public string? Status { get; set; }
 
     /// <summary>
     /// Destination phone number in <see href="https://en.wikipedia.org/wiki/E.164">E.164 format</see>.

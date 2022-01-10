@@ -25,12 +25,12 @@ public class MessageStream : MessageStreamPatchModel, IHasId, IHasCreated, IHasU
     /// <summary>
     /// Type of stream.
     /// </summary>
-    public MessageStreamType Type { get; set; }
+    public string? Type { get; set; }
 
     /// <summary>
     /// Provider used by the stream.
     /// </summary>
-    public MessageStreamProviderType Provider { get; set; }
+    public string? Provider { get; set; }
 
     /// <summary>
     /// Time at which the stream was archived.

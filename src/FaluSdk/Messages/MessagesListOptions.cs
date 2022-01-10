@@ -13,7 +13,7 @@ public record MessagesListOptions : BasicListOptions
     /// <summary>
     /// Filter options for <see cref="Message.Status"/> property.
     /// </summary>
-    public List<MessageStatus>? Status { get; set; }
+    public List<string>? Status { get; set; }
 
     /// <inheritdoc/>
     internal override void Populate(QueryValues values)

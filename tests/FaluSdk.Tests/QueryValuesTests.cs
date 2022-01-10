@@ -11,13 +11,13 @@ public class QueryValuesTests
     public void QueryIsGenerated()
     {
         var values = new QueryValues
-            {
-                { "sort", "descending" },
-                { "count", "100" },
-                { "ct", "123" },
-                { "age.lt", "40" },
-                { "created.gte", "2021-03-10T19:41:25.0000000+03:00" }
-            };
+        {
+            { "sort", "descending" },
+            { "count", "100" },
+            { "ct", "123" },
+            { "age.lt", "40" },
+            { "created.gte", "2021-03-10T19:41:25.0000000+03:00" }
+        };
 
         var query = values.ToString();
         Assert.Equal("?sort=descending&count=100&ct=123&age.lt=40&created.gte=2021-03-10T19%3A41%3A25.0000000%2B03%3A00", query);
@@ -29,7 +29,7 @@ public class QueryValuesTests
         // Prepare
         var options = new BasicListOptions
         {
-            Sorting = SortingOrder.Descending,
+            Sorting = "descending",
             Count = 12,
             Created = null,
             ContinuationToken = "123",
@@ -74,17 +74,17 @@ public class QueryValuesTests
         var dictionary = query.ToDictionary();
         Assert.NotEmpty(dictionary);
         Assert.Equal(new[] {
-                "created.lt",
-                "created.lte",
-                "created.gt",
-                "created.gte",
-            }, dictionary.Keys);
+            "created.lt",
+            "created.lte",
+            "created.gt",
+            "created.gte",
+        }, dictionary.Keys);
         Assert.Equal(new[] {
-                "2021-03-11T16:41:25.0000000+00:00",
-                "2021-03-11T19:41:25.0000000+03:00",
-                "2021-03-10T16:41:25.0000000+00:00",
-                "2021-03-10T19:41:25.0000000+03:00",
-            }, dictionary.Values);
+            "2021-03-11T16:41:25.0000000+00:00",
+            "2021-03-11T19:41:25.0000000+03:00",
+            "2021-03-10T16:41:25.0000000+00:00",
+            "2021-03-10T19:41:25.0000000+03:00",
+        }, dictionary.Values);
     }
 
     [Fact]
@@ -93,7 +93,7 @@ public class QueryValuesTests
         // Prepare
         var options = new MarketingListOptions
         {
-            Sorting = SortingOrder.Descending,
+            Sorting = "descending",
             Count = 12,
             Created = null,
             ContinuationToken = "123",
@@ -115,26 +115,25 @@ public class QueryValuesTests
         var dictionary = query.ToDictionary();
         Assert.NotEmpty(dictionary);
         Assert.Equal(new[] {
-                "sort",
-                "count",
-                "ct",
-                "country",
-                "gender",
+            "sort",
+            "count",
+            "ct",
+            "country",
+            "gender",
 
-                "age.lt",
-                "age.gte",
-            }, dictionary.Keys);
+            "age.lt",
+            "age.gte",
+        }, dictionary.Keys);
         Assert.Equal(new[] {
-                "descending",
-                "12",
-                "123",
-                "uga",
-                "female",
+            "descending",
+            "12",
+            "123",
+            "uga",
+            "female",
 
-                "40",
-                "29",
-            }, dictionary.Values);
-
+            "40",
+            "29",
+        }, dictionary.Values);
     }
 
     [Fact]
@@ -143,7 +142,7 @@ public class QueryValuesTests
         // Prepare
         var options = new PaymentAuthorizationsListOptions
         {
-            Sorting = SortingOrder.Descending,
+            Sorting = "descending",
             Count = 12,
             Created = null,
             ContinuationToken = "123",
@@ -164,19 +163,18 @@ public class QueryValuesTests
         var dictionary = query.ToDictionary();
         Assert.NotEmpty(dictionary);
         Assert.Equal(new[] {
-                "sort",
-                "count",
-                "ct",
-                "status",
-                "approved",
-            }, dictionary.Keys);
+            "sort",
+            "count",
+            "ct",
+            "status",
+            "approved",
+        }, dictionary.Keys);
         Assert.Equal(new[] {
-                "descending",
-                "12",
-                "123",
-                "pending,closed",
-                "false",
-            }, dictionary.Values);
-
+            "descending",
+            "12",
+            "123",
+            "pending,closed",
+            "false",
+        }, dictionary.Values);
     }
 }

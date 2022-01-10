@@ -6,7 +6,7 @@
 public record BasicListOptions
 {
     /// <summary>The order to use for sorting the objects returned.</summary>
-    public SortingOrder? Sorting { get; set; }
+    public string? Sorting { get; set; }
 
     /// <summary>The maximum number of objects to return.</summary>
     public int? Count { get; set; }

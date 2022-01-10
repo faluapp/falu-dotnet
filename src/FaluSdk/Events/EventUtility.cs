@@ -80,18 +80,25 @@ public static class EventUtility
         };
     }
 
-    /// <summary>
-    /// Validate a signature provided alongside a webhook event.
-    /// </summary>
-    /// <param name="json">The raw JSON body payload</param>
+    /// <summary>Validate a signature provided alongside a webhook event.</summary>
+    /// <param name="payload">The body payload.</param>
     /// <param name="signature">The value of the <see cref="HeadersNames.XFaluSignature"/> header from the webhook request.</param>
     /// <param name="secret">The webhook endpoint's signing secret.</param>
-    /// <param name="tolerance">The time tolerance, in seconds. Defaults to 300 seconds</param>
+    /// <param name="tolerance">The time tolerance, in seconds. Defaults to 300 seconds.</param>
     /// <param name="utcNow">The timestamp to use for the current time. Defaults to current time.</param>
-    public static void ValidateSignature(string json, string signature, string secret, long? tolerance = null, long? utcNow = null)
+    public static void ValidateSignature(string payload, string signature, string secret, long? tolerance = null, long? utcNow = null)
+        => ValidateSignature(Encoding.UTF8.GetBytes(payload), signature, secret, tolerance, utcNow);
+
+    /// <summary>Validate a signature provided alongside a webhook event.</summary>
+    /// <param name="payload">The body payload.</param>
+    /// <param name="signature">The value of the <see cref="HeadersNames.XFaluSignature"/> header from the webhook request.</param>
+    /// <param name="secret">The webhook endpoint's signing secret.</param>
+    /// <param name="tolerance">The time tolerance, in seconds. Defaults to 300 seconds.</param>
+    /// <param name="utcNow">The timestamp to use for the current time. Defaults to current time.</param>
+    public static void ValidateSignature(byte[] payload, string signature, string secret, long? tolerance = null, long? utcNow = null)
     {
         var actualItems = ParseSignature(signature);
-        var expected = ComputeSignature(secret, actualItems["t"].FirstOrDefault(), json);
+        var expected = ComputeSignature(secret, actualItems["t"].FirstOrDefault(), payload);
 
         if (!IsSignaturePresent(expected, actualItems["sha256"]))
         {
@@ -117,14 +124,12 @@ public static class EventUtility
     }
 
     private static bool IsSignaturePresent(string signature, IEnumerable<string> signatures)
-    {
-        return signatures.Any(key => string.Equals(key, signature, StringComparison.Ordinal));
-    }
+        => signatures.Any(key => string.Equals(key, signature, StringComparison.Ordinal));
 
-    private static string ComputeSignature(string secret, string? timestamp, string payload)
+    private static string ComputeSignature(string secret, string? timestamp, byte[] payload)
     {
         var secretBytes = Encoding.UTF8.GetBytes(secret);
-        var payloadBytes = Encoding.UTF8.GetBytes($"{timestamp}.{payload}");
+        var payloadBytes = Encoding.UTF8.GetBytes($"{timestamp}.").Concat(payload).ToArray();
 
         using var hasher = new HMACSHA256(secretBytes);
         var hash = hasher.ComputeHash(payloadBytes);

@@ -21,7 +21,7 @@ public class Payment : PaymentPatchModel, IHasId, IHasCurrency, IHasCreated, IHa
     /// <summary>
     /// Status of the payment
     /// </summary>
-    public PaymentStatus Status { get; set; }
+    public string? Status { get; set; }
 
     /// <inheritdoc/>
     public DateTimeOffset Created { get; set; }

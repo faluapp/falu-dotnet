@@ -32,7 +32,7 @@ public class PaymentRefund : PaymentRefundPatchModel, IHasId, IHasCurrency, IHas
     /// <summary>
     /// Status of the reversal.
     /// </summary>
-    public PaymentRefundStatus Status { get; set; }
+    public string? Status { get; set; }
 
     /// <inheritdoc/>
     public DateTimeOffset Created { get; set; }

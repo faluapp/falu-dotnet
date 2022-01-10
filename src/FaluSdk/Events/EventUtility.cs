@@ -1,4 +1,5 @@
-﻿using Falu.Core;
+﻿using CloudNative.CloudEvents;
+using Falu.Core;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -15,7 +16,7 @@ public static class EventUtility
     private const int DefaultTimeTolerance = 300;
 
     /// <summary>
-    /// Parses a JSON string from a Falu webhook into a <see cref="WebhookEvent{TObject}"/> object, while
+    /// Parses a JSON string from a webhook into a <see cref="WebhookEvent{TObject}"/> object, while
     /// verifying the <a href="https://docs.falu.io/webhooks/signatures">webhook's
     /// signature</a>.
     /// </summary>
@@ -29,10 +30,10 @@ public static class EventUtility
     /// Thrown if the signature verification fails for any reason.
     /// </exception>
     public static WebhookEvent<T>? ConstructEvent<T>(string json,
-                                                    string signature,
-                                                    string secret,
-                                                    long? tolerance = null,
-                                                    long? utcNow = null)
+                                                     string signature,
+                                                     string secret,
+                                                     long? tolerance = null,
+                                                     long? utcNow = null)
     {
         ValidateSignature(json, signature, secret, tolerance, utcNow);
         return ParseEvent<T>(json);
@@ -52,6 +53,31 @@ public static class EventUtility
     {
         var options = FaluClientOptions.CreateSerializerOptions();
         return System.Text.Json.JsonSerializer.Deserialize<WebhookEvent<T>>(json, options);
+    }
+
+    /// <summary>
+    /// Parses a <see cref="CloudEvent"/> from a webhook into a <see cref="WebhookEvent{TObject}"/> object.
+    /// <br/>
+    /// When using <see cref="CloudEvent"/> to receive webhooks, it is recommended to use the
+    /// <see href="https://www.nuget.org/packages/CloudNative.CloudEvents.AspNetCore/">CloudNative.CloudEvents.AspNetCore</see>
+    /// package.
+    /// </summary>
+    /// <param name="event">The received <see cref="CloudEvent"/>.</param>
+    /// <returns>The deserialized <see cref="WebhookEvent{TObject}"/>.</returns>
+    /// <remarks>
+    /// This method doesn't verify <a href="https://docs.falu.io/webhooks/signatures">webhook
+    /// signatures</a>. It's recommended that you use
+    /// <see cref="ValidateSignature(string, string, string, long?, long?)"/> instead in your authentication/authorization pipeline.
+    /// </remarks>
+    public static WebhookEvent<T>? ParseEvent<T>(CloudEvent @event)
+    {
+        var data = @event.Data;
+        return data switch
+        {
+            string json => ParseEvent<T>(json),
+            byte[] raw => ParseEvent<T>(Encoding.UTF8.GetString(raw)),
+            _ => throw new InvalidOperationException($"Event data of type '{data?.GetType().FullName}' cannot be parsed."),
+        };
     }
 
     /// <summary>

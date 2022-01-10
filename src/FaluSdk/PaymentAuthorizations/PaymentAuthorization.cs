@@ -27,12 +27,12 @@ public class PaymentAuthorization : PaymentAuthorizationPatchModel, IHasId, IHas
     /// <summary>
     /// Status of the payment authorization.
     /// </summary>
-    public PaymentAuthorizationStatus Status { get; set; }
+    public string? Status { get; set; }
 
     /// <summary>
     /// Reason for the given status of the payment authorization.
     /// </summary>
-    public PaymentAuthorizationStatusReason? Reason { get; set; }
+    public string? Reason { get; set; }
 
     /// <inheritdoc/>
     public DateTimeOffset Created { get; set; }
@@ -45,7 +45,7 @@ public class PaymentAuthorization : PaymentAuthorizationPatchModel, IHasId, IHas
     /// An additional property is populated on the authorization with a name matching this value.
     /// It contains additional information specific to the payment type.
     /// </summary>
-    public PaymentType Type { get; set; }
+    public string? Type { get; set; }
 
     /// <summary>
     /// If this is an MPESA Payment, this contains details about the MPESA payment.

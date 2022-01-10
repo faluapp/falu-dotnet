@@ -19,7 +19,7 @@ public class WebhookEndpointPatchModel : IHasDescription, IHasMetadata
     /// <summary>
     /// The status of the webhook.
     /// </summary>
-    public WebhookEndpointStatus Status { get; set; }
+    public string? Status { get; set; }
 
     /// <summary>
     /// The URL of the webhook endpoint

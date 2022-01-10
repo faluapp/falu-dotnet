@@ -12,7 +12,7 @@ public record EvaluationsListOptions : BasicListOptions
     public string? Phone { get; set; }
 
     /// <summary>Filter options for <see cref="Evaluation.Status"/> property.</summary>
-    public List<EvaluationStatus>? Status { get; set; }
+    public List<string>? Status { get; set; }
 
     /// <inheritdoc/>
     internal override void Populate(QueryValues values)

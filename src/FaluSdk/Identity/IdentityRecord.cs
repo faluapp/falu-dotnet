@@ -22,7 +22,7 @@ public class IdentityRecord : IHasId, IHasCreated, IHasUpdated, IHasCountry, IHa
     /// <summary>
     /// The kind of identification document.
     /// </summary>
-    public IdentityDocumentKind? DocumentType { get; set; }
+    public string? DocumentType { get; set; }
 
     /// <summary>
     /// The identification document number.
@@ -57,7 +57,7 @@ public class IdentityRecord : IHasId, IHasCreated, IHasUpdated, IHasCountry, IHa
     /// This value may be fixed or predicted.
     /// When predicted <see cref="GenderConfidence"/> will have a value.
     /// </summary>
-    public Gender? Gender { get; set; }
+    public string? Gender { get; set; }
 
     /// <summary>
     /// The confidence for the value predicted in <see cref="Gender"/>.

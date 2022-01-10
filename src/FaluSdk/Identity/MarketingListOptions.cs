@@ -12,7 +12,7 @@ public record MarketingListOptions : BasicListOptions
     /// The gender of the entity.
     /// When not specified, any gender is returned.
     /// </summary>
-    public Gender? Gender { get; set; }
+    public string? Gender { get; set; }
 
     /// <summary>
     /// Range filter options for <code>birthday</code> property but based on age.

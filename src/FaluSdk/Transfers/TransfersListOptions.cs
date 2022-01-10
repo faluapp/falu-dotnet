@@ -6,7 +6,7 @@ namespace Falu.Transfers;
 public record TransfersListOptions : BasicListOptionsWithMoney
 {
     /// <summary>Filter options for <see cref="Transfer.Status"/> property.</summary>
-    public List<TransferStatus>? Status { get; set; }
+    public List<string>? Status { get; set; }
 
     /// <inheritdoc/>
     internal override void Populate(QueryValues values)

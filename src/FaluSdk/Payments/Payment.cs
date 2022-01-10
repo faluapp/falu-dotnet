@@ -21,7 +21,7 @@ public class Payment : PaymentPatchModel, IHasId, IHasCurrency, IHasCreated, IHa
     /// <summary>
     /// Status of the payment
     /// </summary>
-    public PaymentStatus Status { get; set; }
+    public string? Status { get; set; }
 
     /// <inheritdoc/>
     public DateTimeOffset Created { get; set; }
@@ -44,7 +44,7 @@ public class Payment : PaymentPatchModel, IHasId, IHasCurrency, IHasCreated, IHa
     /// An additional property is populated on the Payment with a name matching this value.
     /// It contains additional information specific to the Payment type.
     /// </summary>
-    public PaymentType Type { get; set; }
+    public string? Type { get; set; }
 
     /// <summary>
     /// If this is an MPESA Payment, this contains details about the MPESA payment.

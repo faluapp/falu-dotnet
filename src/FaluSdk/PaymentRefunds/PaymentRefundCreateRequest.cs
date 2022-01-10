@@ -13,5 +13,5 @@ public class PaymentRefundCreateRequest : PaymentRefundPatchModel
     /// <summary>
     /// Reason for the reversal.
     /// </summary>
-    public PaymentRefundReason? Reason { get; set; }
+    public string? Reason { get; set; }
 }

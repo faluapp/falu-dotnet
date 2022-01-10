@@ -8,5 +8,5 @@ public class WebhookEndpointCreateRequest : WebhookEndpointPatchModel
     /// <summary>
     /// The format to use for webhook requests.
     /// </summary>
-    public WebhookFormat? Format { get; set; }
+    public string? Format { get; set; }
 }

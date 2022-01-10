@@ -58,12 +58,6 @@ public sealed class QueryValues : IEnumerable<KeyValuePair<string, string>>
     }
 
     ///
-    public QueryValues Add<T>(string key, T? value) where T : struct, Enum => Add(key, value?.GetEnumMemberAttrValueOrDefault());
-
-    ///
-    public QueryValues Add<T>(string key, IEnumerable<T>? value) where T : struct, Enum => Add(key, value?.Select(v => v.GetEnumMemberAttrValueOrDefault()));
-
-    ///
     public QueryValues Add(string key, IEnumerable<string>? value) => Add(key, value is null ? null : string.Join(",", value));
 
     ///

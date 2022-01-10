@@ -6,7 +6,7 @@ namespace Falu.PaymentAuthorizations;
 public record PaymentAuthorizationsListOptions : BasicListOptionsWithMoney
 {
     /// <summary>Filter options for <see cref="PaymentAuthorization.Status"/> property.</summary>
-    public List<PaymentAuthorizationStatus>? Status { get; set; }
+    public List<string>? Status { get; set; }
 
     /// <summary>Filter options for <see cref="PaymentAuthorization.Approved"/> property.</summary>
     public bool? Approved { get; set; }

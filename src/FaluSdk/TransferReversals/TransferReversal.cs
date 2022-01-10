@@ -27,12 +27,12 @@ public class TransferReversal : TransferReversalPatchModel, IHasId, IHasCurrency
     /// <summary>
     /// Reason for the reversal.
     /// </summary>
-    public TransferReversalReason Reason { get; set; }
+    public string? Reason { get; set; }
 
     /// <summary>
     /// Status of the reversal.
     /// </summary>
-    public TransferReversalStatus Status { get; set; }
+    public string? Status { get; set; }
 
     /// <inheritdoc/>
     public DateTimeOffset Created { get; set; }

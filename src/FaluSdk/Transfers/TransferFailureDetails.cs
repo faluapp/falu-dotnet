@@ -8,7 +8,7 @@ public class TransferFailureDetails
     /// <summary>
     /// Reason for failure.
     /// </summary>
-    public TransferFailureReason Reason { get; set; }
+    public string? Reason { get; set; }
 
     /// <summary>
     /// Time at which failure occurred.

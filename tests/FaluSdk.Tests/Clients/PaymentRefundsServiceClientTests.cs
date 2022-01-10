@@ -105,7 +105,7 @@ public class PaymentRefundsServiceClientTests : BaseServiceClientTests<PaymentRe
             var model = new PaymentRefundCreateRequest
             {
                 PaymentId = Data!.PaymentId,
-                Reason = PaymentRefundReason.CustomerRequested
+                Reason = "customer_requested",
             };
 
             var response = await client.PaymentRefunds.CreateAsync(model, options);

@@ -6,7 +6,7 @@ namespace Falu.Payments;
 public record PaymentsListOptions : BasicListOptionsWithMoney
 {
     /// <summary>Filter options for <see cref="Payment.Status"/> property.</summary>
-    public List<PaymentStatus>? Status { get; set; }
+    public List<string>? Status { get; set; }
 
     /// <inheritdoc/>
     internal override void Populate(QueryValues values)

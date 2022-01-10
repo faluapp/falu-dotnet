@@ -8,7 +8,7 @@ namespace Falu.Events;
 /// This class contains utility methods to process event objects in Falu's webhooks.
 /// </summary>
 /// <remarks>
-/// Use only for <see cref="Webhooks.WebhookFormat.Basic"/>.
+/// Use only for <c>basic</c> format.
 /// </remarks>
 public static class EventUtility
 {

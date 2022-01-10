@@ -6,7 +6,7 @@ namespace Falu.TransferReversals;
 public record TransferReversalsListOptions : BasicListOptionsWithMoney
 {
     /// <summary>Filter options for <see cref="TransferReversal.Status"/> property.</summary>
-    public List<TransferReversalStatus>? Status { get; set; }
+    public List<string>? Status { get; set; }
 
     /// <inheritdoc/>
     internal override void Populate(QueryValues values)

@@ -1,4 +1,5 @@
 ﻿using CloudNative.CloudEvents;
+using CloudNative.CloudEvents.Extensions;
 using CloudNative.CloudEvents.Http;
 using CloudNative.CloudEvents.SystemTextJson;
 using Falu.Core;
@@ -28,7 +29,8 @@ public class CloudEventExtensionsTests
         var time = DateTimeOffset.UtcNow.AddHours(-3);
         var recoded = await RecodeAsync(evaluation, EventTypes.EvaluationCompleted, time, ContentMode.Binary);
         Assert.NotNull(recoded);
-        Assert.Equal("wksp_1234567890", recoded.Subject);
+        Assert.Equal(evaluation.WorkspaceId, recoded.GetWorkspace());
+        Assert.Equal(evaluation.Live, recoded.GetLiveMode());
         Assert.Equal("application/json", recoded.DataContentType);
         Assert.Equal(EventTypes.EvaluationCompleted, recoded.Type);
         Assert.Equal(new Uri($"https://dashboard.falu.io/{evaluation.WorkspaceId}/events/evt_1234567890"), recoded.Source);
@@ -41,7 +43,8 @@ public class CloudEventExtensionsTests
         Assert.Equal("ev_1234567890", evt.Data.Object!.Id);
         Assert.Equal("personal", evt.Data.Object!.Scope);
         Assert.Equal("test@test.com", evt.Data.Object!.Statement?.Email);
-        Assert.Equal("wksp_1234567890", evt.Data.Object!.WorkspaceId);
+        Assert.Equal(evaluation.WorkspaceId, evt.Data.Object!.WorkspaceId);
+        Assert.Equal(evaluation.Live, evt.Data.Object!.Live);
     }
 
     [Fact]
@@ -59,7 +62,8 @@ public class CloudEventExtensionsTests
         var time = DateTimeOffset.UtcNow.AddHours(-3);
         var recoded = await RecodeAsync(template, EventTypes.MessageTemplateCreated, time, ContentMode.Structured);
         Assert.NotNull(recoded);
-        Assert.Equal("wksp_1234567890", recoded.Subject);
+        Assert.Equal(template.WorkspaceId, recoded.GetWorkspace());
+        Assert.Equal(template.Live, recoded.GetLiveMode());
         Assert.Equal("application/json", recoded.DataContentType);
         Assert.Equal(EventTypes.MessageTemplateCreated, recoded.Type);
         Assert.Equal(new Uri($"https://dashboard.falu.io/{template.WorkspaceId}/events/evt_1234567890"), recoded.Source);
@@ -72,10 +76,11 @@ public class CloudEventExtensionsTests
         Assert.Equal("mtpl_1234567890", evt.Data.Object!.Id);
         Assert.Equal("school-promo-2022", evt.Data.Object!.Alias);
         Assert.Equal("You are invited to the Teacher-Parent meeting on {{date}}.", evt.Data.Object!.Body);
-        Assert.Equal("wksp_1234567890", evt.Data.Object!.WorkspaceId);
+        Assert.Equal(template.WorkspaceId, evt.Data.Object!.WorkspaceId);
+        Assert.Equal(template.Live, evt.Data.Object!.Live);
     }
 
-    private static async Task<CloudEvent> RecodeAsync<T>(T data, string type, DateTimeOffset time, ContentMode mode) where T : class, IHasWorkspaceId
+    private static async Task<CloudEvent> RecodeAsync<T>(T data, string type, DateTimeOffset time, ContentMode mode) where T : class, IHasWorkspaceId, IHasLive
     {
         var eventId = "evt_1234567890";
         var source = new Uri($"https://dashboard.falu.io/{data.WorkspaceId}/events/{eventId}");
@@ -86,22 +91,20 @@ public class CloudEventExtensionsTests
             Source = source,
             Type = type,
             DataContentType = "application/json",
-            Data = new WebhookEvent<T>
+            Data = new CloudEventExtensions.CloudEventDataPayload<T>
             {
-                Created = time,
-                Data = new WebhookEventData<T> { Object = data, Previous = null, },
-                Id = eventId,
-                Type = type,
-                Live = false,
-                WorkspaceId = data.WorkspaceId,
+                Object = data,
+                Previous = null,
                 Request = new WebhookEventRequest
                 {
                     Id = "req_1234567890",
                     IdempotencyKey = null,
                 },
             },
-            Subject = data.WorkspaceId,
         };
+
+        cloudEvent[CloudNative.CloudEvents.Extensions.Falu.WorkspaceAttribute] = data.WorkspaceId;
+        cloudEvent[CloudNative.CloudEvents.Extensions.Falu.LiveModeAttribute] = data.Live;
 
         var formatter = new JsonEventFormatter();
         var content = cloudEvent.ToHttpContent(mode, formatter);
@@ -115,6 +118,6 @@ public class CloudEventExtensionsTests
             headers.Add(h.Key, h.Value);
         }
 
-        return await response.ToCloudEventAsync(formatter);
+        return await response.ToCloudEventAsync(formatter, CloudNative.CloudEvents.Extensions.Falu.AllAttributes);
     }
 }

@@ -46,8 +46,8 @@ public static class CloudEventExtensions
         }
 
         var options = FaluClientOptions.CreateSerializerOptions();
-        var ce_payload = JsonSerializer.Deserialize<CloudEventDataPayload<T>>(je.GetRawText(), options);
-        if (ce_payload is null)
+        var payload = JsonSerializer.Deserialize<CloudEventDataPayload<T>>(je.GetRawText(), options);
+        if (payload is null)
         {
             throw new InvalidOperationException("JSON deserialization resulted in null");
         }
@@ -59,10 +59,10 @@ public static class CloudEventExtensions
             Type = type,
             Data = new WebhookEventData<T>
             {
-                Object = ce_payload.Object,
-                Previous = ce_payload.Previous,
+                Object = payload.Object,
+                Previous = payload.Previous,
             },
-            Request = ce_payload.Request,
+            Request = payload.Request,
             WorkspaceId = @event.GetWorkspace(),
             Live = @event.GetLiveMode() ?? false,
         };

@@ -15,40 +15,7 @@ namespace Falu.Tests;
 public class CloudEventExtensionsTests
 {
     [Fact]
-    public async Task ToFaluWebhookEvent_Works_For_Binary()
-    {
-        var evaluation = new Evaluation
-        {
-            Scope = "personal",
-            Statement = new Statement { Email = "test@test.com", },
-            Id = "ev_1234567890",
-            WorkspaceId = "wksp_1234567890",
-            Live = false,
-        };
-
-        var time = DateTimeOffset.UtcNow.AddHours(-3);
-        var recoded = await RecodeAsync(evaluation, EventTypes.EvaluationCompleted, time, ContentMode.Binary);
-        Assert.NotNull(recoded);
-        Assert.Equal(evaluation.WorkspaceId, recoded.GetWorkspace());
-        Assert.Equal(evaluation.Live, recoded.GetLiveMode());
-        Assert.Equal("application/json", recoded.DataContentType);
-        Assert.Equal($"io.falu.{EventTypes.EvaluationCompleted}", recoded.Type);
-        Assert.Equal(new Uri($"https://dashboard.falu.io/{evaluation.WorkspaceId}/events/evt_1234567890"), recoded.Source);
-        Assert.Equal("evt_1234567890", recoded.Id);
-
-        var evt = recoded.ToFaluWebhookEvent<Evaluation>();
-        Assert.NotNull(evt);
-        Assert.NotNull(evt!.Data);
-        Assert.NotNull(evt.Data!.Object);
-        Assert.Equal("ev_1234567890", evt.Data.Object!.Id);
-        Assert.Equal("personal", evt.Data.Object!.Scope);
-        Assert.Equal("test@test.com", evt.Data.Object!.Statement?.Email);
-        Assert.Equal(evaluation.WorkspaceId, evt.Data.Object!.WorkspaceId);
-        Assert.Equal(evaluation.Live, evt.Data.Object!.Live);
-    }
-
-    [Fact]
-    public async Task ToFaluWebhookEvent_Works_For_Structured()
+    public async Task ToFaluWebhookEvent_Works()
     {
         var template = new MessageTemplate
         {
@@ -60,7 +27,7 @@ public class CloudEventExtensionsTests
         };
 
         var time = DateTimeOffset.UtcNow.AddHours(-3);
-        var recoded = await RecodeAsync(template, EventTypes.MessageTemplateCreated, time, ContentMode.Structured);
+        var recoded = await RecodeAsync(template, EventTypes.MessageTemplateCreated, time);
         Assert.NotNull(recoded);
         Assert.Equal(template.WorkspaceId, recoded.GetWorkspace());
         Assert.Equal(template.Live, recoded.GetLiveMode());
@@ -80,7 +47,7 @@ public class CloudEventExtensionsTests
         Assert.Equal(template.Live, evt.Data.Object!.Live);
     }
 
-    private static async Task<CloudEvent> RecodeAsync<T>(T data, string type, DateTimeOffset time, ContentMode mode) where T : class, IHasWorkspaceId, IHasLive
+    private static async Task<CloudEvent> RecodeAsync<T>(T data, string type, DateTimeOffset time) where T : class, IHasWorkspaceId, IHasLive
     {
         var eventId = "evt_1234567890";
         var source = new Uri($"https://dashboard.falu.io/{data.WorkspaceId}/events/{eventId}");
@@ -107,7 +74,7 @@ public class CloudEventExtensionsTests
         cloudEvent[CloudNative.CloudEvents.Extensions.Falu.LiveModeAttribute] = data.Live;
 
         var formatter = new JsonEventFormatter();
-        var content = cloudEvent.ToHttpContent(mode, formatter);
+        var content = cloudEvent.ToHttpContent(ContentMode.Structured, formatter);
         var response = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
         {
             Content = new StreamContent(await content.ReadAsStreamAsync())

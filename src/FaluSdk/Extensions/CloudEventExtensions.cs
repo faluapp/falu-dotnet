@@ -25,12 +25,11 @@ public static class CloudEventExtensions
     public static WebhookEvent<T>? ToFaluWebhookEvent<T>(this CloudEvent @event)
     {
         var data = @event.Data;
-        return data switch
+        if (data is not JsonElement je)
         {
-            string json => EventUtility.ParseEvent<T>(json),
-            byte[] raw => EventUtility.ParseEvent<T>(Encoding.UTF8.GetString(raw)),
-            JsonElement je => EventUtility.ParseEvent<T>(je.GetRawText()),
-            _ => throw new InvalidOperationException($"Event data of type '{data?.GetType().FullName}' cannot be parsed."),
-        };
+            throw new InvalidOperationException($"Event data of type '{data?.GetType().FullName}' cannot be parsed.");
+        }
+
+        return EventUtility.ParseEvent<T>(je.GetRawText());
     }
 }

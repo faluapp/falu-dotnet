@@ -12,7 +12,7 @@ public class WebhookEventData<TObject>
     public TObject? Object { get; set; }
 
     /// <summary>
-    /// Object containing the names of the attributes that have changed, and their previous
+    /// Object containing the names of the properties that have changed, and their previous
     /// values (sent along only with <c>*.updated</c> events).
     /// </summary>
     public TObject? Previous { get; set; }

@@ -3,7 +3,6 @@ using CloudNative.CloudEvents.Extensions;
 using CloudNative.CloudEvents.Http;
 using CloudNative.CloudEvents.SystemTextJson;
 using Falu.Core;
-using Falu.Evaluations;
 using Falu.Events;
 using Falu.MessageTemplates;
 using Falu.Webhooks;
@@ -14,8 +13,10 @@ namespace Falu.Tests;
 
 public class CloudEventExtensionsTests
 {
-    [Fact]
-    public async Task ToFaluWebhookEvent_Works()
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public async Task ToFaluWebhookEvent_Works(bool live)
     {
         var template = new MessageTemplate
         {
@@ -23,7 +24,7 @@ public class CloudEventExtensionsTests
             Body = "You are invited to the Teacher-Parent meeting on {{date}}.",
             Id = "mtpl_1234567890",
             WorkspaceId = "wksp_1234567890",
-            Live = false,
+            Live = live,
         };
 
         var time = DateTimeOffset.UtcNow.AddHours(-3);

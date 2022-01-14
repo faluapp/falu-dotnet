@@ -1,5 +1,6 @@
 ﻿using Falu.Events;
 using System.Text;
+using System.Text.Json;
 
 namespace CloudNative.CloudEvents;
 
@@ -28,6 +29,7 @@ public static class CloudEventExtensions
         {
             string json => EventUtility.ParseEvent<T>(json),
             byte[] raw => EventUtility.ParseEvent<T>(Encoding.UTF8.GetString(raw)),
+            JsonElement je => EventUtility.ParseEvent<T>(je.GetRawText()),
             _ => throw new InvalidOperationException($"Event data of type '{data?.GetType().FullName}' cannot be parsed."),
         };
     }

@@ -10,6 +10,8 @@ namespace CloudNative.CloudEvents;
 /// </summary>
 public static class CloudEventExtensions
 {
+    private readonly static System.Text.RegularExpressions.Regex TypeFormat = new("^io.falu.(.*)$");
+
     /// <summary>
     /// Convert a <see cref="CloudEvent"/> to a <see cref="WebhookEvent{TObject}"/> object.
     /// <br/>
@@ -33,6 +35,16 @@ public static class CloudEventExtensions
             throw new InvalidOperationException($"Event data of type '{data?.GetType().FullName}' cannot be parsed.");
         }
 
+        // extract the event type
+        var type = @event.Type;
+        if (type is not null)
+        {
+            var match = TypeFormat.Match(type);
+            type = match.Success
+                ? match.Groups[1].Value
+                : throw new InvalidOperationException($"The '{nameof(@event)}.{nameof(@event.Type)}' value must start with 'io.falu.'");
+        }
+
         var options = FaluClientOptions.CreateSerializerOptions();
         var ce_payload = JsonSerializer.Deserialize<CloudEventDataPayload<T>>(je.GetRawText(), options);
         if (ce_payload is null)
@@ -42,15 +54,15 @@ public static class CloudEventExtensions
 
         return new WebhookEvent<T>
         {
+            Id = @event.Id,
             Created = @event.Time ?? DateTimeOffset.MinValue,
+            Type = type,
             Data = new WebhookEventData<T>
             {
                 Object = ce_payload.Object,
                 Previous = ce_payload.Previous,
             },
-            Id = @event.Id,
             Request = ce_payload.Request,
-            Type = @event.Type,
             WorkspaceId = @event.GetWorkspace(),
             Live = @event.GetLiveMode() ?? false,
         };

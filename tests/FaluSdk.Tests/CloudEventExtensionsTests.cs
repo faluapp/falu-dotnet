@@ -32,7 +32,7 @@ public class CloudEventExtensionsTests
         Assert.Equal(evaluation.WorkspaceId, recoded.GetWorkspace());
         Assert.Equal(evaluation.Live, recoded.GetLiveMode());
         Assert.Equal("application/json", recoded.DataContentType);
-        Assert.Equal(EventTypes.EvaluationCompleted, recoded.Type);
+        Assert.Equal($"io.falu.{EventTypes.EvaluationCompleted}", recoded.Type);
         Assert.Equal(new Uri($"https://dashboard.falu.io/{evaluation.WorkspaceId}/events/evt_1234567890"), recoded.Source);
         Assert.Equal("evt_1234567890", recoded.Id);
 
@@ -65,7 +65,7 @@ public class CloudEventExtensionsTests
         Assert.Equal(template.WorkspaceId, recoded.GetWorkspace());
         Assert.Equal(template.Live, recoded.GetLiveMode());
         Assert.Equal("application/json", recoded.DataContentType);
-        Assert.Equal(EventTypes.MessageTemplateCreated, recoded.Type);
+        Assert.Equal($"io.falu.{EventTypes.MessageTemplateCreated}", recoded.Type);
         Assert.Equal(new Uri($"https://dashboard.falu.io/{template.WorkspaceId}/events/evt_1234567890"), recoded.Source);
         Assert.Equal("evt_1234567890", recoded.Id);
 
@@ -89,7 +89,7 @@ public class CloudEventExtensionsTests
             Id = eventId,
             Time = time,
             Source = source,
-            Type = type,
+            Type = $"io.falu.{type}",
             DataContentType = "application/json",
             Data = new CloudEventExtensions.CloudEventDataPayload<T>
             {

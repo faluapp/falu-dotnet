@@ -21,7 +21,7 @@ public static class CloudEventExtensions
     /// This method doesn't verify <a href="https://docs.falu.io/webhooks/signatures">webhook signatures</a>.
     /// Use <see cref="EventUtility.ValidateSignature(byte[], string, string, long?, long?)"/> for validation.
     /// </remarks>
-    public static WebhookEvent<T>? ToFaluWebhookEvent<T>(CloudEvent @event)
+    public static WebhookEvent<T>? ToFaluWebhookEvent<T>(this CloudEvent @event)
     {
         var data = @event.Data;
         return data switch

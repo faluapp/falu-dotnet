@@ -42,8 +42,6 @@ public class FaluClientOptions
             ReadCommentHandling = JsonCommentHandling.Skip,
         };
 
-        serializerOptions.Converters.Add(new JsonStringEnumConverter(serializerOptions.PropertyNamingPolicy));
-
         return serializerOptions;
     }
 }

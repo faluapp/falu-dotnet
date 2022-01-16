@@ -11,6 +11,7 @@ namespace CloudNative.CloudEvents;
 public static class CloudEventExtensions
 {
     private readonly static System.Text.RegularExpressions.Regex TypeFormat = new("^io.falu.(.*)$");
+    private static readonly JsonSerializerOptions serializerOptions = FaluClientOptions.CreateSerializerOptions();
 
     /// <summary>
     /// Convert a <see cref="CloudEvent"/> to a <see cref="WebhookEvent{TObject}"/> object.
@@ -45,8 +46,7 @@ public static class CloudEventExtensions
                 : throw new InvalidOperationException($"The '{nameof(@event)}.{nameof(@event.Type)}' value must start with 'io.falu.'");
         }
 
-        var options = FaluClientOptions.CreateSerializerOptions();
-        var payload = JsonSerializer.Deserialize<CloudEventDataPayload<T>>(je.GetRawText(), options);
+        var payload = JsonSerializer.Deserialize<CloudEventDataPayload<T>>(je.GetRawText(), serializerOptions);
         if (payload is null)
         {
             throw new InvalidOperationException("JSON deserialization resulted in null");

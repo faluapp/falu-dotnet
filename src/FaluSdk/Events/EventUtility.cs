@@ -1,6 +1,7 @@
 ﻿using Falu.Core;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 
 namespace Falu.Events;
 
@@ -13,6 +14,7 @@ namespace Falu.Events;
 public static class EventUtility
 {
     private const int DefaultTimeTolerance = 300;
+    private static readonly JsonSerializerOptions serializerOptions = FaluClientOptions.CreateSerializerOptions();
 
     /// <summary>
     /// Parses a JSON string from a webhook into a <see cref="WebhookEvent{TObject}"/> object, while
@@ -50,8 +52,7 @@ public static class EventUtility
     /// </remarks>
     public static WebhookEvent<T>? ParseEvent<T>(string json)
     {
-        var options = FaluClientOptions.CreateSerializerOptions();
-        return System.Text.Json.JsonSerializer.Deserialize<WebhookEvent<T>>(json, options);
+        return JsonSerializer.Deserialize<WebhookEvent<T>>(json, serializerOptions);
     }
 
     /// <summary>Validate a signature provided alongside a webhook event.</summary>

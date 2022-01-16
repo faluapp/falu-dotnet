@@ -50,7 +50,7 @@ public static class EventUtility
     /// </remarks>
     public static WebhookEvent<T>? ParseEvent<T>(string json)
     {
-        var options = FaluClientOptions.CreateSerializerOptions();
+        var options = FaluClientOptions.GetSerializerOptions();
         return System.Text.Json.JsonSerializer.Deserialize<WebhookEvent<T>>(json, options);
     }
 

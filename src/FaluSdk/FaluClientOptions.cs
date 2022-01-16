@@ -8,11 +8,13 @@ namespace Falu;
 /// </summary>
 public class FaluClientOptions
 {
+    private static JsonSerializerOptions? serializerOptions;
+
     /// <summary>The ApiVersion that the SDK conforms to.</summary>
     internal const string ApiVersion = "2022-01-01";
 
     /// <summary>Serialization options.</summary>
-    internal JsonSerializerOptions SerializerOptions { get; } = CreateSerializerOptions();
+    internal JsonSerializerOptions SerializerOptions { get; } = GetSerializerOptions();
 
     /// <summary>
     /// The API Key for authenticating requests to Falu servers.
@@ -31,16 +33,19 @@ public class FaluClientOptions
     /// </summary>
     public ApplicationInformation? Application { get; set; }
 
-    internal static JsonSerializerOptions CreateSerializerOptions()
+    internal static JsonSerializerOptions GetSerializerOptions()
     {
-        var serializerOptions = new JsonSerializerOptions
+        if (serializerOptions is null)
         {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            PropertyNameCaseInsensitive = true,
-            AllowTrailingCommas = true,
-            ReadCommentHandling = JsonCommentHandling.Skip,
-        };
+            serializerOptions = new JsonSerializerOptions
+            {
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                PropertyNameCaseInsensitive = true,
+                AllowTrailingCommas = true,
+                ReadCommentHandling = JsonCommentHandling.Skip,
+            };
+        }
 
         return serializerOptions;
     }

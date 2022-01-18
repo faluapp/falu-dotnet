@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Falu.Tests.Clients;
 
-public class FilesServiceClientTests : BaseServiceClientTests<File>
+public class FilesServiceClientTests : BaseServiceClientTests<Files.File>
 {
     public FilesServiceClientTests() : base(new()
     {
@@ -76,7 +76,7 @@ public class FilesServiceClientTests : BaseServiceClientTests<File>
                 Count = 1
             };
 
-            var results = new List<File>();
+            var results = new List<Files.File>();
 
             await foreach (var item in client.Files.ListRecursivelyAsync(opt, options))
             {
@@ -100,7 +100,7 @@ public class FilesServiceClientTests : BaseServiceClientTests<File>
             var model = new FileCreateRequest
             {
                 FileName = Data!.Filename,
-                Content = new System.IO.MemoryStream(Guid.NewGuid().ToByteArray()),
+                Content = new MemoryStream(Guid.NewGuid().ToByteArray()),
                 Purpose = Data!.Purpose
             };
 

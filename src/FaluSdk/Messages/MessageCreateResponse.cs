@@ -5,7 +5,7 @@ namespace Falu.Messages;
 /// <summary>
 /// Response from sending one or more messages.
 /// </summary>
-public class MessageCreateResponse : IHasCreated, IHasWorkspaceId, IHasLive
+public class MessageCreateResponse : IHasCreated, IHasWorkspace, IHasLive
 {
     /// <inheritdoc/>
     public DateTimeOffset Created { get; set; }

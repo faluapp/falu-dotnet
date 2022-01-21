@@ -5,7 +5,7 @@ namespace Falu.MessageTemplates;
 /// <summary>
 /// A template for sending messages.
 /// </summary>
-public class MessageTemplate : MessageTemplatePatchModel, IHasId, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
+public class MessageTemplate : MessageTemplatePatchModel, IHasId, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
 {
     /// <inheritdoc/>
     public string? Id { get; set; }

@@ -3,7 +3,7 @@
 namespace Falu.Files;
 
 /// <summary>A file on Falu's servers.</summary>
-public class File : IHasId, IHasCreated, IHasUpdated, IHasDescription, IHasWorkspaceId, IHasLive, IHasEtag
+public class File : IHasId, IHasCreated, IHasUpdated, IHasDescription, IHasWorkspace, IHasLive, IHasEtag
 {
     /// <inheritdoc/>
     public string? Id { get; set; }

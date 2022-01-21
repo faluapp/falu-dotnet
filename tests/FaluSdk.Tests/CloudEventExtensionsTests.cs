@@ -48,7 +48,7 @@ public class CloudEventExtensionsTests
         Assert.Equal(template.Live, evt.Data.Object!.Live);
     }
 
-    private static async Task<CloudEvent> RecodeAsync<T>(T data, string type, DateTimeOffset time) where T : class, IHasWorkspaceId, IHasLive
+    private static async Task<CloudEvent> RecodeAsync<T>(T data, string type, DateTimeOffset time) where T : class, IHasWorkspace, IHasLive
     {
         var eventId = "evt_1234567890";
         var source = new Uri($"https://dashboard.falu.io/{data.WorkspaceId}/events/{eventId}");

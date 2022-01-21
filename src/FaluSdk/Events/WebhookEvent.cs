@@ -5,7 +5,7 @@ namespace Falu.Events;
 /// <summary>
 /// The basic implementation of a Webhook Event irrespective of the usage
 /// </summary>
-public class WebhookEvent<TObject> : IHasId, IHasCreated, IHasWorkspaceId, IHasLive
+public class WebhookEvent<TObject> : IHasId, IHasCreated, IHasWorkspace, IHasLive
 {
     /// <inheritdoc/>
     public string? Id { get; set; }

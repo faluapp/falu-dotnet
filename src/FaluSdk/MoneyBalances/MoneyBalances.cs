@@ -6,7 +6,7 @@ namespace Falu.Payments;
 /// Funds that are available to be transferred.
 /// They are categorized by provider and currency.
 /// </summary>
-public class MoneyBalances : IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
+public class MoneyBalances : IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
 {
     /// <inheritdoc/>
     public DateTimeOffset Created { get; set; }

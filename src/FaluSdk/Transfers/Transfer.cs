@@ -59,7 +59,7 @@ public class Transfer : TransferPatchModel, IHasId, IHasCurrency, IHasCreated, I
     /// <summary>
     /// Identifier of the reversal, if transfer has been reversed.
     /// </summary>
-    public string? ReversalId { get; set; }
+    public string? Reversal { get; set; }
 
     /// <inheritdoc/>
     public string? WorkspaceId { get; set; }

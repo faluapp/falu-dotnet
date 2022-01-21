@@ -13,7 +13,7 @@ public class TransferReversal : TransferReversalPatchModel, IHasId, IHasCurrency
     /// <summary>
     /// Identifier of the Transfer reversed.
     /// </summary>
-    public string? TransferId { get; set; }
+    public string? Transfer { get; set; }
 
     /// <inheritdoc/>
     public string? Currency { get; set; }

@@ -37,7 +37,7 @@ public class Payment : PaymentPatchModel, IHasId, IHasCurrency, IHasCreated, IHa
     /// <summary>
     /// Identifier of the authorization, if the payment passed through a flow requiring authorization.
     /// </summary>
-    public string? AuthorizationId { get; set; }
+    public string? Authorization { get; set; }
 
     /// <summary>
     /// The type of the Payment.

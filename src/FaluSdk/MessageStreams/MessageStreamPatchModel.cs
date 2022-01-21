@@ -7,11 +7,6 @@ namespace Falu.MessageStreams;
 /// </summary>
 public class MessageStreamPatchModel : IHasDescription, IHasMetadata
 {
-    /// <summary>
-    /// Settings for the stream.
-    /// </summary>
-    public MessageStreamSettings? Settings { get; set; }
-
     /// <inheritdoc/>
     public string? Description { get; set; }
 

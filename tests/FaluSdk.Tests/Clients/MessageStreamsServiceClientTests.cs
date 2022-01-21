@@ -17,15 +17,6 @@ public class MessageStreamsServiceClientTests : BaseServiceClientTests<MessageSt
         Name = "default",
         Created = DateTimeOffset.UtcNow,
         Updated = DateTimeOffset.UtcNow,
-        Settings = new MessageStreamSettings
-        {
-            Mtech = new MtechSettings
-            {
-                Username = "cake",
-                Password = "cake",
-                ShortCode = "UFC"
-            }
-        },
         WorkspaceId = WorkspaceId
     }, "/v1/message_streams")
     { }
@@ -110,7 +101,6 @@ public class MessageStreamsServiceClientTests : BaseServiceClientTests<MessageSt
                 Name = Data!.Name,
                 Type = Data!.Type,
                 Provider = Data!.Provider,
-                Settings = Data!.Settings
             };
 
             var response = await client.MessageStreams.CreateAsync(model, options);

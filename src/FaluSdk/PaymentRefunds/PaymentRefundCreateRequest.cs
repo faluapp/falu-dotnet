@@ -8,7 +8,7 @@ public class PaymentRefundCreateRequest : PaymentRefundPatchModel
     /// <summary>
     /// Identifier of the Payment to reverse.
     /// </summary>
-    public string? PaymentId { get; set; }
+    public string? Payment { get; set; }
 
     /// <summary>
     /// Reason for the reversal.

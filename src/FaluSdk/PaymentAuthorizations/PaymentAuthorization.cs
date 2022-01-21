@@ -55,7 +55,7 @@ public class PaymentAuthorization : PaymentAuthorizationPatchModel, IHasId, IHas
     /// <summary>
     /// Identifier of the payment created after the authorization is approved and closed.
     /// </summary>
-    public string? PaymentId { get; set; }
+    public string? Payment { get; set; }
 
     /// <inheritdoc/>
     public string? WorkspaceId { get; set; }

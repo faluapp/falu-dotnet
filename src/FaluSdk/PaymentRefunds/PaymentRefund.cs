@@ -10,11 +10,6 @@ public class PaymentRefund : PaymentRefundPatchModel, IHasId, IHasCurrency, IHas
     /// <inheritdoc/>
     public string? Id { get; set; }
 
-    /// <summary>
-    /// Identifier of the Payment reversed.
-    /// </summary>
-    public string? PaymentId { get; set; }
-
     /// <inheritdoc/>
     public string? Currency { get; set; }
 
@@ -39,6 +34,11 @@ public class PaymentRefund : PaymentRefundPatchModel, IHasId, IHasCurrency, IHas
 
     /// <inheritdoc/>
     public DateTimeOffset Updated { get; set; }
+
+    /// <summary>
+    /// Identifier of the Payment reversed.
+    /// </summary>
+    public string? Payment { get; set; }
 
     /// <summary>
     /// Time at which the reversal succeeded. Only populated when successful.

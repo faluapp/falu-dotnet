@@ -57,9 +57,9 @@ public class Payment : PaymentPatchModel, IHasId, IHasCurrency, IHasCreated, IHa
     public PaymentFailureDetails? Failure { get; set; }
 
     /// <summary>
-    /// Identifier of the reversal, if payment has been reversed.
+    /// Identifier of the refund, if payment has been refunded.
     /// </summary>
-    public string? ReversalId { get; set; }
+    public string? Refund { get; set; }
 
     /// <inheritdoc/>
     public string? WorkspaceId { get; set; }

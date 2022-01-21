@@ -40,7 +40,7 @@ public class Message : MessagePatchModel, IHasId, IHasCreated, IHasUpdated, IHas
     /// <summary>
     /// Stream used for the message.
     /// </summary>
-    public string? StreamId { get; set; }
+    public string? Stream { get; set; }
 
     /// <summary>
     /// Provider used for the message.

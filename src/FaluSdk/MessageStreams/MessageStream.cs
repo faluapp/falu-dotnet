@@ -28,11 +28,6 @@ public class MessageStream : MessageStreamPatchModel, IHasId, IHasCreated, IHasU
     public string? Type { get; set; }
 
     /// <summary>
-    /// Provider used by the stream.
-    /// </summary>
-    public string? Provider { get; set; }
-
-    /// <summary>
     /// Time at which the stream was archived.
     /// Only populated once a stream is archived.
     /// </summary>

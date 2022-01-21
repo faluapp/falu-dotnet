@@ -100,7 +100,6 @@ public class MessageStreamsServiceClientTests : BaseServiceClientTests<MessageSt
             {
                 Name = Data!.Name,
                 Type = Data!.Type,
-                Provider = Data!.Provider,
             };
 
             var response = await client.MessageStreams.CreateAsync(model, options);

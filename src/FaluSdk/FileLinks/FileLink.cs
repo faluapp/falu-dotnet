@@ -15,7 +15,7 @@ public class FileLink : FileLinkPatchModel, IHasId, IHasCreated, IHasUpdated, IH
     public DateTimeOffset Updated { get; set; }
 
     /// <summary>Unique identifier of the file.</summary>
-    public string? FileId { get; set; }
+    public string? File { get; set; }
 
     /// <summary>Publicly accessible URL to download the file.</summary>
     public string? Url { get; set; }

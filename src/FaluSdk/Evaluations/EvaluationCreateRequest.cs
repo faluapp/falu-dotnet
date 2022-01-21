@@ -42,5 +42,5 @@ public class EvaluationCreateRequest : EvaluationPatchModel, IHasCurrency
     /// <summary>
     /// Unique identifier of the file containing the sstatement
     /// </summary>
-    public string? FileId { get; set; }
+    public string? File { get; set; }
 }

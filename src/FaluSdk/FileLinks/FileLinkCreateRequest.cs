@@ -4,5 +4,5 @@
 public class FileLinkCreateRequest : FileLinkPatchModel
 {
     /// <summary>Unique identifier of the file.</summary>
-    public string? FileId { get; set; }
+    public string? File { get; set; }
 }

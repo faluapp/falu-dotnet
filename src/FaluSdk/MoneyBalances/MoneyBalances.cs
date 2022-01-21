@@ -21,7 +21,7 @@ public class MoneyBalances : IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, 
     public Dictionary<string, long>? Mpesa { get; set; }
 
     /// <inheritdoc/>
-    public string? WorkspaceId { get; set; }
+    public string? Workspace { get; set; }
 
     /// <inheritdoc/>
     public bool Live { get; set; }

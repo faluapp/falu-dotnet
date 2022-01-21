@@ -57,7 +57,7 @@ public class PaymentRefund : PaymentRefundPatchModel, IHasId, IHasCurrency, IHas
     public PaymentRefundFailureDetails? Failure { get; set; }
 
     /// <inheritdoc/>
-    public string? WorkspaceId { get; set; }
+    public string? Workspace { get; set; }
 
     /// <inheritdoc/>
     public bool Live { get; set; }

@@ -19,7 +19,7 @@ public class MoneyBalancesServiceClientTests : BaseServiceClientTests
         {
             ["0001"] = 50_000_00
         },
-        WorkspaceId = WorkspaceId
+        Workspace = WorkspaceId
     };
 
 

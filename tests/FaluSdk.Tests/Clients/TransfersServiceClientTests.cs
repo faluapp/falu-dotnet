@@ -16,7 +16,7 @@ public class TransfersServiceClientTests : BaseServiceClientTests<Transfer>
         Created = DateTimeOffset.UtcNow,
         Updated = DateTimeOffset.UtcNow,
         Mpesa = new TransferMpesaDetails { },
-        WorkspaceId = WorkspaceId
+        Workspace = WorkspaceId
     }, "/v1/transfers")
     { }
 

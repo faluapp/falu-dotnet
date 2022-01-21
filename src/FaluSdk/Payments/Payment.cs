@@ -62,7 +62,7 @@ public class Payment : PaymentPatchModel, IHasId, IHasCurrency, IHasCreated, IHa
     public string? Refund { get; set; }
 
     /// <inheritdoc/>
-    public string? WorkspaceId { get; set; }
+    public string? Workspace { get; set; }
 
     /// <inheritdoc/>
     public bool Live { get; set; }

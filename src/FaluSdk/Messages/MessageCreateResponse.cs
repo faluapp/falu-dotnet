@@ -16,7 +16,7 @@ public class MessageCreateResponse : IHasCreated, IHasWorkspace, IHasLive
     public IList<string>? Ids { get; set; }
 
     /// <inheritdoc/>
-    public string? WorkspaceId { get; set; }
+    public string? Workspace { get; set; }
 
     /// <inheritdoc/>
     public bool Live { get; set; }

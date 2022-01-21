@@ -16,7 +16,7 @@ public class WebhooksServiceClientTests : BaseServiceClientTests<WebhookEndpoint
         Secret = "e0gNHBa90CfdKbtcWgksn52cvXoXMqCTaLdttJAsQVU=",
         Created = DateTimeOffset.UtcNow,
         Updated = DateTimeOffset.UtcNow,
-        WorkspaceId = WorkspaceId
+        Workspace = WorkspaceId
     }, "/v1/webhooks/endpoints")
     { }
 

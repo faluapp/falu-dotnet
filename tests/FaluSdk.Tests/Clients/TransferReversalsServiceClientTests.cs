@@ -16,7 +16,7 @@ public class TransferReversalsServiceClientTests : BaseServiceClientTests<Transf
         Created = DateTimeOffset.UtcNow,
         Updated = DateTimeOffset.UtcNow,
         Transfer = "tr_123",
-        WorkspaceId = WorkspaceId
+        Workspace = WorkspaceId
     }, "/v1/transfer_reversals")
     { }
 

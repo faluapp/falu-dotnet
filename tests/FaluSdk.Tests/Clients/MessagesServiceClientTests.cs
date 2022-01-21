@@ -18,7 +18,7 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
         Updated = DateTimeOffset.UtcNow,
         To = "+254722000000",
         Body = "This is a test",
-        WorkspaceId = WorkspaceId
+        Workspace = WorkspaceId
     }, "/v1/messages")
     { }
 
@@ -127,7 +127,7 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
                 Created = Data.Created,
                 Ids = new[] { Data.Id!, },
                 Live = Data.Live,
-                WorkspaceId = Data.WorkspaceId,
+                Workspace = Data.Workspace,
             };
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {

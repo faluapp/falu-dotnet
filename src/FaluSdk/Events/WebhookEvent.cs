@@ -30,7 +30,7 @@ public class WebhookEvent<TObject> : IHasId, IHasCreated, IHasWorkspace, IHasLiv
     public WebhookEventData<TObject>? Data { get; set; }
 
     /// <inheritdoc/>
-    public string? WorkspaceId { get; set; }
+    public string? Workspace { get; set; }
 
     /// <inheritdoc/>
     public bool Live { get; set; }

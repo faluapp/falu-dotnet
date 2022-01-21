@@ -21,7 +21,7 @@ public class PaymentRefundsServiceClientTests : BaseServiceClientTests<PaymentRe
             BusinessShortCode = "5001",
             RequestId = Guid.NewGuid().ToString()
         },
-        WorkspaceId = WorkspaceId
+        Workspace = WorkspaceId
     }, "/v1/payment_refunds")
     { }
 

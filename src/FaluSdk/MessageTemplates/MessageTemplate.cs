@@ -17,7 +17,7 @@ public class MessageTemplate : MessageTemplatePatchModel, IHasId, IHasCreated, I
     public DateTimeOffset Updated { get; set; }
 
     /// <inheritdoc/>
-    public string? WorkspaceId { get; set; }
+    public string? Workspace { get; set; }
 
     /// <inheritdoc/>
     public bool Live { get; set; }

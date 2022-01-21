@@ -8,5 +8,5 @@ public interface IHasWorkspace
     /// <summary>
     /// Unique identifier for the workspace that the object belongs to.
     /// </summary>
-    string? WorkspaceId { get; set; }
+    string? Workspace { get; set; }
 }

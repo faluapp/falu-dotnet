@@ -62,7 +62,7 @@ public class Transfer : TransferPatchModel, IHasId, IHasCurrency, IHasCreated, I
     public string? Reversal { get; set; }
 
     /// <inheritdoc/>
-    public string? WorkspaceId { get; set; }
+    public string? Workspace { get; set; }
 
     /// <inheritdoc/>
     public bool Live { get; set; }

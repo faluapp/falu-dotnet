@@ -63,7 +63,7 @@ public static class CloudEventExtensions
                 Previous = payload.Previous,
             },
             Request = payload.Request,
-            WorkspaceId = @event.GetWorkspace(),
+            Workspace = @event.GetWorkspace(),
             Live = @event.GetLiveMode() ?? false,
         };
     }

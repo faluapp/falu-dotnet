@@ -24,7 +24,7 @@ public class FileLink : FileLinkPatchModel, IHasId, IHasCreated, IHasUpdated, IH
     public bool Expired { get; set; }
 
     /// <inheritdoc/>
-    public string? WorkspaceId { get; set; }
+    public string? Workspace { get; set; }
 
     /// <inheritdoc/>
     public bool Live { get; set; }

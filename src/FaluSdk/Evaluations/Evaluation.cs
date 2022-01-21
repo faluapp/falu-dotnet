@@ -41,7 +41,7 @@ public class Evaluation : EvaluationPatchModel, IHasId, IHasCurrency, IHasCreate
     public EvaluationScoring? Scoring { get; set; }
 
     /// <inheritdoc/>
-    public string? WorkspaceId { get; set; }
+    public string? Workspace { get; set; }
 
     /// <inheritdoc/>
     public bool Live { get; set; }

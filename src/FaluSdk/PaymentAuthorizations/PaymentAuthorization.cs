@@ -58,7 +58,7 @@ public class PaymentAuthorization : PaymentAuthorizationPatchModel, IHasId, IHas
     public string? Payment { get; set; }
 
     /// <inheritdoc/>
-    public string? WorkspaceId { get; set; }
+    public string? Workspace { get; set; }
 
     /// <inheritdoc/>
     public bool Live { get; set; }

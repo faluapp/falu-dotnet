@@ -18,7 +18,6 @@ public class MessageTemplatesServiceClientTests : BaseServiceClientTests<Message
         Body = "Hi {{name}}! Thanks for being a loyal customer. We appreciate you!",
         Created = DateTimeOffset.UtcNow,
         Updated = DateTimeOffset.UtcNow,
-        Workspace = WorkspaceId
     }, "/v1/message_templates")
     { }
 

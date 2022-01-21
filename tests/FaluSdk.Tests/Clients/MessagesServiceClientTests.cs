@@ -18,7 +18,6 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
         Updated = DateTimeOffset.UtcNow,
         To = "+254722000000",
         Body = "This is a test",
-        Workspace = WorkspaceId
     }, "/v1/messages")
     { }
 

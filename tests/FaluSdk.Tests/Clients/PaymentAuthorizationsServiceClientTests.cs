@@ -24,7 +24,6 @@ public class PaymentAuthorizationsServiceClientTests : BaseServiceClientTests<Pa
             Reference = "MDX678TSQ",
             BusinessShortCode = "5001"
         },
-        Workspace = WorkspaceId
     }, "/v1/payment_authorizations")
     { }
 

@@ -15,7 +15,6 @@ public class FileLinksServiceClientTests : BaseServiceClientTests<FileLink>
         Updated = DateTimeOffset.UtcNow,
         File = "file_123",
         Url = "https://test.falu.io",
-        Workspace = WorkspaceId
     }, "/v1/file_links")
     { }
 

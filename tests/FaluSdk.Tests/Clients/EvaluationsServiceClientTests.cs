@@ -17,7 +17,6 @@ public class EvaluationsServiceClientTests : BaseServiceClientTests<Evaluation>
         Currency = "KES",
         Created = DateTimeOffset.UtcNow,
         Updated = DateTimeOffset.UtcNow,
-        WorkspaceId = WorkspaceId
     }, "/v1/evaluations")
     { }
 

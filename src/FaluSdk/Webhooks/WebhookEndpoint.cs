@@ -5,7 +5,7 @@ namespace Falu.Webhooks;
 /// <summary>
 /// The basic implementation of a Webhook irrespective of the usage
 /// </summary>
-public class WebhookEndpoint : WebhookEndpointPatchModel, IHasId, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
+public class WebhookEndpoint : WebhookEndpointPatchModel, IHasId, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
 {
     /// <inheritdoc/>
     public string? Id { get; set; }
@@ -26,7 +26,7 @@ public class WebhookEndpoint : WebhookEndpointPatchModel, IHasId, IHasCreated, I
     public string? Secret { get; set; }
 
     /// <inheritdoc/>
-    public string? WorkspaceId { get; set; }
+    public string? Workspace { get; set; }
 
     /// <inheritdoc/>
     public bool Live { get; set; }

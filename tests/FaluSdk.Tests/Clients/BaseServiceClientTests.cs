@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Falu.Tests.Clients;
 
-public class BaseServiceClientTests<TResource> : BaseServiceClientTests where TResource : IHasId
+public class BaseServiceClientTests<TResource> : BaseServiceClientTests where TResource : IHasId, IHasWorkspace
 {
     protected string BasePath { get; }
     protected TResource Data { get; }
@@ -17,6 +17,8 @@ public class BaseServiceClientTests<TResource> : BaseServiceClientTests where TR
     {
         Data = data ?? throw new ArgumentNullException(nameof(data));
         BasePath = basePath ?? throw new ArgumentNullException(nameof(basePath));
+
+        Data.Workspace ??= WorkspaceId;
     }
 
     protected DynamicHttpMessageHandler GetAsync_Handler(RequestOptions? options = null)
@@ -129,21 +131,21 @@ public class BaseServiceClientTests
     public static IEnumerable<object[]> RequestOptionsData =>
         new List<object[]>
         {
-                new object[] { new RequestOptions { } },
-                new object[] { new RequestOptions { IdempotencyKey = IdempotencyKey } },
-                new object[] { new RequestOptions { Workspace = WorkspaceId } },
-                new object[] { new RequestOptions { Live = false } },
-                new object[] { new RequestOptions { Live = true } }
+            new object[] { new RequestOptions { } },
+            new object[] { new RequestOptions { IdempotencyKey = IdempotencyKey } },
+            new object[] { new RequestOptions { Workspace = WorkspaceId } },
+            new object[] { new RequestOptions { Live = false } },
+            new object[] { new RequestOptions { Live = true } }
         };
 
     public static IEnumerable<object[]> RequestOptionsWithHasContinuationTokenData =>
         new List<object[]>
         {
-                new object[] { new RequestOptions { }, false },
-                new object[] { new RequestOptions { IdempotencyKey = IdempotencyKey }, false },
-                new object[] { new RequestOptions { Workspace = WorkspaceId }, false },
-                new object[] { new RequestOptions { Live = false }, true },
-                new object[] { new RequestOptions { Live = true }, true }
+            new object[] { new RequestOptions { }, false },
+            new object[] { new RequestOptions { IdempotencyKey = IdempotencyKey }, false },
+            new object[] { new RequestOptions { Workspace = WorkspaceId }, false },
+            new object[] { new RequestOptions { Live = false }, true },
+            new object[] { new RequestOptions { Live = true }, true }
         };
 
     protected static void AssertRequestHeaders(HttpRequestMessage message, RequestOptions? options = null)

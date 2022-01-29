@@ -11,7 +11,7 @@ public class PaymentRefundsServiceClientTests : BaseServiceClientTests<PaymentRe
     public PaymentRefundsServiceClientTests() : base(new()
     {
         Id = "pr_123",
-        PaymentId = "pa_123",
+        Payment = "pa_123",
         Currency = "KES",
         Amount = 50_000_00,
         Created = DateTimeOffset.UtcNow,
@@ -21,7 +21,6 @@ public class PaymentRefundsServiceClientTests : BaseServiceClientTests<PaymentRe
             BusinessShortCode = "5001",
             RequestId = Guid.NewGuid().ToString()
         },
-        WorkspaceId = WorkspaceId
     }, "/v1/payment_refunds")
     { }
 
@@ -104,7 +103,7 @@ public class PaymentRefundsServiceClientTests : BaseServiceClientTests<PaymentRe
         {
             var model = new PaymentRefundCreateRequest
             {
-                PaymentId = Data!.PaymentId,
+                Payment = Data!.Payment,
                 Reason = "customer_requested",
             };
 

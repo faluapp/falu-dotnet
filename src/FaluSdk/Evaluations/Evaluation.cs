@@ -5,7 +5,7 @@ namespace Falu.Evaluations;
 /// <summary>
 /// An evaluation record.
 /// </summary>
-public class Evaluation : EvaluationPatchModel, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
+public class Evaluation : EvaluationPatchModel, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
 {
     /// <inheritdoc/>
     public string? Id { get; set; }
@@ -41,7 +41,7 @@ public class Evaluation : EvaluationPatchModel, IHasId, IHasCurrency, IHasCreate
     public EvaluationScoring? Scoring { get; set; }
 
     /// <inheritdoc/>
-    public string? WorkspaceId { get; set; }
+    public string? Workspace { get; set; }
 
     /// <inheritdoc/>
     public bool Live { get; set; }

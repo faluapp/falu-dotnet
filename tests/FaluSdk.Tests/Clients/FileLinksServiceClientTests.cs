@@ -13,9 +13,8 @@ public class FileLinksServiceClientTests : BaseServiceClientTests<FileLink>
         Id = "link_123",
         Created = DateTimeOffset.UtcNow,
         Updated = DateTimeOffset.UtcNow,
-        FileId = "file_123",
+        File = "file_123",
         Url = "https://test.falu.io",
-        WorkspaceId = WorkspaceId
     }, "/v1/file_links")
     { }
 
@@ -98,14 +97,14 @@ public class FileLinksServiceClientTests : BaseServiceClientTests<FileLink>
         {
             var model = new FileLinkCreateRequest
             {
-                FileId = Data!.FileId
+                File = Data!.File
             };
 
             var response = await client.FileLinks.CreateAsync(model, options);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
-            Assert.Equal(Data!.FileId, response.Resource!.FileId);
+            Assert.Equal(Data!.File, response.Resource!.File);
         });
     }
 

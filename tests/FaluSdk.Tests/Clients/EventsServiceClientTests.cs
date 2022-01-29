@@ -12,7 +12,6 @@ public class EventsServiceClientTests : BaseServiceClientTests<WebhookEvent>
         Id = "evt_123",
         Created = DateTimeOffset.UtcNow,
         Type = Webhooks.EventTypes.TransferSucceeded,
-        WorkspaceId = WorkspaceId
     }, "/v1/events")
     { }
 

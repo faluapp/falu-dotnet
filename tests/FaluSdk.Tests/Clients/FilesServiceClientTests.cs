@@ -15,7 +15,6 @@ public class FilesServiceClientTests : BaseServiceClientTests<Files.File>
         Type = "image/png",
         Filename = "test.png",
         Size = 1024,
-        WorkspaceId = WorkspaceId,
         Purpose = "customer.evaluation",
     }, "/v1/files")
     { }

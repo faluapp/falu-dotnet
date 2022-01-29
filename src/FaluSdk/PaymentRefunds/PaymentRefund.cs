@@ -5,15 +5,10 @@ namespace Falu.PaymentRefunds;
 /// <summary>
 /// Represents a reversal of a Payment.
 /// </summary>
-public class PaymentRefund : PaymentRefundPatchModel, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
+public class PaymentRefund : PaymentRefundPatchModel, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
 {
     /// <inheritdoc/>
     public string? Id { get; set; }
-
-    /// <summary>
-    /// Identifier of the Payment reversed.
-    /// </summary>
-    public string? PaymentId { get; set; }
 
     /// <inheritdoc/>
     public string? Currency { get; set; }
@@ -41,6 +36,11 @@ public class PaymentRefund : PaymentRefundPatchModel, IHasId, IHasCurrency, IHas
     public DateTimeOffset Updated { get; set; }
 
     /// <summary>
+    /// Identifier of the Payment reversed.
+    /// </summary>
+    public string? Payment { get; set; }
+
+    /// <summary>
     /// Time at which the reversal succeeded. Only populated when successful.
     /// </summary>
     public DateTimeOffset? Succeeded { get; set; }
@@ -57,7 +57,7 @@ public class PaymentRefund : PaymentRefundPatchModel, IHasId, IHasCurrency, IHas
     public PaymentRefundFailureDetails? Failure { get; set; }
 
     /// <inheritdoc/>
-    public string? WorkspaceId { get; set; }
+    public string? Workspace { get; set; }
 
     /// <inheritdoc/>
     public bool Live { get; set; }

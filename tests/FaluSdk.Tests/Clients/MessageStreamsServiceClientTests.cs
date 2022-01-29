@@ -17,7 +17,6 @@ public class MessageStreamsServiceClientTests : BaseServiceClientTests<MessageSt
         Name = "default",
         Created = DateTimeOffset.UtcNow,
         Updated = DateTimeOffset.UtcNow,
-        WorkspaceId = WorkspaceId
     }, "/v1/message_streams")
     { }
 

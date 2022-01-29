@@ -5,7 +5,7 @@ namespace Falu.Messages;
 /// <summary>
 /// A message record.
 /// </summary>
-public class Message : MessagePatchModel, IHasId, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
+public class Message : MessagePatchModel, IHasId, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
 {
     /// <inheritdoc/>
     public string? Id { get; set; }
@@ -40,7 +40,7 @@ public class Message : MessagePatchModel, IHasId, IHasCreated, IHasUpdated, IHas
     /// <summary>
     /// Stream used for the message.
     /// </summary>
-    public string? StreamId { get; set; }
+    public string? Stream { get; set; }
 
     /// <summary>
     /// Provider used for the message.
@@ -54,7 +54,7 @@ public class Message : MessagePatchModel, IHasId, IHasCreated, IHasUpdated, IHas
     public DateTimeOffset? Delivered { get; set; }
 
     /// <inheritdoc/>
-    public string? WorkspaceId { get; set; }
+    public string? Workspace { get; set; }
 
     /// <inheritdoc/>
     public bool Live { get; set; }

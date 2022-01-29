@@ -15,8 +15,7 @@ public class TransferReversalsServiceClientTests : BaseServiceClientTests<Transf
         Amount = 1_000_00,
         Created = DateTimeOffset.UtcNow,
         Updated = DateTimeOffset.UtcNow,
-        TransferId = "tr_123",
-        WorkspaceId = WorkspaceId
+        Transfer = "tr_123",
     }, "/v1/transfer_reversals")
     { }
 
@@ -97,7 +96,7 @@ public class TransferReversalsServiceClientTests : BaseServiceClientTests<Transf
 
         await TestAsync(handler, async (client) =>
         {
-            var model = new TransferReversalCreateRequest { TransferId = Data!.TransferId };
+            var model = new TransferReversalCreateRequest { Transfer = Data!.Transfer };
             var response = await client.TransferReversals.CreateAsync(model, options);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);

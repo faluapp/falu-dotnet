@@ -6,7 +6,7 @@ namespace Falu.PaymentAuthorizations;
 /// <summary>
 /// Represents a payment authorization.
 /// </summary>
-public class PaymentAuthorization : PaymentAuthorizationPatchModel, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
+public class PaymentAuthorization : PaymentAuthorizationPatchModel, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
 {
     /// <inheritdoc/>
     public string? Id { get; set; }
@@ -55,10 +55,10 @@ public class PaymentAuthorization : PaymentAuthorizationPatchModel, IHasId, IHas
     /// <summary>
     /// Identifier of the payment created after the authorization is approved and closed.
     /// </summary>
-    public string? PaymentId { get; set; }
+    public string? Payment { get; set; }
 
     /// <inheritdoc/>
-    public string? WorkspaceId { get; set; }
+    public string? Workspace { get; set; }
 
     /// <inheritdoc/>
     public bool Live { get; set; }

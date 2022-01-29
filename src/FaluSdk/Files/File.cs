@@ -3,7 +3,7 @@
 namespace Falu.Files;
 
 /// <summary>A file on Falu's servers.</summary>
-public class File : IHasId, IHasCreated, IHasUpdated, IHasDescription, IHasWorkspaceId, IHasLive, IHasEtag
+public class File : IHasId, IHasCreated, IHasUpdated, IHasDescription, IHasWorkspace, IHasLive, IHasEtag
 {
     /// <inheritdoc/>
     public string? Id { get; set; }
@@ -34,7 +34,7 @@ public class File : IHasId, IHasCreated, IHasUpdated, IHasDescription, IHasWorks
     public DateTimeOffset? Expires { get; set; }
 
     /// <inheritdoc/>
-    public string? WorkspaceId { get; set; }
+    public string? Workspace { get; set; }
 
     /// <inheritdoc/>
     public bool Live { get; set; }

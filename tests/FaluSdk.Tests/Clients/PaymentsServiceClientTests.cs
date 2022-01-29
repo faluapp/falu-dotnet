@@ -15,7 +15,6 @@ public class PaymentsServiceClientTests : BaseServiceClientTests<Payment>
         Amount = 100_00,
         Created = DateTimeOffset.UtcNow,
         Updated = DateTimeOffset.UtcNow,
-        WorkspaceId = WorkspaceId
     }, "/v1/payments")
     { }
 

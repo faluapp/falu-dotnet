@@ -5,7 +5,7 @@ namespace Falu.Transfers;
 /// <summary>
 /// Represents a transaction made by the business to customer or another business.
 /// </summary>
-public class Transfer : TransferPatchModel, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasWorkspaceId, IHasLive, IHasEtag
+public class Transfer : TransferPatchModel, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
 {
     /// <inheritdoc/>
     public string? Id { get; set; }
@@ -59,10 +59,10 @@ public class Transfer : TransferPatchModel, IHasId, IHasCurrency, IHasCreated, I
     /// <summary>
     /// Identifier of the reversal, if transfer has been reversed.
     /// </summary>
-    public string? ReversalId { get; set; }
+    public string? Reversal { get; set; }
 
     /// <inheritdoc/>
-    public string? WorkspaceId { get; set; }
+    public string? Workspace { get; set; }
 
     /// <inheritdoc/>
     public bool Live { get; set; }

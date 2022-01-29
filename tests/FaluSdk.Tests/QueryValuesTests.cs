@@ -88,55 +88,6 @@ public class QueryValuesTests
     }
 
     [Fact]
-    public void Works_For_MarketingListOptions()
-    {
-        // Prepare
-        var options = new MarketingListOptions
-        {
-            Sorting = "descending",
-            Count = 12,
-            Created = null,
-            ContinuationToken = "123",
-            Updated = null,
-            Country = "uga",
-            Gender = "female",
-            Age = new RangeFilteringOptions<int>
-            {
-                GreaterThanOrEqualTo = 29,
-                LessThan = 40,
-            }
-        };
-
-        // Act
-        var query = new QueryValues();
-        options.Populate(query);
-
-        // Assert
-        var dictionary = query.ToDictionary();
-        Assert.NotEmpty(dictionary);
-        Assert.Equal(new[] {
-            "sort",
-            "count",
-            "ct",
-            "country",
-            "gender",
-
-            "age.lt",
-            "age.gte",
-        }, dictionary.Keys);
-        Assert.Equal(new[] {
-            "descending",
-            "12",
-            "123",
-            "uga",
-            "female",
-
-            "40",
-            "29",
-        }, dictionary.Values);
-    }
-
-    [Fact]
     public void Works_For_PaymentAuthorizationsListOptions()
     {
         // Prepare

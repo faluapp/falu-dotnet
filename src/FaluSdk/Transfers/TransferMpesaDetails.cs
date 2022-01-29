@@ -1,4 +1,6 @@
-﻿namespace Falu.Transfers;
+﻿using System.Text.Json.Serialization;
+
+namespace Falu.Transfers;
 
 /// <summary>
 /// Represents the provider details for a MPESA transfer.
@@ -8,6 +10,7 @@ public class TransferMpesaDetails
     /// <summary>
     /// The target business short code
     /// </summary>
+    [JsonPropertyName("business_short_code")]
     public string? BusinessShortCode { get; set; }
 
     /// <summary>

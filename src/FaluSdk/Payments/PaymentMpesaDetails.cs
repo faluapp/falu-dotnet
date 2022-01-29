@@ -1,4 +1,6 @@
-﻿namespace Falu.Payments;
+﻿using System.Text.Json.Serialization;
+
+namespace Falu.Payments;
 
 /// <summary>
 /// Details about an MPESA Payment
@@ -8,6 +10,7 @@ public class PaymentMpesaDetails
     /// <summary>
     /// The target business short code
     /// </summary>
+    [JsonPropertyName("business_short_code")]
     public string? BusinessShortCode { get; set; }
 
     /// <summary>

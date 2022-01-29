@@ -1,4 +1,6 @@
-﻿namespace Falu.PaymentRefunds;
+﻿using System.Text.Json.Serialization;
+
+namespace Falu.PaymentRefunds;
 
 /// <summary>
 /// Represents the details for an MPESA payment refund.
@@ -8,6 +10,7 @@ public class PaymentRefundMpesaDetails
     /// <summary>
     /// The target business short code
     /// </summary>
+    [JsonPropertyName("business_short_code")]
     public string? BusinessShortCode { get; set; }
 
     /// <summary>

@@ -55,16 +55,8 @@ public class IdentityRecord : IHasId, IHasCreated, IHasUpdated, IHasCountry, IHa
     /// <summary>
     /// The gender of the entity.
     /// This value may be fixed or predicted.
-    /// When predicted <see cref="GenderConfidence"/> will have a value.
     /// </summary>
     public string? Gender { get; set; }
-
-    /// <summary>
-    /// The confidence for the value predicted in <see cref="Gender"/>.
-    /// This value is null when the gender is fixed and not predicted.
-    /// It should not be used to determine predicted gender.
-    /// </summary>
-    public float? GenderConfidence { get; set; }
 
     /// <inheritdoc/>
     public string? Etag { get; set; }

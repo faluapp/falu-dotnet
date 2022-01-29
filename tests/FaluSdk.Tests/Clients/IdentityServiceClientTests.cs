@@ -23,14 +23,6 @@ public class IdentityServiceClientTests : BaseServiceClientTests
         Gender = "male"
     };
 
-    private readonly MarketingResult marketing = new()
-    {
-        Created = DateTimeOffset.UtcNow,
-        Updated = DateTimeOffset.UtcNow,
-        Country = "ken",
-        Phones = new List<string> { "+254722000000", "+255722000000" }
-    };
-
     [Theory]
     [MemberData(nameof(RequestOptionsData))]
     public async Task SearchAsync_Works(RequestOptions options)
@@ -65,42 +57,4 @@ public class IdentityServiceClientTests : BaseServiceClientTests
             Assert.Equal(identity.Country, response.Resource!.Country);
         });
     }
-
-    [Theory]
-    [MemberData(nameof(RequestOptionsData))]
-    public async Task MarketingAsync_Works(RequestOptions options)
-    {
-        var handler = new DynamicHttpMessageHandler((req, ct) =>
-        {
-            Assert.Equal(HttpMethod.Post, req.Method);
-            Assert.Equal($"{BasePath}/marketing", req.RequestUri!.AbsolutePath);
-
-            AssertRequestHeaders(req, options);
-
-            var content = new List<MarketingResult> { marketing };
-            return new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, MediaTypeNames.Application.Json)
-            };
-        });
-
-        await TestAsync(handler, async (client) =>
-        {
-            var marketing_options = new MarketingListOptions
-            {
-                Age = new RangeFilteringOptions<int>
-                {
-                    GreaterThan = 24,
-                    LessThanOrEqualTo = 30
-                },
-                Gender = "male"
-            };
-
-            var response = await client.Identity.MarketingAsync(marketing_options, options);
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.NotNull(response.Resource);
-            Assert.Single(response.Resource);
-        });
-    }
-
 }

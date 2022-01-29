@@ -1,4 +1,6 @@
-﻿namespace Falu.Messages;
+﻿using System.Text.Json.Serialization;
+
+namespace Falu.Messages;
 
 /// <summary>
 /// Details about the provider used to send a message.
@@ -8,6 +10,7 @@ public class MessageProvider
     /// <summary>
     /// Unique identifier for the request as provided by the provider.
     /// </summary>
+    [JsonPropertyName("request_id")]
     public string? RequestId { get; set; }
 
     /// <summary>

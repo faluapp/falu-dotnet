@@ -23,6 +23,7 @@ public class TransferMpesaDetails
     /// Only populated for flows that initiate the transaction instead of MPESA.
     /// The value is only available after the request is sent to MPESA.
     /// </summary>
+    [JsonPropertyName("request_id")]
     public string? RequestId { get; set; }
 
     /// <summary>

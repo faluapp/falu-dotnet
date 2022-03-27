@@ -44,7 +44,7 @@ public class QueryValuesTests
         var dictionary = query.ToDictionary();
         Assert.NotEmpty(dictionary);
         Assert.Equal(new[] { "sort", "count", "ct", }, dictionary.Keys);
-        Assert.Equal(new[] { "descending", "12", "123", }, dictionary.Values);
+        Assert.Equal(new[] { "descending", "12", "123", }, dictionary.Values.SelectMany(v => v));
     }
 
     [Fact]
@@ -84,7 +84,7 @@ public class QueryValuesTests
             "2021-03-11T19:41:25.0000000+03:00",
             "2021-03-10T16:41:25.0000000+00:00",
             "2021-03-10T19:41:25.0000000+03:00",
-        }, dictionary.Values);
+        }, dictionary.Values.SelectMany(v => v));
     }
 
     [Fact]
@@ -124,8 +124,9 @@ public class QueryValuesTests
             "descending",
             "12",
             "123",
-            "pending,closed",
+            "pending",
+            "closed",
             "false",
-        }, dictionary.Values);
+        }, dictionary.Values.SelectMany(v => v));
     }
 }

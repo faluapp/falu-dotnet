@@ -69,7 +69,7 @@ public sealed class QueryValues : IEnumerable<KeyValuePair<string, string[]>>
             DateTime dt => Add(key, dt.ToString("O")),
             int i => Add(key, i.ToString()),
             long l => Add(key, l.ToString()),
-            string s when !string.IsNullOrWhiteSpace(s) => Add(key, s),
+            string s => Add(key, s),
             _ => throw new InvalidOperationException($"'{value.GetType().FullName}' objects are not supported"),
         };
     }

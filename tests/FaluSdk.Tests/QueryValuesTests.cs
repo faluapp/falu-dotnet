@@ -1,5 +1,4 @@
 ﻿using Falu.Core;
-using Falu.Identity;
 using Falu.PaymentAuthorizations;
 using Xunit;
 

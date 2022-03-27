@@ -23,6 +23,17 @@ public sealed class QueryValues : IEnumerable<KeyValuePair<string, string[]>>
     public string[] this[string key] => values[key];
 
     ///
+    public QueryValues Add(string key, string[]? value)
+    {
+        if (value is not null)
+        {
+            values.Add(key, value);
+        }
+
+        return this;
+    }
+
+    ///
     public QueryValues Add(string key, string? value)
     {
         if (!string.IsNullOrWhiteSpace(value))

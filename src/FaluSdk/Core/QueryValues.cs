@@ -1,33 +1,34 @@
-﻿using System.Collections;
+﻿using Microsoft.Extensions.Primitives;
+using System.Collections;
 using System.Text;
 using System.Text.Encodings.Web;
 
 namespace Falu.Core;
 
 /// <summary>Helper for handling query values.</summary>
-public sealed class QueryValues : IEnumerable<KeyValuePair<string, IEnumerable<string>>>
+public sealed class QueryValues : IEnumerable<KeyValuePair<string, StringValues>>
 {
-    private readonly Dictionary<string, IEnumerable<string>> values;
+    private readonly Dictionary<string, StringValues> values;
 
     ///
-    public QueryValues(Dictionary<string, IEnumerable<string>>? values = null)
+    public QueryValues(Dictionary<string, StringValues>? values = null)
     {
         // keys are case insensitive
         this.values = values == null
-            ? new Dictionary<string, IEnumerable<string>>(StringComparer.OrdinalIgnoreCase)
-            : new Dictionary<string, IEnumerable<string>>(values, StringComparer.OrdinalIgnoreCase);
+            ? new Dictionary<string, StringValues>(StringComparer.OrdinalIgnoreCase)
+            : new Dictionary<string, StringValues>(values, StringComparer.OrdinalIgnoreCase);
     }
 
     /// <summary>Gets or sets the value associated with the specified key.</summary>
     /// <param name="key">The key of the value to get or set.</param>
-    public IEnumerable<string> this[string key] => values[key];
+    public StringValues this[string key] => values[key];
 
     ///
-    public QueryValues Add(string key, IEnumerable<string>? value)
+    public QueryValues Add(string key, StringValues? value)
     {
         if (value is not null)
         {
-            values.Add(key, value);
+            values.Add(key, value.Value);
         }
 
         return this;
@@ -39,6 +40,9 @@ public sealed class QueryValues : IEnumerable<KeyValuePair<string, IEnumerable<s
         values.Remove(key);
         return this;
     }
+
+    ///
+    public QueryValues Add(string key, IEnumerable<string>? value) => Add(key, (StringValues?)value);
 
     ///
     public QueryValues Add(string key, string? value)
@@ -86,14 +90,14 @@ public sealed class QueryValues : IEnumerable<KeyValuePair<string, IEnumerable<s
 
         foreach (var kvp in other.values)
         {
-            Add($"{property}.{kvp.Key}", kvp.Value);
+            Add($"{property}.{kvp.Key}", (StringValues?)kvp.Value);
         }
 
         return this;
     }
 
     ///
-    internal Dictionary<string, IEnumerable<string>> ToDictionary() => values;
+    internal Dictionary<string, StringValues> ToDictionary() => values;
 
     private string Generate()
     {
@@ -101,7 +105,7 @@ public sealed class QueryValues : IEnumerable<KeyValuePair<string, IEnumerable<s
         var builder = new StringBuilder();
         foreach (var parameter in values)
         {
-            if (parameter.Value is null) continue;
+            if (parameter.Value == default(StringValues)) continue;
 
             // for each item add a query parameter value, the server does not understand when combined
             foreach (var value in parameter.Value)
@@ -140,7 +144,7 @@ public sealed class QueryValues : IEnumerable<KeyValuePair<string, IEnumerable<s
     #region IEnumerable
 
     /// <inheritdoc/>
-    public IEnumerator<KeyValuePair<string, IEnumerable<string>>> GetEnumerator() => values.GetEnumerator();
+    public IEnumerator<KeyValuePair<string, StringValues>> GetEnumerator() => values.GetEnumerator();
 
     /// <inheritdoc/>
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

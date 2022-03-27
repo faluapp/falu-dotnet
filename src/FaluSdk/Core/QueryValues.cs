@@ -45,6 +45,9 @@ public sealed class QueryValues : ICollection<KeyValuePair<string, StringValues>
     public QueryValues Add(string key, IEnumerable<string>? value) => Add(key, (StringValues?)value);
 
     ///
+    public QueryValues Add(string key, IList<string>? value) => Add(key, value?.ToArray());
+
+    ///
     public QueryValues Add(string key, string? value)
     {
         if (!string.IsNullOrWhiteSpace(value))

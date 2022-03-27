@@ -6,7 +6,7 @@ using System.Text.Encodings.Web;
 namespace Falu.Core;
 
 /// <summary>Helper for handling query values.</summary>
-public sealed class QueryValues : IEnumerable<KeyValuePair<string, StringValues>>
+public sealed class QueryValues : ICollection<KeyValuePair<string, StringValues>>
 {
     private readonly Dictionary<string, StringValues> values;
 
@@ -148,6 +148,34 @@ public sealed class QueryValues : IEnumerable<KeyValuePair<string, StringValues>
 
     /// <inheritdoc/>
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    #endregion
+
+    #region ICollection
+
+    /// <inheritdoc/>
+    public int Count => values.Count;
+
+    /// <inheritdoc/>
+    bool ICollection<KeyValuePair<string, StringValues>>.IsReadOnly => false;
+
+    /// <inheritdoc/>
+    void ICollection<KeyValuePair<string, StringValues>>.Add(KeyValuePair<string, StringValues> item)
+        => ((ICollection<KeyValuePair<string, StringValues>>)values).Add(item);
+
+    /// <inheritdoc/>
+    public void Clear() => values.Clear();
+
+    /// <inheritdoc/>
+    public bool Contains(KeyValuePair<string, StringValues> item) => values.Contains(item);
+
+    /// <inheritdoc/>
+    void ICollection<KeyValuePair<string, StringValues>>.CopyTo(KeyValuePair<string, StringValues>[] array, int arrayIndex)
+        => ((ICollection<KeyValuePair<string, StringValues>>)values).CopyTo(array, arrayIndex);
+
+    /// <inheritdoc/>
+    bool ICollection<KeyValuePair<string, StringValues>>.Remove(KeyValuePair<string, StringValues> item) 
+        => ((ICollection<KeyValuePair<string, StringValues>>)values).Remove(item);
 
     #endregion
 

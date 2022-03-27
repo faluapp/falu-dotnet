@@ -37,11 +37,9 @@ public class FaluClientOptions
     {
         if (serializerOptions is null)
         {
-            serializerOptions = new JsonSerializerOptions
+            serializerOptions = new(JsonSerializerDefaults.Web)
             {
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                PropertyNameCaseInsensitive = true,
                 AllowTrailingCommas = true,
                 ReadCommentHandling = JsonCommentHandling.Skip,
             };

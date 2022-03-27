@@ -5,31 +5,38 @@ using System.Text.Encodings.Web;
 namespace Falu.Core;
 
 /// <summary>Helper for handling query values.</summary>
-public sealed class QueryValues : IEnumerable<KeyValuePair<string, string[]>>
+public sealed class QueryValues : IEnumerable<KeyValuePair<string, IEnumerable<string>>>
 {
-    private readonly Dictionary<string, string[]> values;
+    private readonly Dictionary<string, IEnumerable<string>> values;
 
     ///
-    public QueryValues(Dictionary<string, string[]>? values = null)
+    public QueryValues(Dictionary<string, IEnumerable<string>>? values = null)
     {
         // keys are case insensitive
         this.values = values == null
-            ? new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase)
-            : new Dictionary<string, string[]>(values, StringComparer.OrdinalIgnoreCase);
+            ? new Dictionary<string, IEnumerable<string>>(StringComparer.OrdinalIgnoreCase)
+            : new Dictionary<string, IEnumerable<string>>(values, StringComparer.OrdinalIgnoreCase);
     }
 
     /// <summary>Gets or sets the value associated with the specified key.</summary>
     /// <param name="key">The key of the value to get or set.</param>
-    public string[] this[string key] => values[key];
+    public IEnumerable<string> this[string key] => values[key];
 
     ///
-    public QueryValues Add(string key, string[]? value)
+    public QueryValues Add(string key, IEnumerable<string>? value)
     {
         if (value is not null)
         {
             values.Add(key, value);
         }
 
+        return this;
+    }
+
+    ///
+    public QueryValues Remove(string key)
+    {
+        values.Remove(key);
         return this;
     }
 
@@ -51,13 +58,6 @@ public sealed class QueryValues : IEnumerable<KeyValuePair<string, string[]>>
     }
 
     ///
-    public QueryValues Remove(string key)
-    {
-        values.Remove(key);
-        return this;
-    }
-
-    ///
     public QueryValues Add(string key, object? value)
     {
         if (value is null) return this;
@@ -72,19 +72,6 @@ public sealed class QueryValues : IEnumerable<KeyValuePair<string, string[]>>
             string s => Add(key, s),
             _ => throw new InvalidOperationException($"'{value.GetType().FullName}' objects are not supported"),
         };
-    }
-
-    ///
-    public QueryValues Add(string key, IEnumerable<string>? value)
-    {
-        if (value is null) return this;
-
-        // for each item add a query parameter value, the server does not understand when combined
-        foreach (var item in value)
-        {
-            Add(key, item);
-        }
-        return this;
     }
 
     ///
@@ -106,7 +93,7 @@ public sealed class QueryValues : IEnumerable<KeyValuePair<string, string[]>>
     }
 
     ///
-    internal Dictionary<string, string[]> ToDictionary() => values;
+    internal Dictionary<string, IEnumerable<string>> ToDictionary() => values;
 
     private string Generate()
     {
@@ -116,6 +103,7 @@ public sealed class QueryValues : IEnumerable<KeyValuePair<string, string[]>>
         {
             if (parameter.Value is null) continue;
 
+            // for each item add a query parameter value, the server does not understand when combined
             foreach (var value in parameter.Value)
             {
                 if (value is null) continue;
@@ -152,7 +140,7 @@ public sealed class QueryValues : IEnumerable<KeyValuePair<string, string[]>>
     #region IEnumerable
 
     /// <inheritdoc/>
-    public IEnumerator<KeyValuePair<string, string[]>> GetEnumerator() => values.GetEnumerator();
+    public IEnumerator<KeyValuePair<string, IEnumerable<string>>> GetEnumerator() => values.GetEnumerator();
 
     /// <inheritdoc/>
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

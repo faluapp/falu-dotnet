@@ -1,37 +1,51 @@
-﻿using System.Collections;
+﻿using Microsoft.Extensions.Primitives;
+using System.Collections;
 using System.Text;
 using System.Text.Encodings.Web;
 
 namespace Falu.Core;
 
 /// <summary>Helper for handling query values.</summary>
-public sealed class QueryValues : IEnumerable<KeyValuePair<string, string[]>>
+public sealed class QueryValues : ICollection<KeyValuePair<string, StringValues>>
 {
-    private readonly Dictionary<string, string[]> values;
+    private readonly Dictionary<string, StringValues> values;
 
     ///
-    public QueryValues(Dictionary<string, string[]>? values = null)
+    public QueryValues(Dictionary<string, StringValues>? values = null)
     {
         // keys are case insensitive
         this.values = values == null
-            ? new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase)
-            : new Dictionary<string, string[]>(values, StringComparer.OrdinalIgnoreCase);
+            ? new Dictionary<string, StringValues>(StringComparer.OrdinalIgnoreCase)
+            : new Dictionary<string, StringValues>(values, StringComparer.OrdinalIgnoreCase);
     }
 
     /// <summary>Gets or sets the value associated with the specified key.</summary>
     /// <param name="key">The key of the value to get or set.</param>
-    public string[] this[string key] => values[key];
+    public StringValues this[string key] => values[key];
 
     ///
-    public QueryValues Add(string key, string[]? value)
+    public QueryValues Add(string key, StringValues? value)
     {
         if (value is not null)
         {
-            values.Add(key, value);
+            values.Add(key, value.Value);
         }
 
         return this;
     }
+
+    ///
+    public QueryValues Remove(string key)
+    {
+        values.Remove(key);
+        return this;
+    }
+
+    ///
+    public QueryValues Add(string key, IEnumerable<string>? value) => Add(key, (StringValues?)value);
+
+    ///
+    public QueryValues Add(string key, IList<string>? value) => Add(key, value?.ToArray());
 
     ///
     public QueryValues Add(string key, string? value)
@@ -51,13 +65,6 @@ public sealed class QueryValues : IEnumerable<KeyValuePair<string, string[]>>
     }
 
     ///
-    public QueryValues Remove(string key)
-    {
-        values.Remove(key);
-        return this;
-    }
-
-    ///
     public QueryValues Add(string key, object? value)
     {
         if (value is null) return this;
@@ -69,22 +76,9 @@ public sealed class QueryValues : IEnumerable<KeyValuePair<string, string[]>>
             DateTime dt => Add(key, dt.ToString("O")),
             int i => Add(key, i.ToString()),
             long l => Add(key, l.ToString()),
-            string s when !string.IsNullOrWhiteSpace(s) => Add(key, s),
+            string s => Add(key, s),
             _ => throw new InvalidOperationException($"'{value.GetType().FullName}' objects are not supported"),
         };
-    }
-
-    ///
-    public QueryValues Add(string key, IEnumerable<string>? value)
-    {
-        if (value is null) return this;
-
-        // for each item add a query parameter value, the server does not understand when combined
-        foreach (var item in value)
-        {
-            Add(key, item);
-        }
-        return this;
     }
 
     ///
@@ -99,14 +93,14 @@ public sealed class QueryValues : IEnumerable<KeyValuePair<string, string[]>>
 
         foreach (var kvp in other.values)
         {
-            Add($"{property}.{kvp.Key}", kvp.Value);
+            Add($"{property}.{kvp.Key}", (StringValues?)kvp.Value);
         }
 
         return this;
     }
 
     ///
-    internal Dictionary<string, string[]> ToDictionary() => values;
+    internal Dictionary<string, StringValues> ToDictionary() => values;
 
     private string Generate()
     {
@@ -114,8 +108,9 @@ public sealed class QueryValues : IEnumerable<KeyValuePair<string, string[]>>
         var builder = new StringBuilder();
         foreach (var parameter in values)
         {
-            if (parameter.Value is null) continue;
+            if (parameter.Value == default(StringValues)) continue;
 
+            // for each item add a query parameter value, the server does not understand when combined
             foreach (var value in parameter.Value)
             {
                 if (value is null) continue;
@@ -152,10 +147,38 @@ public sealed class QueryValues : IEnumerable<KeyValuePair<string, string[]>>
     #region IEnumerable
 
     /// <inheritdoc/>
-    public IEnumerator<KeyValuePair<string, string[]>> GetEnumerator() => values.GetEnumerator();
+    public IEnumerator<KeyValuePair<string, StringValues>> GetEnumerator() => values.GetEnumerator();
 
     /// <inheritdoc/>
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    #endregion
+
+    #region ICollection
+
+    /// <inheritdoc/>
+    public int Count => values.Count;
+
+    /// <inheritdoc/>
+    bool ICollection<KeyValuePair<string, StringValues>>.IsReadOnly => false;
+
+    /// <inheritdoc/>
+    void ICollection<KeyValuePair<string, StringValues>>.Add(KeyValuePair<string, StringValues> item)
+        => ((ICollection<KeyValuePair<string, StringValues>>)values).Add(item);
+
+    /// <inheritdoc/>
+    public void Clear() => values.Clear();
+
+    /// <inheritdoc/>
+    public bool Contains(KeyValuePair<string, StringValues> item) => values.Contains(item);
+
+    /// <inheritdoc/>
+    void ICollection<KeyValuePair<string, StringValues>>.CopyTo(KeyValuePair<string, StringValues>[] array, int arrayIndex)
+        => ((ICollection<KeyValuePair<string, StringValues>>)values).CopyTo(array, arrayIndex);
+
+    /// <inheritdoc/>
+    bool ICollection<KeyValuePair<string, StringValues>>.Remove(KeyValuePair<string, StringValues> item) 
+        => ((ICollection<KeyValuePair<string, StringValues>>)values).Remove(item);
 
     #endregion
 

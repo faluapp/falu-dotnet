@@ -67,7 +67,7 @@ public static partial class IServiceCollectionExtensions
         }
 
         // register post configuration for validation purposes
-        services.AddSingleton<IPostConfigureOptions<TClientOptions>, PostConfigureFaluClientOptions<TClientOptions>>();
+        services.ConfigureOptions<FaluClientConfigureOptions<TClientOptions>>();
 
         // get the version from the assembly
         var productVersion = typeof(TClient).Assembly.GetName().Version!.ToString(3);

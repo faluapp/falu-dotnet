@@ -2,9 +2,15 @@
 
 namespace Falu;
 
-internal class PostConfigureFaluClientOptions<TClientOptions> : IPostConfigureOptions<TClientOptions> where TClientOptions : FaluClientOptions
+internal class FaluClientConfigureOptions<TClientOptions> : IPostConfigureOptions<TClientOptions>, IValidateOptions<TClientOptions>
+    where TClientOptions : FaluClientOptions
 {
     public void PostConfigure(string name, TClientOptions options)
+    {
+        // intentionally left blank for future use
+    }
+
+    public ValidateOptionsResult Validate(string name, TClientOptions options)
     {
         if (string.IsNullOrWhiteSpace(options.ApiKey))
         {
@@ -12,12 +18,14 @@ internal class PostConfigureFaluClientOptions<TClientOptions> : IPostConfigureOp
                         + "double-check your API key from the Falu Dashboard. See "
                         + "https://docs.falu.io/api/authentication for details or contact support "
                         + "at https://falu.com/support/email if you have any questions.";
-            throw new FaluException(message);
+            return ValidateOptionsResult.Fail(message);
         }
 
         if (options.Retries < 0)
         {
-            throw new FaluException("Retries cannot be negative.");
+            return ValidateOptionsResult.Fail("Retries cannot be negative.");
         }
+
+        return ValidateOptionsResult.Success;
     }
 }

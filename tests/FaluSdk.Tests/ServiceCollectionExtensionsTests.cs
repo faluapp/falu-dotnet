@@ -15,7 +15,7 @@ public class ServiceCollectionExtensionsTests
         var provider = services.BuildServiceProvider();
 
         // Act && Assert
-        Assert.Throws<FaluException>(() => provider.GetRequiredService<FaluClient>());
+        Assert.Throws<OptionsValidationException>(() => provider.GetRequiredService<FaluClient>());
     }
 
     [Fact]

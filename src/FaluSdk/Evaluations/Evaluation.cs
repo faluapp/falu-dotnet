@@ -3,7 +3,7 @@
 namespace Falu.Evaluations;
 
 /// <summary>An evaluation record.</summary>
-public class Evaluation : EvaluationPatchModel, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
+public class Evaluation : EvaluationPatchModel, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasRedaction, IHasWorkspace, IHasLive, IHasEtag
 {
     /// <inheritdoc/>
     public string? Id { get; set; }

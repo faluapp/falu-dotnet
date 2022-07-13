@@ -4,7 +4,9 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.Evaluations;
 
 ///
-public class EvaluationsServiceClient : BaseServiceClient<Evaluation>, ISupportsListing<Evaluation, EvaluationsListOptions>
+public class EvaluationsServiceClient : BaseServiceClient<Evaluation>,
+                                        ISupportsListing<Evaluation, EvaluationsListOptions>,
+                                        ISupportsRedaction<Evaluation>
 {
     ///
     public EvaluationsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
@@ -33,7 +35,7 @@ public class EvaluationsServiceClient : BaseServiceClient<Evaluation>, ISupports
     /// <summary>
     /// Retrieve an evaluation.
     /// </summary>
-    /// <param name="id">Unique identifier for the evaluation</param>
+    /// <param name="id">Unique identifier for the evaluation.</param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
@@ -47,7 +49,7 @@ public class EvaluationsServiceClient : BaseServiceClient<Evaluation>, ISupports
     /// <summary>
     /// Update an evaluation.
     /// </summary>
-    /// <param name="id">Unique identifier for the evaluation</param>
+    /// <param name="id">Unique identifier for the evaluation.</param>
     /// <param name="patch"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
@@ -77,7 +79,7 @@ public class EvaluationsServiceClient : BaseServiceClient<Evaluation>, ISupports
     /// <summary>
     /// Score an evaluation.
     /// </summary>
-    /// <param name="id">Unique identifier for the evaluation</param>
+    /// <param name="id">Unique identifier for the evaluation.</param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
@@ -86,6 +88,19 @@ public class EvaluationsServiceClient : BaseServiceClient<Evaluation>, ISupports
                                                                  CancellationToken cancellationToken = default)
     {
         var uri = $"{MakeResourcePath(id)}/score";
+        return RequestAsync<Evaluation>(uri, HttpMethod.Post, new { }, options, cancellationToken);
+    }
+
+    /// <summary>Redact a evaluation to remove all collected information from Falu.</summary>
+    /// <param name="id">Unique identifier for the evaluation.</param>
+    /// <param name="options">Options to use for the request.</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public Task<ResourceResponse<Evaluation>> RedactAsync(string id,
+                                                          RequestOptions? options = null,
+                                                          CancellationToken cancellationToken = default)
+    {
+        var uri = $"{MakeResourcePath(id)}/redact";
         return RequestAsync<Evaluation>(uri, HttpMethod.Post, new { }, options, cancellationToken);
     }
 }

@@ -4,7 +4,9 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.Messages;
 
 ///
-public class MessagesServiceClient : BaseServiceClient<Message>, ISupportsListing<Message, MessagesListOptions>
+public class MessagesServiceClient : BaseServiceClient<Message>,
+                                     ISupportsListing<Message, MessagesListOptions>,
+                                     ISupportsRedaction<Message>
 {
     ///
     public MessagesServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
@@ -33,7 +35,7 @@ public class MessagesServiceClient : BaseServiceClient<Message>, ISupportsListin
     /// <summary>
     /// Retrieve a message.
     /// </summary>
-    /// <param name="id">Unique identifier for the message</param>
+    /// <param name="id">Unique identifier for the message.</param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
@@ -60,7 +62,7 @@ public class MessagesServiceClient : BaseServiceClient<Message>, ISupportsListin
     }
 
     /// <summary>Update a message.</summary>
-    /// <param name="id">Unique identifier for the message</param>
+    /// <param name="id">Unique identifier for the message.</param>
     /// <param name="patch"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
@@ -97,5 +99,18 @@ public class MessagesServiceClient : BaseServiceClient<Message>, ISupportsListin
 
         var uri = MakePath("/batch");
         return RequestAsync<MessageCreateResponse>(uri, HttpMethod.Post, messages, options, cancellationToken);
+    }
+
+    /// <summary>Redact a message to remove all collected information from Falu.</summary>
+    /// <param name="id">Unique identifier for the message.</param>
+    /// <param name="options">Options to use for the request.</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public Task<ResourceResponse<Message>> RedactAsync(string id,
+                                                       RequestOptions? options = null,
+                                                       CancellationToken cancellationToken = default)
+    {
+        var uri = $"{MakeResourcePath(id)}/redact";
+        return RequestAsync<Message>(uri, HttpMethod.Post, new { }, options, cancellationToken);
     }
 }

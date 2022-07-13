@@ -2,9 +2,7 @@
 
 namespace Falu.Evaluations;
 
-/// <summary>
-/// An evaluation record.
-/// </summary>
+/// <summary>An evaluation record.</summary>
 public class Evaluation : EvaluationPatchModel, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
 {
     /// <inheritdoc/>
@@ -28,6 +26,11 @@ public class Evaluation : EvaluationPatchModel, IHasId, IHasCurrency, IHasCreate
     /// Status of the evaluation.
     /// </summary>
     public string? Status { get; set; }
+
+    /// <summary>
+    /// A set of options for the evaluation's process.
+    /// </summary>
+    public EvaluationScoringOptions? Options { get; set; }
 
     /// <summary>
     /// Statement used for the evaluation.

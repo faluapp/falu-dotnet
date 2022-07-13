@@ -1,9 +1,9 @@
 ﻿using Falu.Core;
 using Falu.Payments;
-using Newtonsoft.Json;
 using System.Net;
 using System.Net.Mime;
 using System.Text;
+using System.Text.Json;
 using Xunit;
 
 namespace Falu.Tests.Clients;
@@ -35,7 +35,7 @@ public class MoneyBalancesServiceClientTests : BaseServiceClientTests
 
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, MediaTypeNames.Application.Json)
+                Content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, MediaTypeNames.Application.Json)
             };
         });
 
@@ -60,7 +60,7 @@ public class MoneyBalancesServiceClientTests : BaseServiceClientTests
 
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, MediaTypeNames.Application.Json)
+                Content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, MediaTypeNames.Application.Json)
             };
         });
 

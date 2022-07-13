@@ -1,9 +1,9 @@
 ﻿using Falu.Core;
 using Falu.PaymentAuthorizations;
-using Newtonsoft.Json;
 using System.Net;
 using System.Net.Mime;
 using System.Text;
+using System.Text.Json;
 using Tingle.Extensions.JsonPatch;
 using Xunit;
 
@@ -94,7 +94,7 @@ public class PaymentAuthorizationsServiceClientTests : BaseServiceClientTests<Pa
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonConvert.SerializeObject(Data!), Encoding.UTF8, MediaTypeNames.Application.Json)
+                Content = new StringContent(JsonSerializer.Serialize(Data!), Encoding.UTF8, MediaTypeNames.Application.Json)
             };
 
             return response;
@@ -123,7 +123,7 @@ public class PaymentAuthorizationsServiceClientTests : BaseServiceClientTests<Pa
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonConvert.SerializeObject(Data!), Encoding.UTF8, MediaTypeNames.Application.Json)
+                Content = new StringContent(JsonSerializer.Serialize(Data!), Encoding.UTF8, MediaTypeNames.Application.Json)
             };
 
             return response;

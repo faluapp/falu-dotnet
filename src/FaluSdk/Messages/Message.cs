@@ -24,7 +24,6 @@ public class Message : MessagePatchModel, IHasId, IHasCreated, IHasUpdated, IHas
     /// <summary>
     /// Destination phone number in <see href="https://en.wikipedia.org/wiki/E.164">E.164 format</see>.
     /// </summary>
-    /// <example>+254722000000</example>
     public string? To { get; set; }
 
     /// <summary>

@@ -1,9 +1,9 @@
 ﻿using Falu.Core;
 using Falu.MessageTemplates;
-using Newtonsoft.Json;
 using System.Net;
 using System.Net.Mime;
 using System.Text;
+using System.Text.Json;
 using Tingle.Extensions.JsonPatch;
 using Xunit;
 
@@ -160,7 +160,7 @@ public class MessageTemplatesServiceClientTests : BaseServiceClientTests<Message
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, MediaTypeNames.Application.Json)
+                Content = new StringContent(JsonSerializer.Serialize(content), Encoding.UTF8, MediaTypeNames.Application.Json)
             };
 
             return response;

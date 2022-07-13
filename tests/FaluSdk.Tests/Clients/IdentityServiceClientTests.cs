@@ -1,9 +1,9 @@
 ﻿using Falu.Core;
 using Falu.Identity;
-using Newtonsoft.Json;
 using System.Net;
 using System.Net.Mime;
 using System.Text;
+using System.Text.Json;
 using Xunit;
 
 namespace Falu.Tests.Clients;
@@ -36,7 +36,7 @@ public class IdentityServiceClientTests : BaseServiceClientTests
 
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonConvert.SerializeObject(identity), Encoding.UTF8, MediaTypeNames.Application.Json)
+                Content = new StringContent(JsonSerializer.Serialize(identity), Encoding.UTF8, MediaTypeNames.Application.Json)
             };
         });
 

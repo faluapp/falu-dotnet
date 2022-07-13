@@ -1,9 +1,9 @@
 ﻿using Falu.Core;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 using System.Net;
 using System.Net.Mime;
 using System.Text;
+using System.Text.Json;
 using Xunit;
 
 namespace Falu.Tests.Clients;
@@ -32,7 +32,7 @@ public class BaseServiceClientTests<TResource> : BaseServiceClientTests where TR
 
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonConvert.SerializeObject(Data), Encoding.UTF8, MediaTypeNames.Application.Json)
+                Content = new StringContent(JsonSerializer.Serialize(Data), Encoding.UTF8, MediaTypeNames.Application.Json)
             };
         });
 
@@ -52,7 +52,7 @@ public class BaseServiceClientTests<TResource> : BaseServiceClientTests where TR
             var content = new List<TResource> { Data };
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, MediaTypeNames.Application.Json)
+                Content = new StringContent(JsonSerializer.Serialize(content), Encoding.UTF8, MediaTypeNames.Application.Json)
             };
 
             if (hasContinuationToken.GetValueOrDefault())
@@ -78,7 +78,7 @@ public class BaseServiceClientTests<TResource> : BaseServiceClientTests where TR
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonConvert.SerializeObject(Data), Encoding.UTF8, MediaTypeNames.Application.Json)
+                Content = new StringContent(JsonSerializer.Serialize(Data), Encoding.UTF8, MediaTypeNames.Application.Json)
             };
 
             return response;
@@ -98,7 +98,7 @@ public class BaseServiceClientTests<TResource> : BaseServiceClientTests where TR
 
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonConvert.SerializeObject(Data), Encoding.UTF8, MediaTypeNames.Application.Json)
+                Content = new StringContent(JsonSerializer.Serialize(Data), Encoding.UTF8, MediaTypeNames.Application.Json)
             };
         });
 

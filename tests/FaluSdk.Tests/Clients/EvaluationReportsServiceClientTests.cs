@@ -1,5 +1,5 @@
 ﻿using Falu.Core;
-using Falu.Evaluations;
+using Falu.EvaluationReports;
 using System.Net;
 using Xunit;
 

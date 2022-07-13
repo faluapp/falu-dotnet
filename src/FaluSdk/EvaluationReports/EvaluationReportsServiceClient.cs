@@ -1,6 +1,6 @@
 ﻿using Falu.Core;
 
-namespace Falu.Evaluations;
+namespace Falu.EvaluationReports;
 
 ///
 public class EvaluationReportsServiceClient : BaseServiceClient<EvaluationReport>,

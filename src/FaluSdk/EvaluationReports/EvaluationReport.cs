@@ -1,6 +1,7 @@
 ﻿using Falu.Core;
+using Falu.Evaluations;
 
-namespace Falu.Evaluations;
+namespace Falu.EvaluationReports;
 
 /// <summary>An evaluation report.</summary>
 public class EvaluationReport : IHasId, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag

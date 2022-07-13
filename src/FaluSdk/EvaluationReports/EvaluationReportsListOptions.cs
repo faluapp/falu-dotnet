@@ -1,6 +1,6 @@
 ﻿using Falu.Core;
 
-namespace Falu.Evaluations;
+namespace Falu.EvaluationReports;
 
 /// <summary>Options for filtering and pagination of evaluation reports.</summary>
 public record EvaluationReportsListOptions : BasicListOptions

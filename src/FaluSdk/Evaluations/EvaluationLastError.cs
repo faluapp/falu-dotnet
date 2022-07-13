@@ -1,5 +1,8 @@
 ﻿namespace Falu.Evaluations;
 
+/// <summary>
+/// The last error encountered in the evaluation scoring process.
+/// </summary>
 public class EvaluationLastError
 {
     /// <summary>

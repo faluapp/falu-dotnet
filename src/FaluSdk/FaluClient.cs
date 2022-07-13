@@ -3,6 +3,8 @@ using Falu.Events;
 using Falu.FileLinks;
 using Falu.Files;
 using Falu.Identity;
+using Falu.IdentityVerifications;
+using Falu.IdentityVerificationReports;
 using Falu.Messages;
 using Falu.MessageStreams;
 using Falu.MessageTemplates;
@@ -45,6 +47,8 @@ public class FaluClient<TOptions> where TOptions : FaluClientOptions
         Files = new FilesServiceClient(BackChannel, Options);
         FileLinks = new FileLinksServiceClient(BackChannel, Options);
         Identity = new IdentityServiceClient(BackChannel, Options);
+        IdentityVerifications = new IdentityVerificationsServiceClient(BackChannel, Options);
+        IdentityVerificationReports = new IdentityVerificationReportsServiceClient(BackChannel, Options);
         Messages = new MessagesServiceClient(BackChannel, Options);
         MessageStreams = new MessageStreamsServiceClient(BackChannel, Options);
         MessageTemplates = new MessageTemplatesServiceClient(BackChannel, Options);
@@ -82,6 +86,12 @@ public class FaluClient<TOptions> where TOptions : FaluClientOptions
 
     ///
     public virtual IdentityServiceClient Identity { get; protected set; }
+
+    ///
+    public virtual IdentityVerificationsServiceClient IdentityVerifications { get; protected set; }
+
+    ///
+    public virtual IdentityVerificationReportsServiceClient IdentityVerificationReports { get; protected set; }
 
     ///
     public virtual MessagesServiceClient Messages { get; protected set; }

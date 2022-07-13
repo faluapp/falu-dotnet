@@ -6,7 +6,8 @@ namespace Falu.FileLinks;
 ///
 public class FileLinksServiceClient : BaseServiceClient<FileLink>,
                                       ISupportsListing<FileLink, FileLinksListOptions>,
-                                      ISupportsRetrieving<FileLink>
+                                      ISupportsRetrieving<FileLink>,
+                                      ISupportsUpdating<FileLink, FileLinkPatchModel>
 {
     ///
     public FileLinksServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options)

@@ -6,7 +6,8 @@ namespace Falu.Payments;
 ///
 public class PaymentsServiceClient : BaseServiceClient<Payment>,
                                      ISupportsListing<Payment, PaymentsListOptions>,
-                                     ISupportsRetrieving<Payment>
+                                     ISupportsRetrieving<Payment>,
+                                     ISupportsUpdating<Payment, PaymentPatchModel>
 {
     ///
     public PaymentsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }

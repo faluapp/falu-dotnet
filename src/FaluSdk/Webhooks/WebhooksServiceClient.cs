@@ -6,7 +6,8 @@ namespace Falu.Webhooks;
 ///
 public class WebhooksServiceClient : BaseServiceClient<WebhookEndpoint>,
                                      ISupportsListing<WebhookEndpoint, WebhookEndpointsListOptions>,
-                                     ISupportsRetrieving<WebhookEndpoint>
+                                     ISupportsRetrieving<WebhookEndpoint>,
+                                     ISupportsUpdating<WebhookEndpoint, WebhookEndpointPatchModel>
 {
     ///
     public WebhooksServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }

@@ -6,7 +6,8 @@ namespace Falu.PaymentAuthorizations;
 ///
 public class PaymentAuthorizationsServiceClient : BaseServiceClient<PaymentAuthorization>,
                                                   ISupportsListing<PaymentAuthorization, PaymentAuthorizationsListOptions>,
-                                                  ISupportsRetrieving<PaymentAuthorization>
+                                                  ISupportsRetrieving<PaymentAuthorization>,
+                                                  ISupportsUpdating<PaymentAuthorization, PaymentAuthorizationPatchModel>
 {
     ///
     public PaymentAuthorizationsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }

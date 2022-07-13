@@ -6,7 +6,8 @@ namespace Falu.MessageStreams;
 ///
 public class MessageStreamsServiceClient : BaseServiceClient<MessageStream>,
                                            ISupportsListing<MessageStream, MessageStreamsListOptions>,
-                                           ISupportsRetrieving<MessageStream>
+                                           ISupportsRetrieving<MessageStream>,
+                                           ISupportsUpdating<MessageStream, MessageStreamPatchModel>
 {
     ///
     public MessageStreamsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }

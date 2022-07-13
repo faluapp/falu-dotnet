@@ -6,7 +6,8 @@ namespace Falu.Transfers;
 ///
 public class TransfersServiceClient : BaseServiceClient<Transfer>,
                                       ISupportsListing<Transfer, TransfersListOptions>,
-                                      ISupportsRetrieving<Transfer>
+                                      ISupportsRetrieving<Transfer>,
+                                      ISupportsUpdating<Transfer, TransferPatchModel>
 {
     ///
     public TransfersServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }

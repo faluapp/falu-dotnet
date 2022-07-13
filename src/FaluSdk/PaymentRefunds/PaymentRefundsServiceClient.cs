@@ -6,7 +6,8 @@ namespace Falu.PaymentRefunds;
 ///
 public class PaymentRefundsServiceClient : BaseServiceClient<PaymentRefund>,
                                            ISupportsListing<PaymentRefund, PaymentRefundsListOptions>,
-                                           ISupportsRetrieving<PaymentRefund>
+                                           ISupportsRetrieving<PaymentRefund>,
+                                           ISupportsUpdating<PaymentRefund, PaymentRefundPatchModel>
 {
     ///
     public PaymentRefundsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }

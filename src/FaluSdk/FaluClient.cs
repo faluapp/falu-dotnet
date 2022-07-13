@@ -40,6 +40,7 @@ public class FaluClient<TOptions> where TOptions : FaluClientOptions
         }
 
         Evaluations = new EvaluationsServiceClient(BackChannel, Options);
+        EvaluationReports = new EvaluationReportsServiceClient(BackChannel, Options);
         Events = new EventsServiceClient(BackChannel, Options);
         Files = new FilesServiceClient(BackChannel, Options);
         FileLinks = new FileLinksServiceClient(BackChannel, Options);
@@ -66,6 +67,9 @@ public class FaluClient<TOptions> where TOptions : FaluClientOptions
 
     ///
     public virtual EvaluationsServiceClient Evaluations { get; protected set; }
+
+    ///
+    public virtual EvaluationReportsServiceClient EvaluationReports { get; protected set; }
 
     ///
     public virtual EventsServiceClient Events { get; protected set; }

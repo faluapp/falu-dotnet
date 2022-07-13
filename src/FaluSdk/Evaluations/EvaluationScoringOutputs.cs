@@ -11,7 +11,6 @@ public class EvaluationScoringOutputs
     public string? StatementProvider { get; set; }
 
     /// <summary>Name found in the document.</summary>
-    /// <example>JOHN ***</example>
     public string? Name { get; set; }
 
     /// <summary>Email found in the document.</summary>
@@ -33,13 +32,11 @@ public class EvaluationScoringOutputs
     /// <summary>
     /// Risk probability. The higher the value, the higher the risk
     /// </summary>
-    /// <example>0.54687</example>
     public float? Risk { get; set; }
 
     /// <summary>
     /// Limit advised for lending in the smallest currency unit.
     /// </summary>
-    /// <example>1500000</example>
     public long? Limit { get; set; }
 
     /// <summary>

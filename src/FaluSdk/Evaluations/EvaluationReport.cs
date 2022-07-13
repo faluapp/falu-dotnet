@@ -17,7 +17,6 @@ public class EvaluationReport : IHasId, IHasCreated, IHasUpdated, IHasWorkspace,
     /// <summary>
     /// Identifier of the evaluation that created this report.
     /// </summary>
-    /// <example>ev_602a8dd0a54847479a874de4</example>
     public string? Evaluation { get; set; }
 
     /// <summary>

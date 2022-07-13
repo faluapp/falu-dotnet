@@ -5,6 +5,7 @@ namespace Falu.Evaluations;
 /// <summary>
 /// The statement used for an evaluation.
 /// </summary>
+[Obsolete("Use EvaluationScoringOutputs instead or pull from attached EvaluationReports")]
 public class Statement
 {
     /// <summary>

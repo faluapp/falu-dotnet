@@ -4,7 +4,11 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.Transfers;
 
 ///
-public class TransfersServiceClient : BaseServiceClient<Transfer>, ISupportsListing<Transfer, TransfersListOptions>
+public class TransfersServiceClient : BaseServiceClient<Transfer>,
+                                      ISupportsListing<Transfer, TransfersListOptions>,
+                                      ISupportsRetrieving<Transfer>,
+                                      ISupportsCreation<Transfer, TransferCreateRequest>,
+                                      ISupportsUpdating<Transfer, TransferPatchModel>
 {
     ///
     public TransfersServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
@@ -47,15 +51,15 @@ public class TransfersServiceClient : BaseServiceClient<Transfer>, ISupportsList
     /// <summary>
     /// Create a transfer.
     /// </summary>
-    /// <param name="transfer"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<Transfer>> CreateAsync(TransferCreateRequest transfer,
+    public virtual Task<ResourceResponse<Transfer>> CreateAsync(TransferCreateRequest request,
                                                                 RequestOptions? options = null,
                                                                 CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync(transfer, options, cancellationToken);
+        return CreateResourceAsync(request, options, cancellationToken);
     }
 
     /// <summary>

@@ -28,6 +28,21 @@ public class PaymentAuthorizationsServiceClientTests : BaseServiceClientTests<Pa
     { }
 
     [Theory]
+    [MemberData(nameof(RequestOptionsData))]
+    public async Task GetAsync_Works(RequestOptions options)
+    {
+        var handler = GetAsync_Handler(options);
+
+        await TestAsync(handler, async (client) =>
+        {
+            var response = await client.PaymentAuthorizations.GetAsync(Data!.Id!, options);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(response.Resource);
+            Assert.Equal(Data!.Id, response.Resource!.Id);
+        });
+    }
+
+    [Theory]
     [MemberData(nameof(RequestOptionsWithHasContinuationTokenData))]
     public async Task ListAsync_Works(RequestOptions options, bool hasContinuationToken)
     {

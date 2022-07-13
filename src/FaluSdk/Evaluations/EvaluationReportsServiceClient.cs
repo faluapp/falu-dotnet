@@ -3,7 +3,9 @@
 namespace Falu.Evaluations;
 
 ///
-public class EvaluationReportsServiceClient : BaseServiceClient<EvaluationReport>, ISupportsListing<EvaluationReport, EvaluationReportsListOptions>
+public class EvaluationReportsServiceClient : BaseServiceClient<EvaluationReport>,
+                                              ISupportsListing<EvaluationReport, EvaluationReportsListOptions>,
+                                              ISupportsRetrieving<EvaluationReport>
 {
     ///
     public EvaluationReportsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }

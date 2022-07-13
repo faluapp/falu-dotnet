@@ -4,7 +4,11 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.MessageTemplates;
 
 ///
-public class MessageTemplatesServiceClient : BaseServiceClient<MessageTemplate>, ISupportsListing<MessageTemplate, MessageTemplatesListOptions>
+public class MessageTemplatesServiceClient : BaseServiceClient<MessageTemplate>,
+                                             ISupportsListing<MessageTemplate, MessageTemplatesListOptions>,
+                                             ISupportsRetrieving<MessageTemplate>,
+                                             ISupportsCreation<MessageTemplate, MessageTemplateCreateRequest>,
+                                             ISupportsUpdating<MessageTemplate, MessageTemplatePatchModel>
 {
     ///
     public MessageTemplatesServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
@@ -47,15 +51,15 @@ public class MessageTemplatesServiceClient : BaseServiceClient<MessageTemplate>,
     /// <summary>
     /// Create a message template.
     /// </summary>
-    /// <param name="template"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<MessageTemplate>> CreateAsync(MessageTemplateCreateRequest template,
+    public virtual Task<ResourceResponse<MessageTemplate>> CreateAsync(MessageTemplateCreateRequest request,
                                                                        RequestOptions? options = null,
                                                                        CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync(template, options, cancellationToken);
+        return CreateResourceAsync(request, options, cancellationToken);
     }
 
     /// <summary>

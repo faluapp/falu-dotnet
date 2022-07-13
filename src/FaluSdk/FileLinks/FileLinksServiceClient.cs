@@ -4,7 +4,11 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.FileLinks;
 
 ///
-public class FileLinksServiceClient : BaseServiceClient<FileLink>, ISupportsListing<FileLink, FileLinksListOptions>
+public class FileLinksServiceClient : BaseServiceClient<FileLink>,
+                                      ISupportsListing<FileLink, FileLinksListOptions>,
+                                      ISupportsRetrieving<FileLink>,
+                                      ISupportsCreation<FileLink, FileLinkCreateRequest>,
+                                      ISupportsUpdating<FileLink, FileLinkPatchModel>
 {
     ///
     public FileLinksServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options)
@@ -45,15 +49,15 @@ public class FileLinksServiceClient : BaseServiceClient<FileLink>, ISupportsList
     }
 
     /// <summary>Create a file link.</summary>
-    /// <param name="link"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<FileLink>> CreateAsync(FileLinkCreateRequest link,
+    public virtual Task<ResourceResponse<FileLink>> CreateAsync(FileLinkCreateRequest request,
                                                                 RequestOptions? options = null,
                                                                 CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync(link, options, cancellationToken);
+        return CreateResourceAsync(request, options, cancellationToken);
     }
 
     /// <summary>Update a file link.</summary>

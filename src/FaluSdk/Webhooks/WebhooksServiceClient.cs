@@ -4,7 +4,11 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.Webhooks;
 
 ///
-public class WebhooksServiceClient : BaseServiceClient<WebhookEndpoint>, ISupportsListing<WebhookEndpoint, WebhookEndpointsListOptions>
+public class WebhooksServiceClient : BaseServiceClient<WebhookEndpoint>,
+                                     ISupportsListing<WebhookEndpoint, WebhookEndpointsListOptions>,
+                                     ISupportsRetrieving<WebhookEndpoint>,
+                                     ISupportsCreation<WebhookEndpoint, WebhookEndpointCreateRequest>,
+                                     ISupportsUpdating<WebhookEndpoint, WebhookEndpointPatchModel>
 {
     ///
     public WebhooksServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
@@ -47,15 +51,15 @@ public class WebhooksServiceClient : BaseServiceClient<WebhookEndpoint>, ISuppor
     /// <summary>
     /// Create a webhook endpoint.
     /// </summary>
-    /// <param name="endpoint"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<WebhookEndpoint>> CreateAsync(WebhookEndpointCreateRequest endpoint,
+    public virtual Task<ResourceResponse<WebhookEndpoint>> CreateAsync(WebhookEndpointCreateRequest request,
                                                                        RequestOptions? options = null,
                                                                        CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync(endpoint, options, cancellationToken);
+        return CreateResourceAsync(request, options, cancellationToken);
     }
 
     /// <summary>

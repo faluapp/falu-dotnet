@@ -38,6 +38,28 @@ public class Evaluation : EvaluationPatchModel, IHasId, IHasCurrency, IHasCreate
     public Statement? Statement { get; set; }
 
     /// <summary>
+    /// The secret to use when generating <see cref="Url"/> and <see cref="ClientSecret"/>.
+    /// The values generated are used for authentication on clients and the browser.
+    /// Every time the document is updated a new value is generated which is random.
+    /// </summary>
+    public string? Secret { get; set; }
+
+    /// <summary>
+    /// The short-lived client secret used by front-end libraries to show an evaluation modal inside your app.
+    /// This client secret expires after 24 hours and can only be used once.
+    /// Don’t store it, log it, embed it in a URL, or expose it to anyone other than the user.
+    /// Make sure that you have TLS enabled on any page that includes the client secret.
+    /// </summary>
+    public string? ClientSecret { get; set; }
+
+    /// <summary>
+    /// The short-lived URL that you use to redirect a user to Falu to submit their evaluation information.
+    /// This link expires after 24 hours and can only be used once.
+    /// Don’t store it, log it, send it in emails or expose it to anyone other than the target user.
+    /// </summary>
+    public string? Url { get; set; }
+
+    /// <summary>
     /// Scoring generated for the evaluation.
     /// Only populated if extraction succeeded.
     /// </summary>

@@ -66,7 +66,7 @@ public class EvaluationsServiceClient : BaseServiceClient<Evaluation>,
     }
 
     /// <summary>
-    /// Initiate an evaluation.
+    /// Create an evaluation.
     /// </summary>
     /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
@@ -94,7 +94,7 @@ public class EvaluationsServiceClient : BaseServiceClient<Evaluation>,
         return RequestAsync<Evaluation>(uri, HttpMethod.Post, new { }, options, cancellationToken);
     }
 
-    /// <summary>Redact a evaluation to remove all collected information from Falu.</summary>
+    /// <summary>Redact an evaluation to remove all collected information from Falu.</summary>
     /// <param name="id">Unique identifier for the evaluation.</param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>

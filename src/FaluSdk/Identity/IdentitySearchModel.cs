@@ -14,7 +14,6 @@ public class IdentitySearchModel : IHasCountry
     /// The phone number to search in <see href="https://en.wikipedia.org/wiki/E.164">E.164 format</see>.
     /// Required if <see cref="DocumentNumber"/> is not specified.
     /// </summary>
-    /// <example>+254722000000</example>
     public string? Phone { get; set; }
 
     /// <summary>

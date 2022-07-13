@@ -21,7 +21,6 @@ public class File : IHasId, IHasCreated, IHasUpdated, IHasDescription, IHasWorks
     public string? Purpose { get; set; }
 
     /// <summary>Type of file.</summary>
-    /// <example>image/png</example>
     public string? Type { get; set; }
 
     /// <summary>A name of the file suitable for saving to a filesystem.</summary>

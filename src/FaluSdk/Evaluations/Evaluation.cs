@@ -14,6 +14,7 @@ public class Evaluation : EvaluationPatchModel, IHasId, IHasCurrency, IHasCreate
     /// <summary>
     /// Scope of the evaluation.
     /// </summary>
+    [Obsolete("Moved to Options")]
     public string? Scope { get; set; }
 
     /// <inheritdoc/>
@@ -35,6 +36,7 @@ public class Evaluation : EvaluationPatchModel, IHasId, IHasCurrency, IHasCreate
     /// <summary>
     /// Statement used for the evaluation.
     /// </summary>
+    [Obsolete("Moved to Reports or Outputs")]
     public Statement? Statement { get; set; }
 
     /// <summary>
@@ -63,6 +65,7 @@ public class Evaluation : EvaluationPatchModel, IHasId, IHasCurrency, IHasCreate
     /// Scoring generated for the evaluation.
     /// Only populated if extraction succeeded.
     /// </summary>
+    [Obsolete("Moved to Outputs")]
     public EvaluationScoring? Scoring { get; set; }
 
     /// <summary>

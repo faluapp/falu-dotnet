@@ -3,6 +3,7 @@
 /// <summary>
 /// Represents the scoring done for an evaluation
 /// </summary>
+[Obsolete("Use EvaluationScoringOutputs instead")]
 public class EvaluationScoring
 {
     /// <summary>

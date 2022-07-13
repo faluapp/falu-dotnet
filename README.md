@@ -132,6 +132,29 @@ var ro = new RequestOptions { IdempotencyKey = "SOME STRING", };
 await client.Evaluations.CreateAsync(evaluation: request, options: ro);
 ```
 
+## Identity
+
+With `FaluClient` you can verify your user's identity from a documentation perspective. Below is a sample of how to do verify the user's phone number against a name or id card.
+
+```cs
+FaluClient client; // omitted for brevity
+
+var request = new IdentityVerificationCreateRequest
+{
+    Checks = new IdentityVerificationChecks
+    {
+        Document = new IdentityVerificationChecksForDocument
+        {
+            LiveCapture = true,
+        }
+    },
+};
+var response = await client.IdentityVerifications.CreateAsync(request);
+response.EnsureSuccess(); // might throw an exception (FaluException)
+var url = response.Resource.Url; // use this URL to complete verification
+var clientSecret = response.Resource.ClientSecret; // pass this to Android/iOS apps using the official SDK
+```
+
 ## Messages
 
 With `FaluClient` you can send both transactional and bulk messages to customers. You can use pre-created templates to streamline sending of your messages. Below is a sample of how to create a template then used it to send a message.
@@ -220,28 +243,6 @@ response.EnsureSuccess(); // might throw an exception (FaluException)
 ```
 
 > Your outgoing account for MPESA must be configured in your [Workspace settings][workspace-settings] before you can initiate an outgoing payment to a customer.
-
-## Identity
-
-With `FaluClient` you can verify your user's identity from a documentation perspective. Below is a sample of how to do verify the user's phone number against a name or id card.
-
-```cs
-FaluClient client; // omitted for brevity
-
-var search = new IdentitySearchModel
-{
-    Phone = "+254722000000",
-};
-var response = await client.Identity.SearchAsync(search);
-response.EnsureSuccess(); // might throw an exception (FaluException)
-var result = response.Resource;
-if (result != null)
-{
-    var name = result.Name;
-    var idNumber = result.DocumentNumber;
-    // application confirms if the name and idNumber provided matches the ones in the result
-}
-```
 
 ## Evaluations
 

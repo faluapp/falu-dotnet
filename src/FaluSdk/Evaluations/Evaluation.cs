@@ -66,9 +66,17 @@ public class Evaluation : EvaluationPatchModel, IHasId, IHasCurrency, IHasCreate
     public EvaluationScoring? Scoring { get; set; }
 
     /// <summary>
+    /// Unique identifiers of the reports for this verification.
+    /// </summary>
+    public List<string> Reports { get; set; } = new List<string>();
+
+    /// <summary>
     /// The evaluations and scoring output data.
     /// </summary>
     public EvaluationScoringOutputs? Outputs { get; set; }
+
+    /// <inheritdoc/>
+    public DataRedaction? Redaction { get; set; }
 
     /// <inheritdoc/>
     public string? Workspace { get; set; }

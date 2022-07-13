@@ -4,7 +4,9 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.Payments;
 
 ///
-public class PaymentsServiceClient : BaseServiceClient<Payment>, ISupportsListing<Payment, PaymentsListOptions>
+public class PaymentsServiceClient : BaseServiceClient<Payment>,
+                                     ISupportsListing<Payment, PaymentsListOptions>,
+                                     ISupportsRetrieving<Payment>
 {
     ///
     public PaymentsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }

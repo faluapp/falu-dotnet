@@ -4,7 +4,9 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.Webhooks;
 
 ///
-public class WebhooksServiceClient : BaseServiceClient<WebhookEndpoint>, ISupportsListing<WebhookEndpoint, WebhookEndpointsListOptions>
+public class WebhooksServiceClient : BaseServiceClient<WebhookEndpoint>,
+                                     ISupportsListing<WebhookEndpoint, WebhookEndpointsListOptions>,
+                                     ISupportsRetrieving<WebhookEndpoint>
 {
     ///
     public WebhooksServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }

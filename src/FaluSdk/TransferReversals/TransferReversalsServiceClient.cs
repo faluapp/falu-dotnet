@@ -4,7 +4,9 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.TransferReversals;
 
 ///
-public class TransferReversalsServiceClient : BaseServiceClient<TransferReversal>, ISupportsListing<TransferReversal, TransferReversalsListOptions>
+public class TransferReversalsServiceClient : BaseServiceClient<TransferReversal>,
+                                              ISupportsListing<TransferReversal, TransferReversalsListOptions>,
+                                              ISupportsRetrieving<TransferReversal>
 {
     ///
     public TransferReversalsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }

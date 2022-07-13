@@ -4,7 +4,9 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.MessageTemplates;
 
 ///
-public class MessageTemplatesServiceClient : BaseServiceClient<MessageTemplate>, ISupportsListing<MessageTemplate, MessageTemplatesListOptions>
+public class MessageTemplatesServiceClient : BaseServiceClient<MessageTemplate>,
+                                             ISupportsListing<MessageTemplate, MessageTemplatesListOptions>,
+                                             ISupportsRetrieving<MessageTemplate>
 {
     ///
     public MessageTemplatesServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }

@@ -4,7 +4,9 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.PaymentRefunds;
 
 ///
-public class PaymentRefundsServiceClient : BaseServiceClient<PaymentRefund>, ISupportsListing<PaymentRefund, PaymentRefundsListOptions>
+public class PaymentRefundsServiceClient : BaseServiceClient<PaymentRefund>,
+                                           ISupportsListing<PaymentRefund, PaymentRefundsListOptions>,
+                                           ISupportsRetrieving<PaymentRefund>
 {
     ///
     public PaymentRefundsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }

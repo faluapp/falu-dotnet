@@ -6,6 +6,7 @@ namespace Falu.Evaluations;
 ///
 public class EvaluationsServiceClient : BaseServiceClient<Evaluation>,
                                         ISupportsListing<Evaluation, EvaluationsListOptions>,
+                                        ISupportsRetrieving<Evaluation>,
                                         ISupportsRedaction<Evaluation>
 {
     ///

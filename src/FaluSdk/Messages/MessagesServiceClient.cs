@@ -6,6 +6,7 @@ namespace Falu.Messages;
 ///
 public class MessagesServiceClient : BaseServiceClient<Message>,
                                      ISupportsListing<Message, MessagesListOptions>,
+                                     ISupportsRetrieving<Message>,
                                      ISupportsRedaction<Message>
 {
     ///

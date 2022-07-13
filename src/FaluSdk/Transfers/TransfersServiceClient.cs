@@ -4,7 +4,9 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.Transfers;
 
 ///
-public class TransfersServiceClient : BaseServiceClient<Transfer>, ISupportsListing<Transfer, TransfersListOptions>
+public class TransfersServiceClient : BaseServiceClient<Transfer>,
+                                      ISupportsListing<Transfer, TransfersListOptions>,
+                                      ISupportsRetrieving<Transfer>
 {
     ///
     public TransfersServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }

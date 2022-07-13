@@ -3,7 +3,9 @@
 namespace Falu.Events;
 
 ///
-public class EventsServiceClient : BaseServiceClient<WebhookEvent>, ISupportsListing<WebhookEvent, EventsListOptions>
+public class EventsServiceClient : BaseServiceClient<WebhookEvent>,
+                                   ISupportsListing<WebhookEvent, EventsListOptions>,
+                                   ISupportsRetrieving<WebhookEvent>
 {
     ///
     public EventsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }

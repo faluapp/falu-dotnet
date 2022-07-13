@@ -4,7 +4,9 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.MessageStreams;
 
 ///
-public class MessageStreamsServiceClient : BaseServiceClient<MessageStream>, ISupportsListing<MessageStream, MessageStreamsListOptions>
+public class MessageStreamsServiceClient : BaseServiceClient<MessageStream>,
+                                           ISupportsListing<MessageStream, MessageStreamsListOptions>,
+                                           ISupportsRetrieving<MessageStream>
 {
     ///
     public MessageStreamsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }

@@ -4,7 +4,9 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.FileLinks;
 
 ///
-public class FileLinksServiceClient : BaseServiceClient<FileLink>, ISupportsListing<FileLink, FileLinksListOptions>
+public class FileLinksServiceClient : BaseServiceClient<FileLink>,
+                                      ISupportsListing<FileLink, FileLinksListOptions>,
+                                      ISupportsRetrieving<FileLink>
 {
     ///
     public FileLinksServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options)

@@ -3,7 +3,9 @@
 namespace Falu.Files;
 
 ///
-public class FilesServiceClient : BaseServiceClient<File>, ISupportsListing<File, FilesListOptions>
+public class FilesServiceClient : BaseServiceClient<File>,
+                                  ISupportsListing<File, FilesListOptions>,
+                                  ISupportsRetrieving<File>
 {
     ///
     public FilesServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options)

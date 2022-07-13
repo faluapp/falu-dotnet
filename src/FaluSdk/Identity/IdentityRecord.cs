@@ -5,6 +5,7 @@ namespace Falu.Identity;
 /// <summary>
 /// The identification record for an entity.
 /// </summary>
+[Obsolete(MessageStrings.IdentitySearchDeprecated)]
 public class IdentityRecord : IHasId, IHasCreated, IHasUpdated, IHasCountry, IHasEtag
 {
     /// <inheritdoc/>

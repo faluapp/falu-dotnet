@@ -47,7 +47,9 @@ public class FaluClient<TOptions> where TOptions : FaluClientOptions
         Events = new EventsServiceClient(BackChannel, Options);
         Files = new FilesServiceClient(BackChannel, Options);
         FileLinks = new FileLinksServiceClient(BackChannel, Options);
+#pragma warning disable CS0618 // Type or member is obsolete
         Identity = new IdentityServiceClient(BackChannel, Options);
+#pragma warning restore CS0618 // Type or member is obsolete
         IdentityVerifications = new IdentityVerificationsServiceClient(BackChannel, Options);
         IdentityVerificationReports = new IdentityVerificationReportsServiceClient(BackChannel, Options);
         Messages = new MessagesServiceClient(BackChannel, Options);
@@ -86,6 +88,7 @@ public class FaluClient<TOptions> where TOptions : FaluClientOptions
     public virtual FileLinksServiceClient FileLinks { get; protected set; }
 
     ///
+    [Obsolete(MessageStrings.IdentitySearchDeprecated)]
     public virtual IdentityServiceClient Identity { get; protected set; }
 
     ///

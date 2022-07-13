@@ -8,6 +8,7 @@ using Xunit;
 
 namespace Falu.Tests.Clients;
 
+[Obsolete(MessageStrings.IdentitySearchDeprecated)]
 public class IdentityServiceClientTests : BaseServiceClientTests
 {
     private const string BasePath = "/v1/identity";

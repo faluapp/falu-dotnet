@@ -3,6 +3,7 @@
 namespace Falu.Identity;
 
 ///
+[Obsolete(MessageStrings.IdentitySearchDeprecated)]
 public class IdentityServiceClient : BaseServiceClient<IdentityRecord>
 {
     ///

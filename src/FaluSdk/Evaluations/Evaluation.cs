@@ -71,6 +71,11 @@ public class Evaluation : EvaluationPatchModel, IHasId, IHasCurrency, IHasCreate
     public List<string> Reports { get; set; } = new List<string>();
 
     /// <summary>
+    /// If present, this property tells you the last error encountered when processing the evaluation.
+    /// </summary>
+    public EvaluationLastError? Error { get; set; }
+
+    /// <summary>
     /// The evaluations and scoring output data.
     /// </summary>
     public EvaluationScoringOutputs? Outputs { get; set; }

@@ -5,6 +5,7 @@ namespace Falu.Identity;
 /// <summary>
 /// Information for searching for an entity's identity.
 /// </summary>
+[Obsolete(MessageStrings.IdentitySearchDeprecated)]
 public class IdentitySearchModel : IHasCountry
 {
     /// <inheritdoc />

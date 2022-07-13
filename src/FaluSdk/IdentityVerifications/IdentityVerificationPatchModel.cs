@@ -11,5 +11,5 @@ public class IdentityVerificationPatchModel : IHasDescription, IHasMetadata
     public virtual string? Description { get; set; }
 
     /// <inheritdoc/>
-    public Dictionary<string, string> Metadata { get; set; } = new Dictionary<string, string>();
+    public Dictionary<string, string>? Metadata { get; set; }
 }

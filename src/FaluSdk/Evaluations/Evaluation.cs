@@ -65,6 +65,11 @@ public class Evaluation : EvaluationPatchModel, IHasId, IHasCurrency, IHasCreate
     /// </summary>
     public EvaluationScoring? Scoring { get; set; }
 
+    /// <summary>
+    /// The evaluations and scoring output data.
+    /// </summary>
+    public EvaluationScoringOutputs? Outputs { get; set; }
+
     /// <inheritdoc/>
     public string? Workspace { get; set; }
 

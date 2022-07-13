@@ -7,6 +7,7 @@ namespace Falu.Evaluations;
 public class EvaluationsServiceClient : BaseServiceClient<Evaluation>,
                                         ISupportsListing<Evaluation, EvaluationsListOptions>,
                                         ISupportsRetrieving<Evaluation>,
+                                        ISupportsCreation<Evaluation, EvaluationCreateRequest>,
                                         ISupportsUpdating<Evaluation, EvaluationPatchModel>,
                                         ISupportsRedaction<Evaluation>
 {
@@ -67,15 +68,15 @@ public class EvaluationsServiceClient : BaseServiceClient<Evaluation>,
     /// <summary>
     /// Initiate an evaluation.
     /// </summary>
-    /// <param name="evaluation"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<Evaluation>> CreateAsync(EvaluationCreateRequest evaluation,
+    public virtual Task<ResourceResponse<Evaluation>> CreateAsync(EvaluationCreateRequest request,
                                                                   RequestOptions? options = null,
                                                                   CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync(evaluation, options, cancellationToken);
+        return CreateResourceAsync(request, options, cancellationToken);
     }
 
     /// <summary>

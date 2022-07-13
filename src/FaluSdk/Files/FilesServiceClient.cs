@@ -5,7 +5,8 @@ namespace Falu.Files;
 ///
 public class FilesServiceClient : BaseServiceClient<File>,
                                   ISupportsListing<File, FilesListOptions>,
-                                  ISupportsRetrieving<File>
+                                  ISupportsRetrieving<File>,
+                                  ISupportsCreation<File, FileCreateRequest>
 {
     ///
     public FilesServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options)
@@ -46,41 +47,41 @@ public class FilesServiceClient : BaseServiceClient<File>,
     }
 
     /// <summary>Upload a file.</summary>
-    /// <param name="file"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<File>> CreateAsync(FileCreateRequest file,
+    public virtual Task<ResourceResponse<File>> CreateAsync(FileCreateRequest request,
                                                             RequestOptions? options = null,
                                                             CancellationToken cancellationToken = default)
     {
-        if (file is null) throw new ArgumentNullException(nameof(file));
-        if (file.Purpose is null) throw new InvalidOperationException($"{nameof(file.Purpose)} cannot be null.");
-        if (file.Content is null) throw new InvalidOperationException($"{nameof(file.Content)} cannot be null.");
-        if (string.IsNullOrWhiteSpace(file.FileName))
+        if (request is null) throw new ArgumentNullException(nameof(request));
+        if (request.Purpose is null) throw new InvalidOperationException($"{nameof(request.Purpose)} cannot be null.");
+        if (request.Content is null) throw new InvalidOperationException($"{nameof(request.Content)} cannot be null.");
+        if (string.IsNullOrWhiteSpace(request.FileName))
         {
-            throw new InvalidOperationException($"{nameof(file.FileName)} cannot be null or whitespace.");
+            throw new InvalidOperationException($"{nameof(request.FileName)} cannot be null or whitespace.");
         }
 
         var content = new MultipartFormDataContent
         {
             // populate fields of the model as key value pairs
-            { new StringContent(file.Purpose), "purpose" },
+            { new StringContent(request.Purpose), "purpose" },
 
             // populate the file stream
-            { new StreamContent(file.Content), "file", file.FileName },
+            { new StreamContent(request.Content), "file", request.FileName },
         };
 
         // Add description if provided
-        if (!string.IsNullOrWhiteSpace(file.Description))
+        if (!string.IsNullOrWhiteSpace(request.Description))
         {
-            content.Add(new StringContent(file.Description), "description");
+            content.Add(new StringContent(request.Description), "description");
         }
 
         // Add Expires if provided
-        if (file.Expires is not null)
+        if (request.Expires is not null)
         {
-            content.Add(new StringContent(file.Expires!.Value.ToString("O")), "expires");
+            content.Add(new StringContent(request.Expires!.Value.ToString("O")), "expires");
         }
 
         var uri = MakePath();

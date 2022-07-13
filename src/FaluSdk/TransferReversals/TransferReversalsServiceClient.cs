@@ -7,6 +7,7 @@ namespace Falu.TransferReversals;
 public class TransferReversalsServiceClient : BaseServiceClient<TransferReversal>,
                                               ISupportsListing<TransferReversal, TransferReversalsListOptions>,
                                               ISupportsRetrieving<TransferReversal>,
+                                              ISupportsCreation<TransferReversal, TransferReversalCreateRequest>,
                                               ISupportsUpdating<TransferReversal, TransferReversalPatchModel>
 {
     ///
@@ -50,15 +51,15 @@ public class TransferReversalsServiceClient : BaseServiceClient<TransferReversal
     /// <summary>
     /// Create transfer reversal.
     /// </summary>
-    /// <param name="reversal"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<TransferReversal>> CreateAsync(TransferReversalCreateRequest reversal,
+    public virtual Task<ResourceResponse<TransferReversal>> CreateAsync(TransferReversalCreateRequest request,
                                                                         RequestOptions? options = null,
                                                                         CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync(reversal, options, cancellationToken);
+        return CreateResourceAsync(request, options, cancellationToken);
     }
 
     /// <summary>

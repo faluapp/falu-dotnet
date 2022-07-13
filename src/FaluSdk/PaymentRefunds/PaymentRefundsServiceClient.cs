@@ -7,6 +7,7 @@ namespace Falu.PaymentRefunds;
 public class PaymentRefundsServiceClient : BaseServiceClient<PaymentRefund>,
                                            ISupportsListing<PaymentRefund, PaymentRefundsListOptions>,
                                            ISupportsRetrieving<PaymentRefund>,
+                                           ISupportsCreation<PaymentRefund, PaymentRefundCreateRequest>,
                                            ISupportsUpdating<PaymentRefund, PaymentRefundPatchModel>
 {
     ///
@@ -50,15 +51,15 @@ public class PaymentRefundsServiceClient : BaseServiceClient<PaymentRefund>,
     /// <summary>
     /// Create payment refund.
     /// </summary>
-    /// <param name="refund"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<PaymentRefund>> CreateAsync(PaymentRefundCreateRequest refund,
+    public virtual Task<ResourceResponse<PaymentRefund>> CreateAsync(PaymentRefundCreateRequest request,
                                                                      RequestOptions? options = null,
                                                                      CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync(refund, options, cancellationToken);
+        return CreateResourceAsync(request, options, cancellationToken);
     }
 
     /// <summary>

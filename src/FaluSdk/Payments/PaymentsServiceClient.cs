@@ -7,6 +7,7 @@ namespace Falu.Payments;
 public class PaymentsServiceClient : BaseServiceClient<Payment>,
                                      ISupportsListing<Payment, PaymentsListOptions>,
                                      ISupportsRetrieving<Payment>,
+                                     ISupportsCreation<Payment, PaymentCreateRequest>,
                                      ISupportsUpdating<Payment, PaymentPatchModel>
 {
     ///
@@ -50,15 +51,15 @@ public class PaymentsServiceClient : BaseServiceClient<Payment>,
     /// <summary>
     /// Create a payment.
     /// </summary>
-    /// <param name="payment"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<Payment>> CreateAsync(PaymentCreateRequest payment,
+    public virtual Task<ResourceResponse<Payment>> CreateAsync(PaymentCreateRequest request,
                                                                RequestOptions? options = null,
                                                                CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync(payment, options, cancellationToken);
+        return CreateResourceAsync(request, options, cancellationToken);
     }
 
     /// <summary>

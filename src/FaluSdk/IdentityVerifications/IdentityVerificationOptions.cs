@@ -1,27 +1,27 @@
 ﻿namespace Falu.IdentityVerifications;
 
 ///
-public class IdentityVerificationChecks
+public class IdentityVerificationOptions
 {
     /// <summary>
     /// Options for the id number check.
     /// </summary>
-    public IdentityVerificationChecksForIdNumber? IdNumber { get; set; }
+    public IdentityVerificationOptionsForIdNumber? IdNumber { get; set; }
 
     /// <summary>
     /// Options for the document check.
     /// </summary>
-    public IdentityVerificationChecksForDocument? Document { get; set; }
+    public IdentityVerificationOptionsForDocument? Document { get; set; }
 }
 
 ///
-public class IdentityVerificationChecksForIdNumber
+public class IdentityVerificationOptionsForIdNumber
 {
     // intentionally left blank
 }
 
 ///
-public class IdentityVerificationChecksForDocument
+public class IdentityVerificationOptionsForDocument
 {
     /// <summary>
     /// Disable image uploads, identity document images have to be captured using the device's camera.

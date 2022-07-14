@@ -30,7 +30,7 @@ public class IdentityVerification : IdentityVerificationPatchModel, IHasId, IHas
     /// <summary>
     /// A set of verification checks to be performed.
     /// </summary>
-    public IdentityVerificationChecks? Checks { get; set; }
+    public IdentityVerificationOptions? Options { get; set; }
 
     /// <summary>
     /// The short-lived client secret used by front-end libraries to show a verification modal inside your app.

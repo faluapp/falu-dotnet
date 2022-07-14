@@ -18,7 +18,7 @@ public class IdentityVerificationReport : IHasId, IHasCreated, IHasUpdated, IHas
     /// <summary>
     /// The checks that initiated this report.
     /// </summary>
-    public IdentityVerificationChecks? Checks { get; set; }
+    public IdentityVerificationOptions? Options { get; set; }
 
     /// <summary>
     /// Details on the user’s acceptance of the Services Agreement.

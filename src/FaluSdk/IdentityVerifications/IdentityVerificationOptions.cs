@@ -26,7 +26,7 @@ public class IdentityVerificationOptionsForDocument
     /// <summary>
     /// Disable image uploads, identity document images have to be captured using the device's camera.
     /// </summary>
-    public bool LiveCapture { get; set; }
+    public bool Live { get; set; }
 
     /// <summary>
     /// The allowed identity document types.

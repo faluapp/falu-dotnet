@@ -228,7 +228,7 @@ var request = new TransferRequest
 {
     Amount = 1000,
     Currency = "kes",
-    Purpose = TransferPurpose.Business, // can also be Salary
+    Purpose = "business", // can also be "salary"
     Mpesa = new TransferRequestMpesa
     {
         Customer = new TransferRequestMpesaToCustomer

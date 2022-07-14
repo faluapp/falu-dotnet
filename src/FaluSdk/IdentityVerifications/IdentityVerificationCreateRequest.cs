@@ -6,6 +6,11 @@
 public class IdentityVerificationCreateRequest : IdentityVerificationPatchModel
 {
     /// <summary>
+    /// The type of verification check to be performed.
+    /// </summary>
+    public string? Type { get; set; }
+
+    /// <summary>
     /// A set of verification checks to be performed.
     /// </summary>
     public IdentityVerificationChecks? Checks { get; set; }

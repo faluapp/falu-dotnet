@@ -23,6 +23,11 @@ public class IdentityVerification : IdentityVerificationPatchModel, IHasId, IHas
     public string? Status { get; set; }
 
     /// <summary>
+    /// The type of verification check to be performed.
+    /// </summary>
+    public string? Type { get; set; }
+
+    /// <summary>
     /// A set of verification checks to be performed.
     /// </summary>
     public IdentityVerificationChecks? Checks { get; set; }

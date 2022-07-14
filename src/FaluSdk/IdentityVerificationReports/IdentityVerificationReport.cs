@@ -41,9 +41,9 @@ public class IdentityVerificationReport : IHasId, IHasCreated, IHasUpdated, IHas
     public IdentityVerificationReportSelfie? Selfie { get; set; }
 
     /// <summary>
-    /// Result from a liveness check.
+    /// Result from a video check.
     /// </summary>
-    public IdentityVerificationReportLiveness? Liveness { get; set; }
+    public IdentityVerificationReportVideo? Video { get; set; }
 
     /// <inheritdoc/>
     public string? Workspace { get; set; }
@@ -213,7 +213,7 @@ public class IdentityVerificationReportSelfie : AbstractIdentityVerificationRepo
 }
 
 ///
-public class IdentityVerificationReportLiveness : AbstractIdentityVerificationReportCheck
+public class IdentityVerificationReportVideo : AbstractIdentityVerificationReportCheck
 {
     /// <summary>
     /// Identifier of the file holding the video used in this check.

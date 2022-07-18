@@ -54,9 +54,3 @@ public class EvaluationReport : IHasId, IHasCreated, IHasUpdated, IHasWorkspace,
     /// <inheritdoc/>
     public string? Etag { get; set; }
 }
-
-///
-public class EvaluationReportBureau : AbstractEvaluationReport { }
-
-///
-public class EvaluationReportAml : AbstractEvaluationReport { }

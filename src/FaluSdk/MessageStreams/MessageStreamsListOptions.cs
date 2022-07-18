@@ -5,5 +5,13 @@ namespace Falu.MessageStreams;
 /// <summary>Options for filtering and pagination of message streams.</summary>
 public record MessageStreamsListOptions : BasicListOptions
 {
-    // intentionally left blank
+    /// <summary>Filter options for <see cref="MessageStream.Type"/> property.</summary>
+    public List<string>? Type { get; set; }
+
+    /// <inheritdoc/>
+    internal override void Populate(QueryValues values)
+    {
+        base.Populate(values);
+        values.Add("type", Type);
+    }
 }

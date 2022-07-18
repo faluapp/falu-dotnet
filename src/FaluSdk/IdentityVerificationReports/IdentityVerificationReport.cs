@@ -23,7 +23,7 @@ public class IdentityVerificationReport : IHasId, IHasCreated, IHasUpdated, IHas
     /// <summary>
     /// Details on the user’s acceptance of the Services Agreement.
     /// </summary>
-    public IdentityVerificationConsent? Consent { get; set; }
+    public IdentityVerificationReportConsent? Consent { get; set; }
 
     /// <summary>
     /// Result from an id number check.

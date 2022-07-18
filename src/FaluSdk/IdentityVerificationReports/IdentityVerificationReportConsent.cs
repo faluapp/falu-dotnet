@@ -1,7 +1,7 @@
 ﻿namespace Falu.IdentityVerificationReports;
 
 ///
-public class IdentityVerificationConsent
+public class IdentityVerificationReportConsent
 {
     /// <summary>
     /// The timestamp marking when the user gave consent for the identity verification to be done.

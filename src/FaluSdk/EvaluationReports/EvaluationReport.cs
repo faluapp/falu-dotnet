@@ -31,19 +31,9 @@ public class EvaluationReport : IHasId, IHasCreated, IHasUpdated, IHasWorkspace,
     public EvaluationReportConsent? Consent { get; set; }
 
     /// <summary>
-    /// Result from a bureau in the relevant jurisdiction.
-    /// </summary>
-    public EvaluationReportBureau? Bureau { get; set; }
-
-    /// <summary>
     /// Result from a financial statement.
     /// </summary>
     public EvaluationReportStatement? Statement { get; set; }
-
-    /// <summary>
-    /// Result from an anti-money laundering check.
-    /// </summary>
-    public EvaluationReportAml? Aml { get; set; }
 
     /// <inheritdoc/>
     public string? Workspace { get; set; }

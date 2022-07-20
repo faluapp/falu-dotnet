@@ -42,6 +42,43 @@ public static class EventTypes
 
     #endregion
 
+    #region IdentityVerifications
+
+    /// <summary>
+    /// Occurs whenever an identity verification is created.
+    /// </summary>
+    public const string IdentityVerificationCreated = "identity_verification.created";
+
+    /// <summary>
+    /// Occurs whenever a user has successfully submitted their information,
+    /// and verification checks have started processing.
+    /// </summary>
+    public const string IdentityVerificationProcessing = "identity_verification.processing";
+
+    /// <summary>
+    /// Occurs whenever processing of all the verification checks have completed
+    /// and they’re all successfully verified.
+    /// </summary>
+    public const string IdentityVerificationVerified = "identity_verification.verified";
+
+    /// <summary>
+    /// Occurs whenever processing of all the verification checks have completed, and at least one of the checks failed.
+    /// </summary>
+    public const string IdentityVerificationInputRequired = "identity_verification.input_required";
+
+    /// <summary>
+    /// Occurs whenever an identity verification has been cancelled and future
+    /// submission attempts have been disabled.
+    /// </summary>
+    public const string IdentityVerificationCancelled = "identity_verification.cancelled";
+
+    /// <summary>
+    /// Occurs whenever an identity verification has been redacted.
+    /// </summary>
+    public const string IdentityVerificationRedacted = "identity_verification.redacted";
+
+    #endregion
+
     #region Messages
 
     /// <summary>

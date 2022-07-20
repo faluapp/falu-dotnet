@@ -12,27 +12,27 @@ namespace Falu.Events;
 /// </remarks>
 public static class EventUtility
 {
-    private const int DefaultTimeTolerance = 300;
+    private static readonly TimeSpan DefaultTimeTolerance = TimeSpan.FromSeconds(300);
 
     /// <summary>Validate a signature provided alongside a webhook event.</summary>
     /// <param name="payload">The body payload.</param>
     /// <param name="signature">The value of the <see cref="HeadersNames.XFaluSignature"/> header from the webhook request.</param>
     /// <param name="secret">The webhook endpoint's signing secret.</param>
-    /// <param name="tolerance">The time tolerance, in seconds. Defaults to 300 seconds.</param>
+    /// <param name="tolerance">The time tolerance. Defaults to 300 seconds.</param>
     /// <param name="utcNow">The timestamp to use for the current time. Defaults to current time.</param>
-    public static void ValidateSignature(string payload, string signature, string secret, long? tolerance = null, long? utcNow = null)
+    public static void ValidateSignature(string payload, string signature, string secret, TimeSpan? tolerance = null, DateTimeOffset? utcNow = null)
         => ValidateSignature(Encoding.UTF8.GetBytes(payload), signature, secret, tolerance, utcNow);
 
     /// <summary>Validate a signature provided alongside a webhook event.</summary>
     /// <param name="payload">The body payload.</param>
     /// <param name="signature">The value of the <see cref="HeadersNames.XFaluSignature"/> header from the webhook request.</param>
     /// <param name="secret">The webhook endpoint's signing secret.</param>
-    /// <param name="tolerance">The time tolerance, in seconds. Defaults to 300 seconds.</param>
+    /// <param name="tolerance">The time tolerance. Defaults to 300 seconds.</param>
     /// <param name="utcNow">The timestamp to use for the current time. Defaults to current time.</param>
     /// <remarks>
     /// Use this to validate the signature in your request pipeline.
     /// </remarks>
-    public static void ValidateSignature(byte[] payload, string signature, string secret, long? tolerance = null, long? utcNow = null)
+    public static void ValidateSignature(byte[] payload, string signature, string secret, TimeSpan? tolerance = null, DateTimeOffset? utcNow = null)
     {
         var actualItems = ParseSignature(signature);
         var expected = ComputeSignature(secret, actualItems["t"].FirstOrDefault(), payload);
@@ -42,11 +42,11 @@ public static class EventUtility
             throw new FaluException($"The signature for the webhook is not present in the {HeadersNames.XFaluSignature} header.");
         }
 
-        var webhookUtc = Convert.ToInt32(actualItems["t"].FirstOrDefault());
-        var now = utcNow ?? DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        var webhookUtc = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt32(actualItems["t"].FirstOrDefault()));
+        var now = utcNow ?? DateTimeOffset.UtcNow;
         tolerance ??= DefaultTimeTolerance;
 
-        if (Math.Abs(now - webhookUtc) > tolerance)
+        if ((now - webhookUtc) > tolerance)
         {
             throw new FaluException("The webhook cannot be processed because the current timestamp is outside of the allowed tolerance.");
         }

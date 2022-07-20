@@ -49,13 +49,6 @@ public class Evaluation : EvaluationPatchModel, IHasId, IHasCurrency, IHasCreate
     public string? Url { get; set; }
 
     /// <summary>
-    /// Scoring generated for the evaluation.
-    /// Only populated if extraction succeeded.
-    /// </summary>
-    [Obsolete("Moved to Outputs")]
-    public EvaluationScoring? Scoring { get; set; }
-
-    /// <summary>
     /// Unique identifiers of the reports for this verification.
     /// </summary>
     public List<string> Reports { get; set; } = new List<string>();

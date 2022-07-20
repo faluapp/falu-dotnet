@@ -1,0 +1,25 @@
+{
+  "specversion": "1.0",
+  "id": "evt_602",
+  "time": "2022-07-20T06:49:06Z",
+  "source": "https://dashboard.falu.io/wksp_602/events/evt_602",
+  "type": "io.falu.money_balances.updated",
+  "datacontenttype": "application/json",
+  "workspace": "wksp_602",
+  "live": false,
+  "data": {
+    "request": {
+      "id": "req_602",
+      "idempotency_key": "idempotency-key-123"
+    },
+    "object": {
+      "mpesa": {
+        "123456": 1030890,
+        "654321": 300500
+      },
+      "workspace": "wksp_602",
+      "live": false,
+      "etag": "AAAAAAAAAAA="
+    }
+  }
+}

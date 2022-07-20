@@ -53,10 +53,17 @@ public static class WebhookUtility
 
     private static ILookup<string, string> ParseSignature(string signature)
     {
+        static KeyValuePair<string, string> ParseItem(string item)
+        {
+            var parts = item.Trim().Split(new[] { '=' }, 2);
+            if (parts.Length != 2) throw new FaluException("The signature header format is unexpected.");
+            return new(parts[0], parts[1]);
+        }
+
         return signature.Trim()
                         .Split(',')
-                        .Select(item => item.Trim().Split(new[] { '=' }, 2))
-                        .ToLookup(item => item[0], item => item[1]);
+                        .Select(item => ParseItem(item))
+                        .ToLookup(item => item.Key, item => item.Value);
     }
 
     private static bool IsSignaturePresent(string signature, IEnumerable<string> signatures)

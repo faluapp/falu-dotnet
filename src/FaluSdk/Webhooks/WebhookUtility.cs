@@ -44,7 +44,8 @@ public static class WebhookUtility
         now ??= DateTimeOffset.UtcNow;
         tolerance ??= DefaultTimeTolerance;
 
-        if ((now - timestamp) > tolerance)
+        // ensure the timestamp is not in the future, and is within the allowed tolerance
+        if (timestamp > now || ((now - timestamp) > tolerance))
         {
             throw new FaluException("The webhook cannot be processed because the current timestamp is outside of the allowed tolerance.");
         }

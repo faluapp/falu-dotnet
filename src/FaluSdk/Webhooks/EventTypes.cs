@@ -51,6 +51,17 @@ public static class EventTypes
     /// </summary>
     public const string MessageDelivered = "message.delivered";
 
+    /// <summary>
+    /// Occurs whenever the message has been cancelled and future
+    /// update attempts have been disabled.
+    /// </summary>
+    public const string MessageCancelled = "message.cancelled";
+
+    /// <summary>
+    /// Occurs whenever a message has been redacted.
+    /// </summary>
+    public const string MessageRedacted = "message.redacted";
+
     #endregion
 
     #region MessageTemplates

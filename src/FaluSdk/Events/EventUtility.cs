@@ -14,46 +14,6 @@ public static class EventUtility
 {
     private const int DefaultTimeTolerance = 300;
 
-    /// <summary>
-    /// Parses a JSON string from a webhook into a <see cref="WebhookEvent{TObject}"/> object, while
-    /// verifying the <a href="https://docs.falu.io/webhooks/signatures">webhook's
-    /// signature</a>.
-    /// </summary>
-    /// <param name="json">The JSON string to parse.</param>
-    /// <param name="signature">The value of the <c>X-Falu-Signature</c> header from the webhook request.</param>
-    /// <param name="secret">The webhook endpoint's signing secret.</param>
-    /// <param name="tolerance">The time tolerance, in seconds. Defaults to 300 seconds.</param>
-    /// <param name="utcNow">The timestamp to use for the current time. Defaults to current time.</param>
-    /// <returns>The deserialized <see cref="WebhookEvent{TObject}"/>.</returns>
-    /// <exception cref="FaluException">
-    /// Thrown if the signature verification fails for any reason.
-    /// </exception>
-    public static WebhookEvent<T>? ConstructEvent<T>(string json,
-                                                     string signature,
-                                                     string secret,
-                                                     long? tolerance = null,
-                                                     long? utcNow = null)
-    {
-        ValidateSignature(json, signature, secret, tolerance, utcNow);
-        return ParseEvent<T>(json);
-    }
-
-    /// <summary>
-    /// Parses a JSON string from a webhook into a <see cref="WebhookEvent{TObject}"/> object.
-    /// </summary>
-    /// <param name="json">The JSON string to parse.</param>
-    /// <returns>The deserialized <see cref="WebhookEvent{TObject}"/>.</returns>
-    /// <remarks>
-    /// This method doesn't verify <a href="https://docs.falu.io/webhooks/signatures">webhook
-    /// signatures</a>. It's recommended that you use
-    /// <see cref="ConstructEvent(string, string, string, long?, long?)"/> instead.
-    /// </remarks>
-    public static WebhookEvent<T>? ParseEvent<T>(string json)
-    {
-        var options = FaluClientOptions.GetSerializerOptions();
-        return System.Text.Json.JsonSerializer.Deserialize<WebhookEvent<T>>(json, options);
-    }
-
     /// <summary>Validate a signature provided alongside a webhook event.</summary>
     /// <param name="payload">The body payload.</param>
     /// <param name="signature">The value of the <see cref="HeadersNames.XFaluSignature"/> header from the webhook request.</param>

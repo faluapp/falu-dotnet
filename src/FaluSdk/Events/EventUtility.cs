@@ -19,34 +19,35 @@ public static class EventUtility
     /// <param name="signature">The value of the <see cref="HeadersNames.XFaluSignature"/> header from the webhook request.</param>
     /// <param name="secret">The webhook endpoint's signing secret.</param>
     /// <param name="tolerance">The time tolerance. Defaults to 300 seconds.</param>
-    /// <param name="utcNow">The timestamp to use for the current time. Defaults to current time.</param>
-    public static void ValidateSignature(string payload, string signature, string secret, TimeSpan? tolerance = null, DateTimeOffset? utcNow = null)
-        => ValidateSignature(Encoding.UTF8.GetBytes(payload), signature, secret, tolerance, utcNow);
+    /// <param name="now">The timestamp to use for the current time. Defaults to current time.</param>
+    public static void ValidateSignature(string payload, string signature, string secret, TimeSpan? tolerance = null, DateTimeOffset? now = null)
+        => ValidateSignature(Encoding.UTF8.GetBytes(payload), signature, secret, tolerance, now);
 
     /// <summary>Validate a signature provided alongside a webhook event.</summary>
     /// <param name="payload">The body payload.</param>
     /// <param name="signature">The value of the <see cref="HeadersNames.XFaluSignature"/> header from the webhook request.</param>
     /// <param name="secret">The webhook endpoint's signing secret.</param>
     /// <param name="tolerance">The time tolerance. Defaults to 300 seconds.</param>
-    /// <param name="utcNow">The timestamp to use for the current time. Defaults to current time.</param>
+    /// <param name="now">The timestamp to use for the current time. Defaults to current time.</param>
     /// <remarks>
     /// Use this to validate the signature in your request pipeline.
     /// </remarks>
-    public static void ValidateSignature(byte[] payload, string signature, string secret, TimeSpan? tolerance = null, DateTimeOffset? utcNow = null)
+    public static void ValidateSignature(byte[] payload, string signature, string secret, TimeSpan? tolerance = null, DateTimeOffset? now = null)
     {
-        var actualItems = ParseSignature(signature);
-        var expected = ComputeSignature(secret, actualItems["t"].FirstOrDefault(), payload);
+        var actual = ParseSignature(signature);
+        var actualTimestamp = actual["t"].FirstOrDefault();
+        var expected = ComputeSignature(secret, actualTimestamp, payload);
 
-        if (!IsSignaturePresent(expected, actualItems["sha256"]))
+        if (!IsSignaturePresent(expected, actual["sha256"]))
         {
             throw new FaluException($"The signature for the webhook is not present in the {HeadersNames.XFaluSignature} header.");
         }
 
-        var webhookUtc = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt32(actualItems["t"].FirstOrDefault()));
-        var now = utcNow ?? DateTimeOffset.UtcNow;
+        var timestamp = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt32(actualTimestamp));
+        now ??= DateTimeOffset.UtcNow;
         tolerance ??= DefaultTimeTolerance;
 
-        if ((now - webhookUtc) > tolerance)
+        if ((now - timestamp) > tolerance)
         {
             throw new FaluException("The webhook cannot be processed because the current timestamp is outside of the allowed tolerance.");
         }

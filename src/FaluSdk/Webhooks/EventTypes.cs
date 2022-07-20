@@ -11,14 +11,25 @@ public static class EventTypes
     public const string EvaluationCreated = "evaluation.created";
 
     /// <summary>
-    /// Occurs whenever an evaluation fails.
+    /// Occurs whenever a user has successfully submitted their information,
+    /// and scoring has started processing.
     /// </summary>
-    public const string EvaluationFailed = "evaluation.failed";
+    public const string EvaluationProcessing = "evaluation.processing";
 
     /// <summary>
     /// Occurs whenever an evaluation is completed.
     /// </summary>
     public const string EvaluationCompleted = "evaluation.completed";
+
+    /// <summary>
+    /// Occurs whenever an evaluation transitions to require user input.
+    /// </summary>
+    public const string EvaluationInputRequired = "evaluation.input_required";
+
+    /// <summary>
+    /// Occurs whenever an evaluation has been redacted.
+    /// </summary>
+    public const string EvaluationRedacted = "evaluation.redacted";
 
     #endregion
 

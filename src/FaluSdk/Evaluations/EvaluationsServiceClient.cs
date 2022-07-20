@@ -79,21 +79,6 @@ public class EvaluationsServiceClient : BaseServiceClient<Evaluation>,
         return CreateResourceAsync(request, options, cancellationToken);
     }
 
-    /// <summary>
-    /// Score an evaluation.
-    /// </summary>
-    /// <param name="id">Unique identifier for the evaluation.</param>
-    /// <param name="options">Options to use for the request.</param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    public virtual Task<ResourceResponse<Evaluation>> ScoreAsync(string id,
-                                                                 RequestOptions? options = null,
-                                                                 CancellationToken cancellationToken = default)
-    {
-        var uri = $"{MakeResourcePath(id)}/score";
-        return RequestAsync<Evaluation>(uri, HttpMethod.Post, new { }, options, cancellationToken);
-    }
-
     /// <summary>Redact an evaluation to remove all collected information from Falu.</summary>
     /// <param name="id">Unique identifier for the evaluation.</param>
     /// <param name="options">Options to use for the request.</param>

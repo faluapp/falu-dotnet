@@ -3,7 +3,7 @@
 namespace Falu.Events;
 
 /// <summary>
-/// The basic implementation of a Webhook Event irrespective of the usage
+/// Represents a Falu Webhook Event for any object.
 /// </summary>
 public class WebhookEvent<TObject> : IHasId, IHasCreated, IHasWorkspace, IHasLive
 {
@@ -37,6 +37,6 @@ public class WebhookEvent<TObject> : IHasId, IHasCreated, IHasWorkspace, IHasLiv
 }
 
 /// <summary>
-/// The basic implementation of a Webhook Event irrespective of the usage
+/// Represents a Falu Webhook Event for any object.
 /// </summary>
 public class WebhookEvent : WebhookEvent<object> { }

@@ -7,9 +7,6 @@ namespace Falu.Events;
 /// <summary>
 /// This class contains utility methods to process event objects in Falu's webhooks.
 /// </summary>
-/// <remarks>
-/// Use only for <c>basic</c> format.
-/// </remarks>
 public static class EventUtility
 {
     private static readonly TimeSpan DefaultTimeTolerance = TimeSpan.FromSeconds(300);

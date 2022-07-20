@@ -2,16 +2,16 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Falu.Events;
+namespace Falu.Webhooks;
 
 /// <summary>
-/// This class contains utility methods to process event objects in Falu's webhooks.
+/// This class contains utility methods to process incoming webhooks from Falu servers.
 /// </summary>
-public static class EventUtility
+public static class WebhookUtility
 {
     private static readonly TimeSpan DefaultTimeTolerance = TimeSpan.FromSeconds(300);
 
-    /// <summary>Validate a signature provided alongside a webhook event.</summary>
+    /// <summary>Validate a signature provided alongside a webhook.</summary>
     /// <param name="payload">The body payload.</param>
     /// <param name="signature">The value of the <see cref="HeadersNames.XFaluSignature"/> header from the webhook request.</param>
     /// <param name="secret">The webhook endpoint's signing secret.</param>
@@ -20,7 +20,7 @@ public static class EventUtility
     public static void ValidateSignature(string payload, string signature, string secret, TimeSpan? tolerance = null, DateTimeOffset? now = null)
         => ValidateSignature(Encoding.UTF8.GetBytes(payload), signature, secret, tolerance, now);
 
-    /// <summary>Validate a signature provided alongside a webhook event.</summary>
+    /// <summary>Validate a signature provided alongside a webhook.</summary>
     /// <param name="payload">The body payload.</param>
     /// <param name="signature">The value of the <see cref="HeadersNames.XFaluSignature"/> header from the webhook request.</param>
     /// <param name="secret">The webhook endpoint's signing secret.</param>

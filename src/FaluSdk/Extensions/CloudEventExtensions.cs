@@ -1,6 +1,7 @@
 ﻿using CloudNative.CloudEvents.Extensions;
 using Falu;
 using Falu.Events;
+using Falu.Webhooks;
 using System.Text.Json;
 
 namespace CloudNative.CloudEvents;
@@ -23,7 +24,7 @@ public static class CloudEventExtensions
     /// <returns>The deserialized <see cref="WebhookEvent{TObject}"/>.</returns>
     /// <remarks>
     /// This method doesn't verify <a href="https://docs.falu.io/webhooks/signatures">webhook signatures</a>.
-    /// Use <see cref="EventUtility.ValidateSignature(byte[], string, string, TimeSpan?, DateTimeOffset?)"/> for validation.
+    /// Use <see cref="WebhookUtility.ValidateSignature(byte[], string, string, TimeSpan?, DateTimeOffset?)"/> for validation.
     /// </remarks>
     public static WebhookEvent<T>? ToFaluWebhookEvent<T>(this CloudEvent @event)
     {

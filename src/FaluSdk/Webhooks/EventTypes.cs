@@ -33,6 +33,15 @@ public static class EventTypes
 
     #endregion
 
+    #region Files
+
+    /// <summary>
+    /// Occurs whenever a file is created.
+    /// </summary>
+    public const string FileCreated = "file.created";
+
+    #endregion
+
     #region Messages
 
     /// <summary>

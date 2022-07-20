@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\event_sample.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CloudNative.CloudEvents.SystemTextJson" Version="2.3.1" />
     <PackageReference Include="coverlet.collector" Version="3.1.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />

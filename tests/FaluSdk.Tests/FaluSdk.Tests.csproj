@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\event_sample.json" />
+    <EmbeddedResource Include="Samples\cloud_event.json" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,5 +1,4 @@
 ﻿using Falu.Webhooks;
-using Tingle.Extensions.Processing;
 using Xunit;
 
 namespace Falu.Tests;
@@ -20,7 +19,7 @@ public class WebhookUtilityTests
     public async Task ValidateSignature_Works()
     {
         var timestamp = DateTimeOffset.FromUnixTimeSeconds(KnownTimestamp).AddSeconds(100);
-        var json = await GetSampleEventPayload();
+        var json = await TestSamples.GetCloudEventAsync();
         WebhookUtility.ValidateSignature(json, KnownSignatures[0], Secret0, now: timestamp);
     }
 
@@ -28,7 +27,7 @@ public class WebhookUtilityTests
     public async Task ValidateSignature_Works_With_RolledSecrets()
     {
         var timestamp = DateTimeOffset.FromUnixTimeSeconds(KnownTimestamp).AddSeconds(100);
-        var json = await GetSampleEventPayload();
+        var json = await TestSamples.GetCloudEventAsync();
 
         WebhookUtility.ValidateSignature(json, KnownSignatures[1], Secret0, now: timestamp);
         WebhookUtility.ValidateSignature(json, KnownSignatures[1], Secret1, now: timestamp);
@@ -38,7 +37,7 @@ public class WebhookUtilityTests
     public async Task ValidateSignature_Rejects_OldTimestamp()
     {
         var timestamp = DateTimeOffset.FromUnixTimeSeconds(KnownTimestamp) + TimeSpan.FromSeconds(400);
-        var json = await GetSampleEventPayload();
+        var json = await TestSamples.GetCloudEventAsync();
         var exception = Assert.Throws<FaluException>(() => WebhookUtility.ValidateSignature(json, KnownSignatures[0], Secret0, now: timestamp));
         Assert.Equal("The webhook cannot be processed because the current timestamp is outside of the allowed tolerance.", exception.Message);
     }
@@ -65,7 +64,4 @@ public class WebhookUtilityTests
         var exception = Assert.Throws<FaluException>(() => WebhookUtility.ValidateSignature("{}", headerValue, string.Empty));
         Assert.Equal("The signature header format is unexpected.", exception.Message);
     }
-
-    private static async Task<string> GetSampleEventPayload()
-        => (await EmbeddedResourceHelper.GetResourceAsStringAsync<WebhookUtilityTests>(folder: "Resources", fileName: "event_sample.json"))!;
 }

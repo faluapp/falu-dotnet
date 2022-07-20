@@ -5,7 +5,7 @@
   "source": "https://dashboard.falu.io/wksp_602/events/evt_602",
   "type": "io.falu.money_balances.updated",
   "datacontenttype": "application/json",
-  "workspace": "wksp_123",
+  "workspace": "wksp_602",
   "live": false,
   "data": {
     "request": {
@@ -13,10 +13,13 @@
       "idempotency_key": "idempotency-key-123"
     },
     "object": {
-      "Balances": {
+      "mpesa": {
         "123456": 1030890,
         "654321": 300500
-      }
+      },
+      "workspace": "wksp_602",
+      "live": false,
+      "etag": "AAAAAAAAAAA="
     }
   }
 }

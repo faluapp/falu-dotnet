@@ -7,8 +7,8 @@ public class WebhookUtilityTests
 {
     private const string Secret0 = "webhook_secret";
     private const string Secret1 = "webhook_secret_expired";
-    private const string Signature0 = "f675e7534ef41c1d20bc73fa2da64cde11f20cf1d3b96574d74df8a963c66f7c";
-    private const string Signature1 = "16c3100ad258b8c0dc490b0e12d4347481a0b2349d172e94005e8bd161b7a89e";
+    private const string Signature0 = "a950948ee5a9ce80d6d0d250dba2723be4a62319d936b280992f804ee9b35566";
+    private const string Signature1 = "684ed18f8c9ca820c9fd079b83ed1fc5ddbf70e4e512b2ca5a2761a72c402a21";
     private const long KnownTimestamp = 1658299746;
     private static readonly string[] KnownSignatures = {
         $"t=1658299746,sha256={Signature0}",
@@ -45,9 +45,7 @@ public class WebhookUtilityTests
     [Fact]
     public void ValidateSignature_Rejects_WrongSignature()
     {
-        var json = "{}"; // wrong payload
-        var exception = Assert.Throws<FaluException>(() => WebhookUtility.ValidateSignature(json, KnownSignatures[0], Secret0));
-
+        var exception = Assert.Throws<FaluException>(() => WebhookUtility.ValidateSignature("{}", KnownSignatures[0], Secret0));
         Assert.Equal("The signature for the webhook is not present in the X-Falu-Signature header.", exception.Message);
     }
 

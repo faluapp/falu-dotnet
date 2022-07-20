@@ -11,14 +11,71 @@ public static class EventTypes
     public const string EvaluationCreated = "evaluation.created";
 
     /// <summary>
-    /// Occurs whenever an evaluation fails.
+    /// Occurs whenever a user has successfully submitted their information,
+    /// and scoring has started processing.
     /// </summary>
-    public const string EvaluationFailed = "evaluation.failed";
+    public const string EvaluationProcessing = "evaluation.processing";
 
     /// <summary>
     /// Occurs whenever an evaluation is completed.
     /// </summary>
     public const string EvaluationCompleted = "evaluation.completed";
+
+    /// <summary>
+    /// Occurs whenever an evaluation transitions to require user input.
+    /// </summary>
+    public const string EvaluationInputRequired = "evaluation.input_required";
+
+    /// <summary>
+    /// Occurs whenever an evaluation has been redacted.
+    /// </summary>
+    public const string EvaluationRedacted = "evaluation.redacted";
+
+    #endregion
+
+    #region Files
+
+    /// <summary>
+    /// Occurs whenever a file is created.
+    /// </summary>
+    public const string FileCreated = "file.created";
+
+    #endregion
+
+    #region IdentityVerifications
+
+    /// <summary>
+    /// Occurs whenever an identity verification is created.
+    /// </summary>
+    public const string IdentityVerificationCreated = "identity_verification.created";
+
+    /// <summary>
+    /// Occurs whenever a user has successfully submitted their information,
+    /// and verification checks have started processing.
+    /// </summary>
+    public const string IdentityVerificationProcessing = "identity_verification.processing";
+
+    /// <summary>
+    /// Occurs whenever processing of all the verification checks have completed
+    /// and they’re all successfully verified.
+    /// </summary>
+    public const string IdentityVerificationVerified = "identity_verification.verified";
+
+    /// <summary>
+    /// Occurs whenever processing of all the verification checks have completed, and at least one of the checks failed.
+    /// </summary>
+    public const string IdentityVerificationInputRequired = "identity_verification.input_required";
+
+    /// <summary>
+    /// Occurs whenever an identity verification has been cancelled and future
+    /// submission attempts have been disabled.
+    /// </summary>
+    public const string IdentityVerificationCancelled = "identity_verification.cancelled";
+
+    /// <summary>
+    /// Occurs whenever an identity verification has been redacted.
+    /// </summary>
+    public const string IdentityVerificationRedacted = "identity_verification.redacted";
 
     #endregion
 
@@ -39,6 +96,17 @@ public static class EventTypes
     /// NOTE: only called when a provider with delivery reports is enabled configured
     /// </summary>
     public const string MessageDelivered = "message.delivered";
+
+    /// <summary>
+    /// Occurs whenever the message has been cancelled and future
+    /// update attempts have been disabled.
+    /// </summary>
+    public const string MessageCancelled = "message.cancelled";
+
+    /// <summary>
+    /// Occurs whenever a message has been redacted.
+    /// </summary>
+    public const string MessageRedacted = "message.redacted";
 
     #endregion
 

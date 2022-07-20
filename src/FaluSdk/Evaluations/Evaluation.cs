@@ -11,12 +11,6 @@ public class Evaluation : EvaluationPatchModel, IHasId, IHasCurrency, IHasCreate
     /// <inheritdoc/>
     public string? Currency { get; set; }
 
-    /// <summary>
-    /// Scope of the evaluation.
-    /// </summary>
-    [Obsolete("Moved to Options")]
-    public string? Scope { get; set; }
-
     /// <inheritdoc/>
     public DateTimeOffset Created { get; set; }
 

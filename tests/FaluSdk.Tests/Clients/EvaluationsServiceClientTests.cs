@@ -124,34 +124,6 @@ public class EvaluationsServiceClientTests : BaseServiceClientTests<Evaluation>
 
     [Theory]
     [MemberData(nameof(RequestOptionsData))]
-    public async Task ScoreAsync_Works(RequestOptions options)
-    {
-        var handler = new DynamicHttpMessageHandler((req, ct) =>
-        {
-            Assert.Equal(HttpMethod.Post, req.Method);
-            Assert.Equal($"{BasePath}/{Data!.Id}/score", req.RequestUri!.AbsolutePath);
-
-            AssertRequestHeaders(req, options);
-
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent("{}", Encoding.UTF8, MediaTypeNames.Application.Json),
-            };
-
-            return response;
-        });
-
-        await TestAsync(handler, async (client) =>
-        {
-            var response = await client.Evaluations.ScoreAsync(Data!.Id!, options);
-
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.NotNull(response.Resource);
-        });
-    }
-
-    [Theory]
-    [MemberData(nameof(RequestOptionsData))]
     public async Task RedactAsync_Works(RequestOptions options)
     {
         var handler = new DynamicHttpMessageHandler((req, ct) =>

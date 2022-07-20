@@ -3,7 +3,7 @@
 namespace Falu.Webhooks;
 
 /// <summary>
-/// The basic implementation of a Webhook irrespective of the usage
+/// Represents a webhook endpoint.
 /// </summary>
 public class WebhookEndpoint : WebhookEndpointPatchModel, IHasId, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
 {

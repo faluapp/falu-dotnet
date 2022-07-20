@@ -3,7 +3,7 @@
 namespace Falu.Events;
 
 /// <summary>
-/// The basic details about a request that triggered a webhook event.
+/// Represents details about a request that triggered a webhook event.
 /// Usually embedded in the webhook event.
 /// </summary>
 public class WebhookEventRequest

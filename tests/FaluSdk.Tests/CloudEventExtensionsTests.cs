@@ -1,91 +1,48 @@
 ﻿using CloudNative.CloudEvents;
 using CloudNative.CloudEvents.Extensions;
-using CloudNative.CloudEvents.Http;
 using CloudNative.CloudEvents.SystemTextJson;
-using Falu.Core;
-using Falu.Events;
-using Falu.MessageTemplates;
+using Falu.Payments;
 using Falu.Webhooks;
-using System.Net.Http.Headers;
+using System.Net.Mime;
 using Xunit;
 
 namespace Falu.Tests;
 
 public class CloudEventExtensionsTests
 {
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
-    public async Task ToFaluWebhookEvent_Works(bool live)
+    [Fact]
+    public async Task ToFaluWebhookEvent_Works()
     {
-        var template = new MessageTemplate
-        {
-            Alias = "school-promo-2022",
-            Body = "You are invited to the Teacher-Parent meeting on {{date}}.",
-            Id = "mtpl_1234567890",
-            Workspace = "wksp_1234567890",
-            Live = live,
-        };
-
-        var time = DateTimeOffset.UtcNow.AddHours(-3);
-        var recoded = await RecodeAsync(template, EventTypes.MessageTemplateCreated, time);
-        Assert.NotNull(recoded);
-        Assert.Equal(template.Workspace, recoded.GetWorkspace());
-        Assert.Equal(template.Live, recoded.GetLiveMode());
-        Assert.Equal("application/json", recoded.DataContentType);
-        Assert.Equal($"io.falu.{EventTypes.MessageTemplateCreated}", recoded.Type);
-        Assert.Equal(new Uri($"https://dashboard.falu.io/{template.Workspace}/events/evt_1234567890"), recoded.Source);
-        Assert.Equal("evt_1234567890", recoded.Id);
-
-        var evt = recoded.ToFaluWebhookEvent<MessageTemplate>();
-        Assert.NotNull(evt);
-        Assert.NotNull(evt!.Data);
-        Assert.NotNull(evt.Data!.Object);
-        Assert.Equal("mtpl_1234567890", evt.Data.Object!.Id);
-        Assert.Equal("school-promo-2022", evt.Data.Object!.Alias);
-        Assert.Equal("You are invited to the Teacher-Parent meeting on {{date}}.", evt.Data.Object!.Body);
-        Assert.Equal(template.Workspace, evt.Data.Object!.Workspace);
-        Assert.Equal(template.Live, evt.Data.Object!.Live);
-    }
-
-    private static async Task<CloudEvent> RecodeAsync<T>(T data, string type, DateTimeOffset time) where T : class, IHasWorkspace, IHasLive
-    {
-        var eventId = "evt_1234567890";
-        var source = new Uri($"https://dashboard.falu.io/{data.Workspace}/events/{eventId}");
-        var cloudEvent = new CloudEvent
-        {
-            Id = eventId,
-            Time = time,
-            Source = source,
-            Type = $"io.falu.{type}",
-            DataContentType = "application/json",
-            Data = new CloudEventExtensions.CloudEventDataPayload<T>
-            {
-                Object = data,
-                Previous = null,
-                Request = new WebhookEventRequest
-                {
-                    Id = "req_1234567890",
-                    IdempotencyKey = null,
-                },
-            },
-        };
-
-        cloudEvent[CloudNative.CloudEvents.Extensions.Falu.WorkspaceAttribute] = data.Workspace;
-        cloudEvent[CloudNative.CloudEvents.Extensions.Falu.LiveModeAttribute] = data.Live;
-
+        var stream = TestSamples.GetCloudEventAsStreamAsync();
         var formatter = new JsonEventFormatter();
-        var content = cloudEvent.ToHttpContent(ContentMode.Structured, formatter);
-        var response = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
-        {
-            Content = new StreamContent(await content.ReadAsStreamAsync())
-        };
-        foreach (var h in content.Headers)
-        {
-            HttpHeaders headers = h.Key.StartsWith("Content-") ? response.Content.Headers : response.Headers;
-            headers.Add(h.Key, h.Value);
-        }
+        var cloudEvent = await formatter.DecodeStructuredModeMessageAsync(
+            body: stream,
+            contentType: new ContentType("application/json"),
+            extensionAttributes: CloudNative.CloudEvents.Extensions.Falu.AllAttributes);
+        Assert.NotNull(cloudEvent);
+        Assert.Equal("wksp_602", cloudEvent.GetWorkspace());
+        Assert.Equal(false, cloudEvent.GetLiveMode());
+        Assert.Equal("application/json", cloudEvent.DataContentType);
+        Assert.Equal($"io.falu.{EventTypes.MoneyBalancesUpdated}", cloudEvent.Type);
+        Assert.Equal(new Uri("https://dashboard.falu.io/wksp_602/events/evt_602"), cloudEvent.Source);
+        Assert.Equal("evt_602", cloudEvent.Id);
 
-        return await response.ToCloudEventAsync(formatter, CloudNative.CloudEvents.Extensions.Falu.AllAttributes);
+        var evt = cloudEvent.ToFaluWebhookEvent<MoneyBalances>();
+        Assert.NotNull(evt);
+
+        Assert.Equal("wksp_602", evt!.Workspace);
+        Assert.False(evt.Live);
+
+        Assert.Equal("req_602", evt.Request!.Id);
+        Assert.Equal("idempotency-key-123", evt.Request.IdempotencyKey);
+
+        Assert.NotNull(evt.Data);
+        Assert.NotNull(evt.Data!.Object);
+        Assert.Equal("wksp_602", evt.Data.Object!.Workspace);
+        Assert.False(evt.Data.Object.Live);
+        Assert.Equal("AAAAAAAAAAA=", evt.Data.Object!.Etag);
+        Assert.NotNull(evt.Data.Object.Mpesa);
+        Assert.Equal(new[] { "123456", "654321", }, evt.Data.Object.Mpesa!.Keys);
+        Assert.Equal(new[] { 1030890L, 300500, }, evt.Data.Object.Mpesa!.Values);
     }
 }

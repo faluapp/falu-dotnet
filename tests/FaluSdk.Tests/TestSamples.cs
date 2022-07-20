@@ -9,5 +9,9 @@ internal class TestSamples
     private static Task<string> GetAsStringAsync(string fileName)
         => EmbeddedResourceHelper.GetResourceAsStringAsync<TestSamples>(FolderNameSamples, fileName)!;
 
-    public static Task<string> GetCloudEventAsync() => GetAsStringAsync("cloud_event.json");
+    private static Stream GetAsStreamAsync(string fileName)
+        => EmbeddedResourceHelper.GetResourceAsStream<TestSamples>(FolderNameSamples, fileName)!;
+
+    public static Task<string> GetCloudEventAsStringAsync() => GetAsStringAsync("cloud_event.json");
+    public static Stream GetCloudEventAsStreamAsync() => GetAsStreamAsync("cloud_event.json");
 }

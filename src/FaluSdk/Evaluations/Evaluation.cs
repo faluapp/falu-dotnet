@@ -34,12 +34,6 @@ public class Evaluation : EvaluationPatchModel, IHasId, IHasCurrency, IHasCreate
     public EvaluationScoringOptions? Options { get; set; }
 
     /// <summary>
-    /// Statement used for the evaluation.
-    /// </summary>
-    [Obsolete("Moved to Reports or Outputs")]
-    public Statement? Statement { get; set; }
-
-    /// <summary>
     /// The short-lived client secret used by front-end libraries to show an evaluation modal inside your app.
     /// This client secret expires after 24 hours and can only be used once.
     /// Don’t store it, log it, embed it in a URL, or expose it to anyone other than the user.

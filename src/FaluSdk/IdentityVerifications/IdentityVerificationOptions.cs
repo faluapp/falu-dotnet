@@ -4,6 +4,12 @@
 public class IdentityVerificationOptions
 {
     /// <summary>
+    /// Whether to allow uploads for documents, images and videos.
+    /// This only applies to document related checks.
+    /// </summary>
+    public bool? AllowUploads { get; set; }
+
+    /// <summary>
     /// Options for the id number check.
     /// </summary>
     public IdentityVerificationOptionsForIdNumber? IdNumber { get; set; }
@@ -34,11 +40,6 @@ public class IdentityVerificationOptionsForIdNumber
 public class IdentityVerificationOptionsForDocument
 {
     /// <summary>
-    /// Disable image uploads, identity document images have to be captured using the device's camera.
-    /// </summary>
-    public bool Live { get; set; }
-
-    /// <summary>
     /// The allowed identity document types.
     /// If a user uploads a document which isn't one of the allowed types, it will be rejected.
     /// </summary>
@@ -48,20 +49,12 @@ public class IdentityVerificationOptionsForDocument
 ///
 public class IdentityVerificationOptionsForSelfie
 {
-    /// <summary>
-    /// Disable image uploads, selfie images have to be captured using the device's camera.
-    /// </summary>
-    public bool Live { get; set; }
+    // intentionally left blank
 }
 
 ///
 public class IdentityVerificationOptionsForVideo
 {
-    /// <summary>
-    /// Disable uploads, videos have to be captured using the device's camera.
-    /// </summary>
-    public bool Live { get; set; }
-
     /// <summary>
     /// Face poses to be performed in the video recording.
     /// It is recommended to leave this field unassigned for the server to

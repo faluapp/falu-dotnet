@@ -144,10 +144,8 @@ var request = new IdentityVerificationCreateRequest
     Type = "document", // can also be "id_number" or "document_and_selfie" or "document_and_video"
     Options = new IdentityVerificationOptions
     {
-        Document = new IdentityVerificationOptionsForDocument
-        {
-            Live = true,
-        },
+        AllowUploads = true,
+        Document = new IdentityVerificationOptionsForDocument { },
     },
     ReturnUrl = "https://my-app.com/verify/waiting?userId=123456",
 };

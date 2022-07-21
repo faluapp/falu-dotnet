@@ -256,12 +256,12 @@ FaluClient client; // omitted for brevity
 var request = new EvaluationCreateModel
 {
     Currency = "kes",
-    Scope = EvaluationScope.Personal, // can also be Business
-    Provider = StatementProvider.Mpesa,
-    Name = "JOHN KAMAU ONYANGO", // full name as on statement
-    Phone = "+254722000000", // phone number as on statement for mobile based providers
-    Password = "1234567890", // password to open statement file
-    Content = System.IO.File.OpenRead("path-to-statement-file") // can be any readable stream
+    Options = new EvaluationScoringOptions
+    {
+        Scope = "personal", // can also be "business"
+        Statement = new EvaluationScoringOptionsForStatement { },
+    },
+    ReturnUrl = "https://my-app.com/evaluation/waiting/user_123",
 };
 
 // Request evaluation, results shall be relayed via webhooks

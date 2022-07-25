@@ -80,6 +80,12 @@ public class IdentityVerificationReportDocument : AbstractIdentityVerificationRe
     public PhysicalAddress? Address { get; set; }
 
     /// <summary>
+    /// The driving license vehicle categories.
+    /// Only populated if this report is for a driving licence.
+    /// </summary>
+    public List<IdentityVerificationDocumentVehicleCategory>? DrivingLicenseCategories { get; set; }
+
+    /// <summary>
     /// Unique identifiers of the files containing images for this document.
     /// </summary>
     public List<string> Files { get; set; } = new List<string>();

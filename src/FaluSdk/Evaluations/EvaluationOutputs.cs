@@ -5,7 +5,7 @@ namespace Falu.Evaluations;
 /// <summary>
 /// Outputs of scoring done in an evaluation.
 /// </summary>
-public class EvaluationScoringOutputs
+public class EvaluationOutputs
 {
     /// <summary>Provider used for scoring document.</summary>
     public string? StatementProvider { get; set; }

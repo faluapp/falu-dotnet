@@ -25,7 +25,7 @@ public class Evaluation : EvaluationPatchModel, IHasId, IHasCurrency, IHasCreate
     /// <summary>
     /// A set of options for the evaluation's process.
     /// </summary>
-    public EvaluationScoringOptions? Options { get; set; }
+    public EvaluationOptions? Options { get; set; }
 
     /// <summary>
     /// The short-lived client secret used by front-end libraries to show an evaluation modal inside your app.
@@ -55,7 +55,7 @@ public class Evaluation : EvaluationPatchModel, IHasId, IHasCurrency, IHasCreate
     /// <summary>
     /// The evaluations and scoring output data.
     /// </summary>
-    public EvaluationScoringOutputs? Outputs { get; set; }
+    public EvaluationOutputs? Outputs { get; set; }
 
     /// <inheritdoc/>
     public DataRedaction? Redaction { get; set; }

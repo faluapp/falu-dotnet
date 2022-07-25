@@ -3,7 +3,7 @@
 /// <summary>
 /// Options for evaluation scoring
 /// </summary>
-public class EvaluationScoringOptions
+public class EvaluationOptions
 {
     /// <summary>
     /// Scope of the evaluation.

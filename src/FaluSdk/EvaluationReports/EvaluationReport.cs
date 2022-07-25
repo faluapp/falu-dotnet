@@ -23,7 +23,7 @@ public class EvaluationReport : IHasId, IHasCreated, IHasUpdated, IHasWorkspace,
     /// <summary>
     /// The options that initiated this report.
     /// </summary>
-    public EvaluationScoringOptions? Options { get; set; }
+    public EvaluationOptions? Options { get; set; }
 
     /// <summary>
     /// Details on the user’s acceptance of the Services Agreement.

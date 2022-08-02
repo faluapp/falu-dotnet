@@ -5,13 +5,16 @@ namespace Falu.Events;
 /// <summary>
 /// Represents a Falu Webhook Event for any object.
 /// </summary>
-public class WebhookEvent<TObject> : IHasId, IHasCreated, IHasWorkspace, IHasLive
+public class WebhookEvent<TObject> : IHasId, IHasCreated, IHasUpdated, IHasRedaction, IHasWorkspace, IHasLive
 {
     /// <inheritdoc/>
     public string? Id { get; set; }
 
     /// <inheritdoc/>
     public DateTimeOffset Created { get; set; }
+
+    /// <inheritdoc/>
+    public DateTimeOffset Updated { get; set; }
 
     /// <summary>
     /// Type of event (e.g. payment.updated, money_balances.updated, etc.).
@@ -28,6 +31,9 @@ public class WebhookEvent<TObject> : IHasId, IHasCreated, IHasWorkspace, IHasLiv
     /// Object containing data associated with the event.
     /// </summary>
     public WebhookEventData<TObject>? Data { get; set; }
+
+    /// <inheritdoc/>
+    public DataRedaction? Redaction { get; set; }
 
     /// <inheritdoc/>
     public string? Workspace { get; set; }

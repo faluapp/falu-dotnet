@@ -81,7 +81,7 @@ public class IdentityVerificationReportDocument : AbstractIdentityVerificationRe
 
     /// <summary>
     /// The driving license vehicle categories.
-    /// Only populated if this report is for a driving licence.
+    /// Only populated if this report is for a driving license.
     /// </summary>
     public List<IdentityVerificationDocumentVehicleCategory>? DrivingLicenseCategories { get; set; }
 

@@ -29,4 +29,11 @@ public class MessageCreateRequest : MessagePatchModel
     /// If not provided, message will default to the "transactional" stream.
     /// </summary>
     public string Stream { get; set; } = "transactional";
+
+    /// <summary>
+    /// Schedule for sending the message(s).
+    /// When <see langword="null"/>, the message(s)
+    /// is/are enqueued for immediate sending.
+    /// </summary>
+    public MessageCreateRequestSchedule? Schedule { get; set; }
 }

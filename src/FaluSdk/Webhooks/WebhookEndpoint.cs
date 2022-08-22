@@ -21,7 +21,7 @@ public class WebhookEndpoint : WebhookEndpointPatchModel, IHasId, IHasCreated, I
     /// Otherwise, a secured value is returned.
     /// For example: <c>e0gNHBa90CfdKbtcWgksn52cvXoXMqCTaLdttJAsQVU=</c> would be
     /// returned in full on creation. However, subsequent times like read/get/update,
-    /// would return either <c>null</c> or <c>e0gNHBa90***********************************</c>.
+    /// would return either <see langword="null"/> or <c>e0gNHBa90***********************************</c>.
     /// </summary>
     public string? Secret { get; set; }
 

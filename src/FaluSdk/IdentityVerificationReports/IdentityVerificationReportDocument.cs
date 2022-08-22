@@ -86,6 +86,11 @@ public class IdentityVerificationReportDocument : AbstractIdentityVerificationRe
     public List<IdentityVerificationDocumentVehicleCategory>? DrivingLicenseCategories { get; set; }
 
     /// <summary>
+    /// The issuing authority for the document.
+    /// </summary>
+    public string? IssuingAuthority { get; set; }
+
+    /// <summary>
     /// Unique identifiers of the files containing images for this document.
     /// </summary>
     public List<string> Files { get; set; } = new List<string>();

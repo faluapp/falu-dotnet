@@ -6,6 +6,11 @@ namespace Falu.Messages;
 public record MessagesListOptions : BasicListOptions
 {
     /// <summary>
+    /// Unique identifier of the message stream to filter for.
+    /// </summary>
+    public string? Stream { get; set; }
+
+    /// <summary>
     /// Range filter options for <see cref="Message.Delivered"/> property.
     /// </summary>
     public RangeFilteringOptions<DateTimeOffset>? Delivered { get; set; }
@@ -24,7 +29,8 @@ public record MessagesListOptions : BasicListOptions
     internal override void Populate(QueryValues values)
     {
         base.Populate(values);
-        values.Add("status", Status)
+        values.Add("stream", Stream)
+              .Add("status", Status)
               .Add("delivered", QueryValues.FromRange(Delivered))
               .Add("sent", QueryValues.FromRange(Sent));
     }

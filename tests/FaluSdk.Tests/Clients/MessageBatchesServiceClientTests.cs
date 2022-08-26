@@ -1,5 +1,5 @@
 ﻿using Falu.Core;
-using Falu.Evaluations;
+using Falu.MessageBatches;
 using System.Net;
 using System.Net.Mime;
 using System.Text;
@@ -8,15 +8,15 @@ using Xunit;
 
 namespace Falu.Tests.Clients;
 
-public class EvaluationsServiceClientTests : BaseServiceClientTests<Evaluation>
+public class MessageBatchesServiceClientTests : BaseServiceClientTests<MessageBatch>
 {
-    public EvaluationsServiceClientTests() : base(new()
+    public MessageBatchesServiceClientTests() : base(new()
     {
-        Id = "ev_123",
-        Currency = "KES",
+        Id = "msba_123",
+        Messages = new List<string> { "msg_123", },
         Created = DateTimeOffset.UtcNow,
         Updated = DateTimeOffset.UtcNow,
-    }, "/v1/evaluations")
+    }, "/v1/message_batches")
     { }
 
     [Theory]
@@ -27,7 +27,7 @@ public class EvaluationsServiceClientTests : BaseServiceClientTests<Evaluation>
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.Evaluations.GetAsync(Data!.Id!, options);
+            var response = await client.MessageBatches.GetAsync(Data!.Id!, options);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
             Assert.Equal(Data!.Id, response.Resource!.Id);
@@ -42,12 +42,12 @@ public class EvaluationsServiceClientTests : BaseServiceClientTests<Evaluation>
 
         await TestAsync(handler, async (client) =>
         {
-            var opt = new EvaluationsListOptions
+            var opt = new MessageBatchesListOptions
             {
                 Count = 1
             };
 
-            var response = await client.Evaluations.ListAsync(opt, options);
+            var response = await client.MessageBatches.ListAsync(opt, options);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -56,9 +56,8 @@ public class EvaluationsServiceClientTests : BaseServiceClientTests<Evaluation>
             if (hasContinuationToken) Assert.NotNull(response.ContinuationToken);
             else Assert.Null(response.ContinuationToken);
 
-            var ev = response!.Resource!.Single();
-
-            Assert.Equal(Data!.Id, ev.Id);
+            var msgstr = response!.Resource!.Single();
+            Assert.Equal(Data!.Id!, msgstr.Id);
         });
     }
 
@@ -70,14 +69,13 @@ public class EvaluationsServiceClientTests : BaseServiceClientTests<Evaluation>
 
         await TestAsync(handler, async (client) =>
         {
-            var opt = new EvaluationsListOptions
+            var opt = new MessageBatchesListOptions
             {
                 Count = 1
             };
 
-            var results = new List<Evaluation>();
-
-            await foreach (var item in client.Evaluations.ListRecursivelyAsync(opt, options))
+            var results = new List<MessageBatch>();
+            await foreach (var item in client.MessageBatches.ListRecursivelyAsync(opt, options))
             {
                 results.Add(item);
             }
@@ -96,8 +94,18 @@ public class EvaluationsServiceClientTests : BaseServiceClientTests<Evaluation>
 
         await TestAsync(handler, async (client) =>
         {
-            var model = new EvaluationCreateRequest { };
-            var response = await client.Evaluations.CreateAsync(model, options);
+            var model = new MessageBatchCreateRequest
+            {
+                Messages = new List<MessageBatchCreateRequestMessage>
+                {
+                    new MessageBatchCreateRequestMessage
+                    {
+                        To = new[] { "+254722000000", },
+                        Body = "This is a test",
+                    },
+                },
+            };
+            var response = await client.MessageBatches.CreateAsync(model, options);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -112,10 +120,10 @@ public class EvaluationsServiceClientTests : BaseServiceClientTests<Evaluation>
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<EvaluationPatchModel>();
-            document.Replace(x => x.Description, "new description");
+            var document = new JsonPatchDocument<MessageBatchPatchModel>();
+            document.Replace(x => x.Metadata, new Dictionary<string, string> { ["purpose"] = "loan-repayment" });
 
-            var response = await client.Evaluations.UpdateAsync(Data!.Id!, document, options);
+            var response = await client.MessageBatches.UpdateAsync(Data!.Id!, document, options);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -143,7 +151,7 @@ public class EvaluationsServiceClientTests : BaseServiceClientTests<Evaluation>
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.Evaluations.CancelAsync(Data!.Id!, options);
+            var response = await client.MessageBatches.CancelAsync(Data!.Id!, options);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -171,7 +179,7 @@ public class EvaluationsServiceClientTests : BaseServiceClientTests<Evaluation>
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.Evaluations.RedactAsync(Data!.Id!, options);
+            var response = await client.MessageBatches.RedactAsync(Data!.Id!, options);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);

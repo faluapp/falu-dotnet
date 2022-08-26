@@ -8,6 +8,7 @@ public class MessagesServiceClient : BaseServiceClient<Message>,
                                      ISupportsListing<Message, MessagesListOptions>,
                                      ISupportsRetrieving<Message>,
                                      ISupportsUpdating<Message, MessagePatchModel>,
+                                     ISupportsCanceling<Message>,
                                      ISupportsRedaction<Message>
 {
     ///
@@ -82,6 +83,7 @@ public class MessagesServiceClient : BaseServiceClient<Message>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
+    [Obsolete("Migrate to using MessageBatch API resource.")]
     public virtual Task<ResourceResponse<MessageCreateResponse>> SendBatchAsync(IList<MessageCreateRequest> messages,
                                                                                 RequestOptions? options = null,
                                                                                 CancellationToken cancellationToken = default)
@@ -103,6 +105,18 @@ public class MessagesServiceClient : BaseServiceClient<Message>,
         return RequestAsync<MessageCreateResponse>(uri, HttpMethod.Post, messages, options, cancellationToken);
     }
 
+    /// <summary>Cancel a message preventing further updates.</summary>
+    /// <param name="id">Unique identifier for the message.</param>
+    /// <param name="options">Options to use for the request.</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public Task<ResourceResponse<Message>> CancelAsync(string id,
+                                                       RequestOptions? options = null,
+                                                       CancellationToken cancellationToken = default)
+    {
+        return CancelResourceAsync(id, options, cancellationToken);
+    }
+
     /// <summary>Redact a message to remove all collected information from Falu.</summary>
     /// <param name="id">Unique identifier for the message.</param>
     /// <param name="options">Options to use for the request.</param>
@@ -112,7 +126,6 @@ public class MessagesServiceClient : BaseServiceClient<Message>,
                                                        RequestOptions? options = null,
                                                        CancellationToken cancellationToken = default)
     {
-        var uri = $"{MakeResourcePath(id)}/redact";
-        return RequestAsync<Message>(uri, HttpMethod.Post, new { }, options, cancellationToken);
+        return RedactResourceAsync(id, options, cancellationToken);
     }
 }

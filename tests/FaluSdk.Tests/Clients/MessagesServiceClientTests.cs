@@ -144,11 +144,13 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
                 Body = Data!.Body
             };
 
+#pragma warning disable CS0618 // Type or member is obsolete
             var response = await client.Messages.SendBatchAsync(new[] { model }, options);
+#pragma warning restore CS0618 // Type or member is obsolete
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.NotNull(response.Resource);
-            Assert.Single(response.Resource!.Ids);
+            Assert.NotNull(response.Resource?.Ids);
+            Assert.Single(response.Resource.Ids);
         });
     }
 
@@ -164,6 +166,34 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
             document.Replace(x => x.Metadata, new Dictionary<string, string> { ["purpose"] = "loan-repayment" });
 
             var response = await client.Messages.UpdateAsync(Data!.Id!, document, options);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(response.Resource);
+        });
+    }
+
+    [Theory]
+    [MemberData(nameof(RequestOptionsData))]
+    public async Task CancelAsync_Works(RequestOptions options)
+    {
+        var handler = new DynamicHttpMessageHandler((req, ct) =>
+        {
+            Assert.Equal(HttpMethod.Post, req.Method);
+            Assert.Equal($"{BasePath}/{Data!.Id}/cancel", req.RequestUri!.AbsolutePath);
+
+            AssertRequestHeaders(req, options);
+
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("{}", Encoding.UTF8, MediaTypeNames.Application.Json),
+            };
+
+            return response;
+        });
+
+        await TestAsync(handler, async (client) =>
+        {
+            var response = await client.Messages.CancelAsync(Data!.Id!, options);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);

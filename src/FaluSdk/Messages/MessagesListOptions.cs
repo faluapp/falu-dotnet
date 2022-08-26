@@ -6,9 +6,24 @@ namespace Falu.Messages;
 public record MessagesListOptions : BasicListOptions
 {
     /// <summary>
+    /// Unique identifier of the message stream to filter for.
+    /// </summary>
+    public string? Stream { get; set; }
+
+    /// <summary>
+    /// Unique identifier of the message batch to filter for.
+    /// </summary>
+    public string? Batch { get; set; }
+
+    /// <summary>
     /// Range filter options for <see cref="Message.Delivered"/> property.
     /// </summary>
     public RangeFilteringOptions<DateTimeOffset>? Delivered { get; set; }
+
+    /// <summary>
+    /// Range filter options for <see cref="Message.Sent"/> property.
+    /// </summary>
+    public RangeFilteringOptions<DateTimeOffset>? Sent { get; set; }
 
     /// <summary>
     /// Filter options for <see cref="Message.Status"/> property.
@@ -19,7 +34,10 @@ public record MessagesListOptions : BasicListOptions
     internal override void Populate(QueryValues values)
     {
         base.Populate(values);
-        values.Add("status", Status)
-              .Add("delivered", QueryValues.FromRange(Delivered));
+        values.Add("stream", Stream)
+              .Add("batch", Batch)
+              .Add("status", Status)
+              .Add("delivered", QueryValues.FromRange(Delivered))
+              .Add("sent", QueryValues.FromRange(Sent));
     }
 }

@@ -110,6 +110,31 @@ public static class EventTypes
 
     #endregion
 
+    #region Message Batches
+
+    /// <summary>
+    /// Occurs whenever a message batch is sent.
+    /// </summary>
+    public const string MessageBatchCreated = "message_batch.created";
+
+    /// <summary>
+    /// Occurs whenever a message batch is scheduled.
+    /// </summary>
+    public const string MessageBatchScheduled = "message_batch.scheduled";
+
+    /// <summary>
+    /// Occurs whenever the message batch has been cancelled and future
+    /// update attempts have been disabled.
+    /// </summary>
+    public const string MessageBatchCancelled = "message_batch.cancelled";
+
+    /// <summary>
+    /// Occurs whenever a message batch has been redacted.
+    /// </summary>
+    public const string MessageBatchRedacted = "message_batch.redacted";
+
+    #endregion
+
     #region MessageTemplates
 
     /// <summary>

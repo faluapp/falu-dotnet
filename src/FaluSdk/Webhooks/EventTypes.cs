@@ -3,7 +3,7 @@
 /// 
 public static class EventTypes
 {
-    #region Evaluation
+    #region Evaluations
 
     /// <summary>
     /// Occurs whenever an evaluation is created.
@@ -42,7 +42,7 @@ public static class EventTypes
 
     #endregion
 
-    #region IdentityVerifications
+    #region Identity Verifications
 
     /// <summary>
     /// Occurs whenever an identity verification is created.
@@ -135,7 +135,7 @@ public static class EventTypes
 
     #endregion
 
-    #region MessageTemplates
+    #region Message Templates
 
     /// <summary>
     /// Occurs whenever a message template is created.
@@ -182,7 +182,7 @@ public static class EventTypes
 
     #endregion
 
-    #region PaymentAuthorizations
+    #region Payment Authorizations
 
     /// <summary>
     /// Occurs whenever a payment authorization is requested.
@@ -201,7 +201,7 @@ public static class EventTypes
 
     #endregion
 
-    #region PaymentRefunds
+    #region Payment Refunds
 
     /// <summary>
     /// Occurs whenever a payment refund is created.
@@ -249,7 +249,7 @@ public static class EventTypes
 
     #endregion
 
-    #region TransferReversals
+    #region Transfer Reversals
 
     /// <summary>
     /// Occurs whenever a transfer reversal is created.

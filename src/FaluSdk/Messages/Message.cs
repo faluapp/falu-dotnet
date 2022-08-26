@@ -42,6 +42,15 @@ public class Message : MessagePatchModel, IHasId, IHasCreated, IHasUpdated, IHas
     public string? Stream { get; set; }
 
     /// <summary>
+    /// Number of segments that make up the complete message.
+    /// If the body that is too large to be sent in a single
+    /// message, it is segmented and charged as multiple messages.
+    /// <br/>
+    /// Inbound messages over 160 characters are reassembled when the message is received.
+    /// </summary>
+    public int Segements { get; set; }
+
+    /// <summary>
     /// Provider used for the message.
     /// </summary>
     public MessageProvider? Provider { get; set; }

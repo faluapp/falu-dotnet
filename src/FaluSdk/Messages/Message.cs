@@ -52,6 +52,11 @@ public class Message : MessagePatchModel, IHasId, IHasCreated, IHasUpdated, IHas
     public MessageSchedule? Schedule { get; set; }
 
     /// <summary>
+    /// Time at which the message was sent.
+    /// </summary>
+    public DateTimeOffset? Sent { get; set; }
+
+    /// <summary>
     /// Time at which the message was delivered.
     /// This is dependent on the underlying provider.
     /// </summary>

@@ -11,6 +11,11 @@ public record MessagesListOptions : BasicListOptions
     public string? Stream { get; set; }
 
     /// <summary>
+    /// Unique identifier of the message batch to filter for.
+    /// </summary>
+    public string? Batch { get; set; }
+
+    /// <summary>
     /// Range filter options for <see cref="Message.Delivered"/> property.
     /// </summary>
     public RangeFilteringOptions<DateTimeOffset>? Delivered { get; set; }
@@ -30,6 +35,7 @@ public record MessagesListOptions : BasicListOptions
     {
         base.Populate(values);
         values.Add("stream", Stream)
+              .Add("batch", Batch)
               .Add("status", Status)
               .Add("delivered", QueryValues.FromRange(Delivered))
               .Add("sent", QueryValues.FromRange(Sent));

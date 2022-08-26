@@ -35,15 +35,12 @@ public class FaluClientOptions
 
     internal static JsonSerializerOptions GetSerializerOptions()
     {
-        if (serializerOptions is null)
+        serializerOptions ??= new(JsonSerializerDefaults.Web)
         {
-            serializerOptions = new(JsonSerializerDefaults.Web)
-            {
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-                AllowTrailingCommas = true,
-                ReadCommentHandling = JsonCommentHandling.Skip,
-            };
-        }
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            AllowTrailingCommas = true,
+            ReadCommentHandling = JsonCommentHandling.Skip,
+        };
 
         return serializerOptions;
     }

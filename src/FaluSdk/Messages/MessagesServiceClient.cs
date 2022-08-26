@@ -8,6 +8,7 @@ public class MessagesServiceClient : BaseServiceClient<Message>,
                                      ISupportsListing<Message, MessagesListOptions>,
                                      ISupportsRetrieving<Message>,
                                      ISupportsUpdating<Message, MessagePatchModel>,
+                                     ISupportsCanceling<Message>,
                                      ISupportsRedaction<Message>
 {
     ///
@@ -101,6 +102,19 @@ public class MessagesServiceClient : BaseServiceClient<Message>,
 
         var uri = MakePath("/batch");
         return RequestAsync<MessageCreateResponse>(uri, HttpMethod.Post, messages, options, cancellationToken);
+    }
+
+    /// <summary>Cancel a message preventing further updates.</summary>
+    /// <param name="id">Unique identifier for the message.</param>
+    /// <param name="options">Options to use for the request.</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public Task<ResourceResponse<Message>> CancelAsync(string id,
+                                                       RequestOptions? options = null,
+                                                       CancellationToken cancellationToken = default)
+    {
+        var uri = $"{MakeResourcePath(id)}/cancel";
+        return RequestAsync<Message>(uri, HttpMethod.Post, new { }, options, cancellationToken);
     }
 
     /// <summary>Redact a message to remove all collected information from Falu.</summary>

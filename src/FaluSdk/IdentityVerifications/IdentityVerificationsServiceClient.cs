@@ -5,11 +5,12 @@ namespace Falu.IdentityVerifications;
 
 ///
 public class IdentityVerificationsServiceClient : BaseServiceClient<IdentityVerification>,
-                                                   ISupportsListing<IdentityVerification, IdentityVerificationsListOptions>,
-                                                   ISupportsRetrieving<IdentityVerification>,
-                                                   ISupportsCreation<IdentityVerification, IdentityVerificationCreateRequest>,
-                                                   ISupportsUpdating<IdentityVerification, IdentityVerificationPatchModel>,
-                                                   ISupportsRedaction<IdentityVerification>
+                                                  ISupportsListing<IdentityVerification, IdentityVerificationsListOptions>,
+                                                  ISupportsRetrieving<IdentityVerification>,
+                                                  ISupportsCreation<IdentityVerification, IdentityVerificationCreateRequest>,
+                                                  ISupportsUpdating<IdentityVerification, IdentityVerificationPatchModel>,
+                                                  ISupportsCanceling<IdentityVerification>,
+                                                  ISupportsRedaction<IdentityVerification>
 {
     ///
     public IdentityVerificationsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
@@ -77,6 +78,19 @@ public class IdentityVerificationsServiceClient : BaseServiceClient<IdentityVeri
                                                                             CancellationToken cancellationToken = default)
     {
         return CreateResourceAsync(request, options, cancellationToken);
+    }
+
+    /// <summary>Cancel an identity verification preventing further updates.</summary>
+    /// <param name="id">Unique identifier for the identity verification.</param>
+    /// <param name="options">Options to use for the request.</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public Task<ResourceResponse<IdentityVerification>> CancelAsync(string id,
+                                                                    RequestOptions? options = null,
+                                                                    CancellationToken cancellationToken = default)
+    {
+        var uri = $"{MakeResourcePath(id)}/cancel";
+        return RequestAsync<IdentityVerification>(uri, HttpMethod.Post, new { }, options, cancellationToken);
     }
 
     /// <summary>Redact an identity verification to remove all collected information from Falu.</summary>

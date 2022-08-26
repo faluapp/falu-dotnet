@@ -92,7 +92,7 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
 
     [Theory]
     [MemberData(nameof(RequestOptionsData))]
-    public async Task SendAsync_Works(RequestOptions options)
+    public async Task CreateAsync_Works(RequestOptions options)
     {
         var handler = CreateAsync_Handler(options);
 
@@ -103,7 +103,7 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
                 To = new[] { Data!.To!, },
                 Body = Data!.Body
             };
-            var response = await client.Messages.SendAsync(model, options);
+            var response = await client.Messages.CreateAsync(model, options);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);

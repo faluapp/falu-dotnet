@@ -11,6 +11,11 @@ public record MessagesListOptions : BasicListOptions
     public RangeFilteringOptions<DateTimeOffset>? Delivered { get; set; }
 
     /// <summary>
+    /// Range filter options for <see cref="Message.Sent"/> property.
+    /// </summary>
+    public RangeFilteringOptions<DateTimeOffset>? Sent { get; set; }
+
+    /// <summary>
     /// Filter options for <see cref="Message.Status"/> property.
     /// </summary>
     public List<string>? Status { get; set; }
@@ -20,6 +25,7 @@ public record MessagesListOptions : BasicListOptions
     {
         base.Populate(values);
         values.Add("status", Status)
-              .Add("delivered", QueryValues.FromRange(Delivered));
+              .Add("delivered", QueryValues.FromRange(Delivered))
+              .Add("sent", QueryValues.FromRange(Sent));
     }
 }

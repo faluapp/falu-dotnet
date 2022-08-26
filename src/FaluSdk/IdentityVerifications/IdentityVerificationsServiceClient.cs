@@ -89,8 +89,7 @@ public class IdentityVerificationsServiceClient : BaseServiceClient<IdentityVeri
                                                                     RequestOptions? options = null,
                                                                     CancellationToken cancellationToken = default)
     {
-        var uri = $"{MakeResourcePath(id)}/cancel";
-        return RequestAsync<IdentityVerification>(uri, HttpMethod.Post, new { }, options, cancellationToken);
+        return CancelResourceAsync(id, options, cancellationToken);
     }
 
     /// <summary>Redact an identity verification to remove all collected information from Falu.</summary>
@@ -102,7 +101,6 @@ public class IdentityVerificationsServiceClient : BaseServiceClient<IdentityVeri
                                                                     RequestOptions? options = null,
                                                                     CancellationToken cancellationToken = default)
     {
-        var uri = $"{MakeResourcePath(id)}/redact";
-        return RequestAsync<IdentityVerification>(uri, HttpMethod.Post, new { }, options, cancellationToken);
+        return RedactResourceAsync(id, options, cancellationToken);
     }
 }

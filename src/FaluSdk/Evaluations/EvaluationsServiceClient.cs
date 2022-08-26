@@ -89,8 +89,7 @@ public class EvaluationsServiceClient : BaseServiceClient<Evaluation>,
                                                           RequestOptions? options = null,
                                                           CancellationToken cancellationToken = default)
     {
-        var uri = $"{MakeResourcePath(id)}/cancel";
-        return RequestAsync<Evaluation>(uri, HttpMethod.Post, new { }, options, cancellationToken);
+        return CancelResourceAsync(id, options, cancellationToken);
     }
 
     /// <summary>Redact an evaluation to remove all collected information from Falu.</summary>
@@ -102,7 +101,6 @@ public class EvaluationsServiceClient : BaseServiceClient<Evaluation>,
                                                           RequestOptions? options = null,
                                                           CancellationToken cancellationToken = default)
     {
-        var uri = $"{MakeResourcePath(id)}/redact";
-        return RequestAsync<Evaluation>(uri, HttpMethod.Post, new { }, options, cancellationToken);
+        return RedactResourceAsync(id, options, cancellationToken);
     }
 }

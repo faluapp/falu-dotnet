@@ -113,8 +113,7 @@ public class MessagesServiceClient : BaseServiceClient<Message>,
                                                        RequestOptions? options = null,
                                                        CancellationToken cancellationToken = default)
     {
-        var uri = $"{MakeResourcePath(id)}/cancel";
-        return RequestAsync<Message>(uri, HttpMethod.Post, new { }, options, cancellationToken);
+        return CancelResourceAsync(id, options, cancellationToken);
     }
 
     /// <summary>Redact a message to remove all collected information from Falu.</summary>
@@ -126,7 +125,6 @@ public class MessagesServiceClient : BaseServiceClient<Message>,
                                                        RequestOptions? options = null,
                                                        CancellationToken cancellationToken = default)
     {
-        var uri = $"{MakeResourcePath(id)}/redact";
-        return RequestAsync<Message>(uri, HttpMethod.Post, new { }, options, cancellationToken);
+        return RedactResourceAsync(id, options, cancellationToken);
     }
 }

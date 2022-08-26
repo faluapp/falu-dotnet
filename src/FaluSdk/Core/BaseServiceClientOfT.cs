@@ -81,6 +81,24 @@ public abstract class BaseServiceClient<TResource> : BaseServiceClient
 
 
     ///
+    protected virtual Task<ResourceResponse<TResource>> CancelResourceAsync(string id,
+                                                                            RequestOptions? options = null,
+                                                                            CancellationToken cancellationToken = default)
+    {
+        var uri = $"{MakeResourcePath(id)}/cancel";
+        return RequestAsync<TResource>(uri, HttpMethod.Post, null, options, cancellationToken);
+    }
+
+    ///
+    protected virtual Task<ResourceResponse<TResource>> RedactResourceAsync(string id,
+                                                                            RequestOptions? options = null,
+                                                                            CancellationToken cancellationToken = default)
+    {
+        var uri = $"{MakeResourcePath(id)}/redact";
+        return RequestAsync<TResource>(uri, HttpMethod.Post, null, options, cancellationToken);
+    }
+
+    ///
     protected virtual Task<ResourceResponse<object>> DeleteResourceAsync(string id,
                                                                          RequestOptions? options = null,
                                                                          CancellationToken cancellationToken = default)

@@ -42,6 +42,11 @@ public class Message : MessagePatchModel, IHasId, IHasCreated, IHasUpdated, IHas
     public string? Stream { get; set; }
 
     /// <summary>
+    /// Batch that the message belogs to, if any.
+    /// </summary>
+    public string? Batch { get; set; }
+
+    /// <summary>
     /// Number of segments that make up the complete message.
     /// If the body that is too large to be sent in a single
     /// message, it is segmented and charged as multiple messages.

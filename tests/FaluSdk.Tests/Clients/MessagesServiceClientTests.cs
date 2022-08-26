@@ -144,11 +144,13 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
                 Body = Data!.Body
             };
 
+#pragma warning disable CS0618 // Type or member is obsolete
             var response = await client.Messages.SendBatchAsync(new[] { model }, options);
+#pragma warning restore CS0618 // Type or member is obsolete
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.NotNull(response.Resource);
-            Assert.Single(response.Resource!.Ids);
+            Assert.NotNull(response.Resource?.Ids);
+            Assert.Single(response.Resource.Ids);
         });
     }
 

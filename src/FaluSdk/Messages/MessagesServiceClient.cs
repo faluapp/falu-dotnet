@@ -83,6 +83,7 @@ public class MessagesServiceClient : BaseServiceClient<Message>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
+    [Obsolete("Migrate to using MessageBatch API resource.")]
     public virtual Task<ResourceResponse<MessageCreateResponse>> SendBatchAsync(IList<MessageCreateRequest> messages,
                                                                                 RequestOptions? options = null,
                                                                                 CancellationToken cancellationToken = default)

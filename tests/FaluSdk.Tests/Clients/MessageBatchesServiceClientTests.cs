@@ -132,6 +132,32 @@ public class MessageBatchesServiceClientTests : BaseServiceClientTests<MessageBa
 
     [Theory]
     [MemberData(nameof(RequestOptionsData))]
+    public async Task StatusAsync_Works(RequestOptions options)
+    {
+        var handler = new DynamicHttpMessageHandler((req, ct) =>
+        {
+            Assert.Equal(HttpMethod.Get, req.Method);
+            Assert.Equal($"{BasePath}/{Data!.Id}/status", req.RequestUri!.AbsolutePath);
+
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("{}", Encoding.UTF8, MediaTypeNames.Application.Json),
+            };
+
+            return response;
+        });
+
+        await TestAsync(handler, async (client) =>
+        {
+            var response = await client.MessageBatches.StatusAsync(Data!.Id!);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(response.Resource);
+        });
+    }
+
+    [Theory]
+    [MemberData(nameof(RequestOptionsData))]
     public async Task CancelAsync_Works(RequestOptions options)
     {
         var handler = new DynamicHttpMessageHandler((req, ct) =>

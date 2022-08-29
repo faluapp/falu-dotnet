@@ -37,7 +37,7 @@ public class MessageBatchesServiceClient : BaseServiceClient<MessageBatch>,
     }
 
     /// <summary>
-    /// Retrieve a message btach.
+    /// Retrieve a message batch.
     /// </summary>
     /// <param name="id">Unique identifier for the message batch.</param>
     /// <param name="options">Options to use for the request.</param>
@@ -77,6 +77,21 @@ public class MessageBatchesServiceClient : BaseServiceClient<MessageBatch>,
                                                                     CancellationToken cancellationToken = default)
     {
         return UpdateResourceAsync(id, patch, options, cancellationToken);
+    }
+
+    /// <summary>
+    /// Retrieve a message batch status.
+    /// </summary>
+    /// <param name="id">Unique identifier for the message batch.</param>
+    /// <param name="options">Options to use for the request.</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public virtual Task<ResourceResponse<MessageBatchStatus>> StatusAsync(string id,
+                                                                          RequestOptions? options = null,
+                                                                          CancellationToken cancellationToken = default)
+    {
+        var uri = $"{MakeResourcePath(id)}/status";
+        return RequestAsync<MessageBatchStatus>(uri, HttpMethod.Get, null, options, cancellationToken);
     }
 
     /// <summary>Cancel a message batch preventing further updates.</summary>

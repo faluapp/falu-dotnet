@@ -1,6 +1,4 @@
 ﻿using Falu.Customers;
-using Falu.EvaluationReports;
-using Falu.Evaluations;
 using Falu.Events;
 using Falu.FileLinks;
 using Falu.Files;
@@ -46,8 +44,6 @@ public class FaluClient<TOptions> where TOptions : FaluClientOptions
         }
 
         Customers = new CustomersServiceClient(BackChannel, Options);
-        Evaluations = new EvaluationsServiceClient(BackChannel, Options);
-        EvaluationReports = new EvaluationReportsServiceClient(BackChannel, Options);
         Events = new EventsServiceClient(BackChannel, Options);
         Files = new FilesServiceClient(BackChannel, Options);
         FileLinks = new FileLinksServiceClient(BackChannel, Options);
@@ -78,12 +74,6 @@ public class FaluClient<TOptions> where TOptions : FaluClientOptions
 
     ///
     public virtual CustomersServiceClient Customers { get; protected set; }
-
-    ///
-    public virtual EvaluationsServiceClient Evaluations { get; protected set; }
-
-    ///
-    public virtual EvaluationReportsServiceClient EvaluationReports { get; protected set; }
 
     ///
     public virtual EventsServiceClient Events { get; protected set; }

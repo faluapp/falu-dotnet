@@ -100,7 +100,7 @@ public class MessageBatchesServiceClientTests : BaseServiceClientTests<MessageBa
                 {
                     new MessageBatchCreateRequestMessage
                     {
-                        To = new[] { "+254722000000", },
+                        Tos = new[] { "+254722000000", },
                         Body = "This is a test",
                     },
                 },

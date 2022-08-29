@@ -84,6 +84,16 @@ public static class EventTypes
     /// <summary>
     /// Occurs whenever a message is sent.
     /// </summary>
+    public const string MessageCreated = "message.created";
+
+    /// <summary>
+    /// Occurs whenever a message is scheduled.
+    /// </summary>
+    public const string MessageScheduled = "message.scheduled";
+
+    /// <summary>
+    /// Occurs whenever a message is sent.
+    /// </summary>
     public const string MessageSent = "message.sent";
 
     /// <summary>

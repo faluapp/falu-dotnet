@@ -82,6 +82,11 @@ public static class EventTypes
     #region Messages
 
     /// <summary>
+    /// Occurs whenever a message is scheduled.
+    /// </summary>
+    public const string MessageScheduled = "message.scheduled";
+
+    /// <summary>
     /// Occurs whenever a message is sent.
     /// </summary>
     public const string MessageSent = "message.sent";

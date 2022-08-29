@@ -56,11 +56,6 @@ public class Message : MessagePatchModel, IHasId, IHasCreated, IHasUpdated, IHas
     public int Segements { get; set; }
 
     /// <summary>
-    /// Provider used for the message.
-    /// </summary>
-    public MessageProvider? Provider { get; set; }
-
-    /// <summary>
     /// Schedule information for the message.
     /// </summary>
     public MessageSchedule? Schedule { get; set; }
@@ -69,6 +64,11 @@ public class Message : MessagePatchModel, IHasId, IHasCreated, IHasUpdated, IHas
     /// Time at which the message was sent.
     /// </summary>
     public DateTimeOffset? Sent { get; set; }
+
+    /// <summary>
+    /// If present, this property tells you the error encountered when processing the message.
+    /// </summary>
+    public MessageError? Error { get; set; }
 
     /// <summary>
     /// Time at which the message was delivered.

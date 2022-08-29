@@ -7,6 +7,7 @@ namespace Falu.Messages;
 public class MessagesServiceClient : BaseServiceClient<Message>,
                                      ISupportsListing<Message, MessagesListOptions>,
                                      ISupportsRetrieving<Message>,
+                                     //ISupportsCreation<Message, MessageCreateRequest>,
                                      ISupportsUpdating<Message, MessagePatchModel>,
                                      ISupportsCanceling<Message>,
                                      ISupportsRedaction<Message>
@@ -49,19 +50,32 @@ public class MessagesServiceClient : BaseServiceClient<Message>,
         return GetResourceAsync(id, options, cancellationToken);
     }
 
-    /// <summary>Send a message.</summary>
+    /// <summary>Create a message.</summary>
     /// <param name="message"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<MessageCreateResponse>> SendAsync(MessageCreateRequest message,
-                                                                           RequestOptions? options = null,
-                                                                           CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<MessageCreateResponse>> CreateAsync(MessageCreateRequest message,
+                                                                             RequestOptions? options = null,
+                                                                             CancellationToken cancellationToken = default)
     {
         if (message is null) throw new ArgumentNullException(nameof(message));
         message.Template?.Model?.GetType().EnsureAllowedForMessageTemplateModel();
 
         return CreateResourceAsync<MessageCreateResponse>(message, options, cancellationToken);
+    }
+
+    /// <summary>Send a message.</summary>
+    /// <param name="message"></param>
+    /// <param name="options">Options to use for the request.</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    [Obsolete("Use 'CreateAsync(...)' instead.")]
+    public virtual Task<ResourceResponse<MessageCreateResponse>> SendAsync(MessageCreateRequest message,
+                                                                           RequestOptions? options = null,
+                                                                           CancellationToken cancellationToken = default)
+    {
+        return CreateAsync(message, options, cancellationToken);
     }
 
     /// <summary>Update a message.</summary>

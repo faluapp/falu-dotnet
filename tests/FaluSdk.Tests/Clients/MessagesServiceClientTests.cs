@@ -112,50 +112,6 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
 
     [Theory]
     [MemberData(nameof(RequestOptionsData))]
-    public async Task SendBatchAsync_Works(RequestOptions options)
-    {
-        var handler = new DynamicHttpMessageHandler((req, ct) =>
-        {
-            Assert.Equal(HttpMethod.Post, req.Method);
-            Assert.Equal($"{BasePath}/batch", req.RequestUri!.AbsolutePath);
-
-            AssertRequestHeaders(req, options);
-
-            var content = new MessageCreateResponse
-            {
-                Created = Data.Created,
-                Ids = new[] { Data.Id!, },
-                Live = Data.Live,
-                Workspace = Data.Workspace,
-            };
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(JsonSerializer.Serialize(content), Encoding.UTF8, MediaTypeNames.Application.Json)
-            };
-
-            return response;
-        });
-
-        await TestAsync(handler, async (client) =>
-        {
-            var model = new MessageCreateRequest
-            {
-                To = new[] { Data!.To!, },
-                Body = Data!.Body
-            };
-
-#pragma warning disable CS0618 // Type or member is obsolete
-            var response = await client.Messages.SendBatchAsync(new[] { model }, options);
-#pragma warning restore CS0618 // Type or member is obsolete
-
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.NotNull(response.Resource?.Ids);
-            Assert.Single(response.Resource.Ids);
-        });
-    }
-
-    [Theory]
-    [MemberData(nameof(RequestOptionsData))]
     public async Task UpdateAsync_Works(RequestOptions options)
     {
         var handler = UpdateAsync_Handler(options);

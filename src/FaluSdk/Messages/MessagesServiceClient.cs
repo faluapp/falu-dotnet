@@ -65,19 +65,6 @@ public class MessagesServiceClient : BaseServiceClient<Message>,
         return CreateResourceAsync<MessageCreateResponse>(message, options, cancellationToken);
     }
 
-    /// <summary>Send a message.</summary>
-    /// <param name="message"></param>
-    /// <param name="options">Options to use for the request.</param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    [Obsolete("Use 'CreateAsync(...)' instead.")]
-    public virtual Task<ResourceResponse<MessageCreateResponse>> SendAsync(MessageCreateRequest message,
-                                                                           RequestOptions? options = null,
-                                                                           CancellationToken cancellationToken = default)
-    {
-        return CreateAsync(message, options, cancellationToken);
-    }
-
     /// <summary>Update a message.</summary>
     /// <param name="id">Unique identifier for the message.</param>
     /// <param name="patch"></param>

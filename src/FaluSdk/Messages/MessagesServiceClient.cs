@@ -65,19 +65,6 @@ public class MessagesServiceClient : BaseServiceClient<Message>,
         return CreateResourceAsync<MessageCreateResponse>(message, options, cancellationToken);
     }
 
-    /// <summary>Send a message.</summary>
-    /// <param name="message"></param>
-    /// <param name="options">Options to use for the request.</param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    [Obsolete("Use 'CreateAsync(...)' instead.")]
-    public virtual Task<ResourceResponse<MessageCreateResponse>> SendAsync(MessageCreateRequest message,
-                                                                           RequestOptions? options = null,
-                                                                           CancellationToken cancellationToken = default)
-    {
-        return CreateAsync(message, options, cancellationToken);
-    }
-
     /// <summary>Update a message.</summary>
     /// <param name="id">Unique identifier for the message.</param>
     /// <param name="patch"></param>
@@ -90,33 +77,6 @@ public class MessagesServiceClient : BaseServiceClient<Message>,
                                                                CancellationToken cancellationToken = default)
     {
         return UpdateResourceAsync(id, patch, options, cancellationToken);
-    }
-
-    /// <summary>Send a batch of messages.</summary>
-    /// <param name="messages"></param>
-    /// <param name="options">Options to use for the request.</param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    [Obsolete("Migrate to using MessageBatch API resource.")]
-    public virtual Task<ResourceResponse<MessageCreateResponse>> SendBatchAsync(IList<MessageCreateRequest> messages,
-                                                                                RequestOptions? options = null,
-                                                                                CancellationToken cancellationToken = default)
-    {
-        if (messages is null) throw new ArgumentNullException(nameof(messages));
-
-        if (messages.Count > 1_000)
-        {
-            throw new ArgumentOutOfRangeException(paramName: nameof(messages),
-                                                  message: "The service does not support more than 1,000 (1k) messages");
-        }
-
-        foreach (var m in messages)
-        {
-            m.Template?.Model?.GetType().EnsureAllowedForMessageTemplateModel();
-        }
-
-        var uri = MakePath("/batch");
-        return RequestAsync<MessageCreateResponse>(uri, HttpMethod.Post, messages, options, cancellationToken);
     }
 
     /// <summary>Cancel a message preventing further updates.</summary>

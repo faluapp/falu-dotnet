@@ -11,7 +11,7 @@ public class MessageBatchSchedule
     public DateTimeOffset Time { get; set; }
 
     /// <summary>
-    /// Duration for which the message batch is/was to be delayed before sending.
+    /// ISO8601 duration for which the message batch is/was to be delayed before sending.
     /// </summary>
-    public TimeSpan? Delay { get; set; }
+    public string? Delay { get; set; }
 }

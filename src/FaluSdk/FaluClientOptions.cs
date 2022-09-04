@@ -11,7 +11,7 @@ public class FaluClientOptions
     private static JsonSerializerOptions? serializerOptions;
 
     /// <summary>The ApiVersion that the SDK conforms to.</summary>
-    internal const string ApiVersion = "2022-05-01";
+    internal const string ApiVersion = "2022-09-01";
 
     /// <summary>Serialization options.</summary>
     internal JsonSerializerOptions SerializerOptions { get; } = GetSerializerOptions();

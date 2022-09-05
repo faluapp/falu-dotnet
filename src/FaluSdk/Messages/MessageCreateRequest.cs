@@ -9,7 +9,7 @@ public class MessageCreateRequest : MessagePatchModel
     /// Destination phone numbers in <see href="https://en.wikipedia.org/wiki/E.164">E.164 format</see>.
     /// You can provide up to 500 numbers in one request.
     /// </summary>
-    public IList<string>? To { get; set; }
+    public string? To { get; set; }
 
     /// <summary>
     /// Actual message content to be sent.

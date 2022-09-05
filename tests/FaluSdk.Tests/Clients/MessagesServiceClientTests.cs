@@ -100,7 +100,7 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
         {
             var model = new MessageCreateRequest
             {
-                To = new[] { Data!.To!, },
+                To = Data!.To!,
                 Body = Data!.Body
             };
             var response = await client.Messages.CreateAsync(model, options);

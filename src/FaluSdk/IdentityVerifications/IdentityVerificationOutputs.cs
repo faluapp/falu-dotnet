@@ -39,4 +39,9 @@ public class IdentityVerificationOutputs
     /// The user’s verified address.
     /// </summary>
     public PhysicalAddress? Address { get; set; }
+
+    /// <summary>
+    /// The user's sex 
+    /// </summary>
+    public string? Sex { get; set; }
 }

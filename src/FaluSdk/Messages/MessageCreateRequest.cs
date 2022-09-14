@@ -35,4 +35,9 @@ public class MessageCreateRequest : MessagePatchModel
     /// is/are enqueued for immediate sending.
     /// </summary>
     public MessageCreateRequestSchedule? Schedule { get; set; }
+
+    /// <summary>
+    /// Identifier of the Customer this Message belongs to, if one exists.
+    /// </summary>
+    public string? Customer { get; set; }
 }

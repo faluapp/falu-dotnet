@@ -24,4 +24,9 @@ public class TransferCreateRequest : TransferPatchModel, IHasCurrency
     /// Details about initiation of an MPESA transfer to a customer or another business.
     /// </summary>
     public TransferCreateRequestMpesa? Mpesa { get; set; }
+
+    /// <summary>
+    /// Identifier of the Customer this Transfer belongs to, if one exists.
+    /// </summary>
+    public string? Customer { get; set; }
 }

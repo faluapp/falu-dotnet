@@ -36,6 +36,11 @@ public class PaymentRefund : PaymentRefundPatchModel, IHasId, IHasCurrency, IHas
     public DateTimeOffset Updated { get; set; }
 
     /// <summary>
+    /// Identifier of the Customer this Payment Refund belongs to, if one exists.
+    /// </summary>
+    public string? Customer { get; set; }
+
+    /// <summary>
     /// Identifier of the Payment reversed.
     /// </summary>
     public string? Payment { get; set; }

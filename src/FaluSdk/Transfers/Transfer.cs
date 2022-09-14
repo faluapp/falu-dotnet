@@ -47,6 +47,11 @@ public class Transfer : TransferPatchModel, IHasId, IHasCurrency, IHasCreated, I
     public string? Purpose { get; set; }
 
     /// <summary>
+    /// Identifier of the Customer this Transfer belongs to, if one exists.
+    /// </summary>
+    public string? Customer { get; set; }
+
+    /// <summary>
     /// If this is an MPESA transfer, this contains details about the MPESA transfer.
     /// </summary>
     public TransferMpesaDetails? Mpesa { get; set; }

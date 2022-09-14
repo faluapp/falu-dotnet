@@ -34,6 +34,11 @@ public class TransferReversal : TransferReversalPatchModel, IHasId, IHasCurrency
     /// </summary>
     public string? Status { get; set; }
 
+    /// <summary>
+    /// Identifier of the Customer this Transfer Reversal belongs to, if one exists.
+    /// </summary>
+    public string? Customer { get; set; }
+
     /// <inheritdoc/>
     public DateTimeOffset Created { get; set; }
 

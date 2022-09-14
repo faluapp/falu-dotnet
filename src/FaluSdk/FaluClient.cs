@@ -1,4 +1,5 @@
-﻿using Falu.EvaluationReports;
+﻿using Falu.Customers;
+using Falu.EvaluationReports;
 using Falu.Evaluations;
 using Falu.Events;
 using Falu.FileLinks;
@@ -44,6 +45,7 @@ public class FaluClient<TOptions> where TOptions : FaluClientOptions
             BackChannel.DefaultRequestHeaders.Add("User-Agent", userAgent);
         }
 
+        Customers = new CustomersServiceClient(BackChannel, Options);
         Evaluations = new EvaluationsServiceClient(BackChannel, Options);
         EvaluationReports = new EvaluationReportsServiceClient(BackChannel, Options);
         Events = new EventsServiceClient(BackChannel, Options);
@@ -73,6 +75,9 @@ public class FaluClient<TOptions> where TOptions : FaluClientOptions
     protected TOptions Options { get; }
 
     #region Services
+
+    ///
+    public virtual CustomersServiceClient Customers { get; protected set; }
 
     ///
     public virtual EvaluationsServiceClient Evaluations { get; protected set; }

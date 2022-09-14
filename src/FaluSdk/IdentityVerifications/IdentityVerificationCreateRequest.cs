@@ -19,4 +19,9 @@ public class IdentityVerificationCreateRequest : IdentityVerificationPatchModel
     /// The URL the user will be redirected to upon completing the verification flow.
     /// </summary>
     public string? ReturnUrl { get; set; }
+
+    /// <summary>
+    /// Identifier of the Customer this Identity Verification belongs to, if one exists.
+    /// </summary>
+    public string? Customer { get; set; }
 }

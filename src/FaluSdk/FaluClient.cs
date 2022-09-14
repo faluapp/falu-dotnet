@@ -8,6 +8,7 @@ using Falu.IdentityVerifications;
 using Falu.MessageBatches;
 using Falu.Messages;
 using Falu.MessageStreams;
+using Falu.MessageSuppressions;
 using Falu.MessageTemplates;
 using Falu.PaymentAuthorizations;
 using Falu.PaymentRefunds;
@@ -53,6 +54,7 @@ public class FaluClient<TOptions> where TOptions : FaluClientOptions
         Messages = new MessagesServiceClient(BackChannel, Options);
         MessageBatches = new MessageBatchesServiceClient(BackChannel, Options);
         MessageStreams = new MessageStreamsServiceClient(BackChannel, Options);
+        MessageSuppressions = new MessageSuppressionsServiceClient(BackChannel, Options);
         MessageTemplates = new MessageTemplatesServiceClient(BackChannel, Options);
         MoneyBalances = new MoneyBalancesServiceClient(BackChannel, Options);
         Payments = new PaymentsServiceClient(BackChannel, Options);
@@ -101,6 +103,9 @@ public class FaluClient<TOptions> where TOptions : FaluClientOptions
 
     ///
     public virtual MessageStreamsServiceClient MessageStreams { get; protected set; }
+
+    ///
+    public virtual MessageSuppressionsServiceClient MessageSuppressions { get; protected set; }
 
     ///
     public virtual MessageTemplatesServiceClient MessageTemplates { get; protected set; }

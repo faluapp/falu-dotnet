@@ -9,7 +9,7 @@ public class MessageBatchCreateRequestMessage
 {
     /// <summary>
     /// Destination phone numbers in <see href="https://en.wikipedia.org/wiki/E.164">E.164 format</see>.
-    /// You can provide up to 500 numbers in one request.
+    /// You can send up to 1,000 messages in one API request.
     /// </summary>
     public IList<string>? Tos { get; set; }
 

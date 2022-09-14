@@ -55,6 +55,7 @@ public class MessageBatchesServiceClient : BaseServiceClient<MessageBatch>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
+    /// <remarks>You can send up to 1,000 messages in one API request.</remarks>
     public virtual Task<ResourceResponse<MessageBatch>> CreateAsync(MessageBatchCreateRequest request,
                                                                     RequestOptions? options = null,
                                                                     CancellationToken cancellationToken = default)

@@ -1,4 +1,5 @@
-﻿using Falu.EvaluationReports;
+﻿using Falu.Customers;
+using Falu.EvaluationReports;
 using Falu.Evaluations;
 using Falu.Events;
 using Falu.FileLinks;
@@ -8,10 +9,12 @@ using Falu.IdentityVerifications;
 using Falu.MessageBatches;
 using Falu.Messages;
 using Falu.MessageStreams;
+using Falu.MessageSuppressions;
 using Falu.MessageTemplates;
 using Falu.PaymentAuthorizations;
 using Falu.PaymentRefunds;
 using Falu.Payments;
+using Falu.TemporaryKeys;
 using Falu.TransferReversals;
 using Falu.Transfers;
 using Falu.Webhooks;
@@ -42,6 +45,7 @@ public class FaluClient<TOptions> where TOptions : FaluClientOptions
             BackChannel.DefaultRequestHeaders.Add("User-Agent", userAgent);
         }
 
+        Customers = new CustomersServiceClient(BackChannel, Options);
         Evaluations = new EvaluationsServiceClient(BackChannel, Options);
         EvaluationReports = new EvaluationReportsServiceClient(BackChannel, Options);
         Events = new EventsServiceClient(BackChannel, Options);
@@ -52,6 +56,7 @@ public class FaluClient<TOptions> where TOptions : FaluClientOptions
         Messages = new MessagesServiceClient(BackChannel, Options);
         MessageBatches = new MessageBatchesServiceClient(BackChannel, Options);
         MessageStreams = new MessageStreamsServiceClient(BackChannel, Options);
+        MessageSuppressions = new MessageSuppressionsServiceClient(BackChannel, Options);
         MessageTemplates = new MessageTemplatesServiceClient(BackChannel, Options);
         MoneyBalances = new MoneyBalancesServiceClient(BackChannel, Options);
         Payments = new PaymentsServiceClient(BackChannel, Options);
@@ -59,6 +64,7 @@ public class FaluClient<TOptions> where TOptions : FaluClientOptions
         PaymentRefunds = new PaymentRefundsServiceClient(BackChannel, Options);
         Transfers = new TransfersServiceClient(BackChannel, Options);
         TransferReversals = new TransferReversalsServiceClient(BackChannel, Options);
+        TemporaryKeys = new TemporaryKeysServiceClient(BackChannel, Options);
         Webhooks = new WebhooksServiceClient(BackChannel, Options);
     }
 
@@ -69,6 +75,9 @@ public class FaluClient<TOptions> where TOptions : FaluClientOptions
     protected TOptions Options { get; }
 
     #region Services
+
+    ///
+    public virtual CustomersServiceClient Customers { get; protected set; }
 
     ///
     public virtual EvaluationsServiceClient Evaluations { get; protected set; }
@@ -101,6 +110,9 @@ public class FaluClient<TOptions> where TOptions : FaluClientOptions
     public virtual MessageStreamsServiceClient MessageStreams { get; protected set; }
 
     ///
+    public virtual MessageSuppressionsServiceClient MessageSuppressions { get; protected set; }
+
+    ///
     public virtual MessageTemplatesServiceClient MessageTemplates { get; protected set; }
 
     ///
@@ -120,6 +132,9 @@ public class FaluClient<TOptions> where TOptions : FaluClientOptions
 
     ///
     public virtual TransferReversalsServiceClient TransferReversals { get; protected set; }
+
+    ///
+    public virtual TemporaryKeysServiceClient TemporaryKeys { get; protected set; }
 
     ///
     public virtual WebhooksServiceClient Webhooks { get; protected set; }

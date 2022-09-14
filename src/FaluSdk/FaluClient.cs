@@ -12,6 +12,7 @@ using Falu.MessageTemplates;
 using Falu.PaymentAuthorizations;
 using Falu.PaymentRefunds;
 using Falu.Payments;
+using Falu.TemporaryKeys;
 using Falu.TransferReversals;
 using Falu.Transfers;
 using Falu.Webhooks;
@@ -59,6 +60,7 @@ public class FaluClient<TOptions> where TOptions : FaluClientOptions
         PaymentRefunds = new PaymentRefundsServiceClient(BackChannel, Options);
         Transfers = new TransfersServiceClient(BackChannel, Options);
         TransferReversals = new TransferReversalsServiceClient(BackChannel, Options);
+        TemporaryKeys = new TemporaryKeysServiceClient(BackChannel, Options);
         Webhooks = new WebhooksServiceClient(BackChannel, Options);
     }
 
@@ -120,6 +122,9 @@ public class FaluClient<TOptions> where TOptions : FaluClientOptions
 
     ///
     public virtual TransferReversalsServiceClient TransferReversals { get; protected set; }
+
+    ///
+    public virtual TemporaryKeysServiceClient TemporaryKeys { get; protected set; }
 
     ///
     public virtual WebhooksServiceClient Webhooks { get; protected set; }

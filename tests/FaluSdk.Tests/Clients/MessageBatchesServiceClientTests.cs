@@ -149,7 +149,7 @@ public class MessageBatchesServiceClientTests : BaseServiceClientTests<MessageBa
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.MessageBatches.StatusAsync(Data!.Id!);
+            var response = await client.MessageBatches.StatusAsync(Data!.Id!, options);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);

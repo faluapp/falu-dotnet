@@ -83,8 +83,8 @@ public class MessageSuppressionsServiceClientTests : BaseServiceClientTests<Mess
             }
 
             Assert.Single(results);
-            var msgtmpl = results.Single();
-            Assert.Equal(Data!.Id, msgtmpl.Id);
+            var sup = results.Single();
+            Assert.Equal(Data!.Id, sup.Id);
         });
     }
 

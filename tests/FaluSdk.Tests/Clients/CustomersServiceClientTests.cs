@@ -84,8 +84,8 @@ public class CustomersServiceClientTests : BaseServiceClientTests<Customer>
             }
 
             Assert.Single(results);
-            var msgtmpl = results.Single();
-            Assert.Equal(Data!.Id, msgtmpl.Id);
+            var cst = results.Single();
+            Assert.Equal(Data!.Id, cst.Id);
         });
     }
 

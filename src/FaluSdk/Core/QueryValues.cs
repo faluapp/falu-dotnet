@@ -177,7 +177,7 @@ public sealed class QueryValues : ICollection<KeyValuePair<string, StringValues>
         => ((ICollection<KeyValuePair<string, StringValues>>)values).CopyTo(array, arrayIndex);
 
     /// <inheritdoc/>
-    bool ICollection<KeyValuePair<string, StringValues>>.Remove(KeyValuePair<string, StringValues> item) 
+    bool ICollection<KeyValuePair<string, StringValues>>.Remove(KeyValuePair<string, StringValues> item)
         => ((ICollection<KeyValuePair<string, StringValues>>)values).Remove(item);
 
     #endregion

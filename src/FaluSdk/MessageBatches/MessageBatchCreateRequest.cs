@@ -9,6 +9,7 @@ public class MessageBatchCreateRequest
 {
     /// <summary>
     /// The messages.
+    /// You can send up to 1,000 messages in one API request.
     /// </summary>
     public List<MessageBatchCreateRequestMessage>? Messages { get; set; }
 

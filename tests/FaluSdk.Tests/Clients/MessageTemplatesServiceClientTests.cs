@@ -13,7 +13,7 @@ public class MessageTemplatesServiceClientTests : BaseServiceClientTests<Message
 {
     public MessageTemplatesServiceClientTests() : base(new()
     {
-        Id = "tmpl_123",
+        Id = "mtpl_123",
         Alias = "loyalty",
         Body = "Hi {{name}}! Thanks for being a loyal customer. We appreciate you!",
         Created = DateTimeOffset.UtcNow,
@@ -85,8 +85,8 @@ public class MessageTemplatesServiceClientTests : BaseServiceClientTests<Message
             }
 
             Assert.Single(results);
-            var msgtmpl = results.Single();
-            Assert.Equal(Data!.Id, msgtmpl.Id);
+            var mtpl = results.Single();
+            Assert.Equal(Data!.Id, mtpl.Id);
         });
     }
 

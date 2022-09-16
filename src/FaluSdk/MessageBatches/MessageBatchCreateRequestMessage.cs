@@ -24,4 +24,9 @@ public class MessageBatchCreateRequestMessage
     /// Required if <see cref="Body"/> is not specified.
     /// </summary>
     public MessageCreateRequestTemplate? Template { get; set; }
+
+    /// <summary>
+    /// Media to be sent with the message.
+    /// </summary>
+    public IList<MessageCreateRequestMedia>? Media { get; set; }
 }

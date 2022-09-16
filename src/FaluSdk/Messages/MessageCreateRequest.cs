@@ -23,6 +23,11 @@ public class MessageCreateRequest : MessagePatchModel
     public MessageCreateRequestTemplate? Template { get; set; }
 
     /// <summary>
+    /// Media to be sent with the message.
+    /// </summary>
+    public IList<MessageCreateRequestMedia>? Media { get; set; }
+
+    /// <summary>
     /// The stream to use.
     /// It can either be the name or unique identifier of the stream.
     /// If not provided, message will default to the "transactional" stream.

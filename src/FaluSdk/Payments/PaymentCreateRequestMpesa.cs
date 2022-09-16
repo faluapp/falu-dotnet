@@ -24,11 +24,10 @@ public class PaymentCreateRequestMpesa
 
     /// <summary>
     /// The short code of the receiver.
-    /// When not provided, it defaults to the default recipient.
     /// When not provided, either the default incoming business code
-    /// or the first business code for the workspace is used depending on the <c>Kind</c>.
+    /// or the first business code for the workspace is used when <see cref="Paybill"/> is set to <see langword="true"/>.
     /// <br/>
-    /// This value is usually required and different from the business short code when using BuyGoods.
+    /// This value is usually different from the business short code when using BuyGoods.
     /// </summary>
     public string? Destination { get; set; }
 }

@@ -58,7 +58,7 @@ public class Message : MessagePatchModel, IHasId, IHasCreated, IHasUpdated, IHas
     /// <br/>
     /// Inbound messages over 160 characters are reassembled when the message is received.
     /// </summary>
-    public int Segements { get; set; }
+    public int Segments { get; set; }
 
     /// <summary>
     /// Schedule information for the message.

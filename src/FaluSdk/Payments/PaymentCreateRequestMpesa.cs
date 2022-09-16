@@ -17,13 +17,13 @@ public class PaymentCreateRequestMpesa
     public string? Reference { get; set; }
 
     /// <summary>
-    /// Set true if the payment to be initiated is to be made to a paybill;
+    /// Set true if the payment to be initiated is to be made to a PayBill;
     /// false, the payment is made to a BuyGoods till.
     /// </summary>
     public bool Paybill { get; set; }
 
     /// <summary>
-    /// The shortcode of the receiver.
+    /// The short code of the receiver.
     /// When not provided, it defaults to the default recipient.
     /// When not provided, either the default incoming business code
     /// or the first business code for the workspace is used depending on the <c>Kind</c>.

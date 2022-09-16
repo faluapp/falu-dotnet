@@ -47,7 +47,7 @@ public class Message : MessagePatchModel, IHasId, IHasCreated, IHasUpdated, IHas
     public string? Stream { get; set; }
 
     /// <summary>
-    /// Batch that the message belogs to, if any.
+    /// Batch that the message belongs to, if any.
     /// </summary>
     public string? Batch { get; set; }
 

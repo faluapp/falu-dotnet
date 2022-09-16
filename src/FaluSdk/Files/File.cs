@@ -23,7 +23,7 @@ public class File : IHasId, IHasCreated, IHasUpdated, IHasDescription, IHasRedac
     /// <summary>Type of file.</summary>
     public string? Type { get; set; }
 
-    /// <summary>A name of the file suitable for saving to a filesystem.</summary>
+    /// <summary>A name of the file suitable for saving to a file system.</summary>
     public string? Filename { get; set; }
 
     /// <summary>Size in bytes of the file.</summary>

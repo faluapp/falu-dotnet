@@ -29,7 +29,7 @@ public class ApplicationInformation
     public string? Version { get; set; }
 
     /// <summary>
-    /// Website/Url for your application.
+    /// Website/URL for your application.
     /// </summary>
     /// <example>https://example.com</example>
     public string? Url { get; set; }

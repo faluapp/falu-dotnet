@@ -16,7 +16,7 @@ public static class WebhookUtility
     /// <param name="signature">The value of the <see cref="HeadersNames.XFaluSignature"/> header from the webhook request.</param>
     /// <param name="secret">The webhook endpoint's signing secret.</param>
     /// <param name="tolerance">The time tolerance. Defaults to 300 seconds.</param>
-    /// <param name="now">The timestamp to use for the current time. Defaults to current time.</param>
+    /// <param name="now">The value to use for the current time. Defaults to current time.</param>
     public static void ValidateSignature(string payload, string signature, string secret, TimeSpan? tolerance = null, DateTimeOffset? now = null)
         => ValidateSignature(Encoding.UTF8.GetBytes(payload), signature, secret, tolerance, now);
 
@@ -25,7 +25,7 @@ public static class WebhookUtility
     /// <param name="signature">The value of the <see cref="HeadersNames.XFaluSignature"/> header from the webhook request.</param>
     /// <param name="secret">The webhook endpoint's signing secret.</param>
     /// <param name="tolerance">The time tolerance. Defaults to 300 seconds.</param>
-    /// <param name="now">The timestamp to use for the current time. Defaults to current time.</param>
+    /// <param name="now">The value to use for the current time. Defaults to current time.</param>
     /// <remarks>
     /// Use this to validate the signature in your request pipeline.
     /// </remarks>

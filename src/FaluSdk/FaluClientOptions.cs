@@ -29,7 +29,7 @@ public class FaluClientOptions
 
     /// <summary>
     /// Information about the application.
-    /// It is recommended for use only with thirdy party plugins/services for identification purposes.
+    /// It is recommended for use only with third party services for identification purposes.
     /// </summary>
     public ApplicationInformation? Application { get; set; }
 

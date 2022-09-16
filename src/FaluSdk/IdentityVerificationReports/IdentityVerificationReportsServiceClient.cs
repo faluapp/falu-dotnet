@@ -34,7 +34,7 @@ public class IdentityVerificationReportsServiceClient : BaseServiceClient<Identi
     /// <summary>
     /// Retrieve an identity verification report.
     /// </summary>
-    /// <param name="id">Unique identifier for the identity verificationreport</param>
+    /// <param name="id">Unique identifier for the identity verification report</param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>

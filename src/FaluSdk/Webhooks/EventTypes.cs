@@ -219,7 +219,7 @@ public static class EventTypes
     public const string PaymentRefundCreated = "payment.refund.created";
 
     /// <summary>
-    /// Occurs whenever a payment refunc is updated.
+    /// Occurs whenever a payment refund is updated.
     /// </summary>
     public const string PaymentRefundUpdated = "payment.refund.updated";
 

@@ -40,7 +40,7 @@ public class EvaluationCreateRequest : EvaluationPatchModel, IHasCurrency
     public string? Password { get; set; }
 
     /// <summary>
-    /// Unique identifier of the file containing the sstatement
+    /// Unique identifier of the file containing the statement
     /// </summary>
     public string? File { get; set; }
 }

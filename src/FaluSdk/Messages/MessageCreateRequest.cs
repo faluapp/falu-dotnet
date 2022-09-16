@@ -20,7 +20,7 @@ public class MessageCreateRequest : MessagePatchModel
     /// The template to use.
     /// Required if <see cref="Body"/> is not specified.
     /// </summary>
-    public MessageSourceTemplate? Template { get; set; }
+    public MessageCreateRequestTemplate? Template { get; set; }
 
     /// <summary>
     /// The stream to use.

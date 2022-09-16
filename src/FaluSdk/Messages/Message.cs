@@ -37,6 +37,11 @@ public class Message : MessagePatchModel, IHasId, IHasCreated, IHasUpdated, IHas
     public MessageSourceTemplate? Template { get; set; }
 
     /// <summary>
+    /// Media included with the message.
+    /// </summary>
+    public List<MessageMedia>? Media { get; set; }
+
+    /// <summary>
     /// Stream used for the message.
     /// </summary>
     public string? Stream { get; set; }

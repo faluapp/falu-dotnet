@@ -5,7 +5,7 @@ namespace Falu.Files;
 /// <summary>Options for filtering and pagination of list files.</summary>
 public record FilesListOptions : BasicListOptions
 {
-    /// <summary>Filter options for <code>purpose</code> property.</summary>
+    /// <summary>Filter options for <see cref="File.Purpose"/> property.</summary>
     public List<string>? Purpose { get; set; }
 
     /// <inheritdoc/>

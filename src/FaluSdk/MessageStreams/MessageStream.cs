@@ -4,7 +4,7 @@ namespace Falu.MessageStreams;
 
 /// <summary>
 /// Represents a stream used for sending messages.
-/// This is a way to spearate messages sent to ensure high deliverability.
+/// This is a way to separate messages sent to ensure high delivery rates.
 /// </summary>
 public class MessageStream : MessageStreamPatchModel, IHasId, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
 {

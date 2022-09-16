@@ -17,18 +17,17 @@ public class PaymentCreateRequestMpesa
     public string? Reference { get; set; }
 
     /// <summary>
-    /// Set true if the payment to be initiated is to be made to a paybill;
+    /// Set true if the payment to be initiated is to be made to a PayBill;
     /// false, the payment is made to a BuyGoods till.
     /// </summary>
     public bool Paybill { get; set; }
 
     /// <summary>
-    /// The shortcode of the receiver.
-    /// When not provided, it defaults to the default recipient.
+    /// The short code of the receiver.
     /// When not provided, either the default incoming business code
-    /// or the first business code for the workspace is used depending on the <c>Kind</c>.
+    /// or the first business code for the workspace is used when <see cref="Paybill"/> is set to <see langword="true"/>.
     /// <br/>
-    /// This value is usually required and different from the business short code when using BuyGoods.
+    /// This value is usually different from the business short code when using BuyGoods.
     /// </summary>
     public string? Destination { get; set; }
 }

@@ -149,7 +149,7 @@ public abstract class BaseServiceClient<TResource> : BaseServiceClient
 
             // set the continuation token for the next batch request
             // nothing else should be changed in the options so that
-            // the continunation token works as expected
+            // the continuation token works as expected
             options.ContinuationToken = response.ContinuationToken;
         } while (true);
     }

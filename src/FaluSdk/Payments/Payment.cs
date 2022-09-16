@@ -35,6 +35,11 @@ public class Payment : PaymentPatchModel, IHasId, IHasCurrency, IHasCreated, IHa
     public DateTimeOffset? Succeeded { get; set; }
 
     /// <summary>
+    /// Identifier of the Customer this Payment belongs to, if one exists.
+    /// </summary>
+    public string? Customer { get; set; }
+
+    /// <summary>
     /// Identifier of the authorization, if the payment passed through a flow requiring authorization.
     /// </summary>
     public string? Authorization { get; set; }

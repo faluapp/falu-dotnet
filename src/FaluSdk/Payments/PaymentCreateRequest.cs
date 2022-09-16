@@ -19,4 +19,9 @@ public class PaymentCreateRequest : PaymentPatchModel, IHasCurrency
     /// Details about initiation by MPESA's STK Push
     /// </summary>
     public PaymentCreateRequestMpesa? Mpesa { get; set; }
+
+    /// <summary>
+    /// Identifier of the Customer this Payment belongs to, if one exists.
+    /// </summary>
+    public string? Customer { get; set; }
 }

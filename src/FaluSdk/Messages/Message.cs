@@ -37,14 +37,24 @@ public class Message : MessagePatchModel, IHasId, IHasCreated, IHasUpdated, IHas
     public MessageSourceTemplate? Template { get; set; }
 
     /// <summary>
+    /// Media included with the message.
+    /// </summary>
+    public List<MessageMedia>? Media { get; set; }
+
+    /// <summary>
     /// Stream used for the message.
     /// </summary>
     public string? Stream { get; set; }
 
     /// <summary>
-    /// Batch that the message belogs to, if any.
+    /// Batch that the message belongs to, if any.
     /// </summary>
     public string? Batch { get; set; }
+
+    /// <summary>
+    /// Identifier of the Customer this Message belongs to, if one exists.
+    /// </summary>
+    public string? Customer { get; set; }
 
     /// <summary>
     /// Number of segments that make up the complete message.
@@ -53,7 +63,7 @@ public class Message : MessagePatchModel, IHasId, IHasCreated, IHasUpdated, IHas
     /// <br/>
     /// Inbound messages over 160 characters are reassembled when the message is received.
     /// </summary>
-    public int Segements { get; set; }
+    public int? Segments { get; set; }
 
     /// <summary>
     /// Schedule information for the message.

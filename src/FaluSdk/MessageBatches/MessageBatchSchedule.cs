@@ -6,7 +6,7 @@
 public class MessageBatchSchedule
 {
     /// <summary>
-    /// Time at which the message batch is/was scheduled scheduled to be sent.
+    /// Time at which the message batch is/was scheduled to be sent.
     /// </summary>
     public DateTimeOffset Time { get; set; }
 

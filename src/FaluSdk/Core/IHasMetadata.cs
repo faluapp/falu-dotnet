@@ -1,7 +1,7 @@
 ﻿namespace Falu.Core;
 
 /// <summary>
-/// Interface that identifies objects with a Metadata property of type <see cref="Dictionary{TKey, TValue}"/>.
+/// Interface that identifies objects with a <c>Metadata</c> property of type <see cref="Dictionary{TKey, TValue}"/>.
 /// </summary>
 public interface IHasMetadata
 {

@@ -18,7 +18,6 @@ public class MessageCreateRequestSchedule
     /// Between 5 minutes and 30 days.
     /// Required if <see cref="Time"/> is not specified.
     /// </summary>
-    /// <example>PT15M</example>
     public string? Delay { get; set; }
 
     /// <summary>

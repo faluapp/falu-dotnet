@@ -14,12 +14,16 @@ public record TransfersListOptions : BasicListOptionsWithMoney
     /// <summary>Filter options for <see cref="Transfer.Purpose"/> property.</summary>
     public List<string>? Purpose { get; set; }
 
+    /// <summary>Filter options for <see cref="Transfer.Customer"/> property.</summary>
+    public string? Customer { get; set; }
+
     /// <inheritdoc/>
     internal override void Populate(QueryValues values)
     {
         base.Populate(values);
         values.Add("status", Status)
               .Add("type", Type)
-              .Add("purpose", Purpose);
+              .Add("purpose", Purpose)
+              .Add("customer", Customer);
     }
 }

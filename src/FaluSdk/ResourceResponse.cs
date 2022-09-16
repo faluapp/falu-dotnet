@@ -119,7 +119,7 @@ public class ResourceResponse<TResource>
     /// <summary>
     /// Checks if there are more results to retrieve.
     /// The result is null when <typeparamref name="TResource"/> is not assignable from <see cref="IEnumerable"/>.
-    /// Otherwise, true when <see cref="ContinuationToken"/> has a valueor false when it doesnt have a value.
+    /// Otherwise, true when <see cref="ContinuationToken"/> has a value or false when it doesn't have a value.
     /// </summary>
     public bool? HasMoreResults => typeof(IEnumerable).IsAssignableFrom(typeof(TResource)) ? ContinuationToken != null : null;
 

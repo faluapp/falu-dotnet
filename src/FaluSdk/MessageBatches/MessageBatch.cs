@@ -34,7 +34,7 @@ public class MessageBatch : MessageBatchPatchModel, IHasId, IHasCreated, IHasUpd
     /// <summary>
     /// Total number of segments from each message.
     /// </summary>
-    public int Segements { get; set; }
+    public int? Segments { get; set; }
 
     /// <inheritdoc/>
     public DataRedaction? Redaction { get; set; }

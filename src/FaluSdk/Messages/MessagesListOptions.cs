@@ -30,6 +30,12 @@ public record MessagesListOptions : BasicListOptions
     /// </summary>
     public List<string>? Status { get; set; }
 
+    /// <summary>Filter options for <see cref="Message.To"/> property.</summary>
+    public string? To { get; set; }
+
+    /// <summary>Filter options for <see cref="Message.Customer"/> property.</summary>
+    public string? Customer { get; set; }
+
     /// <inheritdoc/>
     internal override void Populate(QueryValues values)
     {
@@ -38,6 +44,8 @@ public record MessagesListOptions : BasicListOptions
               .Add("batch", Batch)
               .Add("status", Status)
               .Add("delivered", QueryValues.FromRange(Delivered))
-              .Add("sent", QueryValues.FromRange(Sent));
+              .Add("sent", QueryValues.FromRange(Sent))
+              .Add("to", To)
+              .Add("customer", Customer);
     }
 }

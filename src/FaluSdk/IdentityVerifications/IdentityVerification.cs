@@ -33,6 +33,11 @@ public class IdentityVerification : IdentityVerificationPatchModel, IHasId, IHas
     public IdentityVerificationOptions? Options { get; set; }
 
     /// <summary>
+    /// Identifier of the Customer this Identity Verification belongs to, if one exists.
+    /// </summary>
+    public string? Customer { get; set; }
+
+    /// <summary>
     /// The short-lived client secret used by front-end libraries to show a verification modal inside your app.
     /// This client secret expires after 24 hours and can only be used once.
     /// Don’t store it, log it, embed it in a URL, or expose it to anyone other than the user.

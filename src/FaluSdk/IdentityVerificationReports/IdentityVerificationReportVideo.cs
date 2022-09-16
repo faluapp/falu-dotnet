@@ -14,7 +14,7 @@ public class IdentityVerificationReportVideo : AbstractIdentityVerificationRepor
     public string? Video { get; set; }
 
     /// <summary>
-    /// Identifier of the file holding the image of the potrait used in this check.
+    /// Identifier of the file holding the image of the portrait used in this check.
     /// </summary>
     public string? Portrait { get; set; }
 }

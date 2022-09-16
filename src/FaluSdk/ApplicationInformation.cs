@@ -18,20 +18,20 @@ public class ApplicationInformation
 
     /// <summary>
     /// Name of your application.
+    /// For example <c>SampleApp</c>
     /// </summary>
-    /// <example>SampleApp</example>
     public string Name { get; }
 
     /// <summary>
     /// Version of your application.
+    /// For example <c>1.0.10</c>
     /// </summary>
-    /// <example>1.0.10</example>
     public string? Version { get; set; }
 
     /// <summary>
-    /// Website/Url for your application.
+    /// Website/URL for your application.
+    /// For example <c>https://example.com</c>
     /// </summary>
-    /// <example>https://example.com</example>
     public string? Url { get; set; }
 
     /// <inheritdoc/>

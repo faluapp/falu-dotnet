@@ -19,14 +19,12 @@ public class IdentityVerificationReportDocument : AbstractIdentityVerificationRe
     /// Three-letter <see href="https://www.iso.org/iso-3166-country-codes.html">ISO country code</see>,
     /// in lowercase, which issued the document.
     /// </summary>
-    /// <example>ken</example>
     public string? Issuer { get; set; }
 
     /// <summary>
     /// Three-letter <see href="https://www.iso.org/iso-3166-country-codes.html">ISO country code</see>,
     /// in lowercase, where the entity issued the document originates from.
     /// </summary>
-    /// <example>ken</example>
     public string? Nationality { get; set; }
 
     /// <summary>

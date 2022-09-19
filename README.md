@@ -124,12 +124,12 @@ public async Task DoSomethingAsync(CancellationToken cancellationToken = default
 All of the service methods accept an optional [idempotency key][idempotency-keys].
 
 ```c#
-var request = new EvaluationCreateModel
+var request = new IdentityVerificationCreateRequest
 {
     // omitted for brevity
 };
 var ro = new RequestOptions { IdempotencyKey = "SOME STRING", };
-await client.Evaluations.CreateAsync(evaluation: request, options: ro);
+await client.IdentityVerifications.CreateAsync(request: request, options: ro);
 ```
 
 ## Identity
@@ -243,29 +243,6 @@ response.EnsureSuccess(); // might throw an exception (FaluException)
 ```
 
 > Your outgoing account for MPESA must be configured in your [Workspace settings][workspace-settings] before you can initiate an outgoing payment to a customer.
-
-## Evaluations
-
-With `FaluClient` you can evaluate the credit worthiness of your customers via financial statements. This is particularly useful for mobile lending. Below is a sample of how to evaluate a user.
-
-```cs
-FaluClient client; // omitted for brevity
-
-var request = new EvaluationCreateModel
-{
-    Currency = "kes",
-    Options = new EvaluationScoringOptions
-    {
-        Scope = "personal", // can also be "business"
-        Statement = new EvaluationScoringOptionsForStatement { },
-    },
-    ReturnUrl = "https://my-app.com/evaluation/waiting/user_123",
-};
-
-// Request evaluation, results shall be relayed via webhooks
-var response = await client.Evaluations.CreateAsync(request);
-response.EnsureSuccess(); // might throw an exception (FaluException)
-```
 
 ## Development
 

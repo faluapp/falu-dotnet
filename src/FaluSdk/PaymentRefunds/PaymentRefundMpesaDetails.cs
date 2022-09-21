@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Falu.PaymentRefunds;
+﻿namespace Falu.PaymentRefunds;
 
 /// <summary>
 /// Represents the details for an MPESA payment refund.
@@ -10,7 +8,6 @@ public class PaymentRefundMpesaDetails
     /// <summary>
     /// The target business short code
     /// </summary>
-    [JsonPropertyName("business_short_code")]
     public string? BusinessShortCode { get; set; }
 
     /// <summary>
@@ -18,7 +15,6 @@ public class PaymentRefundMpesaDetails
     /// Only populated for flows that initiate the transaction instead of MPESA.
     /// The value is only available after the request is sent to MPESA.
     /// </summary>
-    [JsonPropertyName("request_id")]
     public string? RequestId { get; set; }
 
     /// <summary>

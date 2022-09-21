@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Falu.Events;
+﻿namespace Falu.Events;
 
 /// <summary>
 /// Represents details about a request that triggered a webhook event.
@@ -17,6 +15,5 @@ public class WebhookEventRequest
     /// <summary>
     /// The idempotency key transmitted during the request, if any.
     /// </summary>
-    [JsonPropertyName("idempotency_key")]
     public string? IdempotencyKey { get; set; }
 }

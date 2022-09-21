@@ -40,6 +40,7 @@ public class FaluClientOptions
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             AllowTrailingCommas = true,
             ReadCommentHandling = JsonCommentHandling.Skip,
+            PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy(),
         };
 
         return serializerOptions;

@@ -33,9 +33,16 @@ public class IdentityVerificationReportDocument : AbstractIdentityVerificationRe
     public string? Type { get; set; }
 
     /// <summary>
-    /// Sub type for the document
+    /// Type of ID card.
+    /// Only populated if <see cref="Type"/> is <c>id_card</c>.
     /// </summary>
-    public string? SubType { get; set; }
+    public string? IdCardType { get; set; }
+
+    /// <summary>
+    /// Type of passport.
+    /// Only populated if <see cref="Type"/> is <c>passport</c>.
+    /// </summary>
+    public string? PassportType { get; set; }
 
     /// <summary>
     /// Document identification number.

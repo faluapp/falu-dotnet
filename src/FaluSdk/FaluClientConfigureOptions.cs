@@ -5,12 +5,12 @@ namespace Falu;
 internal class FaluClientConfigureOptions<TClientOptions> : IPostConfigureOptions<TClientOptions>, IValidateOptions<TClientOptions>
     where TClientOptions : FaluClientOptions
 {
-    public void PostConfigure(string name, TClientOptions options)
+    public void PostConfigure(string? name, TClientOptions options)
     {
         // intentionally left blank for future use
     }
 
-    public ValidateOptionsResult Validate(string name, TClientOptions options)
+    public ValidateOptionsResult Validate(string? name, TClientOptions options)
     {
         if (string.IsNullOrWhiteSpace(options.ApiKey))
         {

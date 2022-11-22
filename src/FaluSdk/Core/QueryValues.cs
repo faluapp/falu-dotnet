@@ -56,7 +56,7 @@ public sealed class QueryValues : ICollection<KeyValuePair<string, StringValues>
             if (values.TryGetValue(key, out var value2))
             {
                 values.Remove(key);
-                v = value2.Concat(v).ToArray();
+                v = value2.Where(x => x != null).Select(x => x!).Concat(v).ToArray();
             }
             values.Add(key, v);
         }

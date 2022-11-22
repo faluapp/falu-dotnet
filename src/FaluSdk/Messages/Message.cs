@@ -78,7 +78,7 @@ public class Message : MessagePatchModel, IHasId, IHasCreated, IHasUpdated, IHas
     /// <summary>
     /// If present, this property tells you the error encountered when processing the message.
     /// </summary>
-    public MessageError? Error { get; set; }
+    public ObjectError? Error { get; set; }
 
     /// <summary>
     /// Time at which the message was delivered.

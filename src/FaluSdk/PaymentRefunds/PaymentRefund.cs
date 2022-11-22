@@ -57,9 +57,9 @@ public class PaymentRefund : PaymentRefundPatchModel, IHasId, IHasCurrency, IHas
     public PaymentRefundMpesaDetails? Mpesa { get; set; }
 
     /// <summary>
-    /// Details about failure if the reversal is in failed state.
+    /// Details on the payment refund error. Present when in failed state.
     /// </summary>
-    public PaymentRefundFailureDetails? Failure { get; set; }
+    public ObjectError? Error { get; set; }
 
     /// <inheritdoc/>
     public string? Workspace { get; set; }
@@ -69,5 +69,4 @@ public class PaymentRefund : PaymentRefundPatchModel, IHasId, IHasCurrency, IHas
 
     /// <inheritdoc/>
     public string? Etag { get; set; }
-
 }

@@ -1,4 +1,6 @@
-﻿namespace Falu.IdentityVerificationReports;
+﻿using Falu.Core;
+
+namespace Falu.IdentityVerificationReports;
 
 ///
 public abstract class AbstractIdentityVerificationReportCheck
@@ -7,7 +9,7 @@ public abstract class AbstractIdentityVerificationReportCheck
     /// Details on the verification error.
     /// Present when not verified.
     /// </summary>
-    public IdentityVerificationReportError? Error { get; set; }
+    public ObjectError? Error { get; set; }
 
     /// <summary>
     /// Whether the check resulted in a successful verification.

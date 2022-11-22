@@ -57,9 +57,9 @@ public class Transfer : TransferPatchModel, IHasId, IHasCurrency, IHasCreated, I
     public TransferMpesaDetails? Mpesa { get; set; }
 
     /// <summary>
-    /// Details about failure if the transfer is in failed state.
+    /// Details on the transfer error. Present when in failed state.
     /// </summary>
-    public TransferFailureDetails? Failure { get; set; }
+    public ObjectError? Error { get; set; }
 
     /// <summary>
     /// Identifier of the reversal, if transfer has been reversed.

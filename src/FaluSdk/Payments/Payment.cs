@@ -57,9 +57,9 @@ public class Payment : PaymentPatchModel, IHasId, IHasCurrency, IHasCreated, IHa
     public PaymentMpesaDetails? Mpesa { get; set; }
 
     /// <summary>
-    /// Details about failure if the payment is in failed state.
+    /// Details on the payment error. Present when in failed state.
     /// </summary>
-    public PaymentFailureDetails? Failure { get; set; }
+    public ObjectError? Error { get; set; }
 
     /// <summary>
     /// Identifier of the refund, if payment has been refunded.

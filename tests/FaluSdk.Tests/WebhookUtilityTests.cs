@@ -15,7 +15,7 @@ public class WebhookUtilityTests
         $"t=1658299746,sha256={Signature0},sha256={Signature1}",
     };
 
-    // TODO: investiage why these tests fail on GitHub workflows but they work on WSL (Ubuntu 20.04) and on Docker (dotnet/runtime:6.0)
+    // TODO: investigate why these tests fail on GitHub workflows but they work on WSL (Ubuntu 20.04) and on Docker (dotnet/runtime:7.0)
     private static bool IsGithubAction() => Environment.GetEnvironmentVariable("GITHUB_ACTION") != null;
 
     [SkippableFact]

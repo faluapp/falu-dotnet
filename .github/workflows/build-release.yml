@@ -3,14 +3,22 @@ name: Build and Publish
 on:
   push:
     # branches:
-    #   - main
+    # - main
     tags:
-      - '*'
+    - '*'
     paths-ignore:
-      - README.md
-      - LICENSE
-      - CHANGELOG.md
-      - docs/**
+    - README.md
+    - LICENSE
+    - CHANGELOG.md
+    - docs/**
+  pull_request:
+    branches:
+    - main
+    paths-ignore:
+    - README.md
+    - LICENSE
+    - CHANGELOG.md
+    - docs/**
   workflow_dispatch:
     inputs:
       reason:
@@ -24,7 +32,6 @@ jobs:
     env:
       buildConfiguration: 'Release'
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-      RELEASING_SDK: true
 
     steps:
     - name: Checkout
@@ -45,26 +52,12 @@ jobs:
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 7.x
-        source-url: https://api.nuget.org/v3/index.json
-      env:
-        NUGET_AUTH_TOKEN: ${{ secrets.NUGET_API_KEY }}
+        dotnet-version: '7.x'
 
-    - name: Install dependencies
-      run: dotnet restore
-
-    - name: Build
-      run: >
-        dotnet build
-        --configuration $buildConfiguration
-        --no-restore
-
-    - name: Test
+    - name: Build & Test
       run: >
         dotnet test
         --configuration $buildConfiguration
-        --no-build
-        --verbosity normal
         --collect "Code coverage"
 
     - name: Pack
@@ -72,7 +65,6 @@ jobs:
         dotnet pack
         --configuration $buildConfiguration
         --no-build
-        --verbosity Detailed
         --output $GITHUB_WORKSPACE/drop
         -p:PackageVersion=$GITVERSION_NUGETVERSION
 
@@ -82,8 +74,27 @@ jobs:
         path: ${{ github.workspace }}/drop/*
         name: drop
 
+  Publish:
+    runs-on: ubuntu-latest
+    needs: [ Build ]
+    if: startsWith(github.ref, 'refs/tags/')
+
+    steps:
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '7.x'
+        source-url: https://api.nuget.org/v3/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{ secrets.NUGET_API_KEY }}
+
+    - name: Download Artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: drop
+        path: drop
+
     - name: Publish to NuGet.org
-      # if: startsWith(github.ref, 'refs/tags/')
       run: >
         dotnet nuget push "$GITHUB_WORKSPACE/drop/*"
         -k ${{ secrets.NUGET_API_KEY }}

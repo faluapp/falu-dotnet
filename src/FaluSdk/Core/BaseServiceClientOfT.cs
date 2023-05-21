@@ -4,7 +4,7 @@ using Tingle.Extensions.JsonPatch;
 namespace Falu.Core;
 
 ///
-public abstract class BaseServiceClient<TResource> : BaseServiceClient
+public abstract class BaseServiceClient<TResource> : BaseServiceClient where TResource : class
 {
     /// <inheritdoc/>
     public BaseServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options)
@@ -18,6 +18,7 @@ public abstract class BaseServiceClient<TResource> : BaseServiceClient
     protected virtual Task<ResourceResponse<T>> GetResourceAsync<T>(string id,
                                                                     RequestOptions? options = null,
                                                                     CancellationToken cancellationToken = default)
+        where T : class
     {
         var uri = MakeResourcePath(id);
         return RequestAsync<T>(uri, HttpMethod.Get, null, options, cancellationToken);
@@ -49,22 +50,23 @@ public abstract class BaseServiceClient<TResource> : BaseServiceClient
     }
 
     ///
-    protected virtual Task<ResourceResponse<TResource>> CreateResourceAsync(object resource,
-                                                                            RequestOptions? options = null,
-                                                                            CancellationToken cancellationToken = default)
-    {
-        return CreateResourceAsync<TResource>(resource, options, cancellationToken);
-    }
-
-    ///
     protected virtual Task<ResourceResponse<T>> CreateResourceAsync<T>(object resource,
                                                                        RequestOptions? options = null,
                                                                        CancellationToken cancellationToken = default)
+        where T : class
     {
         if (resource is null) throw new ArgumentNullException(nameof(resource));
 
         var uri = MakePath();
         return RequestAsync<T>(uri, HttpMethod.Post, resource, options, cancellationToken);
+    }
+
+    ///
+    protected virtual Task<ResourceResponse<TResource>> CreateResourceAsync(object resource,
+                                                                            RequestOptions? options = null,
+                                                                            CancellationToken cancellationToken = default)
+    {
+        return CreateResourceAsync<TResource>(resource, options, cancellationToken);
     }
 
     ///

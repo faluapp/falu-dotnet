@@ -39,6 +39,7 @@ public abstract class BaseServiceClient // This class exists because not all ser
                                                                                       object o,
                                                                                       RequestOptions? options = null,
                                                                                       CancellationToken cancellationToken = default)
+        where TResource : class
     {
         var content = await MakeJsonHttpContentAsync(o, cancellationToken).ConfigureAwait(false);
         return await RequestAsync<TResource>(uri, method, content, options, cancellationToken).ConfigureAwait(false);
@@ -50,6 +51,7 @@ public abstract class BaseServiceClient // This class exists because not all ser
                                                                                       HttpContent? content = null,
                                                                                       RequestOptions? options = null,
                                                                                       CancellationToken cancellationToken = default)
+        where TResource : class
     {
         var request = new HttpRequestMessage(method, uri);
         if (content is not null)
@@ -64,6 +66,7 @@ public abstract class BaseServiceClient // This class exists because not all ser
     protected virtual async Task<ResourceResponse<TResource>> RequestCoreAsync<TResource>(HttpRequestMessage request,
                                                                                           RequestOptions? options = null,
                                                                                           CancellationToken cancellationToken = default)
+        where TResource : class
     {
         var response = await RequestCoreAsync(request, options, cancellationToken).ConfigureAwait(false);
         var resource = default(TResource);
@@ -140,7 +143,7 @@ public abstract class BaseServiceClient // This class exists because not all ser
         return content;
     }
 
-    private async Task<T?> DeserializeAsync<T>(string? mediaType, Stream stream, CancellationToken cancellationToken)
+    private async Task<T?> DeserializeAsync<T>(string? mediaType, Stream stream, CancellationToken cancellationToken) where T : class
     {
         using (stream)
         {

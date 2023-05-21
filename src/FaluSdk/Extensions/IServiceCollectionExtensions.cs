@@ -51,9 +51,11 @@ public static partial class IServiceCollectionExtensions
     /// <param name="services">The <see cref="IServiceCollection"/> to be added to.</param>
     /// <param name="configure">An <see cref="Action{FaluClientOptions}"/> to configure the client options.</param>
     /// <returns></returns>
-    public static IHttpClientBuilder AddFalu<TClient, TClientOptions>(this IServiceCollection services, Action<TClientOptions>? configure = null)
+    public static IHttpClientBuilder AddFalu<TClient, TClientOptions>(
+        this IServiceCollection services,
+        Action<TClientOptions>? configure = null)
         where TClient : FaluClient<TClientOptions>
-        where TClientOptions : FaluClientOptions
+        where TClientOptions : FaluClientOptions, new()
     {
         /*
          * Binding options from an IConfiguration instance is not used to reduce dependencies and leave that to the caller.

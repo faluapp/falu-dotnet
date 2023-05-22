@@ -160,7 +160,7 @@ public abstract class BaseServiceClient // This class exists because not all ser
 
             return (await JsonSerializer.DeserializeAsync(utf8Json: stream,
                                                           returnType: typeof(T),
-                                                          context: FaluJsonSerializerContext.Default,
+                                                          context: FaluSerializerContext.Default,
                                                           cancellationToken: cancellationToken).ConfigureAwait(false)) as T;
         }
     }
@@ -171,7 +171,7 @@ public abstract class BaseServiceClient // This class exists because not all ser
         await JsonSerializer.SerializeAsync(utf8Json: payload,
                                             value: input,
                                             inputType: typeof(T),
-                                            context: FaluJsonSerializerContext.Default,
+                                            context: FaluSerializerContext.Default,
                                             cancellationToken: cancellationToken).ConfigureAwait(false);
 
         // make the produced payload readable

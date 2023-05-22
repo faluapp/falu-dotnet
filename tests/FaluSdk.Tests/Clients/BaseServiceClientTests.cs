@@ -34,7 +34,7 @@ public class BaseServiceClientTests<TResource> : BaseServiceClientTests where TR
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(
-                    JsonSerializer.Serialize(Data, typeof(TResource), FaluJsonSerializerContext.Default),
+                    JsonSerializer.Serialize(Data, typeof(TResource), FaluSerializerContext.Default),
                     Encoding.UTF8,
                     MediaTypeNames.Application.Json)
             };
@@ -57,7 +57,7 @@ public class BaseServiceClientTests<TResource> : BaseServiceClientTests where TR
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(
-                    JsonSerializer.Serialize(content, typeof(List<TResource>), FaluJsonSerializerContext.Default),
+                    JsonSerializer.Serialize(content, typeof(List<TResource>), FaluSerializerContext.Default),
                     Encoding.UTF8,
                     MediaTypeNames.Application.Json)
             };
@@ -86,7 +86,7 @@ public class BaseServiceClientTests<TResource> : BaseServiceClientTests where TR
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(
-                    JsonSerializer.Serialize(Data, typeof(TResource), FaluJsonSerializerContext.Default),
+                    JsonSerializer.Serialize(Data, typeof(TResource), FaluSerializerContext.Default),
                     Encoding.UTF8,
                     MediaTypeNames.Application.Json)
             };
@@ -109,7 +109,7 @@ public class BaseServiceClientTests<TResource> : BaseServiceClientTests where TR
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(
-                    JsonSerializer.Serialize(Data, typeof(TResource), FaluJsonSerializerContext.Default),
+                    JsonSerializer.Serialize(Data, typeof(TResource), FaluSerializerContext.Default),
                     Encoding.UTF8,
                     MediaTypeNames.Application.Json)
             };

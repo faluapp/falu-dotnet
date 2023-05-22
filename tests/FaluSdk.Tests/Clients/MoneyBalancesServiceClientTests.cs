@@ -37,7 +37,7 @@ public class MoneyBalancesServiceClientTests : BaseServiceClientTests
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(
-                    JsonSerializer.Serialize(data, FaluJsonSerializerContext.Default.MoneyBalances),
+                    JsonSerializer.Serialize(data, FaluSerializerContext.Default.MoneyBalances),
                     Encoding.UTF8,
                     MediaTypeNames.Application.Json)
             };
@@ -65,7 +65,7 @@ public class MoneyBalancesServiceClientTests : BaseServiceClientTests
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(
-                    JsonSerializer.Serialize(data, FaluJsonSerializerContext.Default.MoneyBalances),
+                    JsonSerializer.Serialize(data, FaluSerializerContext.Default.MoneyBalances),
                     Encoding.UTF8,
                     MediaTypeNames.Application.Json)
             };

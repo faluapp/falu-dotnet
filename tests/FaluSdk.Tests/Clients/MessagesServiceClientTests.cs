@@ -126,7 +126,7 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
                     Alias = "cars_list",
                     Model = MessageTemplates.MessageTemplateModel.Create(
                         new Dictionary<string, string[]> { ["registrations"] = new string[] { "123", }, },
-                        FaluJsonSerializerContext.Default.IDictionaryStringStringArray),
+                        FaluSerializerContext.Default.IDictionaryStringStringArray),
                 },
             };
             var response = await client.Messages.CreateAsync(model, options);

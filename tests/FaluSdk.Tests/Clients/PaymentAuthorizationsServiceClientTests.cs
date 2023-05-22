@@ -111,7 +111,7 @@ public class PaymentAuthorizationsServiceClientTests : BaseServiceClientTests<Pa
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(
-                    JsonSerializer.Serialize(Data!, FaluJsonSerializerContext.Default.PaymentAuthorization),
+                    JsonSerializer.Serialize(Data!, FaluSerializerContext.Default.PaymentAuthorization),
                     Encoding.UTF8,
                     MediaTypeNames.Application.Json)
             };
@@ -143,7 +143,7 @@ public class PaymentAuthorizationsServiceClientTests : BaseServiceClientTests<Pa
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(
-                    JsonSerializer.Serialize(Data!, FaluJsonSerializerContext.Default.PaymentAuthorization),
+                    JsonSerializer.Serialize(Data!, FaluSerializerContext.Default.PaymentAuthorization),
                     Encoding.UTF8,
                     MediaTypeNames.Application.Json)
             };

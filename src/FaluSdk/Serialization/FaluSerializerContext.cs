@@ -4,6 +4,9 @@ using Tingle.Extensions.JsonPatch;
 
 namespace Falu.Serialization;
 
+/// <summary>
+/// Provides metadata about types used by Falu that is relevant to JSON serialization.
+/// </summary>
 [JsonSerializable(typeof(FaluError))]
 [JsonSerializable(typeof(List<Tingle.Extensions.JsonPatch.Operations.Operation>))]
 
@@ -116,7 +119,7 @@ namespace Falu.Serialization;
 [JsonSerializable(typeof(Events.CloudEventDataPayload<Transfers.Transfer>))]
 [JsonSerializable(typeof(Events.CloudEventDataPayload<TransferReversals.TransferReversal>))]
 [JsonSerializable(typeof(Events.CloudEventDataPayload<TemporaryKeys.TemporaryKey>))]
-public partial class FaluJsonSerializerContext : JsonSerializerContext
+public partial class FaluSerializerContext : JsonSerializerContext // This is exposed publicly to allow chaining via TypeInfoResolver in various external scenarios
 {
     private static JsonSerializerOptions DefaultSerializerOptions { get; } = new(JsonSerializerDefaults.Web)
     {
@@ -134,5 +137,5 @@ public partial class FaluJsonSerializerContext : JsonSerializerContext
         DictionaryKeyPolicy = null,
     };
 
-    static FaluJsonSerializerContext() => s_defaultContext = new FaluJsonSerializerContext(new JsonSerializerOptions(DefaultSerializerOptions));
+    static FaluSerializerContext() => s_defaultContext = new FaluSerializerContext(new JsonSerializerOptions(DefaultSerializerOptions));
 }

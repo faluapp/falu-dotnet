@@ -159,13 +159,13 @@ public class MessageTemplatesServiceClientTests : BaseServiceClientTests<Message
                 Rendered = "Hi cake! Thanks for being a loyal customer. We appreciate you!",
                 Model = MessageTemplateModel.Create(
                     new Dictionary<string, string> { ["name"] = "cake" },
-                    FaluJsonSerializerContext.Default.DictionaryStringString),
+                    FaluSerializerContext.Default.DictionaryStringString),
             };
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(
-                    JsonSerializer.Serialize(content, FaluJsonSerializerContext.Default.MessageTemplateValidationResponse),
+                    JsonSerializer.Serialize(content, FaluSerializerContext.Default.MessageTemplateValidationResponse),
                     Encoding.UTF8,
                     MediaTypeNames.Application.Json)
             };
@@ -179,7 +179,7 @@ public class MessageTemplatesServiceClientTests : BaseServiceClientTests<Message
             {
                 Model = MessageTemplateModel.Create(
                     new Dictionary<string, string> { ["name"] = "cake" },
-                    FaluJsonSerializerContext.Default.DictionaryStringString),
+                    FaluSerializerContext.Default.DictionaryStringString),
                 Body = Data!.Body
             };
 

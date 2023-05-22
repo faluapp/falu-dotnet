@@ -47,6 +47,8 @@ namespace Falu;
 [JsonSerializable(typeof(MessageTemplates.MessageTemplateValidationResponse))]
 
 [JsonSerializable(typeof(Payments.MoneyBalances))]
+[JsonSerializable(typeof(Payments.MoneyBalancesRefreshRequest))]
+[JsonSerializable(typeof(Payments.MoneyBalancesRefreshResponse))]
 
 [JsonSerializable(typeof(List<Payments.Payment>))]
 [JsonSerializable(typeof(Payments.PaymentCreateRequest))]

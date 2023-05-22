@@ -66,7 +66,8 @@ public class MoneyBalancesServiceClientTests : BaseServiceClientTests
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.MoneyBalances.RefreshAsync(options);
+            var model = new MoneyBalancesRefreshRequest { };
+            var response = await client.MoneyBalances.RefreshAsync(model, options);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
         });

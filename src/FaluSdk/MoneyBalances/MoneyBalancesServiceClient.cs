@@ -27,13 +27,15 @@ public class MoneyBalancesServiceClient : BaseServiceClient<MoneyBalances>
     /// <summary>
     /// Force a balance refresh.
     /// </summary>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<object>> RefreshAsync(RequestOptions? options = null,
-                                                               CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<MoneyBalancesRefreshResponse>> RefreshAsync(MoneyBalancesRefreshRequest request,
+                                                                                     RequestOptions? options = null,
+                                                                                     CancellationToken cancellationToken = default)
     {
         var uri = MakePath("/refresh");
-        return RequestAsync<object>(uri, HttpMethod.Post, new { }, options, cancellationToken);
+        return RequestAsync<MoneyBalancesRefreshResponse>(uri, HttpMethod.Post, request, options, cancellationToken);
     }
 }

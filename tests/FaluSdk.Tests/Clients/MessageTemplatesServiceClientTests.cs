@@ -1,5 +1,6 @@
 ﻿using Falu.Core;
 using Falu.MessageTemplates;
+using Falu.Serialization;
 using System.Net;
 using System.Net.Mime;
 using System.Text;
@@ -155,7 +156,10 @@ public class MessageTemplatesServiceClientTests : BaseServiceClientTests<Message
 
             var content = new MessageTemplateValidationResponse
             {
-                Rendered = "Hi cake! Thanks for being a loyal customer. We appreciate you!"
+                Rendered = "Hi cake! Thanks for being a loyal customer. We appreciate you!",
+                Model = MessageTemplateModel.Create(
+                    new Dictionary<string, string> { ["name"] = "cake" },
+                    FaluJsonSerializerContext.Default.DictionaryStringString),
             };
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -173,7 +177,9 @@ public class MessageTemplatesServiceClientTests : BaseServiceClientTests<Message
         {
             var model = new MessageTemplateValidationRequest
             {
-                Model = MessageTemplateModel.Create(new Dictionary<string, string> { ["name"] = "cake" }, FaluJsonSerializerContext.Default.DictionaryStringString),
+                Model = MessageTemplateModel.Create(
+                    new Dictionary<string, string> { ["name"] = "cake" },
+                    FaluJsonSerializerContext.Default.DictionaryStringString),
                 Body = Data!.Body
             };
 

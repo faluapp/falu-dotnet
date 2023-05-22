@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Nodes;
-
-namespace Falu.Messages;
+﻿namespace Falu.Messages;
 
 /// <summary>
 /// Information about the template to be used to send a message.
@@ -20,10 +18,5 @@ public class MessageCreateRequestTemplate
     /// <summary>
     /// Model applied when rending the template.
     /// </summary>
-    /// <remarks>
-    /// For convenience, use <see cref="MessageTemplates.MessageTemplateModel"/> for example:
-    /// <br/>
-    /// <c>Model = MessageTemplateModel.Create(new { otp = "123" })</c>
-    /// </remarks>
-    public JsonObject? Model { get; set; }
+    public MessageTemplates.MessageTemplateModel? Model { get; set; }
 }

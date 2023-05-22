@@ -1,6 +1,6 @@
 ﻿using CloudNative.CloudEvents.Extensions;
-using Falu;
 using Falu.Events;
+using Falu.Serialization;
 using Falu.Webhooks;
 using System.Text.Json;
 

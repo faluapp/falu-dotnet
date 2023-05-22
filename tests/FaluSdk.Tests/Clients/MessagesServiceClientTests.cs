@@ -1,5 +1,6 @@
 ﻿using Falu.Core;
 using Falu.Messages;
+using Falu.Serialization;
 using System.Net;
 using System.Net.Mime;
 using System.Text;
@@ -123,10 +124,9 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
                 Template = new MessageCreateRequestTemplate
                 {
                     Alias = "cars_list",
-                    Model = MessageTemplates.MessageTemplateModel.Create(new Dictionary<string, string[]>
-                    {
-                        ["registrations"] = new string[] { "123", },
-                    }, FaluJsonSerializerContext.Default.IDictionaryStringStringArray),
+                    Model = MessageTemplates.MessageTemplateModel.Create(
+                        new Dictionary<string, string[]> { ["registrations"] = new string[] { "123", }, },
+                        FaluJsonSerializerContext.Default.IDictionaryStringStringArray),
                 },
             };
             var response = await client.Messages.CreateAsync(model, options);

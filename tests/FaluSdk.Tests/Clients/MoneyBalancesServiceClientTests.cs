@@ -1,5 +1,6 @@
 ﻿using Falu.Core;
 using Falu.Payments;
+using Falu.Serialization;
 using System.Net;
 using System.Net.Mime;
 using System.Text;

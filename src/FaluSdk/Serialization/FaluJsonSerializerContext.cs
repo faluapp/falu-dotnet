@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization;
 using Tingle.Extensions.JsonPatch;
 
-namespace Falu;
+namespace Falu.Serialization;
 
 [JsonSerializable(typeof(FaluError))]
 [JsonSerializable(typeof(List<Tingle.Extensions.JsonPatch.Operations.Operation>))]

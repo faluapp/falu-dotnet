@@ -1,8 +1,9 @@
 ﻿using Falu.IdentityVerificationReports;
+using Falu.Serialization;
 using System.Text.Json;
 using Xunit;
 
-namespace Falu.Tests;
+namespace Falu.Tests.Serialization;
 
 public class JsonSnakeCaseNamingPolicyTests
 {

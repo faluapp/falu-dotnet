@@ -1,5 +1,6 @@
 ﻿using Falu.Core;
 using Falu.MessageStreams;
+using Falu.Serialization;
 using System.Net;
 using System.Net.Mime;
 using System.Text;

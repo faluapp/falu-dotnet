@@ -10,10 +10,11 @@ namespace Falu.MessageTemplates;
 /// <summary>
 /// Helper for creating models used to render message templates when sending messages.
 /// </summary>
-public sealed class MessageTemplateModel
+[JsonConverter(typeof(Serialization.MessageTemplateModelJsonConverter))]
+public struct MessageTemplateModel : IEquatable<MessageTemplateModel>
 {
-    internal const string SerializationUnreferencedCodeMessage = "JSON serialization and deserialization might require types that cannot be statically analyzed. Use the overload that takes a JsonTypeInfo or JsonSerializerContext, or make sure all of the required types are preserved.";
-    internal const string SerializationRequiresDynamicCodeMessage = "JSON serialization and deserialization might require types that cannot be statically analyzed and might need runtime code generation. Use System.Text.Json source generation for native AOT applications.";
+    private const string SerializationUnreferencedCodeMessage = "JSON serialization and deserialization might require types that cannot be statically analyzed. Use the overload that takes a JsonTypeInfo or JsonSerializerContext, or make sure all of the required types are preserved.";
+    private const string SerializationRequiresDynamicCodeMessage = "JSON serialization and deserialization might require types that cannot be statically analyzed and might need runtime code generation. Use System.Text.Json source generation for native AOT applications.";
 
     private readonly JsonObject @object;
 
@@ -22,10 +23,30 @@ public sealed class MessageTemplateModel
     /// <exception cref="ArgumentNullException">
     /// <paramref name="object"/> is <see langword="null"/>.
     /// </exception>
-    private MessageTemplateModel(JsonObject @object)
+    public MessageTemplateModel(JsonObject @object)
     {
         this.@object = @object ?? throw new ArgumentNullException(nameof(@object));
     }
+
+    /// <summary>
+    /// The <see cref="JsonObject"/> instance to be held.
+    /// </summary>
+    public JsonObject Object => @object;
+
+    /// <inheritdoc/>
+    public override bool Equals(object? obj) => obj is MessageTemplateModel model && Equals(model);
+
+    /// <inheritdoc/>
+    public bool Equals(MessageTemplateModel other) => EqualityComparer<JsonObject>.Default.Equals(@object, other.@object);
+
+    /// <inheritdoc/>
+    public override int GetHashCode() => @object.GetHashCode();
+
+    ///
+    public static bool operator ==(MessageTemplateModel left, MessageTemplateModel right) => left.Equals(right);
+
+    ///
+    public static bool operator !=(MessageTemplateModel left, MessageTemplateModel right) => !(left == right);
 
     /// <summary>Convert a <see cref="MessageTemplateModel"/> to a <see cref="JsonObject"/>.</summary>
     /// <param name="model">The <see cref="MessageTemplateModel"/> to convert.</param>
@@ -56,8 +77,8 @@ public sealed class MessageTemplateModel
         if (model is null) throw new ArgumentNullException(nameof(model));
         EnsureAllowedModelType(model);
 
-        var jn = JsonSerializer.SerializeToNode(value: model, options: options);
-        return new MessageTemplateModel(Create(jn));
+        var node = JsonSerializer.SerializeToNode(value: model, options: options);
+        return new MessageTemplateModel(Create(node));
     }
 
     /// <summary>Create a <see cref="MessageTemplateModel"/> from another model object type.</summary>
@@ -79,8 +100,8 @@ public sealed class MessageTemplateModel
         if (model is null) throw new ArgumentNullException(nameof(model));
         EnsureAllowedModelType(model);
 
-        var jn = JsonSerializer.SerializeToNode(value: model, jsonTypeInfo: jsonTypeInfo);
-        return new MessageTemplateModel(Create(jn));
+        var node = JsonSerializer.SerializeToNode(value: model, jsonTypeInfo: jsonTypeInfo);
+        return new MessageTemplateModel(Create(node));
     }
 
     /// <summary>Create a <see cref="MessageTemplateModel"/> from another model object type.</summary>
@@ -111,19 +132,19 @@ public sealed class MessageTemplateModel
         if (model is null) throw new ArgumentNullException(nameof(model));
         EnsureAllowedModelType(model);
 
-        var jn = JsonSerializer.SerializeToNode(value: model, inputType: inputType, context: context);
-        return new MessageTemplateModel(Create(jn));
+        var node = JsonSerializer.SerializeToNode(value: model, inputType: inputType, context: context);
+        return new MessageTemplateModel(Create(node));
     }
 
-    /// <param name="jn"></param>
+    /// <param name="node"></param>
     /// <exception cref="InvalidOperationException">
-    /// <paramref name="jn"/> cannot be serialized into a JSON object.
+    /// <paramref name="node"/> cannot be serialized into a JSON object.
     /// </exception>
-    private static MessageTemplateModel Create(JsonNode? jn)
+    private static MessageTemplateModel Create(JsonNode? node)
     {
-        return jn is not JsonObject jo
+        return node is not JsonObject @object
             ? throw new InvalidOperationException("The model provided must be an array at the root.")
-            : new MessageTemplateModel(jo);
+            : new MessageTemplateModel(@object);
     }
 
     #region Type checking

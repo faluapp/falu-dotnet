@@ -59,13 +59,13 @@ public class IdentityVerificationsServiceClient : BaseServiceClient<IdentityVeri
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual async Task<ResourceResponse<IdentityVerification>> UpdateAsync(string id,
-                                                                                  JsonPatchDocument<IdentityVerificationPatchModel> request,
-                                                                                  RequestOptions? options = null,
-                                                                                  CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<IdentityVerification>> UpdateAsync(string id,
+                                                                            JsonPatchDocument<IdentityVerificationPatchModel> request,
+                                                                            RequestOptions? options = null,
+                                                                            CancellationToken cancellationToken = default)
     {
-        var content = await MakeJsonHttpContentAsync(request, SC.Default.JsonPatchDocumentIdentityVerificationPatchModel, cancellationToken).ConfigureAwait(false);
-        return await UpdateResourceAsync(id, content, options, cancellationToken).ConfigureAwait(false);
+        var content = MakeJsonHttpContent(request, SC.Default.JsonPatchDocumentIdentityVerificationPatchModel);
+        return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 
     /// <summary>
@@ -75,12 +75,12 @@ public class IdentityVerificationsServiceClient : BaseServiceClient<IdentityVeri
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual async Task<ResourceResponse<IdentityVerification>> CreateAsync(IdentityVerificationCreateRequest request,
-                                                                                  RequestOptions? options = null,
-                                                                                  CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<IdentityVerification>> CreateAsync(IdentityVerificationCreateRequest request,
+                                                                            RequestOptions? options = null,
+                                                                            CancellationToken cancellationToken = default)
     {
-        var content = await MakeJsonHttpContentAsync(request, SC.Default.IdentityVerificationCreateRequest, cancellationToken).ConfigureAwait(false);
-        return await CreateResourceAsync(content, options, cancellationToken).ConfigureAwait(false);
+        var content = MakeJsonHttpContent(request, SC.Default.IdentityVerificationCreateRequest);
+        return CreateResourceAsync(content, options, cancellationToken);
     }
 
     /// <summary>Cancel an identity verification preventing further updates.</summary>

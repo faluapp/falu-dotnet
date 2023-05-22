@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Headers;
-using System.Text;
+using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
 using SC = Falu.Serialization.FaluSerializerContext;
@@ -11,7 +11,7 @@ namespace Falu.Core;
 public abstract class BaseServiceClient // This class exists because not all service clients may be based on a resource
 {
     /// <summary>List of supported JSON content types</summary>
-    public static readonly string[] SupportedContentTypes = new[] {
+    public static string[] SupportedContentTypes { get; } = new[] {
         "application/json",
         "text/json",
         "application/json-path+json",
@@ -19,7 +19,7 @@ public abstract class BaseServiceClient // This class exists because not all ser
         "application/problem+json",
     };
 
-    private readonly string JsonContentType = SupportedContentTypes[0];
+    internal static string DefaultJsonContentType { get; } = SupportedContentTypes[0];
 
     ///
     protected BaseServiceClient(HttpClient backChannel, FaluClientOptions options)
@@ -198,7 +198,7 @@ public abstract class BaseServiceClient // This class exists because not all ser
         if (request == null) throw new ArgumentNullException(nameof(request));
 
         request.Headers.Add(HeadersNames.XFaluVersion, FaluClientOptions.ApiVersion);
-        request.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(JsonContentType));
+        request.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(DefaultJsonContentType));
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Options.ApiKey);
 
         options ??= new RequestOptions(); // allows for code below to run
@@ -229,14 +229,12 @@ public abstract class BaseServiceClient // This class exists because not all ser
     }
 
     ///
-    protected async Task<HttpContent> MakeJsonHttpContentAsync<T>(T @object, JsonTypeInfo<T> jsonTypeInfo, CancellationToken cancellationToken = default)
-    {
-        var encoding = Encoding.UTF8;
-        var stream = await SerializeAsync(@object, jsonTypeInfo, cancellationToken).ConfigureAwait(false);
-        var content = new StreamContent(stream);
-        content.Headers.ContentType = new MediaTypeHeaderValue(JsonContentType) { CharSet = encoding.BodyName };
-        return content;
-    }
+    protected static HttpContent MakeJsonHttpContent<T>(T @object, JsonTypeInfo<T> jsonTypeInfo) => FaluJsonContent.Create(@object, jsonTypeInfo);
+
+    ///
+    [RequiresUnreferencedCode(MessageStrings.SerializationUnreferencedCodeMessage)]
+    [RequiresDynamicCode(MessageStrings.SerializationRequiresDynamicCodeMessage)]
+    protected static HttpContent MakeJsonHttpContent<T>(T @object, JsonSerializerOptions? serializerOptions = null) => JsonContent.Create(@object, options: serializerOptions);
 
     private static async Task<T?> DeserializeAsync<T>(string? mediaType, Stream stream, JsonTypeInfo<T> jsonTypeInfo, CancellationToken cancellationToken = default)
     {
@@ -256,31 +254,6 @@ public abstract class BaseServiceClient // This class exists because not all ser
                                                          jsonTypeInfo: jsonTypeInfo,
                                                          cancellationToken: cancellationToken).ConfigureAwait(false);
         }
-    }
-
-    private static async Task<Stream> SerializeAsync<T>(T input, JsonTypeInfo<T> jsonTypeInfo, CancellationToken cancellationToken = default)
-    {
-        var payload = new MemoryStream();
-        await JsonSerializer.SerializeAsync(utf8Json: payload,
-                                            value: input,
-                                            jsonTypeInfo: jsonTypeInfo,
-                                            cancellationToken: cancellationToken).ConfigureAwait(false);
-
-        // make the produced payload readable
-        payload.Position = 0;
-        return payload;
-    }
-
-    ///
-    [RequiresUnreferencedCode(MessageStrings.SerializationUnreferencedCodeMessage)]
-    [RequiresDynamicCode(MessageStrings.SerializationRequiresDynamicCodeMessage)]
-    protected async Task<HttpContent> MakeJsonHttpContentAsync<T>(T @object, JsonSerializerOptions? serializerOptions = null, CancellationToken cancellationToken = default)
-    {
-        var encoding = Encoding.UTF8;
-        var stream = await SerializeAsync(@object, serializerOptions, cancellationToken).ConfigureAwait(false);
-        var content = new StreamContent(stream);
-        content.Headers.ContentType = new MediaTypeHeaderValue(JsonContentType) { CharSet = encoding.BodyName };
-        return content;
     }
 
     ///
@@ -304,22 +277,6 @@ public abstract class BaseServiceClient // This class exists because not all ser
                                                             options: serializerOptions,
                                                             cancellationToken: cancellationToken).ConfigureAwait(false);
         }
-    }
-
-    ///
-    [RequiresUnreferencedCode(MessageStrings.SerializationUnreferencedCodeMessage)]
-    [RequiresDynamicCode(MessageStrings.SerializationRequiresDynamicCodeMessage)]
-    private static async Task<Stream> SerializeAsync<T>(T input, JsonSerializerOptions? serializerOptions = null, CancellationToken cancellationToken = default)
-    {
-        var payload = new MemoryStream();
-        await JsonSerializer.SerializeAsync(utf8Json: payload,
-                                            value: input,
-                                            options: serializerOptions,
-                                            cancellationToken: cancellationToken).ConfigureAwait(false);
-
-        // make the produced payload readable
-        payload.Position = 0;
-        return payload;
     }
 
     #endregion

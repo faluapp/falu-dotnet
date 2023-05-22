@@ -54,12 +54,12 @@ public class MessageSuppressionsServiceClient : BaseServiceClient<MessageSuppres
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual async Task<ResourceResponse<MessageSuppression>> CreateAsync(MessageSuppressionCreateRequest request,
-                                                                                RequestOptions? options = null,
-                                                                                CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<MessageSuppression>> CreateAsync(MessageSuppressionCreateRequest request,
+                                                                          RequestOptions? options = null,
+                                                                          CancellationToken cancellationToken = default)
     {
-        var content = await MakeJsonHttpContentAsync(request, SC.Default.MessageSuppressionCreateRequest, cancellationToken).ConfigureAwait(false);
-        return await CreateResourceAsync(content, options, cancellationToken).ConfigureAwait(false);
+        var content = MakeJsonHttpContent(request, SC.Default.MessageSuppressionCreateRequest);
+        return CreateResourceAsync(content, options, cancellationToken);
     }
 
     /// <summary>

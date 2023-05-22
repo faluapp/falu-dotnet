@@ -56,12 +56,12 @@ public class MessagesServiceClient : BaseServiceClient<Message>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual async Task<ResourceResponse<Message>> CreateAsync(MessageCreateRequest request,
-                                                                     RequestOptions? options = null,
-                                                                     CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<Message>> CreateAsync(MessageCreateRequest request,
+                                                               RequestOptions? options = null,
+                                                               CancellationToken cancellationToken = default)
     {
-        var content = await MakeJsonHttpContentAsync(request, SC.Default.MessageCreateRequest, cancellationToken).ConfigureAwait(false);
-        return await CreateResourceAsync(content, options, cancellationToken).ConfigureAwait(false);
+        var content = MakeJsonHttpContent(request, SC.Default.MessageCreateRequest);
+        return CreateResourceAsync(content, options, cancellationToken);
     }
 
     /// <summary>Update a message.</summary>
@@ -70,13 +70,13 @@ public class MessagesServiceClient : BaseServiceClient<Message>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual async Task<ResourceResponse<Message>> UpdateAsync(string id,
-                                                                     JsonPatchDocument<MessagePatchModel> request,
-                                                                     RequestOptions? options = null,
-                                                                     CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<Message>> UpdateAsync(string id,
+                                                               JsonPatchDocument<MessagePatchModel> request,
+                                                               RequestOptions? options = null,
+                                                               CancellationToken cancellationToken = default)
     {
-        var content = await MakeJsonHttpContentAsync(request, SC.Default.JsonPatchDocumentMessagePatchModel, cancellationToken).ConfigureAwait(false);
-        return await UpdateResourceAsync(id, content, options, cancellationToken).ConfigureAwait(false);
+        var content = MakeJsonHttpContent(request, SC.Default.JsonPatchDocumentMessagePatchModel);
+        return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 
     /// <summary>Cancel a message preventing further updates.</summary>

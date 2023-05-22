@@ -1,5 +1,4 @@
 ﻿using Falu.Core;
-using System.Text.Json.Serialization.Metadata;
 using Sc = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.Events;

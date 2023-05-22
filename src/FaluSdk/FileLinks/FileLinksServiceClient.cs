@@ -54,12 +54,12 @@ public class FileLinksServiceClient : BaseServiceClient<FileLink>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual async Task<ResourceResponse<FileLink>> CreateAsync(FileLinkCreateRequest request,
-                                                                      RequestOptions? options = null,
-                                                                      CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<FileLink>> CreateAsync(FileLinkCreateRequest request,
+                                                                RequestOptions? options = null,
+                                                                CancellationToken cancellationToken = default)
     {
-        var content = await MakeJsonHttpContentAsync(request, SC.Default.FileLinkCreateRequest, cancellationToken).ConfigureAwait(false);
-        return await CreateResourceAsync(content, options, cancellationToken).ConfigureAwait(false);
+        var content = MakeJsonHttpContent(request, SC.Default.FileLinkCreateRequest);
+        return CreateResourceAsync(content, options, cancellationToken);
     }
 
     /// <summary>Update a file link.</summary>
@@ -68,12 +68,12 @@ public class FileLinksServiceClient : BaseServiceClient<FileLink>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual async Task<ResourceResponse<FileLink>> UpdateAsync(string id,
-                                                                      JsonPatchDocument<FileLinkPatchModel> request,
-                                                                      RequestOptions? options = null,
-                                                                      CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<FileLink>> UpdateAsync(string id,
+                                                                JsonPatchDocument<FileLinkPatchModel> request,
+                                                                RequestOptions? options = null,
+                                                                CancellationToken cancellationToken = default)
     {
-        var content = await MakeJsonHttpContentAsync(request, SC.Default.JsonPatchDocumentFileLinkPatchModel, cancellationToken).ConfigureAwait(false);
-        return await UpdateResourceAsync(id, content, options, cancellationToken).ConfigureAwait(false);
+        var content = MakeJsonHttpContent(request, SC.Default.JsonPatchDocumentFileLinkPatchModel);
+        return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 }

@@ -56,12 +56,12 @@ public class PaymentsServiceClient : BaseServiceClient<Payment>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual async Task<ResourceResponse<Payment>> CreateAsync(PaymentCreateRequest request,
-                                                                     RequestOptions? options = null,
-                                                                     CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<Payment>> CreateAsync(PaymentCreateRequest request,
+                                                               RequestOptions? options = null,
+                                                               CancellationToken cancellationToken = default)
     {
-        var content = await MakeJsonHttpContentAsync(request, SC.Default.PaymentCreateRequest, cancellationToken).ConfigureAwait(false);
-        return await CreateResourceAsync(content, options, cancellationToken).ConfigureAwait(false);
+        var content = MakeJsonHttpContent(request, SC.Default.PaymentCreateRequest);
+        return CreateResourceAsync(content, options, cancellationToken);
     }
 
     /// <summary>
@@ -72,12 +72,12 @@ public class PaymentsServiceClient : BaseServiceClient<Payment>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual async Task<ResourceResponse<Payment>> UpdateAsync(string id,
-                                                                     JsonPatchDocument<PaymentPatchModel> request,
-                                                                     RequestOptions? options = null,
-                                                                     CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<Payment>> UpdateAsync(string id,
+                                                               JsonPatchDocument<PaymentPatchModel> request,
+                                                               RequestOptions? options = null,
+                                                               CancellationToken cancellationToken = default)
     {
-        var content = await MakeJsonHttpContentAsync(request, SC.Default.JsonPatchDocumentPaymentPatchModel, cancellationToken).ConfigureAwait(false);
-        return await UpdateResourceAsync(id, content, options, cancellationToken).ConfigureAwait(false);
+        var content = MakeJsonHttpContent(request, SC.Default.JsonPatchDocumentPaymentPatchModel);
+        return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 }

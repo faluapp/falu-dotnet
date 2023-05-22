@@ -57,12 +57,12 @@ public class MessageBatchesServiceClient : BaseServiceClient<MessageBatch>,
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     /// <remarks>You can send up to 1,000 messages in one API request.</remarks>
-    public virtual async Task<ResourceResponse<MessageBatch>> CreateAsync(MessageBatchCreateRequest request,
-                                                                          RequestOptions? options = null,
-                                                                          CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<MessageBatch>> CreateAsync(MessageBatchCreateRequest request,
+                                                                    RequestOptions? options = null,
+                                                                    CancellationToken cancellationToken = default)
     {
-        var content = await MakeJsonHttpContentAsync(request, SC.Default.MessageBatchCreateRequest, cancellationToken).ConfigureAwait(false);
-        return await CreateResourceAsync(content, options, cancellationToken).ConfigureAwait(false);
+        var content = MakeJsonHttpContent(request, SC.Default.MessageBatchCreateRequest);
+        return CreateResourceAsync(content, options, cancellationToken);
     }
 
     /// <summary>Update a message batch.</summary>
@@ -71,13 +71,13 @@ public class MessageBatchesServiceClient : BaseServiceClient<MessageBatch>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual async Task<ResourceResponse<MessageBatch>> UpdateAsync(string id,
-                                                                          JsonPatchDocument<MessageBatchPatchModel> request,
-                                                                          RequestOptions? options = null,
-                                                                          CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<MessageBatch>> UpdateAsync(string id,
+                                                                    JsonPatchDocument<MessageBatchPatchModel> request,
+                                                                    RequestOptions? options = null,
+                                                                    CancellationToken cancellationToken = default)
     {
-        var content = await MakeJsonHttpContentAsync(request, SC.Default.JsonPatchDocumentMessageBatchPatchModel, cancellationToken).ConfigureAwait(false);
-        return await UpdateResourceAsync(id, content, options, cancellationToken).ConfigureAwait(false);
+        var content = MakeJsonHttpContent(request, SC.Default.JsonPatchDocumentMessageBatchPatchModel);
+        return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 
     /// <summary>

@@ -19,12 +19,12 @@ public class TemporaryKeysServiceClient : BaseServiceClient<TemporaryKey>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual async Task<ResourceResponse<TemporaryKey>> CreateAsync(TemporaryKeyCreateRequest request,
-                                                                          RequestOptions? options = null,
-                                                                          CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<TemporaryKey>> CreateAsync(TemporaryKeyCreateRequest request,
+                                                                    RequestOptions? options = null,
+                                                                    CancellationToken cancellationToken = default)
     {
-        var content = await MakeJsonHttpContentAsync(request, SC.Default.TemporaryKeyCreateRequest, cancellationToken).ConfigureAwait(false);
-        return await CreateResourceAsync(content, options, cancellationToken).ConfigureAwait(false);
+        var content = MakeJsonHttpContent(request, SC.Default.TemporaryKeyCreateRequest);
+        return CreateResourceAsync(content, options, cancellationToken);
     }
 
     /// <summary>

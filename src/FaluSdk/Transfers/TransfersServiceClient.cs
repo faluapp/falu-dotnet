@@ -56,12 +56,12 @@ public class TransfersServiceClient : BaseServiceClient<Transfer>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual async Task<ResourceResponse<Transfer>> CreateAsync(TransferCreateRequest request,
-                                                                      RequestOptions? options = null,
-                                                                      CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<Transfer>> CreateAsync(TransferCreateRequest request,
+                                                                RequestOptions? options = null,
+                                                                CancellationToken cancellationToken = default)
     {
-        var content = await MakeJsonHttpContentAsync(request, SC.Default.TransferCreateRequest, cancellationToken).ConfigureAwait(false);
-        return await CreateResourceAsync(content, options, cancellationToken).ConfigureAwait(false);
+        var content = MakeJsonHttpContent(request, SC.Default.TransferCreateRequest);
+        return CreateResourceAsync(content, options, cancellationToken);
     }
 
     /// <summary>
@@ -72,12 +72,12 @@ public class TransfersServiceClient : BaseServiceClient<Transfer>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual async Task<ResourceResponse<Transfer>> UpdateAsync(string id,
-                                                                      JsonPatchDocument<TransferPatchModel> request,
-                                                                      RequestOptions? options = null,
-                                                                      CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<Transfer>> UpdateAsync(string id,
+                                                                JsonPatchDocument<TransferPatchModel> request,
+                                                                RequestOptions? options = null,
+                                                                CancellationToken cancellationToken = default)
     {
-        var content = await MakeJsonHttpContentAsync(request, SC.Default.JsonPatchDocumentTransferPatchModel, cancellationToken).ConfigureAwait(false);
-        return await UpdateResourceAsync(id, content, options, cancellationToken).ConfigureAwait(false);
+        var content = MakeJsonHttpContent(request, SC.Default.JsonPatchDocumentTransferPatchModel);
+        return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 }

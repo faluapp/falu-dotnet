@@ -56,12 +56,12 @@ public class MessageTemplatesServiceClient : BaseServiceClient<MessageTemplate>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual async Task<ResourceResponse<MessageTemplate>> CreateAsync(MessageTemplateCreateRequest request,
-                                                                             RequestOptions? options = null,
-                                                                             CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<MessageTemplate>> CreateAsync(MessageTemplateCreateRequest request,
+                                                                       RequestOptions? options = null,
+                                                                       CancellationToken cancellationToken = default)
     {
-        var content = await MakeJsonHttpContentAsync(request, SC.Default.MessageTemplateCreateRequest, cancellationToken).ConfigureAwait(false);
-        return await CreateResourceAsync(content, options, cancellationToken).ConfigureAwait(false);
+        var content = MakeJsonHttpContent(request, SC.Default.MessageTemplateCreateRequest);
+        return CreateResourceAsync(content, options, cancellationToken);
     }
 
     /// <summary>
@@ -72,13 +72,13 @@ public class MessageTemplatesServiceClient : BaseServiceClient<MessageTemplate>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual async Task<ResourceResponse<MessageTemplate>> UpdateAsync(string id,
-                                                                             JsonPatchDocument<MessageTemplatePatchModel> request,
-                                                                             RequestOptions? options = null,
-                                                                             CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<MessageTemplate>> UpdateAsync(string id,
+                                                                       JsonPatchDocument<MessageTemplatePatchModel> request,
+                                                                       RequestOptions? options = null,
+                                                                       CancellationToken cancellationToken = default)
     {
-        var content = await MakeJsonHttpContentAsync(request, SC.Default.JsonPatchDocumentMessageTemplatePatchModel, cancellationToken).ConfigureAwait(false);
-        return await UpdateResourceAsync(id, content, options, cancellationToken).ConfigureAwait(false);
+        var content = MakeJsonHttpContent(request, SC.Default.JsonPatchDocumentMessageTemplatePatchModel);
+        return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 
     /// <summary>
@@ -102,12 +102,12 @@ public class MessageTemplatesServiceClient : BaseServiceClient<MessageTemplate>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual async Task<ResourceResponse<MessageTemplateValidationResponse>> ValidateAsync(MessageTemplateValidationRequest request,
-                                                                                                 RequestOptions? options = null,
-                                                                                                 CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<MessageTemplateValidationResponse>> ValidateAsync(MessageTemplateValidationRequest request,
+                                                                                           RequestOptions? options = null,
+                                                                                           CancellationToken cancellationToken = default)
     {
         var uri = MakePath("/validate");
-        var content = await MakeJsonHttpContentAsync(request, SC.Default.MessageTemplateValidationRequest, cancellationToken).ConfigureAwait(false);
-        return await RequestAsync(uri, HttpMethod.Post, SC.Default.MessageTemplateValidationResponse, content, options, cancellationToken).ConfigureAwait(false);
+        var content = MakeJsonHttpContent(request, SC.Default.MessageTemplateValidationRequest);
+        return RequestAsync(uri, HttpMethod.Post, SC.Default.MessageTemplateValidationResponse, content, options, cancellationToken);
     }
 }

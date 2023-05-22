@@ -32,12 +32,12 @@ public class MoneyBalancesServiceClient : BaseServiceClient<MoneyBalances>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual async Task<ResourceResponse<MoneyBalancesRefreshResponse>> RefreshAsync(MoneyBalancesRefreshRequest request,
-                                                                                           RequestOptions? options = null,
-                                                                                           CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<MoneyBalancesRefreshResponse>> RefreshAsync(MoneyBalancesRefreshRequest request,
+                                                                                     RequestOptions? options = null,
+                                                                                     CancellationToken cancellationToken = default)
     {
         var uri = MakePath("/refresh");
-        var content = await MakeJsonHttpContentAsync(request, SC.Default.MoneyBalancesRefreshRequest, cancellationToken).ConfigureAwait(false);
-        return await RequestAsync(uri, HttpMethod.Post, SC.Default.MoneyBalancesRefreshResponse, content, options, cancellationToken).ConfigureAwait(false);
+        var content = MakeJsonHttpContent(request, SC.Default.MoneyBalancesRefreshRequest);
+        return RequestAsync(uri, HttpMethod.Post, SC.Default.MoneyBalancesRefreshResponse, content, options, cancellationToken);
     }
 }

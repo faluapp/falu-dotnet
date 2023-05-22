@@ -56,12 +56,12 @@ public class WebhooksServiceClient : BaseServiceClient<WebhookEndpoint>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual async Task<ResourceResponse<WebhookEndpoint>> CreateAsync(WebhookEndpointCreateRequest request,
-                                                                             RequestOptions? options = null,
-                                                                             CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<WebhookEndpoint>> CreateAsync(WebhookEndpointCreateRequest request,
+                                                                       RequestOptions? options = null,
+                                                                       CancellationToken cancellationToken = default)
     {
-        var content = await MakeJsonHttpContentAsync(request, SC.Default.WebhookEndpointCreateRequest, cancellationToken).ConfigureAwait(false);
-        return await CreateResourceAsync(content, options, cancellationToken).ConfigureAwait(false);
+        var content = MakeJsonHttpContent(request, SC.Default.WebhookEndpointCreateRequest);
+        return CreateResourceAsync(content, options, cancellationToken);
     }
 
     /// <summary>
@@ -72,13 +72,13 @@ public class WebhooksServiceClient : BaseServiceClient<WebhookEndpoint>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual async Task<ResourceResponse<WebhookEndpoint>> UpdateAsync(string id,
-                                                                             JsonPatchDocument<WebhookEndpointPatchModel> request,
-                                                                             RequestOptions? options = null,
-                                                                             CancellationToken cancellationToken = default)
+    public virtual Task<ResourceResponse<WebhookEndpoint>> UpdateAsync(string id,
+                                                                       JsonPatchDocument<WebhookEndpointPatchModel> request,
+                                                                       RequestOptions? options = null,
+                                                                       CancellationToken cancellationToken = default)
     {
-        var content = await MakeJsonHttpContentAsync(request, SC.Default.JsonPatchDocumentWebhookEndpointPatchModel, cancellationToken).ConfigureAwait(false);
-        return await UpdateResourceAsync(id, content, options, cancellationToken).ConfigureAwait(false);
+        var content = MakeJsonHttpContent(request, SC.Default.JsonPatchDocumentWebhookEndpointPatchModel);
+        return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 
     /// <summary>

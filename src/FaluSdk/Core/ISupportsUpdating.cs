@@ -1,9 +1,10 @@
-﻿using Tingle.Extensions.JsonPatch;
+﻿using System.Diagnostics.CodeAnalysis;
+using Tingle.Extensions.JsonPatch;
 
 namespace Falu.Core;
 
 ///
-public interface ISupportsUpdating<TResource, TResourcePatchModel>
+public interface ISupportsUpdating<TResource, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] TResourcePatchModel>
     where TResource : IHasId, TResourcePatchModel
     where TResourcePatchModel : class
 {

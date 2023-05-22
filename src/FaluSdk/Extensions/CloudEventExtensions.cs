@@ -46,8 +46,7 @@ public static class CloudEventExtensions
                 : throw new InvalidOperationException($"The '{nameof(@event)}.{nameof(@event.Type)}' value must start with 'io.falu.'");
         }
 
-        var payload = JsonSerializer.Deserialize(je.GetRawText(), typeof(CloudEventDataPayload<T>), FaluJsonSerializerContext.Default) as CloudEventDataPayload<T>;
-        if (payload is null)
+        if (JsonSerializer.Deserialize(je.GetRawText(), typeof(CloudEventDataPayload<T>), FaluJsonSerializerContext.Default) is not CloudEventDataPayload<T> payload)
         {
             throw new InvalidOperationException("JSON deserialization resulted in null");
         }

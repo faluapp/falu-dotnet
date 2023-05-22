@@ -66,12 +66,4 @@ public static class CloudEventExtensions
             Live = @event.GetLiveMode() ?? false,
         };
     }
-
-    internal class CloudEventDataPayload<TObject> : WebhookEventData<TObject>
-    {
-        /// <summary>
-        /// Information on the API request that instigated the event.
-        /// </summary>
-        public WebhookEventRequest? Request { get; set; }
-    }
 }

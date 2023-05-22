@@ -12,6 +12,10 @@ public class EventsServiceClientTests : BaseServiceClientTests<WebhookEvent>
         Id = "evt_123",
         Created = DateTimeOffset.UtcNow,
         Type = Webhooks.EventTypes.TransferSucceeded,
+        Request = new WebhookEventRequest
+        {
+            IdempotencyKey = "my-key", // this is set to ensure snake_case works
+        },
     }, "/v1/events")
     { }
 
@@ -27,6 +31,7 @@ public class EventsServiceClientTests : BaseServiceClientTests<WebhookEvent>
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
             Assert.Equal(Data!.Id, response.Resource!.Id);
+            Assert.Equal(Data!.Request!.IdempotencyKey, response.Resource!.Request!.IdempotencyKey);
         });
     }
 
@@ -55,6 +60,7 @@ public class EventsServiceClientTests : BaseServiceClientTests<WebhookEvent>
             var ev = response!.Resource!.Single();
 
             Assert.Equal(Data!.Id, ev.Id);
+            Assert.Equal(Data!.Request!.IdempotencyKey, ev.Request!.IdempotencyKey);
         });
     }
 

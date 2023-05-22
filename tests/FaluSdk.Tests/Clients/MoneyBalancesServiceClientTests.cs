@@ -35,7 +35,10 @@ public class MoneyBalancesServiceClientTests : BaseServiceClientTests
 
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, MediaTypeNames.Application.Json)
+                Content = new StringContent(
+                    JsonSerializer.Serialize(data, FaluJsonSerializerContext.Default.MoneyBalances),
+                    Encoding.UTF8,
+                    MediaTypeNames.Application.Json)
             };
         });
 
@@ -60,7 +63,10 @@ public class MoneyBalancesServiceClientTests : BaseServiceClientTests
 
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, MediaTypeNames.Application.Json)
+                Content = new StringContent(
+                    JsonSerializer.Serialize(data, FaluJsonSerializerContext.Default.MoneyBalances),
+                    Encoding.UTF8,
+                    MediaTypeNames.Application.Json)
             };
         });
 

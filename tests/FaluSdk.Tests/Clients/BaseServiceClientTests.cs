@@ -32,7 +32,10 @@ public class BaseServiceClientTests<TResource> : BaseServiceClientTests where TR
 
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonSerializer.Serialize(Data), Encoding.UTF8, MediaTypeNames.Application.Json)
+                Content = new StringContent(
+                    JsonSerializer.Serialize(Data, typeof(TResource), FaluJsonSerializerContext.Default),
+                    Encoding.UTF8,
+                    MediaTypeNames.Application.Json)
             };
         });
 
@@ -52,7 +55,10 @@ public class BaseServiceClientTests<TResource> : BaseServiceClientTests where TR
             var content = new List<TResource> { Data };
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonSerializer.Serialize(content), Encoding.UTF8, MediaTypeNames.Application.Json)
+                Content = new StringContent(
+                    JsonSerializer.Serialize(content, typeof(List<TResource>), FaluJsonSerializerContext.Default),
+                    Encoding.UTF8,
+                    MediaTypeNames.Application.Json)
             };
 
             if (hasContinuationToken.GetValueOrDefault())
@@ -78,7 +84,10 @@ public class BaseServiceClientTests<TResource> : BaseServiceClientTests where TR
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonSerializer.Serialize(Data), Encoding.UTF8, MediaTypeNames.Application.Json)
+                Content = new StringContent(
+                    JsonSerializer.Serialize(Data, typeof(TResource), FaluJsonSerializerContext.Default),
+                    Encoding.UTF8,
+                    MediaTypeNames.Application.Json)
             };
 
             return response;
@@ -98,7 +107,10 @@ public class BaseServiceClientTests<TResource> : BaseServiceClientTests where TR
 
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonSerializer.Serialize(Data), Encoding.UTF8, MediaTypeNames.Application.Json)
+                Content = new StringContent(
+                    JsonSerializer.Serialize(Data, typeof(TResource), FaluJsonSerializerContext.Default),
+                    Encoding.UTF8,
+                    MediaTypeNames.Application.Json)
             };
         });
 

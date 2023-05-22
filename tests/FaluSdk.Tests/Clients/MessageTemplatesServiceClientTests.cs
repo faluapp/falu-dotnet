@@ -160,7 +160,10 @@ public class MessageTemplatesServiceClientTests : BaseServiceClientTests<Message
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonSerializer.Serialize(content), Encoding.UTF8, MediaTypeNames.Application.Json)
+                Content = new StringContent(
+                    JsonSerializer.Serialize(content, FaluJsonSerializerContext.Default.MessageTemplateValidationResponse),
+                    Encoding.UTF8,
+                    MediaTypeNames.Application.Json)
             };
 
             return response;

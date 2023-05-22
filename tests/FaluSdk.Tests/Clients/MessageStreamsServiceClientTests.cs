@@ -121,7 +121,10 @@ public class MessageStreamsServiceClientTests : BaseServiceClientTests<MessageSt
 
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonSerializer.Serialize(Data!), Encoding.UTF8, MediaTypeNames.Application.Json)
+                Content = new StringContent(
+                    JsonSerializer.Serialize(Data!, FaluJsonSerializerContext.Default.MessageStream),
+                    Encoding.UTF8,
+                    MediaTypeNames.Application.Json)
             };
         });
 
@@ -148,7 +151,10 @@ public class MessageStreamsServiceClientTests : BaseServiceClientTests<MessageSt
 
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonSerializer.Serialize(Data!), Encoding.UTF8, MediaTypeNames.Application.Json)
+                Content = new StringContent(
+                    JsonSerializer.Serialize(Data!, FaluJsonSerializerContext.Default.MessageStream),
+                    Encoding.UTF8,
+                    MediaTypeNames.Application.Json)
             };
         });
 

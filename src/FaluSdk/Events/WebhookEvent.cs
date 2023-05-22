@@ -1,4 +1,5 @@
 ﻿using Falu.Core;
+using System.Text.Json.Nodes;
 
 namespace Falu.Events;
 
@@ -45,4 +46,4 @@ public class WebhookEvent<TObject> : IHasId, IHasCreated, IHasUpdated, IHasRedac
 /// <summary>
 /// Represents a Falu Webhook Event for any object.
 /// </summary>
-public class WebhookEvent : WebhookEvent<object> { }
+public class WebhookEvent : WebhookEvent<JsonObject> { } // using JsonObject instead of object makes it better for the source generator

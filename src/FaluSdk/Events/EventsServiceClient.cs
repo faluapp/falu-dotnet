@@ -56,7 +56,7 @@ public class EventsServiceClient : BaseServiceClient<WebhookEvent>,
                                                                              CancellationToken cancellationToken = default)
     {
         var jsonTypeInfo = Sc.Default.GetRequriedTypeInfo<List<WebhookEvent<T>>>();
-        return ListResourcesRecursivelyAsync<WebhookEvent<T>>(jsonTypeInfo, options, requestOptions, cancellationToken);
+        return ListResourcesRecursivelyAsync(jsonTypeInfo, options, requestOptions, cancellationToken);
     }
 
     /// <summary>

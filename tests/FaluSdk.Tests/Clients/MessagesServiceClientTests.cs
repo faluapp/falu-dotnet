@@ -111,6 +111,33 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
 
     [Theory]
     [MemberData(nameof(RequestOptionsData))]
+    public async Task CreateAsync_WithTemplate_Works(RequestOptions options)
+    {
+        var handler = CreateAsync_Handler(options);
+
+        await TestAsync(handler, async (client) =>
+        {
+            var model = new MessageCreateRequest
+            {
+                To = Data!.To!,
+                Template = new MessageCreateRequestTemplate
+                {
+                    Alias = "cars_list",
+                    Model = MessageTemplates.MessageTemplateModel.Create(new Dictionary<string, string[]>
+                    {
+                        ["registrations"] = new string[] { "123", },
+                    }, FaluJsonSerializerContext.Default.IDictionaryStringStringArray),
+                },
+            };
+            var response = await client.Messages.CreateAsync(model, options);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(response.Resource);
+        });
+    }
+
+    [Theory]
+    [MemberData(nameof(RequestOptionsData))]
     public async Task UpdateAsync_Works(RequestOptions options)
     {
         var handler = UpdateAsync_Handler(options);

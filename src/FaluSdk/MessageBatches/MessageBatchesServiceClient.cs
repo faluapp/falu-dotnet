@@ -60,9 +60,6 @@ public class MessageBatchesServiceClient : BaseServiceClient<MessageBatch>,
                                                                     RequestOptions? options = null,
                                                                     CancellationToken cancellationToken = default)
     {
-        if (request is null) throw new ArgumentNullException(nameof(request));
-        request.Messages?.ForEach(m => m.Template?.Model?.GetType().EnsureAllowedForMessageTemplateModel());
-
         return CreateResourceAsync<MessageBatch>(request, options, cancellationToken);
     }
 

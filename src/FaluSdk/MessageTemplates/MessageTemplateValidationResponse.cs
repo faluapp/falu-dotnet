@@ -1,4 +1,6 @@
-﻿namespace Falu.MessageTemplates;
+﻿using System.Text.Json.Nodes;
+
+namespace Falu.MessageTemplates;
 
 /// <summary>
 /// Response for validating a template
@@ -11,7 +13,7 @@ public class MessageTemplateValidationResponse
     /// If a <see cref="MessageTemplateValidationRequest.Model"/> was submitted, it will be merged
     /// and returned with this model.
     /// </summary>
-    public object? Model { get; set; }
+    public JsonObject? Model { get; set; }
 
     /// <summary>
     /// Using the <see cref="Model"/> the text content that

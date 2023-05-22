@@ -9,12 +9,12 @@ public abstract class BaseServiceClient // This class exists because not all ser
 {
     /// <summary>List of supported JSON content types</summary>
     public static readonly string[] SupportedContentTypes = new[] {
-            "application/json",
-            "text/json",
-            "application/json-path+json",
-            "application/*+json",
-            "application/problem+json",
-        };
+        "application/json",
+        "text/json",
+        "application/json-path+json",
+        "application/*+json",
+        "application/problem+json",
+    };
 
     private readonly string JsonContentType = SupportedContentTypes[0];
 

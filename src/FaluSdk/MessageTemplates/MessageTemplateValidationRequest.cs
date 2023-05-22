@@ -1,4 +1,6 @@
-﻿namespace Falu.MessageTemplates;
+﻿using System.Text.Json.Nodes;
+
+namespace Falu.MessageTemplates;
 
 /// <summary>
 /// Model for requesting template validation
@@ -14,5 +16,10 @@ public class MessageTemplateValidationRequest
     /// <summary>
     /// The template model to be used when rendering test content.
     /// </summary>
-    public object? Model { get; set; }
+    /// <remarks>
+    /// For convenience, use <see cref="MessageTemplateModel"/> for example:
+    /// <br/>
+    /// <c>Model = MessageTemplateModel.Create(new { otp = "123" })</c>
+    /// </remarks>
+    public JsonObject? Model { get; set; }
 }

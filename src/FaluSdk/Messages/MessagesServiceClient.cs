@@ -59,9 +59,6 @@ public class MessagesServiceClient : BaseServiceClient<Message>,
                                                                RequestOptions? options = null,
                                                                CancellationToken cancellationToken = default)
     {
-        if (message is null) throw new ArgumentNullException(nameof(message));
-        message.Template?.Model?.GetType().EnsureAllowedForMessageTemplateModel();
-
         return CreateResourceAsync<Message>(message, options, cancellationToken);
     }
 

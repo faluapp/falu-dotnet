@@ -103,9 +103,6 @@ public class MessageTemplatesServiceClient : BaseServiceClient<MessageTemplate>,
                                                                                            RequestOptions? options = null,
                                                                                            CancellationToken cancellationToken = default)
     {
-        if (template is null) throw new ArgumentNullException(nameof(template));
-        template.Model?.GetType().EnsureAllowedForMessageTemplateModel();
-
         var uri = MakePath("/validate");
         return RequestAsync<MessageTemplateValidationResponse>(uri, HttpMethod.Post, template, options, cancellationToken);
     }

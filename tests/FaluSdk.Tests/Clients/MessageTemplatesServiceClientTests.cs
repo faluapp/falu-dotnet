@@ -173,7 +173,7 @@ public class MessageTemplatesServiceClientTests : BaseServiceClientTests<Message
         {
             var model = new MessageTemplateValidationRequest
             {
-                Model = new Dictionary<string, string> { ["name"] = "cake" },
+                Model = MessageTemplateModel.Create(new Dictionary<string, string> { ["name"] = "cake" }, FaluJsonSerializerContext.Default.DictionaryStringString),
                 Body = Data!.Body
             };
 

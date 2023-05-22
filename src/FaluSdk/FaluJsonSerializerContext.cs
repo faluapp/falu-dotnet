@@ -1,46 +1,48 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using Tingle.Extensions.JsonPatch;
 
 namespace Falu;
 
 [JsonSerializable(typeof(FaluError))]
+[JsonSerializable(typeof(List<Tingle.Extensions.JsonPatch.Operations.Operation>))]
 
 [JsonSerializable(typeof(List<Customers.Customer>))]
 [JsonSerializable(typeof(Customers.CustomerCreateRequest))]
-[JsonSerializable(typeof(Customers.CustomerPatchModel))]
+[JsonSerializable(typeof(JsonPatchDocument<Customers.CustomerPatchModel>))]
 
 [JsonSerializable(typeof(List<Files.File>))]
 [JsonSerializable(typeof(Files.FileCreateRequest))]
 
 [JsonSerializable(typeof(List<FileLinks.FileLink>))]
 [JsonSerializable(typeof(FileLinks.FileLinkCreateRequest))]
-[JsonSerializable(typeof(FileLinks.FileLinkPatchModel))]
+[JsonSerializable(typeof(JsonPatchDocument<FileLinks.FileLinkPatchModel>))]
 
 [JsonSerializable(typeof(List<IdentityVerifications.IdentityVerification>))]
 [JsonSerializable(typeof(IdentityVerifications.IdentityVerificationCreateRequest))]
-[JsonSerializable(typeof(IdentityVerifications.IdentityVerificationPatchModel))]
+[JsonSerializable(typeof(JsonPatchDocument<IdentityVerifications.IdentityVerificationPatchModel>))]
 
 [JsonSerializable(typeof(List<IdentityVerificationReports.IdentityVerificationReport>))]
 
 [JsonSerializable(typeof(List<Messages.Message>))]
 [JsonSerializable(typeof(Messages.MessageCreateRequest))]
-[JsonSerializable(typeof(Messages.MessagePatchModel))]
+[JsonSerializable(typeof(JsonPatchDocument<Messages.MessagePatchModel>))]
 
 [JsonSerializable(typeof(List<MessageBatches.MessageBatch>))]
 [JsonSerializable(typeof(MessageBatches.MessageBatchCreateRequest))]
-[JsonSerializable(typeof(MessageBatches.MessageBatchPatchModel))]
+[JsonSerializable(typeof(JsonPatchDocument<MessageBatches.MessageBatchPatchModel>))]
 [JsonSerializable(typeof(MessageBatches.MessageBatchStatus))]
 
 [JsonSerializable(typeof(List<MessageStreams.MessageStream>))]
 [JsonSerializable(typeof(MessageStreams.MessageStreamCreateRequest))]
-[JsonSerializable(typeof(MessageStreams.MessageStreamPatchModel))]
+[JsonSerializable(typeof(JsonPatchDocument<MessageStreams.MessageStreamPatchModel>))]
 
 [JsonSerializable(typeof(List<MessageSuppressions.MessageSuppression>))]
 [JsonSerializable(typeof(MessageSuppressions.MessageSuppressionCreateRequest))]
 
 [JsonSerializable(typeof(List<MessageTemplates.MessageTemplate>))]
 [JsonSerializable(typeof(MessageTemplates.MessageTemplateCreateRequest))]
-[JsonSerializable(typeof(MessageTemplates.MessageTemplatePatchModel))]
+[JsonSerializable(typeof(JsonPatchDocument<MessageTemplates.MessageTemplatePatchModel>))]
 [JsonSerializable(typeof(MessageTemplates.MessageTemplateValidationRequest))]
 [JsonSerializable(typeof(MessageTemplates.MessageTemplateValidationResponse))]
 
@@ -48,31 +50,31 @@ namespace Falu;
 
 [JsonSerializable(typeof(List<Payments.Payment>))]
 [JsonSerializable(typeof(Payments.PaymentCreateRequest))]
-[JsonSerializable(typeof(Payments.PaymentPatchModel))]
+[JsonSerializable(typeof(JsonPatchDocument<Payments.PaymentPatchModel>))]
 
 [JsonSerializable(typeof(List<PaymentAuthorizations.PaymentAuthorization>))]
 [JsonSerializable(typeof(PaymentAuthorizations.PaymentAuthorizationApproveOptions))]
 [JsonSerializable(typeof(PaymentAuthorizations.PaymentAuthorizationDeclineOptions))]
-[JsonSerializable(typeof(PaymentAuthorizations.PaymentAuthorizationPatchModel))]
+[JsonSerializable(typeof(JsonPatchDocument<PaymentAuthorizations.PaymentAuthorizationPatchModel>))]
 
 [JsonSerializable(typeof(List<PaymentRefunds.PaymentRefund>))]
 [JsonSerializable(typeof(PaymentRefunds.PaymentRefundCreateRequest))]
-[JsonSerializable(typeof(PaymentRefunds.PaymentRefundPatchModel))]
+[JsonSerializable(typeof(JsonPatchDocument<PaymentRefunds.PaymentRefundPatchModel>))]
 
 [JsonSerializable(typeof(List<Transfers.Transfer>))]
 [JsonSerializable(typeof(Transfers.TransferCreateRequest))]
-[JsonSerializable(typeof(Transfers.TransferPatchModel))]
+[JsonSerializable(typeof(JsonPatchDocument<Transfers.TransferPatchModel>))]
 
 [JsonSerializable(typeof(List<TransferReversals.TransferReversal>))]
 [JsonSerializable(typeof(TransferReversals.TransferReversalCreateRequest))]
-[JsonSerializable(typeof(TransferReversals.TransferReversalPatchModel))]
+[JsonSerializable(typeof(JsonPatchDocument<TransferReversals.TransferReversalPatchModel>))]
 
 [JsonSerializable(typeof(TemporaryKeys.TemporaryKey))]
 [JsonSerializable(typeof(TemporaryKeys.TemporaryKeyCreateRequest))]
 
 [JsonSerializable(typeof(List<Webhooks.WebhookEndpoint>))]
 [JsonSerializable(typeof(Webhooks.WebhookEndpointCreateRequest))]
-[JsonSerializable(typeof(Webhooks.WebhookEndpointPatchModel))]
+[JsonSerializable(typeof(JsonPatchDocument<Webhooks.WebhookEndpointPatchModel>))]
 
 [JsonSerializable(typeof(List<Events.WebhookEvent>))]
 [JsonSerializable(typeof(List<Events.WebhookEvent<Customers.Customer>>))]
@@ -110,7 +112,7 @@ namespace Falu;
 [JsonSerializable(typeof(CloudNative.CloudEvents.CloudEventExtensions.CloudEventDataPayload<Transfers.Transfer>))]
 [JsonSerializable(typeof(CloudNative.CloudEvents.CloudEventExtensions.CloudEventDataPayload<TransferReversals.TransferReversal>))]
 [JsonSerializable(typeof(CloudNative.CloudEvents.CloudEventExtensions.CloudEventDataPayload<TemporaryKeys.TemporaryKey>))]
-internal partial class FaluJsonSerializerContext: JsonSerializerContext
+internal partial class FaluJsonSerializerContext : JsonSerializerContext
 {
     private static JsonSerializerOptions DefaultSerializerOptions { get; } = new(JsonSerializerDefaults.Web)
     {

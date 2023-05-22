@@ -1,5 +1,6 @@
 ﻿using Falu.Core;
 using Tingle.Extensions.JsonPatch;
+using SC = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.MessageTemplates;
 
@@ -55,27 +56,29 @@ public class MessageTemplatesServiceClient : BaseServiceClient<MessageTemplate>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<MessageTemplate>> CreateAsync(MessageTemplateCreateRequest request,
-                                                                       RequestOptions? options = null,
-                                                                       CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<MessageTemplate>> CreateAsync(MessageTemplateCreateRequest request,
+                                                                             RequestOptions? options = null,
+                                                                             CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync(request, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.MessageTemplateCreateRequest, cancellationToken).ConfigureAwait(false);
+        return await CreateResourceAsync(content, options, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
     /// Update a message template.
     /// </summary>
     /// <param name="id">Unique identifier for the message template</param>
-    /// <param name="patch"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<MessageTemplate>> UpdateAsync(string id,
-                                                                       JsonPatchDocument<MessageTemplatePatchModel> patch,
-                                                                       RequestOptions? options = null,
-                                                                       CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<MessageTemplate>> UpdateAsync(string id,
+                                                                             JsonPatchDocument<MessageTemplatePatchModel> request,
+                                                                             RequestOptions? options = null,
+                                                                             CancellationToken cancellationToken = default)
     {
-        return UpdateResourceAsync(id, patch, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.JsonPatchDocumentMessageTemplatePatchModel, cancellationToken).ConfigureAwait(false);
+        return await UpdateResourceAsync(id, content, options, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -89,21 +92,22 @@ public class MessageTemplatesServiceClient : BaseServiceClient<MessageTemplate>,
                                                               RequestOptions? options = null,
                                                               CancellationToken cancellationToken = default)
     {
-        return DeleteResourceAsync(id, options, cancellationToken);
+        return DeleteResourceAsync(id, null, options, cancellationToken);
     }
 
     /// <summary>
     /// Validate a message template.
     /// </summary>
-    /// <param name="template"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<MessageTemplateValidationResponse>> ValidateAsync(MessageTemplateValidationRequest template,
-                                                                                           RequestOptions? options = null,
-                                                                                           CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<MessageTemplateValidationResponse>> ValidateAsync(MessageTemplateValidationRequest request,
+                                                                                                 RequestOptions? options = null,
+                                                                                                 CancellationToken cancellationToken = default)
     {
         var uri = MakePath("/validate");
-        return RequestAsync<MessageTemplateValidationResponse>(uri, HttpMethod.Post, template, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.MessageTemplateValidationRequest, cancellationToken).ConfigureAwait(false);
+        return await RequestAsync(uri, HttpMethod.Post, SC.Default.MessageTemplateValidationResponse, content, options, cancellationToken).ConfigureAwait(false);
     }
 }

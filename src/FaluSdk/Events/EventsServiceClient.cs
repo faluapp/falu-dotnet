@@ -1,4 +1,6 @@
 ﻿using Falu.Core;
+using System.Text.Json.Serialization.Metadata;
+using Sc = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.Events;
 
@@ -25,7 +27,9 @@ public class EventsServiceClient : BaseServiceClient<WebhookEvent>,
                                                                               CancellationToken cancellationToken = default)
         where T : class
     {
-        return ListResourcesAsync<WebhookEvent<T>>(options, requestOptions, cancellationToken);
+        var uri = MakePathWithQuery(null, options);
+        var jsonTypeInfo = Sc.Default.GetRequriedTypeInfo<List<WebhookEvent<T>>>();
+        return RequestAsync(uri, HttpMethod.Get, jsonTypeInfo, null, requestOptions, cancellationToken);
     }
 
     /// <summary>Retrieve events.</summary>
@@ -52,7 +56,8 @@ public class EventsServiceClient : BaseServiceClient<WebhookEvent>,
                                                                              RequestOptions? requestOptions = null,
                                                                              CancellationToken cancellationToken = default)
     {
-        return ListResourcesRecursivelyAsync<WebhookEvent<T>>(options, requestOptions, cancellationToken);
+        var jsonTypeInfo = Sc.Default.GetRequriedTypeInfo<List<WebhookEvent<T>>>();
+        return ListResourcesRecursivelyAsync<WebhookEvent<T>>(jsonTypeInfo, options, requestOptions, cancellationToken);
     }
 
     /// <summary>
@@ -67,7 +72,9 @@ public class EventsServiceClient : BaseServiceClient<WebhookEvent>,
                                                                        CancellationToken cancellationToken = default)
         where T : class
     {
-        return GetResourceAsync<WebhookEvent<T>>(id, options, cancellationToken);
+        var uri = MakeResourcePath(id);
+        var jsonTypeInfo = Sc.Default.GetRequriedTypeInfo<WebhookEvent<T>>();
+        return RequestAsync(uri, HttpMethod.Get, jsonTypeInfo, null, options, cancellationToken);
     }
 
     /// <summary>
@@ -81,6 +88,7 @@ public class EventsServiceClient : BaseServiceClient<WebhookEvent>,
                                                                  RequestOptions? options = null,
                                                                  CancellationToken cancellationToken = default)
     {
-        return GetResourceAsync(id, options, cancellationToken);
+        var uri = MakeResourcePath(id);
+        return RequestResourceAsync(uri, HttpMethod.Get, null, options, cancellationToken);
     }
 }

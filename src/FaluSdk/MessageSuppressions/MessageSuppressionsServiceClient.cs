@@ -1,4 +1,5 @@
 ﻿using Falu.Core;
+using SC = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.MessageSuppressions;
 
@@ -53,11 +54,12 @@ public class MessageSuppressionsServiceClient : BaseServiceClient<MessageSuppres
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<MessageSuppression>> CreateAsync(MessageSuppressionCreateRequest request,
-                                                                          RequestOptions? options = null,
-                                                                          CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<MessageSuppression>> CreateAsync(MessageSuppressionCreateRequest request,
+                                                                                RequestOptions? options = null,
+                                                                                CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync(request, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.MessageSuppressionCreateRequest, cancellationToken).ConfigureAwait(false);
+        return await CreateResourceAsync(content, options, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -71,6 +73,6 @@ public class MessageSuppressionsServiceClient : BaseServiceClient<MessageSuppres
                                                               RequestOptions? options = null,
                                                               CancellationToken cancellationToken = default)
     {
-        return DeleteResourceAsync(id, options, cancellationToken);
+        return DeleteResourceAsync(id, null, options, cancellationToken);
     }
 }

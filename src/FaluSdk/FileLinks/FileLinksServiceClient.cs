@@ -1,5 +1,6 @@
 ﻿using Falu.Core;
 using Tingle.Extensions.JsonPatch;
+using SC = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.FileLinks;
 
@@ -53,24 +54,26 @@ public class FileLinksServiceClient : BaseServiceClient<FileLink>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<FileLink>> CreateAsync(FileLinkCreateRequest request,
-                                                                RequestOptions? options = null,
-                                                                CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<FileLink>> CreateAsync(FileLinkCreateRequest request,
+                                                                      RequestOptions? options = null,
+                                                                      CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync(request, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.FileLinkCreateRequest, cancellationToken).ConfigureAwait(false);
+        return await CreateResourceAsync(content, options, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>Update a file link.</summary>
     /// <param name="id">Unique identifier for the file.</param>
-    /// <param name="patch"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<FileLink>> UpdateAsync(string id,
-                                                                JsonPatchDocument<FileLinkPatchModel> patch,
-                                                                RequestOptions? options = null,
-                                                                CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<FileLink>> UpdateAsync(string id,
+                                                                      JsonPatchDocument<FileLinkPatchModel> request,
+                                                                      RequestOptions? options = null,
+                                                                      CancellationToken cancellationToken = default)
     {
-        return UpdateResourceAsync(id, patch, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.JsonPatchDocumentFileLinkPatchModel, cancellationToken).ConfigureAwait(false);
+        return await UpdateResourceAsync(id, content, options, cancellationToken).ConfigureAwait(false);
     }
 }

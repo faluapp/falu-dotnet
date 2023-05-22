@@ -11,7 +11,7 @@ namespace CloudNative.CloudEvents;
 /// </summary>
 public static class CloudEventExtensions
 {
-    private readonly static System.Text.RegularExpressions.Regex TypeFormat = new("^io.falu.(.*)$");
+    private static readonly System.Text.RegularExpressions.Regex TypeFormat = new("^io.falu.(.*)$");
 
     /// <summary>
     /// Convert a <see cref="CloudEvent"/> to a <see cref="WebhookEvent{TObject}"/> object.

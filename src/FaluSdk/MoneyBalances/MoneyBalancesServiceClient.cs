@@ -1,4 +1,5 @@
 ﻿using Falu.Core;
+using SC = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.Payments;
 
@@ -21,7 +22,7 @@ public class MoneyBalancesServiceClient : BaseServiceClient<MoneyBalances>
                                                                   CancellationToken cancellationToken = default)
     {
         var uri = MakePath();
-        return RequestAsync<MoneyBalances>(uri, HttpMethod.Get, null, options, cancellationToken);
+        return RequestResourceAsync(uri, HttpMethod.Get, null, options, cancellationToken);
     }
 
     /// <summary>
@@ -31,11 +32,12 @@ public class MoneyBalancesServiceClient : BaseServiceClient<MoneyBalances>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<MoneyBalancesRefreshResponse>> RefreshAsync(MoneyBalancesRefreshRequest request,
-                                                                                     RequestOptions? options = null,
-                                                                                     CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<MoneyBalancesRefreshResponse>> RefreshAsync(MoneyBalancesRefreshRequest request,
+                                                                                           RequestOptions? options = null,
+                                                                                           CancellationToken cancellationToken = default)
     {
         var uri = MakePath("/refresh");
-        return RequestAsync<MoneyBalancesRefreshResponse>(uri, HttpMethod.Post, request, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.MoneyBalancesRefreshRequest, cancellationToken).ConfigureAwait(false);
+        return await RequestAsync(uri, HttpMethod.Post, SC.Default.MoneyBalancesRefreshResponse, content, options, cancellationToken).ConfigureAwait(false);
     }
 }

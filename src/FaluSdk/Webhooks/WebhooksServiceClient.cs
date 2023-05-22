@@ -1,5 +1,6 @@
 ﻿using Falu.Core;
 using Tingle.Extensions.JsonPatch;
+using SC = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.Webhooks;
 
@@ -55,27 +56,29 @@ public class WebhooksServiceClient : BaseServiceClient<WebhookEndpoint>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<WebhookEndpoint>> CreateAsync(WebhookEndpointCreateRequest request,
-                                                                       RequestOptions? options = null,
-                                                                       CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<WebhookEndpoint>> CreateAsync(WebhookEndpointCreateRequest request,
+                                                                             RequestOptions? options = null,
+                                                                             CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync(request, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.WebhookEndpointCreateRequest, cancellationToken).ConfigureAwait(false);
+        return await CreateResourceAsync(content, options, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
     /// Update a webhook endpoint.
     /// </summary>
     /// <param name="id">Unique identifier for the webhook endpoint</param>
-    /// <param name="patch"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<WebhookEndpoint>> UpdateAsync(string id,
-                                                                       JsonPatchDocument<WebhookEndpointPatchModel> patch,
-                                                                       RequestOptions? options = null,
-                                                                       CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<WebhookEndpoint>> UpdateAsync(string id,
+                                                                             JsonPatchDocument<WebhookEndpointPatchModel> request,
+                                                                             RequestOptions? options = null,
+                                                                             CancellationToken cancellationToken = default)
     {
-        return UpdateResourceAsync(id, patch, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.JsonPatchDocumentWebhookEndpointPatchModel, cancellationToken).ConfigureAwait(false);
+        return await UpdateResourceAsync(id, content, options, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -89,6 +92,6 @@ public class WebhooksServiceClient : BaseServiceClient<WebhookEndpoint>,
                                                               RequestOptions? options = null,
                                                               CancellationToken cancellationToken = default)
     {
-        return DeleteResourceAsync(id, options, cancellationToken);
+        return DeleteResourceAsync(id, null, options, cancellationToken);
     }
 }

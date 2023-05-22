@@ -1,5 +1,6 @@
 ﻿using Falu.Core;
 using Tingle.Extensions.JsonPatch;
+using SC = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.IdentityVerifications;
 
@@ -54,16 +55,17 @@ public class IdentityVerificationsServiceClient : BaseServiceClient<IdentityVeri
     /// Update an identity verification.
     /// </summary>
     /// <param name="id">Unique identifier for the identity verification.</param>
-    /// <param name="patch"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<IdentityVerification>> UpdateAsync(string id,
-                                                                            JsonPatchDocument<IdentityVerificationPatchModel> patch,
-                                                                            RequestOptions? options = null,
-                                                                            CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<IdentityVerification>> UpdateAsync(string id,
+                                                                                  JsonPatchDocument<IdentityVerificationPatchModel> request,
+                                                                                  RequestOptions? options = null,
+                                                                                  CancellationToken cancellationToken = default)
     {
-        return UpdateResourceAsync(id, patch, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.JsonPatchDocumentIdentityVerificationPatchModel, cancellationToken).ConfigureAwait(false);
+        return await UpdateResourceAsync(id, content, options, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -73,11 +75,12 @@ public class IdentityVerificationsServiceClient : BaseServiceClient<IdentityVeri
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<IdentityVerification>> CreateAsync(IdentityVerificationCreateRequest request,
-                                                                            RequestOptions? options = null,
-                                                                            CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<IdentityVerification>> CreateAsync(IdentityVerificationCreateRequest request,
+                                                                                  RequestOptions? options = null,
+                                                                                  CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync(request, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.IdentityVerificationCreateRequest, cancellationToken).ConfigureAwait(false);
+        return await CreateResourceAsync(content, options, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>Cancel an identity verification preventing further updates.</summary>
@@ -89,7 +92,7 @@ public class IdentityVerificationsServiceClient : BaseServiceClient<IdentityVeri
                                                                     RequestOptions? options = null,
                                                                     CancellationToken cancellationToken = default)
     {
-        return CancelResourceAsync(id, options, cancellationToken);
+        return CancelResourceAsync(id, null, options, cancellationToken);
     }
 
     /// <summary>Redact an identity verification to remove all collected information from Falu.</summary>
@@ -101,6 +104,6 @@ public class IdentityVerificationsServiceClient : BaseServiceClient<IdentityVeri
                                                                     RequestOptions? options = null,
                                                                     CancellationToken cancellationToken = default)
     {
-        return RedactResourceAsync(id, options, cancellationToken);
+        return RedactResourceAsync(id, null, options, cancellationToken);
     }
 }

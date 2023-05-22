@@ -1,4 +1,5 @@
 ﻿using Falu.Core;
+using SC = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.TemporaryKeys;
 
@@ -18,11 +19,12 @@ public class TemporaryKeysServiceClient : BaseServiceClient<TemporaryKey>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<TemporaryKey>> CreateAsync(TemporaryKeyCreateRequest request,
-                                                                    RequestOptions? options = null,
-                                                                    CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<TemporaryKey>> CreateAsync(TemporaryKeyCreateRequest request,
+                                                                          RequestOptions? options = null,
+                                                                          CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync(request, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.TemporaryKeyCreateRequest, cancellationToken).ConfigureAwait(false);
+        return await CreateResourceAsync(content, options, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -36,6 +38,6 @@ public class TemporaryKeysServiceClient : BaseServiceClient<TemporaryKey>
                                                               RequestOptions? options = null,
                                                               CancellationToken cancellationToken = default)
     {
-        return DeleteResourceAsync(id, options, cancellationToken);
+        return DeleteResourceAsync(id, null, options, cancellationToken);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Falu.Core;
 using Tingle.Extensions.JsonPatch;
+using SC = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.MessageBatches;
 
@@ -56,25 +57,27 @@ public class MessageBatchesServiceClient : BaseServiceClient<MessageBatch>,
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     /// <remarks>You can send up to 1,000 messages in one API request.</remarks>
-    public virtual Task<ResourceResponse<MessageBatch>> CreateAsync(MessageBatchCreateRequest request,
-                                                                    RequestOptions? options = null,
-                                                                    CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<MessageBatch>> CreateAsync(MessageBatchCreateRequest request,
+                                                                          RequestOptions? options = null,
+                                                                          CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync<MessageBatch>(request, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.MessageBatchCreateRequest, cancellationToken).ConfigureAwait(false);
+        return await CreateResourceAsync(content, options, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>Update a message batch.</summary>
     /// <param name="id">Unique identifier for the message batch.</param>
-    /// <param name="patch"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<MessageBatch>> UpdateAsync(string id,
-                                                                    JsonPatchDocument<MessageBatchPatchModel> patch,
-                                                                    RequestOptions? options = null,
-                                                                    CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<MessageBatch>> UpdateAsync(string id,
+                                                                          JsonPatchDocument<MessageBatchPatchModel> request,
+                                                                          RequestOptions? options = null,
+                                                                          CancellationToken cancellationToken = default)
     {
-        return UpdateResourceAsync(id, patch, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.JsonPatchDocumentMessageBatchPatchModel, cancellationToken).ConfigureAwait(false);
+        return await UpdateResourceAsync(id, content, options, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -89,7 +92,7 @@ public class MessageBatchesServiceClient : BaseServiceClient<MessageBatch>,
                                                                           CancellationToken cancellationToken = default)
     {
         var uri = $"{MakeResourcePath(id)}/status";
-        return RequestAsync<MessageBatchStatus>(uri, HttpMethod.Get, null, options, cancellationToken);
+        return RequestAsync(uri, HttpMethod.Get, SC.Default.MessageBatchStatus, null, options, cancellationToken);
     }
 
     /// <summary>Cancel a message batch preventing further updates.</summary>
@@ -101,7 +104,7 @@ public class MessageBatchesServiceClient : BaseServiceClient<MessageBatch>,
                                                             RequestOptions? options = null,
                                                             CancellationToken cancellationToken = default)
     {
-        return CancelResourceAsync(id, options, cancellationToken);
+        return CancelResourceAsync(id, null, options, cancellationToken);
     }
 
     /// <summary>Redact a message batch to remove all collected information from Falu.</summary>
@@ -113,6 +116,6 @@ public class MessageBatchesServiceClient : BaseServiceClient<MessageBatch>,
                                                             RequestOptions? options = null,
                                                             CancellationToken cancellationToken = default)
     {
-        return RedactResourceAsync(id, options, cancellationToken);
+        return RedactResourceAsync(id, null, options, cancellationToken);
     }
 }

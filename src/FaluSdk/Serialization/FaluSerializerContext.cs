@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 using Tingle.Extensions.JsonPatch;
 
 namespace Falu.Serialization;
@@ -39,8 +40,8 @@ namespace Falu.Serialization;
 [JsonSerializable(typeof(List<MessageStreams.MessageStream>))]
 [JsonSerializable(typeof(MessageStreams.MessageStreamCreateRequest))]
 [JsonSerializable(typeof(JsonPatchDocument<MessageStreams.MessageStreamPatchModel>))]
-[JsonSerializable(typeof(List<MessageStreams.MessageStreamArchiveRequest>))]
-[JsonSerializable(typeof(List<MessageStreams.MessageStreamUnarchiveRequest>))]
+[JsonSerializable(typeof(MessageStreams.MessageStreamArchiveRequest))]
+[JsonSerializable(typeof(MessageStreams.MessageStreamUnarchiveRequest))]
 
 [JsonSerializable(typeof(List<MessageSuppressions.MessageSuppression>))]
 [JsonSerializable(typeof(MessageSuppressions.MessageSuppressionCreateRequest))]
@@ -138,4 +139,17 @@ public partial class FaluSerializerContext : JsonSerializerContext // This is ex
     };
 
     static FaluSerializerContext() => s_defaultContext = new FaluSerializerContext(new JsonSerializerOptions(DefaultSerializerOptions));
+
+    internal JsonTypeInfo<T> GetTypeInfo<T>() => (JsonTypeInfo<T>)GetTypeInfo(typeof(T));
+    internal JsonTypeInfo<T> GetRequriedTypeInfo<T>()
+    {
+        var ti = GetTypeInfo<T>();
+        if (ti is null)
+        {
+            throw new InvalidOperationException(
+                $"'{typeof(T).FullName}' was not found in '{typeof(FaluSerializerContext).FullName}'." +
+                $" You can either create an issue to have it added or use an overload that takes JsonTypeInfo<T> from your own JsonSerialzierContext.");
+        }
+        return ti;
+    }
 }

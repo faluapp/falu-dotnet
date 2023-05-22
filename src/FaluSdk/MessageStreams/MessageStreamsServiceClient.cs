@@ -1,5 +1,6 @@
 ﻿using Falu.Core;
 using Tingle.Extensions.JsonPatch;
+using SC = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.MessageStreams;
 
@@ -55,27 +56,29 @@ public class MessageStreamsServiceClient : BaseServiceClient<MessageStream>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<MessageStream>> CreateAsync(MessageStreamCreateRequest request,
-                                                                     RequestOptions? options = null,
-                                                                     CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<MessageStream>> CreateAsync(MessageStreamCreateRequest request,
+                                                                           RequestOptions? options = null,
+                                                                           CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync(request, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.MessageStreamCreateRequest, cancellationToken).ConfigureAwait(false);
+        return await CreateResourceAsync(content, options, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
     /// Update a message stream.
     /// </summary>
     /// <param name="id">Unique identifier for the message stream</param>
-    /// <param name="patch"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<MessageStream>> UpdateAsync(string id,
-                                                                     JsonPatchDocument<MessageStreamPatchModel> patch,
-                                                                     RequestOptions? options = null,
-                                                                     CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<MessageStream>> UpdateAsync(string id,
+                                                                           JsonPatchDocument<MessageStreamPatchModel> request,
+                                                                           RequestOptions? options = null,
+                                                                           CancellationToken cancellationToken = default)
     {
-        return UpdateResourceAsync(id, patch, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.JsonPatchDocumentMessageStreamPatchModel, cancellationToken).ConfigureAwait(false);
+        return await UpdateResourceAsync(id, content, options, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -89,7 +92,7 @@ public class MessageStreamsServiceClient : BaseServiceClient<MessageStream>,
                                                               RequestOptions? options = null,
                                                               CancellationToken cancellationToken = default)
     {
-        return DeleteResourceAsync(id, options, cancellationToken);
+        return DeleteResourceAsync(id, null, options, cancellationToken);
     }
 
 
@@ -101,13 +104,14 @@ public class MessageStreamsServiceClient : BaseServiceClient<MessageStream>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<MessageStream>> ArchiveAsync(string id,
-                                                                      MessageStreamArchiveRequest request,
-                                                                      RequestOptions? options = null,
-                                                                      CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<MessageStream>> ArchiveAsync(string id,
+                                                                            MessageStreamArchiveRequest request,
+                                                                            RequestOptions? options = null,
+                                                                            CancellationToken cancellationToken = default)
     {
         var uri = $"{MakeResourcePath(id)}/archive";
-        return RequestAsync<MessageStream>(uri, HttpMethod.Post, request, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.MessageStreamArchiveRequest, cancellationToken).ConfigureAwait(false);
+        return await RequestAsync(uri, HttpMethod.Post, SC.Default.MessageStream, content, options, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -118,12 +122,13 @@ public class MessageStreamsServiceClient : BaseServiceClient<MessageStream>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<MessageStream>> UnarchiveAsync(string id,
-                                                                        MessageStreamUnarchiveRequest request,
-                                                                        RequestOptions? options = null,
-                                                                        CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<MessageStream>> UnarchiveAsync(string id,
+                                                                              MessageStreamUnarchiveRequest request,
+                                                                              RequestOptions? options = null,
+                                                                              CancellationToken cancellationToken = default)
     {
         var uri = $"{MakeResourcePath(id)}/unarchive";
-        return RequestAsync<MessageStream>(uri, HttpMethod.Post, request, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.MessageStreamUnarchiveRequest, cancellationToken).ConfigureAwait(false);
+        return await RequestAsync(uri, HttpMethod.Post, SC.Default.MessageStream, content, options, cancellationToken).ConfigureAwait(false);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Falu.Core;
 using Tingle.Extensions.JsonPatch;
+using SC = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.Customers;
 
@@ -55,27 +56,29 @@ public class CustomersServiceClient : BaseServiceClient<Customer>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<Customer>> CreateAsync(CustomerCreateRequest request,
-                                                                RequestOptions? options = null,
-                                                                CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<Customer>> CreateAsync(CustomerCreateRequest request,
+                                                                      RequestOptions? options = null,
+                                                                      CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync(request, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.CustomerCreateRequest, cancellationToken).ConfigureAwait(false);
+        return await CreateResourceAsync(content, options, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
     /// Update a customer.
     /// </summary>
     /// <param name="id">Unique identifier for the customer</param>
-    /// <param name="patch"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<Customer>> UpdateAsync(string id,
-                                                                JsonPatchDocument<CustomerPatchModel> patch,
-                                                                RequestOptions? options = null,
-                                                                CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<Customer>> UpdateAsync(string id,
+                                                                      JsonPatchDocument<CustomerPatchModel> request,
+                                                                      RequestOptions? options = null,
+                                                                      CancellationToken cancellationToken = default)
     {
-        return UpdateResourceAsync(id, patch, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.JsonPatchDocumentCustomerPatchModel, cancellationToken).ConfigureAwait(false);
+        return await UpdateResourceAsync(id, content, options, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -89,6 +92,6 @@ public class CustomersServiceClient : BaseServiceClient<Customer>,
                                                               RequestOptions? options = null,
                                                               CancellationToken cancellationToken = default)
     {
-        return DeleteResourceAsync(id, options, cancellationToken);
+        return DeleteResourceAsync(id, null, options, cancellationToken);
     }
 }

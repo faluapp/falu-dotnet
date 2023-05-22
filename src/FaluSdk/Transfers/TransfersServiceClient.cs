@@ -1,5 +1,6 @@
 ﻿using Falu.Core;
 using Tingle.Extensions.JsonPatch;
+using SC = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.Transfers;
 
@@ -55,26 +56,28 @@ public class TransfersServiceClient : BaseServiceClient<Transfer>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<Transfer>> CreateAsync(TransferCreateRequest request,
-                                                                RequestOptions? options = null,
-                                                                CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<Transfer>> CreateAsync(TransferCreateRequest request,
+                                                                      RequestOptions? options = null,
+                                                                      CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync(request, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.TransferCreateRequest, cancellationToken).ConfigureAwait(false);
+        return await CreateResourceAsync(content, options, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
     /// Update a transfer.
     /// </summary>
     /// <param name="id">Unique identifier for the transfer</param>
-    /// <param name="patch"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<Transfer>> UpdateAsync(string id,
-                                                                JsonPatchDocument<TransferPatchModel> patch,
-                                                                RequestOptions? options = null,
-                                                                CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<Transfer>> UpdateAsync(string id,
+                                                                      JsonPatchDocument<TransferPatchModel> request,
+                                                                      RequestOptions? options = null,
+                                                                      CancellationToken cancellationToken = default)
     {
-        return UpdateResourceAsync(id, patch, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.JsonPatchDocumentTransferPatchModel, cancellationToken).ConfigureAwait(false);
+        return await UpdateResourceAsync(id, content, options, cancellationToken).ConfigureAwait(false);
     }
 }

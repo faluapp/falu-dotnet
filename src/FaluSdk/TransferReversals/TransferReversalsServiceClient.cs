@@ -1,5 +1,6 @@
 ﻿using Falu.Core;
 using Tingle.Extensions.JsonPatch;
+using SC = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.TransferReversals;
 
@@ -55,26 +56,28 @@ public class TransferReversalsServiceClient : BaseServiceClient<TransferReversal
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<TransferReversal>> CreateAsync(TransferReversalCreateRequest request,
-                                                                        RequestOptions? options = null,
-                                                                        CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<TransferReversal>> CreateAsync(TransferReversalCreateRequest request,
+                                                                              RequestOptions? options = null,
+                                                                              CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync(request, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.TransferReversalCreateRequest, cancellationToken).ConfigureAwait(false);
+        return await CreateResourceAsync(content, options, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
     /// Update a transfer reversal.
     /// </summary>
     /// <param name="id">Unique identifier for the transfer reversal</param>
-    /// <param name="patch"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<TransferReversal>> UpdateAsync(string id,
-                                                                        JsonPatchDocument<TransferReversalPatchModel> patch,
-                                                                        RequestOptions? options = null,
-                                                                        CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<TransferReversal>> UpdateAsync(string id,
+                                                                              JsonPatchDocument<TransferReversalPatchModel> request,
+                                                                              RequestOptions? options = null,
+                                                                              CancellationToken cancellationToken = default)
     {
-        return UpdateResourceAsync(id, patch, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.JsonPatchDocumentTransferReversalPatchModel, cancellationToken).ConfigureAwait(false);
+        return await UpdateResourceAsync(id, content, options, cancellationToken).ConfigureAwait(false);
     }
 }

@@ -11,11 +11,8 @@ namespace Falu.MessageTemplates;
 /// Helper for creating models used to render message templates when sending messages.
 /// </summary>
 [JsonConverter(typeof(Serialization.MessageTemplateModelJsonConverter))]
-public struct MessageTemplateModel : IEquatable<MessageTemplateModel>
+public readonly struct MessageTemplateModel : IEquatable<MessageTemplateModel>
 {
-    private const string SerializationUnreferencedCodeMessage = "JSON serialization and deserialization might require types that cannot be statically analyzed. Use the overload that takes a JsonTypeInfo or JsonSerializerContext, or make sure all of the required types are preserved.";
-    private const string SerializationRequiresDynamicCodeMessage = "JSON serialization and deserialization might require types that cannot be statically analyzed and might need runtime code generation. Use System.Text.Json source generation for native AOT applications.";
-
     private readonly JsonObject @object;
 
     /// <summary>Creates an instance of <see cref="MessageTemplateModel"/>.</summary>
@@ -70,8 +67,8 @@ public struct MessageTemplateModel : IEquatable<MessageTemplateModel>
     /// <exception cref="InvalidOperationException">
     /// <paramref name="model"/> cannot be serialized into a JSON object.
     /// </exception>
-    [RequiresUnreferencedCode(SerializationUnreferencedCodeMessage)]
-    [RequiresDynamicCode(SerializationRequiresDynamicCodeMessage)]
+    [RequiresUnreferencedCode(MessageStrings.SerializationUnreferencedCodeMessage)]
+    [RequiresDynamicCode(MessageStrings.SerializationRequiresDynamicCodeMessage)]
     public static MessageTemplateModel Create<TValue>(TValue model, JsonSerializerOptions? options = null)
     {
         if (model is null) throw new ArgumentNullException(nameof(model));

@@ -1,5 +1,6 @@
 ﻿using Falu.Core;
 using Tingle.Extensions.JsonPatch;
+using SC = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.PaymentRefunds;
 
@@ -55,26 +56,28 @@ public class PaymentRefundsServiceClient : BaseServiceClient<PaymentRefund>,
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<PaymentRefund>> CreateAsync(PaymentRefundCreateRequest request,
+    public virtual async Task<ResourceResponse<PaymentRefund>> CreateAsync(PaymentRefundCreateRequest request,
                                                                      RequestOptions? options = null,
                                                                      CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync(request, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.PaymentRefundCreateRequest, cancellationToken).ConfigureAwait(false);
+        return await CreateResourceAsync(content, options, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
     /// Update a payment refund.
     /// </summary>
     /// <param name="id">Unique identifier for the payment refund.</param>
-    /// <param name="patch"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<PaymentRefund>> UpdateAsync(string id,
-                                                                     JsonPatchDocument<PaymentRefundPatchModel> patch,
-                                                                     RequestOptions? options = null,
-                                                                     CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<PaymentRefund>> UpdateAsync(string id,
+                                                                           JsonPatchDocument<PaymentRefundPatchModel> request,
+                                                                           RequestOptions? options = null,
+                                                                           CancellationToken cancellationToken = default)
     {
-        return UpdateResourceAsync(id, patch, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.JsonPatchDocumentPaymentRefundPatchModel, cancellationToken).ConfigureAwait(false);
+        return await UpdateResourceAsync(id, content, options, cancellationToken).ConfigureAwait(false);
     }
 }

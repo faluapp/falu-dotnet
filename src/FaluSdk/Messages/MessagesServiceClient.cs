@@ -1,5 +1,6 @@
 ﻿using Falu.Core;
 using Tingle.Extensions.JsonPatch;
+using SC = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.Messages;
 
@@ -51,29 +52,31 @@ public class MessagesServiceClient : BaseServiceClient<Message>,
     }
 
     /// <summary>Create a message.</summary>
-    /// <param name="message"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<Message>> CreateAsync(MessageCreateRequest message,
-                                                               RequestOptions? options = null,
-                                                               CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<Message>> CreateAsync(MessageCreateRequest request,
+                                                                     RequestOptions? options = null,
+                                                                     CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync<Message>(message, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.MessageCreateRequest, cancellationToken).ConfigureAwait(false);
+        return await CreateResourceAsync(content, options, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>Update a message.</summary>
     /// <param name="id">Unique identifier for the message.</param>
-    /// <param name="patch"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<Message>> UpdateAsync(string id,
-                                                               JsonPatchDocument<MessagePatchModel> patch,
-                                                               RequestOptions? options = null,
-                                                               CancellationToken cancellationToken = default)
+    public virtual async Task<ResourceResponse<Message>> UpdateAsync(string id,
+                                                                     JsonPatchDocument<MessagePatchModel> request,
+                                                                     RequestOptions? options = null,
+                                                                     CancellationToken cancellationToken = default)
     {
-        return UpdateResourceAsync(id, patch, options, cancellationToken);
+        var content = await MakeJsonHttpContentAsync(request, SC.Default.JsonPatchDocumentMessagePatchModel, cancellationToken).ConfigureAwait(false);
+        return await UpdateResourceAsync(id, content, options, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>Cancel a message preventing further updates.</summary>
@@ -85,7 +88,7 @@ public class MessagesServiceClient : BaseServiceClient<Message>,
                                                        RequestOptions? options = null,
                                                        CancellationToken cancellationToken = default)
     {
-        return CancelResourceAsync(id, options, cancellationToken);
+        return CancelResourceAsync(id, null, options, cancellationToken);
     }
 
     /// <summary>Redact a message to remove all collected information from Falu.</summary>
@@ -97,6 +100,6 @@ public class MessagesServiceClient : BaseServiceClient<Message>,
                                                        RequestOptions? options = null,
                                                        CancellationToken cancellationToken = default)
     {
-        return RedactResourceAsync(id, options, cancellationToken);
+        return RedactResourceAsync(id, null, options, cancellationToken);
     }
 }

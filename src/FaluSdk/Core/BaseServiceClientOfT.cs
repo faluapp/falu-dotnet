@@ -1,5 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
-using Tingle.Extensions.JsonPatch;
+using System.Text.Json.Serialization.Metadata;
 
 namespace Falu.Core;
 
@@ -9,36 +9,37 @@ public abstract class BaseServiceClient<TResource> : BaseServiceClient where TRe
     /// <inheritdoc/>
     public BaseServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options)
     {
+        JsonTypeInfo = (JsonTypeInfo<TResource>)Serialization.FaluSerializerContext.Default.GetTypeInfo(typeof(TResource));
+        ListJsonTypeInfo = (JsonTypeInfo<List<TResource>>)Serialization.FaluSerializerContext.Default.GetTypeInfo(typeof(List<TResource>));
     }
 
     ///
     protected abstract string BasePath { get; }
 
     ///
-    protected virtual Task<ResourceResponse<T>> GetResourceAsync<T>(string id,
-                                                                    RequestOptions? options = null,
-                                                                    CancellationToken cancellationToken = default)
-        where T : class
-    {
-        var uri = MakeResourcePath(id);
-        return RequestAsync<T>(uri, HttpMethod.Get, null, options, cancellationToken);
-    }
+    protected virtual JsonTypeInfo<TResource> JsonTypeInfo { get; }
+
+    ///
+    protected virtual JsonTypeInfo<List<TResource>> ListJsonTypeInfo { get; }
+
 
     ///
     protected virtual Task<ResourceResponse<TResource>> GetResourceAsync(string id,
                                                                          RequestOptions? options = null,
                                                                          CancellationToken cancellationToken = default)
     {
-        return GetResourceAsync<TResource>(id, options, cancellationToken);
+        var uri = MakeResourcePath(id);
+        return RequestResourceAsync(uri, HttpMethod.Get, null, options, cancellationToken);
     }
 
     ///
-    protected virtual async Task<ResourceResponse<List<T>>> ListResourcesAsync<T>(BasicListOptions? options = null,
+    protected virtual async Task<ResourceResponse<List<T>>> ListResourcesAsync<T>(JsonTypeInfo<List<T>> jsonTypeInfo,
+                                                                                  BasicListOptions? options = null,
                                                                                   RequestOptions? requestOptions = null,
                                                                                   CancellationToken cancellationToken = default)
     {
         var uri = MakePathWithQuery(null, options);
-        return await RequestAsync<List<T>>(uri, HttpMethod.Get, null, requestOptions, cancellationToken).ConfigureAwait(false);
+        return await RequestAsync(uri, HttpMethod.Get, jsonTypeInfo, null, requestOptions, cancellationToken).ConfigureAwait(false);
     }
 
     ///
@@ -46,73 +47,68 @@ public abstract class BaseServiceClient<TResource> : BaseServiceClient where TRe
                                                                                  RequestOptions? requestOptions = null,
                                                                                  CancellationToken cancellationToken = default)
     {
-        return ListResourcesAsync<TResource>(options, requestOptions, cancellationToken);
+        return ListResourcesAsync(ListJsonTypeInfo, options, requestOptions, cancellationToken);
     }
 
     ///
-    protected virtual Task<ResourceResponse<T>> CreateResourceAsync<T>(object resource,
-                                                                       RequestOptions? options = null,
-                                                                       CancellationToken cancellationToken = default)
-        where T : class
-    {
-        if (resource is null) throw new ArgumentNullException(nameof(resource));
-
-        var uri = MakePath();
-        return RequestAsync<T>(uri, HttpMethod.Post, resource, options, cancellationToken);
-    }
-
-    ///
-    protected virtual Task<ResourceResponse<TResource>> CreateResourceAsync(object resource,
+    protected virtual Task<ResourceResponse<TResource>> CreateResourceAsync(HttpContent content,
                                                                             RequestOptions? options = null,
                                                                             CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync<TResource>(resource, options, cancellationToken);
+        if (content is null) throw new ArgumentNullException(nameof(content));
+
+        var uri = MakePath();
+        return RequestResourceAsync(uri, HttpMethod.Post, content, options, cancellationToken);
     }
 
     ///
     protected virtual Task<ResourceResponse<TResource>> UpdateResourceAsync(string id,
-                                                                            IJsonPatchDocument patch,
+                                                                            HttpContent content,
                                                                             RequestOptions? options = null,
                                                                             CancellationToken cancellationToken = default)
     {
-        if (patch is null) throw new ArgumentNullException(nameof(patch));
+        if (content is null) throw new ArgumentNullException(nameof(content));
 
         var uri = MakeResourcePath(id);
-        return RequestAsync<TResource>(uri, HttpMethod.Patch, patch, options, cancellationToken);
+        return RequestResourceAsync(uri, HttpMethod.Patch, content, options, cancellationToken);
     }
 
 
     ///
     protected virtual Task<ResourceResponse<TResource>> CancelResourceAsync(string id,
+                                                                            HttpContent? content = null,
                                                                             RequestOptions? options = null,
                                                                             CancellationToken cancellationToken = default)
     {
         var uri = $"{MakeResourcePath(id)}/cancel";
-        return RequestAsync<TResource>(uri, HttpMethod.Post, null, options, cancellationToken);
+        return RequestResourceAsync(uri, HttpMethod.Post, content, options, cancellationToken);
     }
 
     ///
     protected virtual Task<ResourceResponse<TResource>> RedactResourceAsync(string id,
+                                                                            HttpContent? content = null,
                                                                             RequestOptions? options = null,
                                                                             CancellationToken cancellationToken = default)
     {
         var uri = $"{MakeResourcePath(id)}/redact";
-        return RequestAsync<TResource>(uri, HttpMethod.Post, null, options, cancellationToken);
+        return RequestResourceAsync(uri, HttpMethod.Post, content, options, cancellationToken);
     }
 
     ///
     protected virtual Task<ResourceResponse<object>> DeleteResourceAsync(string id,
+                                                                         HttpContent? content = null, 
                                                                          RequestOptions? options = null,
                                                                          CancellationToken cancellationToken = default)
     {
         var uri = MakeResourcePath(id);
-        return RequestAsync<object>(uri, HttpMethod.Delete, null, options, cancellationToken);
+        return RequestAsync(uri, HttpMethod.Delete, content, options, cancellationToken);
     }
 
     #region List Recursively
 
     ///
-    protected async IAsyncEnumerable<T> ListResourcesRecursivelyAsync<T>(BasicListOptions? options,
+    protected async IAsyncEnumerable<T> ListResourcesRecursivelyAsync<T>(JsonTypeInfo<List<T>> jsonTypeInfo,
+                                                                         BasicListOptions? options,
                                                                          RequestOptions? requestOptions,
                                                                          [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
@@ -124,9 +120,10 @@ public abstract class BaseServiceClient<TResource> : BaseServiceClient where TRe
             cancellationToken.ThrowIfCancellationRequested();
 
             // list next batch
-            var response = await ListResourcesAsync<T>(options: options,
-                                                       requestOptions: requestOptions,
-                                                       cancellationToken: cancellationToken).ConfigureAwait(false);
+            var response = await ListResourcesAsync(jsonTypeInfo: jsonTypeInfo,
+                                                    options: options,
+                                                    requestOptions: requestOptions,
+                                                    cancellationToken: cancellationToken).ConfigureAwait(false);
 
             // ensure the request succeeded
             response.EnsureSuccess();
@@ -161,10 +158,20 @@ public abstract class BaseServiceClient<TResource> : BaseServiceClient where TRe
                                                                         RequestOptions? requestOptions,
                                                                         CancellationToken cancellationToken = default)
     {
-        return ListResourcesRecursivelyAsync<TResource>(options, requestOptions, cancellationToken);
+        return ListResourcesRecursivelyAsync(ListJsonTypeInfo, options, requestOptions, cancellationToken);
     }
 
     #endregion
+
+    ///
+    protected virtual Task<ResourceResponse<TResource>> RequestResourceAsync(string uri,
+                                                                             HttpMethod method,
+                                                                             HttpContent? content = null,
+                                                                             RequestOptions? options = null,
+                                                                             CancellationToken cancellationToken = default)
+    {
+        return RequestAsync(uri, method, JsonTypeInfo, content, options, cancellationToken);
+    }
 
     #region Helpers
 

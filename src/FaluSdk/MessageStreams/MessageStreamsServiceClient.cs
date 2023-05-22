@@ -60,7 +60,7 @@ public class MessageStreamsServiceClient : BaseServiceClient<MessageStream>,
                                                                      RequestOptions? options = null,
                                                                      CancellationToken cancellationToken = default)
     {
-        var content = MakeJsonHttpContent(request, SC.Default.MessageStreamCreateRequest);
+        var content = FaluJsonContent.Create(request, SC.Default.MessageStreamCreateRequest);
         return CreateResourceAsync(content, options, cancellationToken);
     }
 
@@ -77,7 +77,7 @@ public class MessageStreamsServiceClient : BaseServiceClient<MessageStream>,
                                                                      RequestOptions? options = null,
                                                                      CancellationToken cancellationToken = default)
     {
-        var content = MakeJsonHttpContent(request, SC.Default.JsonPatchDocumentMessageStreamPatchModel);
+        var content = FaluJsonContent.Create(request, SC.Default.JsonPatchDocumentMessageStreamPatchModel);
         return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 
@@ -110,7 +110,7 @@ public class MessageStreamsServiceClient : BaseServiceClient<MessageStream>,
                                                                       CancellationToken cancellationToken = default)
     {
         var uri = $"{MakeResourcePath(id)}/archive";
-        var content = MakeJsonHttpContent(request, SC.Default.MessageStreamArchiveRequest);
+        var content = FaluJsonContent.Create(request, SC.Default.MessageStreamArchiveRequest);
         return RequestAsync(uri, HttpMethod.Post, SC.Default.MessageStream, content, options, cancellationToken);
     }
 
@@ -128,7 +128,7 @@ public class MessageStreamsServiceClient : BaseServiceClient<MessageStream>,
                                                                         CancellationToken cancellationToken = default)
     {
         var uri = $"{MakeResourcePath(id)}/unarchive";
-        var content = MakeJsonHttpContent(request, SC.Default.MessageStreamUnarchiveRequest);
+        var content = FaluJsonContent.Create(request, SC.Default.MessageStreamUnarchiveRequest);
         return RequestAsync(uri, HttpMethod.Post, SC.Default.MessageStream, content, options, cancellationToken);
     }
 }

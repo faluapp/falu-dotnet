@@ -60,7 +60,7 @@ public class WebhooksServiceClient : BaseServiceClient<WebhookEndpoint>,
                                                                        RequestOptions? options = null,
                                                                        CancellationToken cancellationToken = default)
     {
-        var content = MakeJsonHttpContent(request, SC.Default.WebhookEndpointCreateRequest);
+        var content = FaluJsonContent.Create(request, SC.Default.WebhookEndpointCreateRequest);
         return CreateResourceAsync(content, options, cancellationToken);
     }
 
@@ -77,7 +77,7 @@ public class WebhooksServiceClient : BaseServiceClient<WebhookEndpoint>,
                                                                        RequestOptions? options = null,
                                                                        CancellationToken cancellationToken = default)
     {
-        var content = MakeJsonHttpContent(request, SC.Default.JsonPatchDocumentWebhookEndpointPatchModel);
+        var content = FaluJsonContent.Create(request, SC.Default.JsonPatchDocumentWebhookEndpointPatchModel);
         return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 

@@ -10,16 +10,7 @@ namespace Falu.Core;
 ///
 public abstract class BaseServiceClient // This class exists because not all service clients may be based on a resource
 {
-    /// <summary>List of supported JSON content types</summary>
-    public static string[] SupportedContentTypes { get; } = new[] {
-        "application/json",
-        "text/json",
-        "application/json-path+json",
-        "application/*+json",
-        "application/problem+json",
-    };
-
-    internal static string DefaultJsonContentType { get; } = SupportedContentTypes[0];
+    internal static string DefaultJsonContentType { get; } = "application/json";
 
     ///
     protected BaseServiceClient(HttpClient backChannel, FaluClientOptions options)
@@ -55,7 +46,7 @@ public abstract class BaseServiceClient // This class exists because not all ser
         // if the response was a success then deserialize the body as TResource otherwise TError
         if (!response.IsSuccessStatusCode)
         {
-            error = await ExtractFromResponseBodyAsync(response, SC.Default.FaluError, cancellationToken).ConfigureAwait(false);
+            error = await response.Content.ReadFromJsonAsync(SC.Default.FaluError, cancellationToken).ConfigureAwait(false);
         }
 
         return new ResourceResponse<object>(response: response, resource: null, error: error);
@@ -68,7 +59,6 @@ public abstract class BaseServiceClient // This class exists because not all ser
                                                                                       HttpContent? content = null,
                                                                                       RequestOptions? options = null,
                                                                                       CancellationToken cancellationToken = default)
-        where TResource : class
     {
         var request = new HttpRequestMessage(method, uri);
         if (content is not null)
@@ -88,7 +78,6 @@ public abstract class BaseServiceClient // This class exists because not all ser
                                                                                       RequestOptions? options = null,
                                                                                       JsonSerializerOptions? serializerOptions = null,
                                                                                       CancellationToken cancellationToken = default)
-        where TResource : class
     {
         var request = new HttpRequestMessage(method, uri);
         if (content is not null)
@@ -104,21 +93,17 @@ public abstract class BaseServiceClient // This class exists because not all ser
                                                                                           JsonTypeInfo<TResource> jsonTypeInfo,
                                                                                           RequestOptions? options = null,
                                                                                           CancellationToken cancellationToken = default)
-        where TResource : class
     {
         var response = await RequestCoreAsync(request, options, cancellationToken).ConfigureAwait(false);
-        var resource = default(TResource);
-        var error = default(FaluError);
 
         // if the response was a success then deserialize the body as TResource otherwise TError
-        if (response.IsSuccessStatusCode)
-        {
-            resource = await ExtractFromResponseBodyAsync(response, jsonTypeInfo, cancellationToken).ConfigureAwait(false);
-        }
-        else
-        {
-            error = await ExtractFromResponseBodyAsync(response, SC.Default.FaluError, cancellationToken).ConfigureAwait(false);
-        }
+        var resource = response.IsSuccessStatusCode
+            ? await response.Content.ReadFromJsonAsync(jsonTypeInfo, cancellationToken).ConfigureAwait(false)
+            : default;
+        var error = !response.IsSuccessStatusCode
+            ? await response.Content.ReadFromJsonAsync(SC.Default.FaluError, cancellationToken).ConfigureAwait(false)
+            : default;
+
         return new ResourceResponse<TResource>(response: response, resource: resource, error: error);
     }
 
@@ -129,64 +114,18 @@ public abstract class BaseServiceClient // This class exists because not all ser
                                                                                           RequestOptions? options = null,
                                                                                           JsonSerializerOptions? serializerOptions = null,
                                                                                           CancellationToken cancellationToken = default)
-        where TResource : class
     {
         var response = await RequestCoreAsync(request, options, cancellationToken).ConfigureAwait(false);
-        var resource = default(TResource);
-        var error = default(FaluError);
 
         // if the response was a success then deserialize the body as TResource otherwise TError
-        if (response.IsSuccessStatusCode)
-        {
-            resource = await ExtractFromResponseBodyAsync<TResource>(response, serializerOptions, cancellationToken).ConfigureAwait(false);
-        }
-        else
-        {
-            error = await ExtractFromResponseBodyAsync(response, SC.Default.FaluError, cancellationToken).ConfigureAwait(false);
-        }
+        var resource = response.IsSuccessStatusCode
+            ? await response.Content.ReadFromJsonAsync<TResource>(serializerOptions, cancellationToken).ConfigureAwait(false)
+            : default;
+        var error = !response.IsSuccessStatusCode
+            ? await response.Content.ReadFromJsonAsync(SC.Default.FaluError, cancellationToken).ConfigureAwait(false)
+            : default;
+
         return new ResourceResponse<TResource>(response: response, resource: resource, error: error);
-    }
-
-    ///
-    protected virtual async Task<T?> ExtractFromResponseBodyAsync<T>(HttpResponseMessage response,
-                                                                     JsonTypeInfo<T> jsonTypeInfo,
-                                                                     CancellationToken cancellationToken = default)
-    {
-
-        // get the content type
-        var contentType = response.Content.Headers?.ContentType;
-
-        // get a stream reference for the content
-        // the stream may still be being incoming and thus we should only read when necessary
-#if NET5_0_OR_GREATER
-        var stream = await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
-#else
-        var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
-#endif
-
-        return await DeserializeAsync(contentType?.MediaType, stream, jsonTypeInfo, cancellationToken).ConfigureAwait(false);
-    }
-
-    ///
-    [RequiresUnreferencedCode(MessageStrings.SerializationUnreferencedCodeMessage)]
-    [RequiresDynamicCode(MessageStrings.SerializationRequiresDynamicCodeMessage)]
-    protected virtual async Task<T?> ExtractFromResponseBodyAsync<T>(HttpResponseMessage response,
-                                                                     JsonSerializerOptions? serializerOptions = null,
-                                                                     CancellationToken cancellationToken = default)
-    {
-
-        // get the content type
-        var contentType = response.Content.Headers?.ContentType;
-
-        // get a stream reference for the content
-        // the stream may still be being incoming and thus we should only read when necessary
-#if NET5_0_OR_GREATER
-        var stream = await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
-#else
-        var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
-#endif
-
-        return await DeserializeAsync<T>(contentType?.MediaType, stream, serializerOptions, cancellationToken).ConfigureAwait(false);
     }
 
     ///
@@ -198,7 +137,7 @@ public abstract class BaseServiceClient // This class exists because not all ser
         if (request == null) throw new ArgumentNullException(nameof(request));
 
         request.Headers.Add(HeadersNames.XFaluVersion, FaluClientOptions.ApiVersion);
-        request.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(DefaultJsonContentType));
+        request.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(DefaultJsonContentType)); // ensure we only get JSON content back
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Options.ApiKey);
 
         options ??= new RequestOptions(); // allows for code below to run
@@ -226,57 +165,6 @@ public abstract class BaseServiceClient // This class exists because not all ser
 
         // execute the request
         return await BackChannel.SendAsync(request, cancellationToken).ConfigureAwait(false);
-    }
-
-    ///
-    protected static HttpContent MakeJsonHttpContent<T>(T @object, JsonTypeInfo<T> jsonTypeInfo) => FaluJsonContent.Create(@object, jsonTypeInfo);
-
-    ///
-    [RequiresUnreferencedCode(MessageStrings.SerializationUnreferencedCodeMessage)]
-    [RequiresDynamicCode(MessageStrings.SerializationRequiresDynamicCodeMessage)]
-    protected static HttpContent MakeJsonHttpContent<T>(T @object, JsonSerializerOptions? serializerOptions = null) => JsonContent.Create(@object, options: serializerOptions);
-
-    private static async Task<T?> DeserializeAsync<T>(string? mediaType, Stream stream, JsonTypeInfo<T> jsonTypeInfo, CancellationToken cancellationToken = default)
-    {
-        using (stream)
-        {
-            if (typeof(Stream).IsAssignableFrom(typeof(T))) return (T)(object)stream;
-
-            // if the stream is empty return the default
-            if (stream.Length == 0) return default;
-
-            // if content type is provided, it must match JSON
-            if (!string.IsNullOrWhiteSpace(mediaType)
-                && !SupportedContentTypes.Contains(value: mediaType, comparer: StringComparer.OrdinalIgnoreCase))
-                return default;
-
-            return await JsonSerializer.DeserializeAsync(utf8Json: stream,
-                                                         jsonTypeInfo: jsonTypeInfo,
-                                                         cancellationToken: cancellationToken).ConfigureAwait(false);
-        }
-    }
-
-    ///
-    [RequiresUnreferencedCode(MessageStrings.SerializationUnreferencedCodeMessage)]
-    [RequiresDynamicCode(MessageStrings.SerializationRequiresDynamicCodeMessage)]
-    private static async Task<T?> DeserializeAsync<T>(string? mediaType, Stream stream, JsonSerializerOptions? serializerOptions = null, CancellationToken cancellationToken = default)
-    {
-        using (stream)
-        {
-            if (typeof(Stream).IsAssignableFrom(typeof(T))) return (T)(object)stream;
-
-            // if the stream is empty return the default
-            if (stream.Length == 0) return default;
-
-            // if content type is provided, it must match JSON
-            if (!string.IsNullOrWhiteSpace(mediaType)
-                && !SupportedContentTypes.Contains(value: mediaType, comparer: StringComparer.OrdinalIgnoreCase))
-                return default;
-
-            return await JsonSerializer.DeserializeAsync<T>(utf8Json: stream,
-                                                            options: serializerOptions,
-                                                            cancellationToken: cancellationToken).ConfigureAwait(false);
-        }
     }
 
     #endregion

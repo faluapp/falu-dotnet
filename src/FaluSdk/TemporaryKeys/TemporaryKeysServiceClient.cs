@@ -23,7 +23,7 @@ public class TemporaryKeysServiceClient : BaseServiceClient<TemporaryKey>
                                                                     RequestOptions? options = null,
                                                                     CancellationToken cancellationToken = default)
     {
-        var content = MakeJsonHttpContent(request, SC.Default.TemporaryKeyCreateRequest);
+        var content = FaluJsonContent.Create(request, SC.Default.TemporaryKeyCreateRequest);
         return CreateResourceAsync(content, options, cancellationToken);
     }
 

@@ -37,7 +37,7 @@ public class MoneyBalancesServiceClient : BaseServiceClient<MoneyBalances>
                                                                                      CancellationToken cancellationToken = default)
     {
         var uri = MakePath("/refresh");
-        var content = MakeJsonHttpContent(request, SC.Default.MoneyBalancesRefreshRequest);
+        var content = FaluJsonContent.Create(request, SC.Default.MoneyBalancesRefreshRequest);
         return RequestAsync(uri, HttpMethod.Post, SC.Default.MoneyBalancesRefreshResponse, content, options, cancellationToken);
     }
 }

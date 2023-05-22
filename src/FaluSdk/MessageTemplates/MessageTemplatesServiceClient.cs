@@ -60,7 +60,7 @@ public class MessageTemplatesServiceClient : BaseServiceClient<MessageTemplate>,
                                                                        RequestOptions? options = null,
                                                                        CancellationToken cancellationToken = default)
     {
-        var content = MakeJsonHttpContent(request, SC.Default.MessageTemplateCreateRequest);
+        var content = FaluJsonContent.Create(request, SC.Default.MessageTemplateCreateRequest);
         return CreateResourceAsync(content, options, cancellationToken);
     }
 
@@ -77,7 +77,7 @@ public class MessageTemplatesServiceClient : BaseServiceClient<MessageTemplate>,
                                                                        RequestOptions? options = null,
                                                                        CancellationToken cancellationToken = default)
     {
-        var content = MakeJsonHttpContent(request, SC.Default.JsonPatchDocumentMessageTemplatePatchModel);
+        var content = FaluJsonContent.Create(request, SC.Default.JsonPatchDocumentMessageTemplatePatchModel);
         return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 
@@ -107,7 +107,7 @@ public class MessageTemplatesServiceClient : BaseServiceClient<MessageTemplate>,
                                                                                            CancellationToken cancellationToken = default)
     {
         var uri = MakePath("/validate");
-        var content = MakeJsonHttpContent(request, SC.Default.MessageTemplateValidationRequest);
+        var content = FaluJsonContent.Create(request, SC.Default.MessageTemplateValidationRequest);
         return RequestAsync(uri, HttpMethod.Post, SC.Default.MessageTemplateValidationResponse, content, options, cancellationToken);
     }
 }

@@ -4,7 +4,7 @@ using System.Text.Json.Serialization.Metadata;
 namespace Falu.Core;
 
 ///
-public abstract class BaseServiceClient<TResource> : BaseServiceClient where TResource : class
+public abstract class BaseServiceClient<TResource> : BaseServiceClient
 {
     /// <inheritdoc/>
     public BaseServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options)

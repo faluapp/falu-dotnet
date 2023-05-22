@@ -57,7 +57,7 @@ public class PaymentAuthorizationsServiceClient : BaseServiceClient<PaymentAutho
                                                                             RequestOptions? options = null,
                                                                             CancellationToken cancellationToken = default)
     {
-        var content = MakeJsonHttpContent(request, SC.Default.JsonPatchDocumentPaymentAuthorizationPatchModel);
+        var content = FaluJsonContent.Create(request, SC.Default.JsonPatchDocumentPaymentAuthorizationPatchModel);
         return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 
@@ -74,7 +74,7 @@ public class PaymentAuthorizationsServiceClient : BaseServiceClient<PaymentAutho
     {
         var uri = $"{MakeResourcePath(id)}/approve";
         request ??= new PaymentAuthorizationApproveOptions();
-        var content = MakeJsonHttpContent(request, SC.Default.PaymentAuthorizationApproveOptions);
+        var content = FaluJsonContent.Create(request, SC.Default.PaymentAuthorizationApproveOptions);
         return RequestAsync(uri, HttpMethod.Post, SC.Default.PaymentAuthorization, content, options, cancellationToken);
     }
 
@@ -91,7 +91,7 @@ public class PaymentAuthorizationsServiceClient : BaseServiceClient<PaymentAutho
     {
         var uri = $"{MakeResourcePath(id)}/decline";
         request ??= new PaymentAuthorizationDeclineOptions();
-        var content = MakeJsonHttpContent(request, SC.Default.PaymentAuthorizationDeclineOptions);
+        var content = FaluJsonContent.Create(request, SC.Default.PaymentAuthorizationDeclineOptions);
         return RequestAsync(uri, HttpMethod.Post, SC.Default.PaymentAuthorization, content, options, cancellationToken);
     }
 }

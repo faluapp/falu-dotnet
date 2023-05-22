@@ -58,7 +58,7 @@ public class MessageSuppressionsServiceClient : BaseServiceClient<MessageSuppres
                                                                           RequestOptions? options = null,
                                                                           CancellationToken cancellationToken = default)
     {
-        var content = MakeJsonHttpContent(request, SC.Default.MessageSuppressionCreateRequest);
+        var content = FaluJsonContent.Create(request, SC.Default.MessageSuppressionCreateRequest);
         return CreateResourceAsync(content, options, cancellationToken);
     }
 

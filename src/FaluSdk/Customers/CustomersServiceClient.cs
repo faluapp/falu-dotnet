@@ -60,7 +60,7 @@ public class CustomersServiceClient : BaseServiceClient<Customer>,
                                                                 RequestOptions? options = null,
                                                                 CancellationToken cancellationToken = default)
     {
-        var content = MakeJsonHttpContent(request, SC.Default.CustomerCreateRequest);
+        var content = FaluJsonContent.Create(request, SC.Default.CustomerCreateRequest);
         return CreateResourceAsync(content, options, cancellationToken);
     }
 
@@ -77,7 +77,7 @@ public class CustomersServiceClient : BaseServiceClient<Customer>,
                                                                 RequestOptions? options = null,
                                                                 CancellationToken cancellationToken = default)
     {
-        var content = MakeJsonHttpContent(request, SC.Default.JsonPatchDocumentCustomerPatchModel);
+        var content = FaluJsonContent.Create(request, SC.Default.JsonPatchDocumentCustomerPatchModel);
         return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 

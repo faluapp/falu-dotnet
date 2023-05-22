@@ -64,7 +64,7 @@ public class IdentityVerificationsServiceClient : BaseServiceClient<IdentityVeri
                                                                             RequestOptions? options = null,
                                                                             CancellationToken cancellationToken = default)
     {
-        var content = MakeJsonHttpContent(request, SC.Default.JsonPatchDocumentIdentityVerificationPatchModel);
+        var content = FaluJsonContent.Create(request, SC.Default.JsonPatchDocumentIdentityVerificationPatchModel);
         return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 
@@ -79,7 +79,7 @@ public class IdentityVerificationsServiceClient : BaseServiceClient<IdentityVeri
                                                                             RequestOptions? options = null,
                                                                             CancellationToken cancellationToken = default)
     {
-        var content = MakeJsonHttpContent(request, SC.Default.IdentityVerificationCreateRequest);
+        var content = FaluJsonContent.Create(request, SC.Default.IdentityVerificationCreateRequest);
         return CreateResourceAsync(content, options, cancellationToken);
     }
 

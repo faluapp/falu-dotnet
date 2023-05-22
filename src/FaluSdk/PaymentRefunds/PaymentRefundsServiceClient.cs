@@ -60,7 +60,7 @@ public class PaymentRefundsServiceClient : BaseServiceClient<PaymentRefund>,
                                                                      RequestOptions? options = null,
                                                                      CancellationToken cancellationToken = default)
     {
-        var content = MakeJsonHttpContent(request, SC.Default.PaymentRefundCreateRequest);
+        var content = FaluJsonContent.Create(request, SC.Default.PaymentRefundCreateRequest);
         return CreateResourceAsync(content, options, cancellationToken);
     }
 
@@ -77,7 +77,7 @@ public class PaymentRefundsServiceClient : BaseServiceClient<PaymentRefund>,
                                                                      RequestOptions? options = null,
                                                                      CancellationToken cancellationToken = default)
     {
-        var content = MakeJsonHttpContent(request, SC.Default.JsonPatchDocumentPaymentRefundPatchModel);
+        var content = FaluJsonContent.Create(request, SC.Default.JsonPatchDocumentPaymentRefundPatchModel);
         return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 }

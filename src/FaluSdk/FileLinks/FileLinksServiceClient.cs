@@ -58,7 +58,7 @@ public class FileLinksServiceClient : BaseServiceClient<FileLink>,
                                                                 RequestOptions? options = null,
                                                                 CancellationToken cancellationToken = default)
     {
-        var content = MakeJsonHttpContent(request, SC.Default.FileLinkCreateRequest);
+        var content = FaluJsonContent.Create(request, SC.Default.FileLinkCreateRequest);
         return CreateResourceAsync(content, options, cancellationToken);
     }
 
@@ -73,7 +73,7 @@ public class FileLinksServiceClient : BaseServiceClient<FileLink>,
                                                                 RequestOptions? options = null,
                                                                 CancellationToken cancellationToken = default)
     {
-        var content = MakeJsonHttpContent(request, SC.Default.JsonPatchDocumentFileLinkPatchModel);
+        var content = FaluJsonContent.Create(request, SC.Default.JsonPatchDocumentFileLinkPatchModel);
         return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 }

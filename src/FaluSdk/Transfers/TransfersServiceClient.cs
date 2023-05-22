@@ -60,7 +60,7 @@ public class TransfersServiceClient : BaseServiceClient<Transfer>,
                                                                 RequestOptions? options = null,
                                                                 CancellationToken cancellationToken = default)
     {
-        var content = MakeJsonHttpContent(request, SC.Default.TransferCreateRequest);
+        var content = FaluJsonContent.Create(request, SC.Default.TransferCreateRequest);
         return CreateResourceAsync(content, options, cancellationToken);
     }
 
@@ -77,7 +77,7 @@ public class TransfersServiceClient : BaseServiceClient<Transfer>,
                                                                 RequestOptions? options = null,
                                                                 CancellationToken cancellationToken = default)
     {
-        var content = MakeJsonHttpContent(request, SC.Default.JsonPatchDocumentTransferPatchModel);
+        var content = FaluJsonContent.Create(request, SC.Default.JsonPatchDocumentTransferPatchModel);
         return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 }

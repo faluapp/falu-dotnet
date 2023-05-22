@@ -60,7 +60,7 @@ public class TransferReversalsServiceClient : BaseServiceClient<TransferReversal
                                                                         RequestOptions? options = null,
                                                                         CancellationToken cancellationToken = default)
     {
-        var content = MakeJsonHttpContent(request, SC.Default.TransferReversalCreateRequest);
+        var content = FaluJsonContent.Create(request, SC.Default.TransferReversalCreateRequest);
         return CreateResourceAsync(content, options, cancellationToken);
     }
 
@@ -77,7 +77,7 @@ public class TransferReversalsServiceClient : BaseServiceClient<TransferReversal
                                                                         RequestOptions? options = null,
                                                                         CancellationToken cancellationToken = default)
     {
-        var content = MakeJsonHttpContent(request, SC.Default.JsonPatchDocumentTransferReversalPatchModel);
+        var content = FaluJsonContent.Create(request, SC.Default.JsonPatchDocumentTransferReversalPatchModel);
         return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 }

@@ -36,6 +36,8 @@ namespace Falu;
 [JsonSerializable(typeof(List<MessageStreams.MessageStream>))]
 [JsonSerializable(typeof(MessageStreams.MessageStreamCreateRequest))]
 [JsonSerializable(typeof(JsonPatchDocument<MessageStreams.MessageStreamPatchModel>))]
+[JsonSerializable(typeof(List<MessageStreams.MessageStreamArchiveRequest>))]
+[JsonSerializable(typeof(List<MessageStreams.MessageStreamUnarchiveRequest>))]
 
 [JsonSerializable(typeof(List<MessageSuppressions.MessageSuppression>))]
 [JsonSerializable(typeof(MessageSuppressions.MessageSuppressionCreateRequest))]

@@ -127,7 +127,8 @@ public class MessageStreamsServiceClientTests : BaseServiceClientTests<MessageSt
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.MessageStreams.ArchiveAsync(Data!.Id!, options);
+            var model = new MessageStreamArchiveRequest { };
+            var response = await client.MessageStreams.ArchiveAsync(Data!.Id!, model, options);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
             Assert.Equal(Data!.Id!, response.Resource!.Id!);
@@ -153,7 +154,8 @@ public class MessageStreamsServiceClientTests : BaseServiceClientTests<MessageSt
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.MessageStreams.UnarchiveAsync(Data!.Id!, options);
+            var model = new MessageStreamUnarchiveRequest { };
+            var response = await client.MessageStreams.UnarchiveAsync(Data!.Id!, model, options);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
             Assert.Equal(Data!.Id!, response.Resource!.Id);

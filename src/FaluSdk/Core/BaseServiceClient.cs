@@ -143,7 +143,7 @@ public abstract class BaseServiceClient // This class exists because not all ser
         return content;
     }
 
-    private async Task<T?> DeserializeAsync<T>(string? mediaType, Stream stream, CancellationToken cancellationToken) where T : class
+    private static async Task<T?> DeserializeAsync<T>(string? mediaType, Stream stream, CancellationToken cancellationToken) where T : class
     {
         using (stream)
         {
@@ -157,18 +157,20 @@ public abstract class BaseServiceClient // This class exists because not all ser
                 && !SupportedContentTypes.Contains(value: mediaType, comparer: StringComparer.OrdinalIgnoreCase))
                 return default;
 
-            return await JsonSerializer.DeserializeAsync<T>(utf8Json: stream,
-                                                            options: Options.SerializerOptions,
-                                                            cancellationToken: cancellationToken).ConfigureAwait(false);
+            return (await JsonSerializer.DeserializeAsync(utf8Json: stream,
+                                                          returnType: typeof(T),
+                                                          context: FaluJsonSerializerContext.Default,
+                                                          cancellationToken: cancellationToken).ConfigureAwait(false)) as T;
         }
     }
 
-    private async Task<Stream> SerializeAsync<T>(T input, CancellationToken cancellationToken)
+    private static async Task<Stream> SerializeAsync<T>(T input, CancellationToken cancellationToken)
     {
         var payload = new MemoryStream();
         await JsonSerializer.SerializeAsync(utf8Json: payload,
                                             value: input,
-                                            options: Options.SerializerOptions,
+                                            inputType: typeof(T),
+                                            context: FaluJsonSerializerContext.Default,
                                             cancellationToken: cancellationToken).ConfigureAwait(false);
 
         // make the produced payload readable

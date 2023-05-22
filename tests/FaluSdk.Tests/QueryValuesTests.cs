@@ -58,10 +58,10 @@ public class QueryValuesTests
             Updated = null,
             Created = new RangeFilteringOptions<DateTimeOffset>
             {
-                GreaterThan = DateTimeOffset.Parse("3/10/2021 4:41:25 PM +00:00"),
-                GreaterThanOrEqualTo = DateTimeOffset.Parse("3/10/2021 7:41:25 PM +03:00"),
-                LessThan = DateTimeOffset.Parse("3/11/2021 4:41:25 PM +00:00"),
-                LessThanOrEqualTo = DateTimeOffset.Parse("3/11/2021 7:41:25 PM +03:00"),
+                GreaterThan = new DateTimeOffset(2021, 3, 10, 16, 41, 25, TimeSpan.Zero),
+                GreaterThanOrEqualTo = new DateTimeOffset(2021, 3, 10, 19, 41, 25, TimeSpan.FromHours(3)),
+                LessThan = new DateTimeOffset(2021, 3, 11, 16, 41, 25, TimeSpan.Zero),
+                LessThanOrEqualTo = new DateTimeOffset(2021, 3, 11, 19, 41, 25, TimeSpan.FromHours(3)),
             },
         };
 

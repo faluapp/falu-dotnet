@@ -11,7 +11,7 @@ namespace Falu.Core;
 
 // heavily inspired by official JsonContent<TValue> bit it is internal
 // https://github.com/dotnet/runtime/blob/e91db04be24aac28fd041425fac014ef04d940b1/src/libraries/System.Net.Http.Json/src/System/Net/Http/Json/JsonContentOfT.cs
-// can be removed when https://github.com/dotnet/runtime/issues/51544 is resolved
+// TODO: remove when https://github.com/dotnet/runtime/issues/51544 is resolved
 
 internal class FaluJsonContent<TValue> : HttpContent
 {

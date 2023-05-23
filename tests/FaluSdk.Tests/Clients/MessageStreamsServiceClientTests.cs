@@ -1,5 +1,6 @@
 ﻿using Falu.Core;
 using Falu.MessageStreams;
+using Falu.Serialization;
 using System.Net;
 using System.Net.Mime;
 using System.Text;
@@ -121,13 +122,17 @@ public class MessageStreamsServiceClientTests : BaseServiceClientTests<MessageSt
 
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonSerializer.Serialize(Data!), Encoding.UTF8, MediaTypeNames.Application.Json)
+                Content = new StringContent(
+                    JsonSerializer.Serialize(Data!, FaluSerializerContext.Default.MessageStream),
+                    Encoding.UTF8,
+                    MediaTypeNames.Application.Json)
             };
         });
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.MessageStreams.ArchiveAsync(Data!.Id!, options);
+            var model = new MessageStreamArchiveRequest { };
+            var response = await client.MessageStreams.ArchiveAsync(Data!.Id!, model, options);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
             Assert.Equal(Data!.Id!, response.Resource!.Id!);
@@ -147,13 +152,17 @@ public class MessageStreamsServiceClientTests : BaseServiceClientTests<MessageSt
 
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonSerializer.Serialize(Data!), Encoding.UTF8, MediaTypeNames.Application.Json)
+                Content = new StringContent(
+                    JsonSerializer.Serialize(Data!, FaluSerializerContext.Default.MessageStream),
+                    Encoding.UTF8,
+                    MediaTypeNames.Application.Json)
             };
         });
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.MessageStreams.UnarchiveAsync(Data!.Id!, options);
+            var model = new MessageStreamUnarchiveRequest { };
+            var response = await client.MessageStreams.UnarchiveAsync(Data!.Id!, model, options);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
             Assert.Equal(Data!.Id!, response.Resource!.Id);

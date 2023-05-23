@@ -14,5 +14,5 @@ public class MessageTemplateValidationRequest
     /// <summary>
     /// The template model to be used when rendering test content.
     /// </summary>
-    public object? Model { get; set; }
+    public MessageTemplateModel? Model { get; set; }
 }

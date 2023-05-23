@@ -1,6 +1,6 @@
 ﻿using CloudNative.CloudEvents.Extensions;
-using Falu;
 using Falu.Events;
+using Falu.Serialization;
 using Falu.Webhooks;
 using System.Text.Json;
 
@@ -11,7 +11,7 @@ namespace CloudNative.CloudEvents;
 /// </summary>
 public static class CloudEventExtensions
 {
-    private readonly static System.Text.RegularExpressions.Regex TypeFormat = new("^io.falu.(.*)$");
+    private static readonly System.Text.RegularExpressions.Regex TypeFormat = new("^io.falu.(.*)$");
 
     /// <summary>
     /// Convert a <see cref="CloudEvent"/> to a <see cref="WebhookEvent{TObject}"/> object.
@@ -46,9 +46,7 @@ public static class CloudEventExtensions
                 : throw new InvalidOperationException($"The '{nameof(@event)}.{nameof(@event.Type)}' value must start with 'io.falu.'");
         }
 
-        var options = FaluClientOptions.GetSerializerOptions();
-        var payload = JsonSerializer.Deserialize<CloudEventDataPayload<T>>(je.GetRawText(), options);
-        if (payload is null)
+        if (JsonSerializer.Deserialize(je.GetRawText(), typeof(CloudEventDataPayload<T>), FaluSerializerContext.Default) is not CloudEventDataPayload<T> payload)
         {
             throw new InvalidOperationException("JSON deserialization resulted in null");
         }
@@ -67,13 +65,5 @@ public static class CloudEventExtensions
             Workspace = @event.GetWorkspace(),
             Live = @event.GetLiveMode() ?? false,
         };
-    }
-
-    internal class CloudEventDataPayload<TObject> : WebhookEventData<TObject>
-    {
-        /// <summary>
-        /// Information on the API request that instigated the event.
-        /// </summary>
-        public WebhookEventRequest? Request { get; set; }
     }
 }

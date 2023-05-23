@@ -1,5 +1,6 @@
 ﻿using Falu.Core;
 using Falu.PaymentAuthorizations;
+using Falu.Serialization;
 using System.Net;
 using System.Net.Mime;
 using System.Text;
@@ -109,7 +110,10 @@ public class PaymentAuthorizationsServiceClientTests : BaseServiceClientTests<Pa
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonSerializer.Serialize(Data!), Encoding.UTF8, MediaTypeNames.Application.Json)
+                Content = new StringContent(
+                    JsonSerializer.Serialize(Data!, FaluSerializerContext.Default.PaymentAuthorization),
+                    Encoding.UTF8,
+                    MediaTypeNames.Application.Json)
             };
 
             return response;
@@ -138,7 +142,10 @@ public class PaymentAuthorizationsServiceClientTests : BaseServiceClientTests<Pa
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonSerializer.Serialize(Data!), Encoding.UTF8, MediaTypeNames.Application.Json)
+                Content = new StringContent(
+                    JsonSerializer.Serialize(Data!, FaluSerializerContext.Default.PaymentAuthorization),
+                    Encoding.UTF8,
+                    MediaTypeNames.Application.Json)
             };
 
             return response;

@@ -1,5 +1,6 @@
 ﻿using Falu.Core;
 using Tingle.Extensions.JsonPatch;
+using SC = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.MessageBatches;
 
@@ -60,24 +61,23 @@ public class MessageBatchesServiceClient : BaseServiceClient<MessageBatch>,
                                                                     RequestOptions? options = null,
                                                                     CancellationToken cancellationToken = default)
     {
-        if (request is null) throw new ArgumentNullException(nameof(request));
-        request.Messages?.ForEach(m => m.Template?.Model?.GetType().EnsureAllowedForMessageTemplateModel());
-
-        return CreateResourceAsync<MessageBatch>(request, options, cancellationToken);
+        var content = FaluJsonContent.Create(request, SC.Default.MessageBatchCreateRequest);
+        return CreateResourceAsync(content, options, cancellationToken);
     }
 
     /// <summary>Update a message batch.</summary>
     /// <param name="id">Unique identifier for the message batch.</param>
-    /// <param name="patch"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<MessageBatch>> UpdateAsync(string id,
-                                                                    JsonPatchDocument<MessageBatchPatchModel> patch,
+                                                                    JsonPatchDocument<MessageBatchPatchModel> request,
                                                                     RequestOptions? options = null,
                                                                     CancellationToken cancellationToken = default)
     {
-        return UpdateResourceAsync(id, patch, options, cancellationToken);
+        var content = FaluJsonContent.Create(request, SC.Default.JsonPatchDocumentMessageBatchPatchModel);
+        return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 
     /// <summary>
@@ -92,7 +92,7 @@ public class MessageBatchesServiceClient : BaseServiceClient<MessageBatch>,
                                                                           CancellationToken cancellationToken = default)
     {
         var uri = $"{MakeResourcePath(id)}/status";
-        return RequestAsync<MessageBatchStatus>(uri, HttpMethod.Get, null, options, cancellationToken);
+        return RequestAsync(uri, HttpMethod.Get, SC.Default.MessageBatchStatus, null, options, cancellationToken);
     }
 
     /// <summary>Cancel a message batch preventing further updates.</summary>
@@ -104,7 +104,7 @@ public class MessageBatchesServiceClient : BaseServiceClient<MessageBatch>,
                                                             RequestOptions? options = null,
                                                             CancellationToken cancellationToken = default)
     {
-        return CancelResourceAsync(id, options, cancellationToken);
+        return CancelResourceAsync(id, null, options, cancellationToken);
     }
 
     /// <summary>Redact a message batch to remove all collected information from Falu.</summary>
@@ -116,6 +116,6 @@ public class MessageBatchesServiceClient : BaseServiceClient<MessageBatch>,
                                                             RequestOptions? options = null,
                                                             CancellationToken cancellationToken = default)
     {
-        return RedactResourceAsync(id, options, cancellationToken);
+        return RedactResourceAsync(id, null, options, cancellationToken);
     }
 }

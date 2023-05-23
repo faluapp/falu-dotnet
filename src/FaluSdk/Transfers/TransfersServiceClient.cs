@@ -1,5 +1,6 @@
 ﻿using Falu.Core;
 using Tingle.Extensions.JsonPatch;
+using SC = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.Transfers;
 
@@ -59,22 +60,24 @@ public class TransfersServiceClient : BaseServiceClient<Transfer>,
                                                                 RequestOptions? options = null,
                                                                 CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync(request, options, cancellationToken);
+        var content = FaluJsonContent.Create(request, SC.Default.TransferCreateRequest);
+        return CreateResourceAsync(content, options, cancellationToken);
     }
 
     /// <summary>
     /// Update a transfer.
     /// </summary>
     /// <param name="id">Unique identifier for the transfer</param>
-    /// <param name="patch"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<Transfer>> UpdateAsync(string id,
-                                                                JsonPatchDocument<TransferPatchModel> patch,
+                                                                JsonPatchDocument<TransferPatchModel> request,
                                                                 RequestOptions? options = null,
                                                                 CancellationToken cancellationToken = default)
     {
-        return UpdateResourceAsync(id, patch, options, cancellationToken);
+        var content = FaluJsonContent.Create(request, SC.Default.JsonPatchDocumentTransferPatchModel);
+        return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 }

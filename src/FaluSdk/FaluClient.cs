@@ -23,7 +23,7 @@ namespace Falu;
 /// <summary>
 /// Official client for Falu API
 /// </summary>
-public class FaluClient<TOptions> where TOptions : FaluClientOptions
+public class FaluClient<TOptions> where TOptions : FaluClientOptions, new()
 {
     /// <summary>
     /// Creates an instance of <see cref="FaluClient{TOptions}"/>

@@ -89,10 +89,10 @@ public class ResourceResponse<TResource>
         if (IsSuccessful) return;
 
         var lines = new List<string>
-            {
-                Error?.Detail ?? Error?.Title ?? $"Request failed - {StatusCode} ({(int)StatusCode})",
-                $"StatusCode: {(int)StatusCode} ({StatusCode})"
-            };
+        {
+            Error?.Detail ?? Error?.Title ?? $"Request failed - {StatusCode} ({(int)StatusCode})",
+            $"StatusCode: {(int)StatusCode} ({StatusCode})"
+        };
         AddIf(lines, RequestId, "RequestId: {0}", RequestId);
         AddIf(lines, TraceId, "TraceId: {0}", TraceId);
         AddIf(lines, Error?.Title, "Error: {0}", Error?.Title);

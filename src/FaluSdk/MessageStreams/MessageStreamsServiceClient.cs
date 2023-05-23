@@ -1,5 +1,6 @@
 ﻿using Falu.Core;
 using Tingle.Extensions.JsonPatch;
+using SC = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.MessageStreams;
 
@@ -59,23 +60,25 @@ public class MessageStreamsServiceClient : BaseServiceClient<MessageStream>,
                                                                      RequestOptions? options = null,
                                                                      CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync(request, options, cancellationToken);
+        var content = FaluJsonContent.Create(request, SC.Default.MessageStreamCreateRequest);
+        return CreateResourceAsync(content, options, cancellationToken);
     }
 
     /// <summary>
     /// Update a message stream.
     /// </summary>
     /// <param name="id">Unique identifier for the message stream</param>
-    /// <param name="patch"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<MessageStream>> UpdateAsync(string id,
-                                                                     JsonPatchDocument<MessageStreamPatchModel> patch,
+                                                                     JsonPatchDocument<MessageStreamPatchModel> request,
                                                                      RequestOptions? options = null,
                                                                      CancellationToken cancellationToken = default)
     {
-        return UpdateResourceAsync(id, patch, options, cancellationToken);
+        var content = FaluJsonContent.Create(request, SC.Default.JsonPatchDocumentMessageStreamPatchModel);
+        return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 
     /// <summary>
@@ -89,7 +92,7 @@ public class MessageStreamsServiceClient : BaseServiceClient<MessageStream>,
                                                               RequestOptions? options = null,
                                                               CancellationToken cancellationToken = default)
     {
-        return DeleteResourceAsync(id, options, cancellationToken);
+        return DeleteResourceAsync(id, null, options, cancellationToken);
     }
 
 
@@ -97,29 +100,35 @@ public class MessageStreamsServiceClient : BaseServiceClient<MessageStream>,
     /// Archive a message stream.
     /// </summary>
     /// <param name="id">Unique identifier for the message stream</param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<MessageStream>> ArchiveAsync(string id,
+                                                                      MessageStreamArchiveRequest request,
                                                                       RequestOptions? options = null,
                                                                       CancellationToken cancellationToken = default)
     {
         var uri = $"{MakeResourcePath(id)}/archive";
-        return RequestAsync<MessageStream>(uri, HttpMethod.Post, new { }, options, cancellationToken);
+        var content = FaluJsonContent.Create(request, SC.Default.MessageStreamArchiveRequest);
+        return RequestAsync(uri, HttpMethod.Post, SC.Default.MessageStream, content, options, cancellationToken);
     }
 
     /// <summary>
     /// Unarchive a message stream.
     /// </summary>
     /// <param name="id">Unique identifier for the message stream</param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<MessageStream>> UnarchiveAsync(string id,
-                                                                      RequestOptions? options = null,
-                                                                      CancellationToken cancellationToken = default)
+                                                                        MessageStreamUnarchiveRequest request,
+                                                                        RequestOptions? options = null,
+                                                                        CancellationToken cancellationToken = default)
     {
         var uri = $"{MakeResourcePath(id)}/unarchive";
-        return RequestAsync<MessageStream>(uri, HttpMethod.Post, new { }, options, cancellationToken);
+        var content = FaluJsonContent.Create(request, SC.Default.MessageStreamUnarchiveRequest);
+        return RequestAsync(uri, HttpMethod.Post, SC.Default.MessageStream, content, options, cancellationToken);
     }
 }

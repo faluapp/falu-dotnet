@@ -11,7 +11,7 @@ public class MessageTemplateValidationResponse
     /// If a <see cref="MessageTemplateValidationRequest.Model"/> was submitted, it will be merged
     /// and returned with this model.
     /// </summary>
-    public object? Model { get; set; }
+    public MessageTemplateModel? Model { get; set; }
 
     /// <summary>
     /// Using the <see cref="Model"/> the text content that

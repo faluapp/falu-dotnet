@@ -1,5 +1,6 @@
 ﻿using Falu.Core;
 using Falu.Payments;
+using Falu.Serialization;
 using System.Net;
 using System.Net.Mime;
 using System.Text;
@@ -35,7 +36,10 @@ public class MoneyBalancesServiceClientTests : BaseServiceClientTests
 
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, MediaTypeNames.Application.Json)
+                Content = new StringContent(
+                    JsonSerializer.Serialize(data, FaluSerializerContext.Default.MoneyBalances),
+                    Encoding.UTF8,
+                    MediaTypeNames.Application.Json)
             };
         });
 
@@ -60,13 +64,17 @@ public class MoneyBalancesServiceClientTests : BaseServiceClientTests
 
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, MediaTypeNames.Application.Json)
+                Content = new StringContent(
+                    JsonSerializer.Serialize(data, FaluSerializerContext.Default.MoneyBalances),
+                    Encoding.UTF8,
+                    MediaTypeNames.Application.Json)
             };
         });
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.MoneyBalances.RefreshAsync(options);
+            var model = new MoneyBalancesRefreshRequest { };
+            var response = await client.MoneyBalances.RefreshAsync(model, options);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
         });

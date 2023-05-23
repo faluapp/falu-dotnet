@@ -18,5 +18,5 @@ public class MessageCreateRequestTemplate
     /// <summary>
     /// Model applied when rending the template.
     /// </summary>
-    public object? Model { get; set; }
+    public MessageTemplates.MessageTemplateModel? Model { get; set; }
 }

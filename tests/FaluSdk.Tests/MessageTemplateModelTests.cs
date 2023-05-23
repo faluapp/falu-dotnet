@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Falu.Tests;
 
-public class TypeExtensionsTests
+public class MessageTemplateModelTests
 {
     [Theory]
     [InlineData(typeof(TestEnum), false)]
@@ -55,50 +55,38 @@ public class TypeExtensionsTests
     [InlineData(typeof(TimeSpan?), false)]
 
     [InlineData(typeof(TestStruct?), true)]
-    public void Check_Works(Type type, bool expected)
+    public void IsAllowedModelType_Works(Type type, bool expected)
     {
-        var actual = type.IsAllowedForMessageTemplateModel();
+        var actual = MessageTemplateModel.IsAllowedModelType(type);
         Assert.Equal(expected, actual);
     }
 
     [Fact]
-    public void Check_Throws_InvalidOperationException()
+    public void EnsureAllowedModelType_Throws_InvalidOperationException()
     {
-        var n = new MessageTemplateValidationRequest
-        {
-            Body = "Cakes",
-            Model = DateTimeOffset.UtcNow,
-        };
+        var model = DateTimeOffset.UtcNow;
 
-        var ex = Assert.Throws<InvalidOperationException>(() => n.Model?.GetType().EnsureAllowedForMessageTemplateModel());
+        var ex = Assert.Throws<InvalidOperationException>(() => MessageTemplateModel.EnsureAllowedModelType(model));
         var expected = "Type 'System.DateTimeOffset' is not allowed for a MessageTemplate model. Try a plain object of IDictionary<string, object>";
         Assert.Equal(expected, ex.Message);
     }
 
     [Fact]
-    public void Check_Throws_InvalidOperationException_ForNullable()
+    public void EnsureAllowedModelType_Throws_InvalidOperationException_ForNullable()
     {
-        var n = new MessageTemplateValidationRequest
-        {
-            Body = "Cakes",
-            Model = (DateTimeOffset?)DateTimeOffset.UtcNow,
-        };
+        var model = (DateTimeOffset?)DateTimeOffset.UtcNow;
 
-        var ex = Assert.Throws<InvalidOperationException>(() => n.Model?.GetType().EnsureAllowedForMessageTemplateModel());
+        var ex = Assert.Throws<InvalidOperationException>(() => MessageTemplateModel.EnsureAllowedModelType(model));
         var expected = "Type 'System.DateTimeOffset' is not allowed for a MessageTemplate model. Try a plain object of IDictionary<string, object>";
         Assert.Equal(expected, ex.Message);
     }
 
     [Fact]
-    public void Check_DoesNotThrow()
+    public void EnsureAllowedModelType_DoesNotThrow()
     {
-        var n = new MessageTemplateValidationRequest
-        {
-            Body = "Cakes",
-            Model = (DateTimeOffset?)null,
-        };
+        var model = (DateTimeOffset?)null;
 
-        n.Model?.GetType().EnsureAllowedForMessageTemplateModel();
+        MessageTemplateModel.EnsureAllowedModelType(model);
     }
 
     struct TestStruct

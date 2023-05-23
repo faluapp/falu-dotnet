@@ -1,5 +1,6 @@
 ﻿using Falu.Core;
 using Tingle.Extensions.JsonPatch;
+using SC = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.PaymentRefunds;
 
@@ -59,22 +60,24 @@ public class PaymentRefundsServiceClient : BaseServiceClient<PaymentRefund>,
                                                                      RequestOptions? options = null,
                                                                      CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync(request, options, cancellationToken);
+        var content = FaluJsonContent.Create(request, SC.Default.PaymentRefundCreateRequest);
+        return CreateResourceAsync(content, options, cancellationToken);
     }
 
     /// <summary>
     /// Update a payment refund.
     /// </summary>
     /// <param name="id">Unique identifier for the payment refund.</param>
-    /// <param name="patch"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<PaymentRefund>> UpdateAsync(string id,
-                                                                     JsonPatchDocument<PaymentRefundPatchModel> patch,
+                                                                     JsonPatchDocument<PaymentRefundPatchModel> request,
                                                                      RequestOptions? options = null,
                                                                      CancellationToken cancellationToken = default)
     {
-        return UpdateResourceAsync(id, patch, options, cancellationToken);
+        var content = FaluJsonContent.Create(request, SC.Default.JsonPatchDocumentPaymentRefundPatchModel);
+        return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 }

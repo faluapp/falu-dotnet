@@ -1,5 +1,6 @@
 ﻿using Falu.Core;
 using Tingle.Extensions.JsonPatch;
+using SC = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.MessageTemplates;
 
@@ -59,23 +60,25 @@ public class MessageTemplatesServiceClient : BaseServiceClient<MessageTemplate>,
                                                                        RequestOptions? options = null,
                                                                        CancellationToken cancellationToken = default)
     {
-        return CreateResourceAsync(request, options, cancellationToken);
+        var content = FaluJsonContent.Create(request, SC.Default.MessageTemplateCreateRequest);
+        return CreateResourceAsync(content, options, cancellationToken);
     }
 
     /// <summary>
     /// Update a message template.
     /// </summary>
     /// <param name="id">Unique identifier for the message template</param>
-    /// <param name="patch"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<MessageTemplate>> UpdateAsync(string id,
-                                                                       JsonPatchDocument<MessageTemplatePatchModel> patch,
+                                                                       JsonPatchDocument<MessageTemplatePatchModel> request,
                                                                        RequestOptions? options = null,
                                                                        CancellationToken cancellationToken = default)
     {
-        return UpdateResourceAsync(id, patch, options, cancellationToken);
+        var content = FaluJsonContent.Create(request, SC.Default.JsonPatchDocumentMessageTemplatePatchModel);
+        return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 
     /// <summary>
@@ -89,24 +92,22 @@ public class MessageTemplatesServiceClient : BaseServiceClient<MessageTemplate>,
                                                               RequestOptions? options = null,
                                                               CancellationToken cancellationToken = default)
     {
-        return DeleteResourceAsync(id, options, cancellationToken);
+        return DeleteResourceAsync(id, null, options, cancellationToken);
     }
 
     /// <summary>
     /// Validate a message template.
     /// </summary>
-    /// <param name="template"></param>
+    /// <param name="request"></param>
     /// <param name="options">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<MessageTemplateValidationResponse>> ValidateAsync(MessageTemplateValidationRequest template,
+    public virtual Task<ResourceResponse<MessageTemplateValidationResponse>> ValidateAsync(MessageTemplateValidationRequest request,
                                                                                            RequestOptions? options = null,
                                                                                            CancellationToken cancellationToken = default)
     {
-        if (template is null) throw new ArgumentNullException(nameof(template));
-        template.Model?.GetType().EnsureAllowedForMessageTemplateModel();
-
         var uri = MakePath("/validate");
-        return RequestAsync<MessageTemplateValidationResponse>(uri, HttpMethod.Post, template, options, cancellationToken);
+        var content = FaluJsonContent.Create(request, SC.Default.MessageTemplateValidationRequest);
+        return RequestAsync(uri, HttpMethod.Post, SC.Default.MessageTemplateValidationResponse, content, options, cancellationToken);
     }
 }

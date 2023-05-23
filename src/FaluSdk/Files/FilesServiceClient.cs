@@ -85,6 +85,6 @@ public class FilesServiceClient : BaseServiceClient<File>,
         }
 
         var uri = MakePath();
-        return RequestAsync<File>(uri, HttpMethod.Post, content, options, cancellationToken);
+        return RequestResourceAsync(uri, HttpMethod.Post, content, options, cancellationToken);
     }
 }

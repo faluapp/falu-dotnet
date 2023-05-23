@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
 
-namespace Falu;
+namespace Falu.Serialization;
 
 // inspired by https://github.com/benfoster/o9d-json
 internal class JsonSnakeCaseNamingPolicy : JsonNamingPolicy

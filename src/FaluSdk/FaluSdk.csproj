@@ -6,9 +6,6 @@
     <RootNamespace>Falu</RootNamespace>
     <PackageIcon>falu-logo.png</PackageIcon>
     <IsTrimmable>true</IsTrimmable>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(RELEASING_SDK)' == 'true'">
     <PackageId>Falu</PackageId>
   </PropertyGroup>
 

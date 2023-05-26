@@ -1,10 +1,45 @@
 ﻿using Falu.MessageTemplates;
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
+using SC = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.Tests;
 
 public class MessageTemplateModelTests
 {
+    [Fact]
+    [RequiresUnreferencedCode(MessageStrings.SerializationUnreferencedCodeMessage)]
+    [RequiresDynamicCode(MessageStrings.SerializationRequiresDynamicCodeMessage)]
+    public void RoundTrip_Works_For_JsonSerializerOptions()
+    {
+        var so = SC.Default.Options;
+        var original = new Dictionary<string, string> { ["name"] = "cake" };
+        var model = MessageTemplateModel.Create(original, so);
+        var reconverted = model.ConvertTo<Dictionary<string, string>>(so);
+        Assert.False(ReferenceEquals(reconverted, original)); // different instances
+        Assert.Equal(original, reconverted); // same content
+    }
+
+    [Fact]
+    public void RoundTrip_Works_For_JsonTypeInfo()
+    {
+        var original = new Dictionary<string, string> { ["name"] = "cake" };
+        var model = MessageTemplateModel.Create(original, SC.Default.DictionaryStringString);
+        var reconverted = model.ConvertTo(SC.Default.DictionaryStringString);
+        Assert.False(ReferenceEquals(reconverted, original)); // different instances
+        Assert.Equal(original, reconverted); // same content
+    }
+
+    [Fact]
+    public void RoundTrip_Works_For_JsonSerializerContext()
+    {
+        var original = new Dictionary<string, string> { ["name"] = "cake" };
+        var model = MessageTemplateModel.Create(original, typeof(Dictionary<string, string>), SC.Default);
+        var reconverted = model.ConvertTo(typeof(Dictionary<string, string>), SC.Default);
+        Assert.False(ReferenceEquals(reconverted, original)); // different instances
+        Assert.Equal(original, reconverted); // same content
+    }
+
     [Theory]
     [InlineData(typeof(TestEnum), false)]
     [InlineData(typeof(string), false)]

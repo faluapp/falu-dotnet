@@ -13,6 +13,11 @@ namespace Falu.MessageTemplates;
 [JsonConverter(typeof(Serialization.MessageTemplateModelJsonConverter))]
 public readonly struct MessageTemplateModel : IEquatable<MessageTemplateModel>
 {
+    /// <summary>
+    /// An empty template model that does not require serialization
+    /// </summary>
+    public static readonly MessageTemplateModel Empty = new(new());
+
     private readonly JsonObject @object;
 
     /// <summary>Creates an instance of <see cref="MessageTemplateModel"/>.</summary>

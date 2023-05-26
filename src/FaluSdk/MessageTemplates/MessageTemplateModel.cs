@@ -74,8 +74,7 @@ public readonly struct MessageTemplateModel : IEquatable<MessageTemplateModel>
         if (model is null) throw new ArgumentNullException(nameof(model));
         EnsureAllowedModelType(model);
 
-        var node = JsonSerializer.SerializeToNode(value: model, options: options);
-        return new MessageTemplateModel(Create(node));
+        return Create(JsonSerializer.SerializeToNode(value: model, options: options));
     }
 
     /// <summary>Create a <see cref="MessageTemplateModel"/> from another model object type.</summary>
@@ -97,8 +96,7 @@ public readonly struct MessageTemplateModel : IEquatable<MessageTemplateModel>
         if (model is null) throw new ArgumentNullException(nameof(model));
         EnsureAllowedModelType(model);
 
-        var node = JsonSerializer.SerializeToNode(value: model, jsonTypeInfo: jsonTypeInfo);
-        return new MessageTemplateModel(Create(node));
+        return Create(JsonSerializer.SerializeToNode(value: model, jsonTypeInfo: jsonTypeInfo));
     }
 
     /// <summary>Create a <see cref="MessageTemplateModel"/> from another model object type.</summary>
@@ -129,8 +127,7 @@ public readonly struct MessageTemplateModel : IEquatable<MessageTemplateModel>
         if (model is null) throw new ArgumentNullException(nameof(model));
         EnsureAllowedModelType(model);
 
-        var node = JsonSerializer.SerializeToNode(value: model, inputType: inputType, context: context);
-        return new MessageTemplateModel(Create(node));
+        return Create(JsonSerializer.SerializeToNode(value: model, inputType: inputType, context: context));
     }
 
     /// <param name="node"></param>

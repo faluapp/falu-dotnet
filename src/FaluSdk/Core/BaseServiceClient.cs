@@ -10,7 +10,8 @@ namespace Falu.Core;
 ///
 public abstract class BaseServiceClient // This class exists because not all service clients may be based on a resource
 {
-    internal static string DefaultJsonContentType { get; } = "application/json";
+    ///
+    protected internal static string DefaultJsonContentType { get; } = "application/json";
 
     ///
     protected BaseServiceClient(HttpClient backChannel, FaluClientOptions options)

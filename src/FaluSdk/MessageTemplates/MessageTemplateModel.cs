@@ -58,6 +58,95 @@ public readonly struct MessageTemplateModel : IEquatable<MessageTemplateModel>
     /// <param name="object">The <see cref="JsonObject"/> to convert.</param>
     public static implicit operator MessageTemplateModel(JsonObject @object) => new(@object);
 
+    #region Conversion to other types
+
+    /// <summary>Create a <typeparamref name="TValue"/> from the template's backing object.</summary>
+    /// <typeparam name="TValue">The type to deserialize the template into.</typeparam>
+    /// <param name="options">Options to control the conversion behavior.</param>
+    /// <returns>A <typeparamref name="TValue"/> representation of the template.</returns>
+    /// <exception cref="InvalidOperationException">
+    /// The model does not container a backing object.
+    /// </exception>
+    /// <exception cref="NotSupportedException">
+    /// There is no compatible <see cref="System.Text.Json.Serialization.JsonConverter"/>
+    /// for <typeparamref name="TValue"/> or its serializable members.
+    /// </exception>
+    [RequiresUnreferencedCode(MessageStrings.SerializationUnreferencedCodeMessage)]
+    [RequiresDynamicCode(MessageStrings.SerializationRequiresDynamicCodeMessage)]
+    public TValue? ConvertTo<TValue>(JsonSerializerOptions? options = null)
+    {
+        if (Object is null) throw new InvalidOperationException("The model must contain a backing object");
+        EnsureAllowedModelType<TValue>();
+
+        return JsonSerializer.Deserialize<TValue>(Object, options: options);
+    }
+
+    /// <summary>Create a <typeparamref name="TValue"/> from the template's backing object.</summary>
+    /// <typeparam name="TValue">The type to deserialize the template into.</typeparam>
+    /// <param name="jsonTypeInfo">Metadata about the type to convert.</param>
+    /// <exception cref="InvalidOperationException">
+    /// The model does not container a backing object.
+    /// </exception>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="jsonTypeInfo"/> is <see langword="null"/>.
+    /// </exception>
+    /// <exception cref="JsonException">
+    /// <typeparamref name="TValue" /> is not compatible with the JSON.
+    /// </exception>
+    /// <exception cref="NotSupportedException">
+    /// There is no compatible <see cref="System.Text.Json.Serialization.JsonConverter"/>
+    /// for <typeparamref name="TValue"/> or its serializable members.
+    /// </exception>
+    public TValue? ConvertTo<TValue>(JsonTypeInfo<TValue> jsonTypeInfo)
+    {
+        if (Object is null) throw new InvalidOperationException("The model must contain a backing object");
+        EnsureAllowedModelType<TValue>();
+
+        return JsonSerializer.Deserialize(Object, jsonTypeInfo: jsonTypeInfo);
+    }
+
+    /// <summary>
+    /// Converts the template's backing object into a <paramref name="returnType"/>.
+    /// </summary>
+    /// <param name="returnType">The type of the object to convert to and return.</param>
+    /// <param name="context">A metadata provider for serializable types.</param>
+    /// <returns>A <paramref name="returnType"/> representation of the JSON value.</returns>
+    /// <exception cref="System.ArgumentNullException">
+    /// <paramref name="returnType"/> is <see langword="null"/>.
+    ///
+    /// -or-
+    ///
+    /// <paramref name="context"/> is <see langword="null"/>.
+    /// </exception>
+    /// <exception cref="JsonException">
+    /// The JSON is invalid.
+    ///
+    /// -or-
+    ///
+    /// <paramref name="returnType" /> is not compatible with the JSON.
+    ///
+    /// -or-
+    ///
+    /// There is remaining data in the string beyond a single JSON value.</exception>
+    /// <exception cref="NotSupportedException">
+    /// There is no compatible <see cref="System.Text.Json.Serialization.JsonConverter"/>
+    /// for <paramref name="returnType"/> or its serializable members.
+    /// </exception>
+    /// <exception cref="InvalidOperationException">
+    /// The <see cref="JsonSerializerContext.GetTypeInfo(Type)"/> method of the provided
+    /// <paramref name="context"/> returns <see langword="null"/> for the type to convert.
+    /// </exception>
+    public object? ConvertTo(Type returnType, JsonSerializerContext context)
+    {
+        if (Object is null) throw new InvalidOperationException("The model must contain a backing object");
+        EnsureAllowedModelType(returnType);
+
+        return JsonSerializer.Deserialize(Object, returnType: returnType, context: context);
+    }
+    #endregion
+
+    #region Creation from other types
+
     /// <summary>Create a <see cref="MessageTemplateModel"/> from another model object type.</summary>
     /// <typeparam name="TValue">The type of the model object.</typeparam>
     /// <param name="model">The model object used to create the model</param>
@@ -146,6 +235,8 @@ public readonly struct MessageTemplateModel : IEquatable<MessageTemplateModel>
             : new MessageTemplateModel(@object);
     }
 
+    #endregion
+
     #region Type checking
 
     private static readonly Type[] otherPrimitives = new[] {
@@ -175,16 +266,18 @@ public readonly struct MessageTemplateModel : IEquatable<MessageTemplateModel>
         return !typeof(IEnumerable).IsAssignableFrom(type) || typeof(IDictionary).IsAssignableFrom(type);
     }
 
+    internal static void EnsureAllowedModelType(Type type)
+    {
+        if (IsAllowedModelType(type)) return;
+        throw new InvalidOperationException($"Type '{type.FullName}' is not allowed for a MessageTemplate model. Try a plain object of IDictionary<string, object>");
+    }
+
+    internal static void EnsureAllowedModelType<T>() => EnsureAllowedModelType(typeof(T));
+
     internal static void EnsureAllowedModelType(object? @object)
     {
-        if (@object is not null)
-        {
-            var type = @object.GetType();
-            if (!IsAllowedModelType(type))
-            {
-                throw new InvalidOperationException($"Type '{type.FullName}' is not allowed for a MessageTemplate model. Try a plain object of IDictionary<string, object>");
-            }
-        }
+        if (@object is null) return;
+        EnsureAllowedModelType(@object.GetType());
     }
 
     #endregion

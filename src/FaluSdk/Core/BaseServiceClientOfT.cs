@@ -96,7 +96,7 @@ public abstract class BaseServiceClient<TResource> : BaseServiceClient
 
     ///
     protected virtual Task<ResourceResponse<object>> DeleteResourceAsync(string id,
-                                                                         HttpContent? content = null, 
+                                                                         HttpContent? content = null,
                                                                          RequestOptions? options = null,
                                                                          CancellationToken cancellationToken = default)
     {

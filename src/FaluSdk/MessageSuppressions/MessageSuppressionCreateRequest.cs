@@ -3,7 +3,7 @@
 /// <summary>
 /// Information for creating a message suppression
 /// </summary>
-public class MessageSuppressionCreateRequest 
+public class MessageSuppressionCreateRequest
 {
     /// <summary>
     /// Destination phone number in <see href="https://en.wikipedia.org/wiki/E.164">E.164 format</see>.

@@ -19,27 +19,28 @@ public class GeneralRetryPolicyTests
     [MemberData(nameof(HttpResponseData.Data), MemberType = typeof(HttpResponseData))]
     public async Task GeneralRetryPolicy_Works(HttpResponseMessage message, bool shouldRetry)
     {
+        var executions = 0;
         var handler = new DynamicHttpMessageHandler((request, ct) =>
         {
+            Interlocked.Increment(ref executions);
             return message;
         });
 
         var delays = new[] { TimeSpan.FromSeconds(0.5f), TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1.5f) };
         var policy = IServiceCollectionExtensions.GetGeneralRetryPolicy(delays);
 
-        await TestAsync(policy, handler, (attempts) =>
-        {
-            var retries = shouldRetry ? delays.Length : 0;
-            Assert.Equal(retries, attempts);
-        });
+        await TestAsync(policy, handler);
+        Assert.Equal((shouldRetry ? delays.Length : 0) + 1, executions);
     }
 
     [Theory]
     [MemberData(nameof(HttpResponseData.Data), MemberType = typeof(HttpResponseData))]
     public async Task WrappedGeneralRetryPolicy_Works(HttpResponseMessage message, bool shouldRetry)
     {
+        var executions = 0;
         var handler = new DynamicHttpMessageHandler((request, ct) =>
         {
+            Interlocked.Increment(ref executions);
             return message;
         });
 
@@ -49,11 +50,8 @@ public class GeneralRetryPolicyTests
         var retryAfterPolicy = IServiceCollectionExtensions.GetRetryAfterPolicy(delays.Length);
         var policy = Policy.WrapAsync(generalRetryPolicy, retryAfterPolicy);
 
-        await TestAsync(policy, handler, (attempts) =>
-        {
-            var retries = shouldRetry ? delays.Length : 0;
-            Assert.Equal(retries, attempts);
-        });
+        await TestAsync(policy, handler);
+        Assert.Equal((shouldRetry ? delays.Length : 0) + 1, executions);
     }
 
     class HttpResponseData
@@ -85,14 +83,10 @@ public class GeneralRetryPolicyTests
         return message;
     }
 
-    private static async Task TestAsync(AsyncPolicy<HttpResponseMessage> policy, HttpMessageHandler handler, Action<int> verify)
+    private static async Task TestAsync(AsyncPolicy<HttpResponseMessage> policy, HttpMessageHandler handler)
     {
         var services = new ServiceCollection();
         services.AddHttpClient(nameof(FaluClient))
-                .ConfigureHttpClient((serviceProvider, client) =>
-                {
-                    client.BaseAddress = new Uri("https://api-test.falu.io/");
-                })
                 .ConfigurePrimaryHttpMessageHandler(() => handler)
                 .AddPolicyHandler(policy);
 
@@ -102,14 +96,7 @@ public class GeneralRetryPolicyTests
         var factory = sp.GetRequiredService<IHttpClientFactory>();
         var client = factory.CreateClient(nameof(FaluClient));
 
-        var attemptsKey = IServiceCollectionExtensions.Attempts;
-        var context = new Context
-        {
-            { attemptsKey, 0 }
-        };
-
-        var response = await policy.ExecuteAsync(ctx => client.SendAsync(new HttpRequestMessage(HttpMethod.Get, "/test") { }), context);
-        var attempts = (int)context[attemptsKey];
-        verify(attempts);
+        var request = new HttpRequestMessage(HttpMethod.Get, "https://api-test.falu.io/test");
+        var response = await client.SendAsync(request);
     }
 }

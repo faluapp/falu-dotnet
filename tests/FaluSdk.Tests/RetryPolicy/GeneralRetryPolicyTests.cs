@@ -59,22 +59,22 @@ public class GeneralRetryPolicyTests
     class HttpResponseData
     {
         public static IEnumerable<object[]> Data => new List<object[]>
-            {
-                new object[] { PrepareShouldRetryResponseMessage(true), true },
-                new object[] { PrepareShouldRetryResponseMessage(false), false },
-                new object[] { new HttpResponseMessage(HttpStatusCode.BadRequest), false },
-                new object[] { new HttpResponseMessage(HttpStatusCode.OK), false},
-                new object[] { new HttpResponseMessage(HttpStatusCode.InternalServerError), true },
-                new object[] { new HttpResponseMessage(HttpStatusCode.Conflict), true},
-                new object[] { new HttpResponseMessage(HttpStatusCode.RequestTimeout), true },
-                new object[] { new HttpResponseMessage(HttpStatusCode.GatewayTimeout), true },
-                new object[] { new HttpResponseMessage(HttpStatusCode.MethodNotAllowed), false },
-                new object[] { new HttpResponseMessage(HttpStatusCode.UnsupportedMediaType), false },
-                new object[] { new HttpResponseMessage(HttpStatusCode.Unauthorized), false },
-                new object[] { new HttpResponseMessage(HttpStatusCode.Forbidden), false },
-                new object[] { new HttpResponseMessage(HttpStatusCode.NoContent), false },
-                new object[] { new HttpResponseMessage(HttpStatusCode.NotFound), false }
-            };
+        {
+            new object[] { PrepareShouldRetryResponseMessage(true), true },
+            new object[] { PrepareShouldRetryResponseMessage(false), false },
+            new object[] { new HttpResponseMessage(HttpStatusCode.BadRequest), false },
+            new object[] { new HttpResponseMessage(HttpStatusCode.OK), false},
+            new object[] { new HttpResponseMessage(HttpStatusCode.InternalServerError), true },
+            new object[] { new HttpResponseMessage(HttpStatusCode.Conflict), true},
+            new object[] { new HttpResponseMessage(HttpStatusCode.RequestTimeout), true },
+            new object[] { new HttpResponseMessage(HttpStatusCode.GatewayTimeout), true },
+            new object[] { new HttpResponseMessage(HttpStatusCode.MethodNotAllowed), false },
+            new object[] { new HttpResponseMessage(HttpStatusCode.UnsupportedMediaType), false },
+            new object[] { new HttpResponseMessage(HttpStatusCode.Unauthorized), false },
+            new object[] { new HttpResponseMessage(HttpStatusCode.Forbidden), false },
+            new object[] { new HttpResponseMessage(HttpStatusCode.NoContent), false },
+            new object[] { new HttpResponseMessage(HttpStatusCode.NotFound), false }
+        };
     }
 
     private static HttpResponseMessage PrepareShouldRetryResponseMessage(bool shouldRetry)
@@ -104,9 +104,9 @@ public class GeneralRetryPolicyTests
 
         var attemptsKey = IServiceCollectionExtensions.Attempts;
         var context = new Context
-            {
-                {attemptsKey, 0}
-            };
+        {
+            { attemptsKey, 0 }
+        };
 
         var response = await policy.ExecuteAsync(ctx => client.SendAsync(new HttpRequestMessage(HttpMethod.Get, "/test") { }), context);
         var attempts = (int)context[attemptsKey];

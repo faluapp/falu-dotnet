@@ -197,11 +197,11 @@ public class ResourceResponseTests
             Errors = new Dictionary<string, string[]>
             {
                 ["[137].To"] = new string[] {
-                        "The To field is required."
-                    },
+                    "The To field is required."
+                },
                 ["[268].To"] = new string[] {
-                        "The To field is required."
-                    },
+                    "The To field is required."
+                },
             },
         };
         var rr = new ResourceResponse<object>(response, new { }, error);

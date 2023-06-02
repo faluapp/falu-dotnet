@@ -67,12 +67,12 @@ public class RetryAfterPolicyTests
     class HttpResponseData
     {
         public static IEnumerable<object[]> Data => new List<object[]>
-            {
-                new object[] { PrepareTooManyRequestsResponseMessage(), true },
-                new object[] { new HttpResponseMessage(HttpStatusCode.BadRequest), false },
-                new object[] { new HttpResponseMessage(HttpStatusCode.OK), false},
-                new object[] { new HttpResponseMessage(HttpStatusCode.InternalServerError), false}
-            };
+        {
+            new object[] { PrepareTooManyRequestsResponseMessage(), true },
+            new object[] { new HttpResponseMessage(HttpStatusCode.BadRequest), false },
+            new object[] { new HttpResponseMessage(HttpStatusCode.OK), false},
+            new object[] { new HttpResponseMessage(HttpStatusCode.InternalServerError), false}
+        };
     }
 
     private static async Task TestAsync(AsyncPolicy<HttpResponseMessage> policy, HttpMessageHandler handler, Action<int> verify)
@@ -94,9 +94,9 @@ public class RetryAfterPolicyTests
 
         var attemptsKey = IServiceCollectionExtensions.Attempts;
         var context = new Context
-            {
-                {attemptsKey, 0}
-            };
+        {
+            { attemptsKey, 0 }
+        };
 
         var response = await policy.ExecuteAsync(ctx => client.SendAsync(new HttpRequestMessage(HttpMethod.Get, "/test") { }), context);
         var attempts = (int)context[attemptsKey];

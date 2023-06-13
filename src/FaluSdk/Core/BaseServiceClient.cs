@@ -47,7 +47,7 @@ public abstract class BaseServiceClient // This class exists because not all ser
         // if the response was a success then deserialize the body as TResource otherwise TError
         if (!response.IsSuccessStatusCode)
         {
-            error = await response.Content.ReadFromJsonAsync(SC.Default.FaluError, cancellationToken).ConfigureAwait(false);
+            error = await ReadFromJsonAsync(response.Content, SC.Default.FaluError, cancellationToken).ConfigureAwait(false);
         }
 
         return new ResourceResponse<object>(response: response, resource: null, error: error);
@@ -99,10 +99,10 @@ public abstract class BaseServiceClient // This class exists because not all ser
 
         // if the response was a success then deserialize the body as TResource otherwise TError
         var resource = response.IsSuccessStatusCode
-            ? await response.Content.ReadFromJsonAsync(jsonTypeInfo, cancellationToken).ConfigureAwait(false)
+            ? await ReadFromJsonAsync(response.Content, jsonTypeInfo, cancellationToken).ConfigureAwait(false)
             : default;
         var error = !response.IsSuccessStatusCode
-            ? await response.Content.ReadFromJsonAsync(SC.Default.FaluError, cancellationToken).ConfigureAwait(false)
+            ? await ReadFromJsonAsync(response.Content, SC.Default.FaluError, cancellationToken).ConfigureAwait(false)
             : default;
 
         return new ResourceResponse<TResource>(response: response, resource: resource, error: error);
@@ -120,10 +120,10 @@ public abstract class BaseServiceClient // This class exists because not all ser
 
         // if the response was a success then deserialize the body as TResource otherwise TError
         var resource = response.IsSuccessStatusCode
-            ? await response.Content.ReadFromJsonAsync<TResource>(serializerOptions, cancellationToken).ConfigureAwait(false)
+            ? await ReadFromJsonAsync<TResource>(response.Content, serializerOptions, cancellationToken).ConfigureAwait(false)
             : default;
         var error = !response.IsSuccessStatusCode
-            ? await response.Content.ReadFromJsonAsync(SC.Default.FaluError, cancellationToken).ConfigureAwait(false)
+            ? await ReadFromJsonAsync(response.Content, SC.Default.FaluError, cancellationToken).ConfigureAwait(false)
             : default;
 
         return new ResourceResponse<TResource>(response: response, resource: resource, error: error);
@@ -166,6 +166,28 @@ public abstract class BaseServiceClient // This class exists because not all ser
 
         // execute the request
         return await BackChannel.SendAsync(request, cancellationToken).ConfigureAwait(false);
+    }
+
+    ///
+    protected virtual Task<T?> ReadFromJsonAsync<T>(HttpContent content,
+                                                    JsonTypeInfo<T> jsonTypeInfo,
+                                                    CancellationToken cancellationToken = default)
+    {
+        return content.Headers.ContentLength > 0
+            ? content.ReadFromJsonAsync(jsonTypeInfo, cancellationToken)
+            : Task.FromResult<T?>(default);
+    }
+
+    ///
+    [RequiresUnreferencedCode(MessageStrings.SerializationUnreferencedCodeMessage)]
+    [RequiresDynamicCode(MessageStrings.SerializationRequiresDynamicCodeMessage)]
+    protected virtual Task<T?> ReadFromJsonAsync<T>(HttpContent content,
+                                                    JsonSerializerOptions? serializerOptions = null,
+                                                    CancellationToken cancellationToken = default)
+    {
+        return content.Headers.ContentLength > 0
+            ? content.ReadFromJsonAsync<T>(serializerOptions, cancellationToken)
+            : Task.FromResult<T?>(default);
     }
 
     #endregion

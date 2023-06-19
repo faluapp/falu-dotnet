@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
 using Polly.Retry;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Http.Headers;
 
@@ -51,7 +52,9 @@ public static partial class IServiceCollectionExtensions
     /// <param name="services">The <see cref="IServiceCollection"/> to be added to.</param>
     /// <param name="configure">An <see cref="Action{FaluClientOptions}"/> to configure the client options.</param>
     /// <returns></returns>
-    public static IHttpClientBuilder AddFalu<TClient, TClientOptions>(
+    public static IHttpClientBuilder AddFalu<
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TClient,
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TClientOptions>(
         this IServiceCollection services,
         Action<TClientOptions>? configure = null)
         where TClient : FaluClient<TClientOptions>

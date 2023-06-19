@@ -17,13 +17,14 @@ using Falu.TransferReversals;
 using Falu.Transfers;
 using Falu.Webhooks;
 using Microsoft.Extensions.Options;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Falu;
 
 /// <summary>
 /// Official client for Falu API
 /// </summary>
-public class FaluClient<TOptions> where TOptions : FaluClientOptions, new()
+public class FaluClient<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TOptions> where TOptions : FaluClientOptions, new()
 {
     /// <summary>
     /// Creates an instance of <see cref="FaluClient{TOptions}"/>
@@ -34,7 +35,6 @@ public class FaluClient<TOptions> where TOptions : FaluClientOptions, new()
     {
         BackChannel = backChannel ?? throw new ArgumentNullException(nameof(backChannel));
         Options = optionsAccessor?.Value ?? throw new ArgumentNullException(nameof(optionsAccessor));
-
 
         // populate the User-Agent for 3rd party providers
         if (Options.Application is not null)

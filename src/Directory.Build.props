@@ -5,7 +5,7 @@
   <PropertyGroup>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Deterministic>true</Deterministic>
-    <Company>Tingle Software Limited</Company>
+    <Company>Falu Technologies Limited</Company>
     <!--<IsPackable>true</IsPackable>-->
   </PropertyGroup>
 

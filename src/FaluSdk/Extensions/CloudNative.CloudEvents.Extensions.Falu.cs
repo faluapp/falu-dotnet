@@ -3,7 +3,7 @@
 namespace CloudNative.CloudEvents.Extensions;
 
 /// <summary>
-/// Support for the <see href="https://github.com/tinglesoftware/cloudevents/blob/main/extensions/falu.md">falu</see>
+/// Support for the <see href="https://github.com/faluapp/cloudevents/blob/main/extensions/falu.md">falu</see>
 /// CloudEvent extension.
 /// </summary>
 public static class Falu

@@ -5,7 +5,7 @@
 # Falu .NET
 
 [![NuGet](https://img.shields.io/nuget/v/Falu.svg)](https://www.nuget.org/packages/Falu/)
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/tinglesoftware/falu-sdk-dotnet/build.yml?branch=main&style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/faluapp/falu-dotnet/build.yml?branch=main&style=flat-square)
 
 The official [Falu][falu] .NET library, supporting .NET Standard 2.1+.
 
@@ -251,10 +251,10 @@ For any requests, bug or comments, please [open an issue][issues] or [submit a p
 [api-docs]: https://docs.falu.io/api?lang=dotnet
 [dotnet-core-cli-tools]: https://docs.microsoft.com/en-us/dotnet/core/tools/
 [idempotency-keys]: https://docs.falu.io/api/idempotent_requests?lang=dotnet
-[issues]: https://github.com/tingle/falu-dotnet/issues/new
+[issues]: https://github.com/faluapp/falu-dotnet/issues/new
 [nuget-cli]: https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference
 [package-manager-console]: https://docs.microsoft.com/en-us/nuget/tools/package-manager-console
-[pulls]: https://github.com/tingle/falu-dotnet/pulls
+[pulls]: https://github.com/faluapp/falu-dotnet/pulls
 [falu]: https://falu.io
 [workspace-settings]: https://dashboard.falu.io/settings
 

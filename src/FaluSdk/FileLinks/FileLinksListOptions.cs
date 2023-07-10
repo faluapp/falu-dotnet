@@ -12,7 +12,7 @@ public record FileLinksListOptions : BasicListOptions
     public bool? Expired { get; set; }
 
     /// <inheritdoc/>
-    internal override void Populate(QueryValues values)
+    protected internal override void Populate(QueryValues values)
     {
         base.Populate(values);
         values.Add("file", File)

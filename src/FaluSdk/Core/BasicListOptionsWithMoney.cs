@@ -14,7 +14,7 @@ public record BasicListOptionsWithMoney : BasicListOptions, IHasCurrency
     public RangeFilteringOptions<long>? Amount { get; set; }
 
     /// <inheritdoc/>
-    internal override void Populate(QueryValues values)
+    protected internal override void Populate(QueryValues values)
     {
         base.Populate(values);
         values.Add("currency", Currency)

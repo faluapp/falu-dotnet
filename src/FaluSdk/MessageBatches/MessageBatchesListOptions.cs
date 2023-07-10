@@ -11,7 +11,7 @@ public record MessageBatchesListOptions : BasicListOptions
     public string? Stream { get; set; }
 
     /// <inheritdoc/>
-    internal override void Populate(QueryValues values)
+    protected internal override void Populate(QueryValues values)
     {
         base.Populate(values);
         values.Add("stream", Stream);

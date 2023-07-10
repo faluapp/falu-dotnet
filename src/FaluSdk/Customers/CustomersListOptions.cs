@@ -11,7 +11,7 @@ public record CustomersListOptions : BasicListOptions
     public string? Email { get; set; }
 
     /// <inheritdoc/>
-    internal override void Populate(QueryValues values)
+    protected internal override void Populate(QueryValues values)
     {
         base.Populate(values);
         values.Add("email", Email);

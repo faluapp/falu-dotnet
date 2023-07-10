@@ -9,7 +9,7 @@ public record MessageStreamsListOptions : BasicListOptions
     public List<string>? Type { get; set; }
 
     /// <inheritdoc/>
-    internal override void Populate(QueryValues values)
+    protected internal override void Populate(QueryValues values)
     {
         base.Populate(values);
         values.Add("type", Type);

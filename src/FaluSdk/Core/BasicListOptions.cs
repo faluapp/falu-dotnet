@@ -26,7 +26,12 @@ public record BasicListOptions
     /// <summary>Range filter options for <see cref="IHasUpdated.Updated"/> property.</summary>
     public RangeFilteringOptions<DateTimeOffset>? Updated { get; set; }
 
-    internal virtual void Populate(QueryValues values)
+    /// <summary>Populate the values into the <see cref="QueryValues"/> instance.</summary>
+    /// <param name="values">The <see cref="QueryValues"/> to be populated.</param>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="values"/> is <see langword="null"/>
+    /// </exception>
+    protected internal virtual void Populate(QueryValues values)
     {
         if (values is null) throw new ArgumentNullException(nameof(values));
 

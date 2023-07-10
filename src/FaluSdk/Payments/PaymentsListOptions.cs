@@ -15,7 +15,7 @@ public record PaymentsListOptions : BasicListOptionsWithMoney
     public string? Customer { get; set; }
 
     /// <inheritdoc/>
-    internal override void Populate(QueryValues values)
+    protected internal override void Populate(QueryValues values)
     {
         base.Populate(values);
         values.Add("status", Status)

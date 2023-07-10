@@ -26,7 +26,7 @@ public record MessageSuppressionsListOptions : BasicListOptions
     public string? To { get; set; }
 
     /// <inheritdoc/>
-    internal override void Populate(QueryValues values)
+    protected internal override void Populate(QueryValues values)
     {
         base.Populate(values);
         values.Add("stream", Stream)

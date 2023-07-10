@@ -11,7 +11,7 @@ public record IdentityVerificationReportsListOptions : BasicListOptions
     public string? Verification { get; set; }
 
     /// <inheritdoc/>
-    internal override void Populate(QueryValues values)
+    protected internal override void Populate(QueryValues values)
     {
         base.Populate(values);
         values.Add("verification", Verification);

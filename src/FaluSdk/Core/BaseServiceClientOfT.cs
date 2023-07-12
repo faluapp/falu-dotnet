@@ -210,15 +210,13 @@ public abstract class BaseServiceClient<TResource> : BaseServiceClient
     /// <param name="subPath">The sub path to add before the query.</param>
     /// <param name="query">The query to append.</param>
     /// <returns>The path and query combined.</returns>
-    protected virtual string MakePathWithQuery(string? subPath, string query)
+    protected virtual string MakePathWithQuery(string? subPath, string? query)
     {
-        if (string.IsNullOrWhiteSpace(query))
-        {
-            throw new ArgumentException($"'{nameof(query)}' cannot be null or whitespace.", nameof(query));
-        }
+        var path = MakePath(subPath);
+        if (string.IsNullOrWhiteSpace(query)) return path;
 
         if (!query.StartsWith("?")) query = $"?{query}";
-        return $"{MakePath(subPath)}{query}";
+        return $"{path}{query}";
     }
 
     #endregion

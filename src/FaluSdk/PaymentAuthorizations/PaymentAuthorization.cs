@@ -32,7 +32,13 @@ public class PaymentAuthorization : PaymentAuthorizationPatchModel, IHasId, IHas
     /// <summary>
     /// Reason for the given status of the payment authorization.
     /// </summary>
-    public string? Reason { get; set; }
+    public string? StatusReason { get; set; }
+
+    /// <summary>
+    /// Reason for declining the payment authorization.
+    /// Only populated when the authorization is not approved.
+    /// </summary>
+    public string? DeclineReason { get; set; }
 
     /// <inheritdoc/>
     public DateTimeOffset Created { get; set; }

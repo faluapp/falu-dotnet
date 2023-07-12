@@ -57,7 +57,8 @@ public class Transfer : TransferPatchModel, IHasId, IHasCurrency, IHasCreated, I
     public TransferMpesaDetails? Mpesa { get; set; }
 
     /// <summary>
-    /// Details on the transfer error. Present when in failed state.
+    /// Details on the transfer error.
+    /// Present when in failed state.
     /// </summary>
     public ObjectError? Error { get; set; }
 

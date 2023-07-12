@@ -57,7 +57,8 @@ public class PaymentRefund : PaymentRefundPatchModel, IHasId, IHasCurrency, IHas
     public PaymentRefundMpesaDetails? Mpesa { get; set; }
 
     /// <summary>
-    /// Details on the payment refund error. Present when in failed state.
+    /// Details on the payment refund error.
+    /// Present when in failed state.
     /// </summary>
     public ObjectError? Error { get; set; }
 

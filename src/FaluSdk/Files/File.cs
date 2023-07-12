@@ -29,6 +29,11 @@ public class File : IHasId, IHasCreated, IHasUpdated, IHasDescription, IHasRedac
     /// <summary>Size in bytes of the file.</summary>
     public long Size { get; set; }
 
+    /// <summary>
+    /// Various hashes of the file content.
+    /// </summary>
+    public FileContentHashes? Hashes { get; set; }
+
     /// <summary>Time at which the file expires.</summary>
     public DateTimeOffset? Expires { get; set; }
 

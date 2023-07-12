@@ -1,7 +1,7 @@
 ﻿namespace Falu.Transfers;
 
 /// <summary>
-/// Represents the provider details for a MPESA transfer.
+/// Represents the provider details for an MPESA transfer.
 /// </summary>
 public class TransferMpesaDetails
 {

@@ -77,7 +77,7 @@ namespace Falu.Serialization;
 [JsonSerializable(typeof(TransferReversals.TransferReversalCreateRequest))]
 [JsonSerializable(typeof(JsonPatchDocument<TransferReversals.TransferReversalPatchModel>))]
 
-[JsonSerializable(typeof(TemporaryKeys.TemporaryKey))]
+[JsonSerializable(typeof(List<TemporaryKeys.TemporaryKey>))]
 [JsonSerializable(typeof(TemporaryKeys.TemporaryKeyCreateRequest))]
 
 [JsonSerializable(typeof(List<Webhooks.WebhookEndpoint>))]

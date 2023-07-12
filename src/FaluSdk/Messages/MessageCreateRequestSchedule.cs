@@ -6,7 +6,8 @@
 public class MessageCreateRequestSchedule
 {
     /// <summary>
-    /// Time at which the message should be sent.
+    /// The <see href="https://en.wikipedia.org/wiki/ISO_8601#Durations">ISO 8601 duration</see>
+    /// for which the message(s) should be delayed before sending, relative to the current server time.
     /// Between 5 minutes and 30 days in the future.
     /// Required if <see cref="Delay"/> is not specified.
     /// </summary>

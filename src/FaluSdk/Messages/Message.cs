@@ -76,7 +76,8 @@ public class Message : MessagePatchModel, IHasId, IHasCreated, IHasUpdated, IHas
     public DateTimeOffset? Sent { get; set; }
 
     /// <summary>
-    /// If present, this property tells you the error encountered when processing the message.
+    /// Details on the message error.
+    /// Present when in failed state.
     /// </summary>
     public ObjectError? Error { get; set; }
 

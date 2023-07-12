@@ -57,7 +57,8 @@ public class TransferReversal : TransferReversalPatchModel, IHasId, IHasCurrency
     public TransferReversalMpesaDetails? Mpesa { get; set; }
 
     /// <summary>
-    /// Details on the transfer reversal error. Present when in failed state.
+    /// Details on the transfer reversal error.
+    /// Present when in failed state.
     /// </summary>
     public ObjectError? Error { get; set; }
 

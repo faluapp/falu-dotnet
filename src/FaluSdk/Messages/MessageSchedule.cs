@@ -6,7 +6,8 @@
 public class MessageSchedule
 {
     /// <summary>
-    /// Time at which the message is/was scheduled to be sent.
+    /// The <see href="https://en.wikipedia.org/wiki/ISO_8601#Durations">ISO 8601 duration</see>
+    /// for which the message is/was to be delayed before sending.
     /// </summary>
     public DateTimeOffset Time { get; set; }
 

@@ -57,7 +57,8 @@ public class Payment : PaymentPatchModel, IHasId, IHasCurrency, IHasCreated, IHa
     public PaymentMpesaDetails? Mpesa { get; set; }
 
     /// <summary>
-    /// Details on the payment error. Present when in failed state.
+    /// Details on the payment error.
+    /// Present when in failed state.
     /// </summary>
     public ObjectError? Error { get; set; }
 

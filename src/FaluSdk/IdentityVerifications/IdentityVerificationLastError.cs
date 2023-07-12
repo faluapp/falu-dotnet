@@ -10,7 +10,7 @@ public class IdentityVerificationLastError
 
     /// <summary>
     /// A human-readable message that explains the reason for verification or user-session failure.
-    /// These message can be shown to your user.
+    /// This message can be shown to your user.
     /// </summary>
     public string? Description { get; set; }
 }

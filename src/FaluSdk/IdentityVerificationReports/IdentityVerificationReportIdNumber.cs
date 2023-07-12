@@ -14,6 +14,13 @@ public class IdentityVerificationReportIdNumber : AbstractIdentityVerificationRe
     public string? IdNumber { get; set; }
 
     /// <summary>
+    /// Three-letter <see href="https://www.iso.org/iso-3166-country-codes.html">ISO country code</see>,
+    /// in lowercase, which issued the document.
+    /// </summary>
+    /// <example>ken</example>
+    public string? Issuer { get; set; }
+
+    /// <summary>
     /// The first name.
     /// </summary>
     public string? FirstName { get; set; }

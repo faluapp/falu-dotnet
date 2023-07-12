@@ -33,6 +33,11 @@ public class MessageStream : MessageStreamPatchModel, IHasId, IHasCreated, IHasU
     /// </summary>
     public DateTimeOffset? Archived { get; set; }
 
+    /// <summary>
+    /// Indicates if the stream is one created by default.
+    /// </summary>
+    public bool Default { get; set; }
+
     /// <inheritdoc/>
     public string? Workspace { get; set; }
 

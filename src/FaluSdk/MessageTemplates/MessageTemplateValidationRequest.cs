@@ -6,6 +6,12 @@
 public class MessageTemplateValidationRequest
 {
     /// <summary>
+    /// Type of the template.
+    /// Defaults to <c>transactional</c>
+    /// </summary>
+    public string? Type { get; set; }
+
+    /// <summary>
     /// The content to use when this template is used to send messages.
     /// See our template language documentation for more information on the syntax for this field.
     /// </summary>

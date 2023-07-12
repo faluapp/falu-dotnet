@@ -5,5 +5,9 @@
 /// </summary>
 public class MessageTemplateCreateRequest : MessageTemplatePatchModel
 {
-    // Intentionally left blank
+    /// <summary>
+    /// Type of the template.
+    /// Defaults to <c>utility</c>
+    /// </summary>
+    public string? Type { get; set; }
 }

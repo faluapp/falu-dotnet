@@ -16,6 +16,11 @@ public class MessageTemplate : MessageTemplatePatchModel, IHasId, IHasCreated, I
     /// <inheritdoc/>
     public DateTimeOffset Updated { get; set; }
 
+    /// <summary>
+    /// Type of the template.
+    /// </summary>
+    public string? Type { get; set; }
+
     /// <inheritdoc/>
     public string? Workspace { get; set; }
 

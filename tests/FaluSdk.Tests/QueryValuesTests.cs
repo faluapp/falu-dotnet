@@ -103,6 +103,8 @@ public class QueryValuesTests
                 "pending",
                 "closed",
             },
+            StatusReason = new List<string> { "invalid", },
+            DeclineReason = new List<string> { "insufficient_amount", },
         };
 
         // Act
@@ -118,6 +120,8 @@ public class QueryValuesTests
             "ct",
             "status",
             "approved",
+            "status_reason",
+            "decline_reason"
         }, dictionary.Keys);
         Assert.Equal(new[] {
             "descending",
@@ -126,6 +130,8 @@ public class QueryValuesTests
             "pending",
             "closed",
             "false",
+            "invalid",
+            "insufficient_amount",
         }, dictionary.Values.SelectMany(v => v));
     }
 }

@@ -45,6 +45,11 @@ public class IdentityVerificationReport : IHasId, IHasCreated, IHasUpdated, IHas
     /// </summary>
     public IdentityVerificationReportVideo? Video { get; set; }
 
+    /// <summary>
+    /// Result from the IP address check.
+    /// </summary>
+    public IdentityVerificationReportIPAddress? IPAddress { get; set; }
+
     /// <inheritdoc/>
     public string? Workspace { get; set; }
 

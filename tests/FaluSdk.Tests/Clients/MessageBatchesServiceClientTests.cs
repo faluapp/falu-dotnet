@@ -13,7 +13,7 @@ public class MessageBatchesServiceClientTests : BaseServiceClientTests<MessageBa
     public MessageBatchesServiceClientTests() : base(new()
     {
         Id = "msba_123",
-        Messages = new List<string> { "msg_123", },
+        Messages = ["msg_123",],
         Created = DateTimeOffset.UtcNow,
         Updated = DateTimeOffset.UtcNow,
     }, "/v1/message_batches")
@@ -96,14 +96,14 @@ public class MessageBatchesServiceClientTests : BaseServiceClientTests<MessageBa
         {
             var model = new MessageBatchCreateRequest
             {
-                Messages = new List<MessageBatchCreateRequestMessage>
-                {
+                Messages =
+                [
                     new MessageBatchCreateRequestMessage
                     {
-                        Tos = new[] { "+254722000000", },
+                        Tos = ["+254722000000"],
                         Body = "This is a test",
                     },
-                },
+                ],
             };
             var response = await client.MessageBatches.CreateAsync(model, options);
 

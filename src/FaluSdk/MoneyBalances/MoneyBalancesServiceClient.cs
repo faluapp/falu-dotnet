@@ -1,4 +1,5 @@
 ﻿using Falu.Core;
+using System.Net.Http.Json;
 using SC = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.Payments;
@@ -37,7 +38,7 @@ public class MoneyBalancesServiceClient : BaseServiceClient<MoneyBalances>
                                                                                      CancellationToken cancellationToken = default)
     {
         var uri = MakePath("/refresh");
-        var content = FaluJsonContent.Create(request, SC.Default.MoneyBalancesRefreshRequest);
+        var content = JsonContent.Create(request, SC.Default.MoneyBalancesRefreshRequest);
         return RequestAsync(uri, HttpMethod.Post, SC.Default.MoneyBalancesRefreshResponse, content, options, cancellationToken);
     }
 }

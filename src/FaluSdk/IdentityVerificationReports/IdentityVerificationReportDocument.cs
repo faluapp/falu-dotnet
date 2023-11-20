@@ -98,5 +98,5 @@ public class IdentityVerificationReportDocument : AbstractIdentityVerificationRe
     /// <summary>
     /// Unique identifiers of the files containing images for this document.
     /// </summary>
-    public List<string> Files { get; set; } = new List<string>();
+    public List<string> Files { get; set; } = [];
 }

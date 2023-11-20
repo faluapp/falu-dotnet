@@ -22,7 +22,7 @@ public class MessageTemplateValidationRequest
     /// Each key must be a three-letter
     /// <see href="https://www.iso.org/iso-639-language-codes.html">ISO language code</see>, in lowercase.
     /// </summary>
-    public Dictionary<string, MessageTemplateTranslation> Translations { get; set; } = new();
+    public Dictionary<string, MessageTemplateTranslation> Translations { get; set; } = [];
 
     /// <summary>
     /// The template model to be used when rendering test content.

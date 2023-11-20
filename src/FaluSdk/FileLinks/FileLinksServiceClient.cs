@@ -1,4 +1,5 @@
 ﻿using Falu.Core;
+using System.Net.Http.Json;
 using Tingle.Extensions.JsonPatch;
 using SC = Falu.Serialization.FaluSerializerContext;
 
@@ -58,7 +59,7 @@ public class FileLinksServiceClient : BaseServiceClient<FileLink>,
                                                                 RequestOptions? options = null,
                                                                 CancellationToken cancellationToken = default)
     {
-        var content = FaluJsonContent.Create(request, SC.Default.FileLinkCreateRequest);
+        var content = JsonContent.Create(request, SC.Default.FileLinkCreateRequest);
         return CreateResourceAsync(content, options, cancellationToken);
     }
 
@@ -73,7 +74,7 @@ public class FileLinksServiceClient : BaseServiceClient<FileLink>,
                                                                 RequestOptions? options = null,
                                                                 CancellationToken cancellationToken = default)
     {
-        var content = FaluJsonContent.Create(request, SC.Default.JsonPatchDocumentFileLinkPatchModel);
+        var content = JsonContent.Create(request, SC.Default.JsonPatchDocumentFileLinkPatchModel);
         return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 }

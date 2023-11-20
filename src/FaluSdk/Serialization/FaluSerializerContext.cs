@@ -120,27 +120,24 @@ namespace Falu.Serialization;
 [JsonSerializable(typeof(Events.CloudEventDataPayload<Transfers.Transfer>))]
 [JsonSerializable(typeof(Events.CloudEventDataPayload<TransferReversals.TransferReversal>))]
 [JsonSerializable(typeof(Events.CloudEventDataPayload<TemporaryKeys.TemporaryKey>))]
+
+[JsonSourceGenerationOptions(
+    AllowTrailingCommas = true,
+    ReadCommentHandling = JsonCommentHandling.Skip,
+
+    // Ignore default values to reduce the data sent after serialization
+    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+
+    // Do not indent content to reduce data usage
+    WriteIndented = false,
+
+    // Use SnakeCase because it is what the server provides
+    PropertyNamingPolicy = JsonKnownNamingPolicy.SnakeCaseLower,
+    DictionaryKeyPolicy = JsonKnownNamingPolicy.Unspecified
+)]
 public partial class FaluSerializerContext : JsonSerializerContext // This is exposed publicly to allow chaining via TypeInfoResolver in various external scenarios
 {
-    private static JsonSerializerOptions DefaultSerializerOptions { get; } = new(JsonSerializerDefaults.Web)
-    {
-        AllowTrailingCommas = true,
-        ReadCommentHandling = JsonCommentHandling.Skip,
-
-        // Ignore default values to reduce the data sent after serialization
-        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-
-        // Do not indent content to reduce data usage
-        WriteIndented = false,
-
-        // Use SnakeCase because it is what the server provides
-        PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy(),
-        DictionaryKeyPolicy = null,
-    };
-
-    static FaluSerializerContext() => s_defaultContext = new FaluSerializerContext(new JsonSerializerOptions(DefaultSerializerOptions));
-
-    internal JsonTypeInfo<T> GetTypeInfo<T>() => (JsonTypeInfo<T>)GetTypeInfo(typeof(T));
+    internal JsonTypeInfo<T>? GetTypeInfo<T>() => (JsonTypeInfo<T>?)GetTypeInfo(typeof(T));
     internal JsonTypeInfo<T> GetRequriedTypeInfo<T>()
     {
         var ti = GetTypeInfo<T>();

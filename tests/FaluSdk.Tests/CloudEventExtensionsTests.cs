@@ -42,7 +42,7 @@ public class CloudEventExtensionsTests
         Assert.False(evt.Data.Object.Live);
         Assert.Equal("AAAAAAAAAAA=", evt.Data.Object!.Etag);
         Assert.NotNull(evt.Data.Object.Mpesa);
-        Assert.Equal(new[] { "123456", "654321", }, evt.Data.Object.Mpesa!.Keys);
-        Assert.Equal(new[] { 1030890L, 300500, }, evt.Data.Object.Mpesa!.Values);
+        Assert.Equal<string>(["123456", "654321"], evt.Data.Object.Mpesa!.Keys);
+        Assert.Equal<long>([1030890L, 300500], evt.Data.Object.Mpesa!.Values);
     }
 }

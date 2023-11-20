@@ -25,5 +25,5 @@ public class MessageTemplateValidationResponse
     /// Each key must be a three-letter
     /// <see href="https://www.iso.org/iso-639-language-codes.html">ISO language code</see>, in lowercase.
     /// </summary>
-    public Dictionary<string, MessageTemplateValidationResponseTranslation> Translations { get; set; } = new();
+    public Dictionary<string, MessageTemplateValidationResponseTranslation> Translations { get; set; } = [];
 }

@@ -5,7 +5,7 @@
 # Falu .NET
 
 [![NuGet](https://img.shields.io/nuget/v/Falu.svg)](https://www.nuget.org/packages/Falu/)
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/faluapp/falu-dotnet/build.yml?branch=main&style=flat-square)
+[![GitHub Workflow Status](https://github.com/faluapp/falu-dotnet/actions/workflows/build.yml/badge.svg)](https://github.com/faluapp/falu-app/actions/workflows/build.yml)
 
 The official [Falu][falu] .NET library, supporting .NET Standard 2.1+.
 

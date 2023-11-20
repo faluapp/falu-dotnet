@@ -6,11 +6,22 @@ namespace Falu.Core;
 ///
 public abstract class BaseServiceClient<TResource> : BaseServiceClient
 {
-    /// <inheritdoc/>
-    public BaseServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options)
+    ///
+    protected BaseServiceClient(HttpClient backChannel, FaluClientOptions options)
+        : this(backChannel,
+               options,
+               Serialization.FaluSerializerContext.Default.GetRequriedTypeInfo<TResource>(),
+               Serialization.FaluSerializerContext.Default.GetTypeInfo<List<TResource>>()) { }
+
+    ///
+    protected BaseServiceClient(HttpClient backChannel,
+                                FaluClientOptions options,
+                                JsonTypeInfo<TResource> jsonTypeInfo,
+                                JsonTypeInfo<List<TResource>>? listJsonTypeInfo = null) // this allows one to pass JsonTypeInfo<T> from a different JsonSerializerContext e.g. in the CLI
+        : base(backChannel, options)
     {
-        JsonTypeInfo = Serialization.FaluSerializerContext.Default.GetRequriedTypeInfo<TResource>();
-        ListJsonTypeInfo = Serialization.FaluSerializerContext.Default.GetTypeInfo<List<TResource>>();
+        JsonTypeInfo = jsonTypeInfo ?? throw new ArgumentNullException(nameof(jsonTypeInfo));
+        ListJsonTypeInfo = listJsonTypeInfo;
     }
 
     ///

@@ -125,7 +125,7 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
                 {
                     Alias = "cars_list",
                     Model = MessageTemplates.MessageTemplateModel.Create(
-                        new Dictionary<string, string[]> { ["registrations"] = new string[] { "123", }, },
+                        new Dictionary<string, string[]> { ["registrations"] = ["123"], },
                         FaluSerializerContext.Default.IDictionaryStringStringArray),
                 },
             };

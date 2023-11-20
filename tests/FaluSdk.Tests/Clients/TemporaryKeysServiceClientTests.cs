@@ -10,7 +10,7 @@ public class TemporaryKeysServiceClientTests : BaseServiceClientTests<TemporaryK
     public TemporaryKeysServiceClientTests() : base(new()
     {
         Id = "key_123",
-        Objects = new List<string> { "idv_1234567890", },
+        Objects = ["idv_1234567890",],
         Secret = "ftkt_1234567890",
         Created = DateTimeOffset.UtcNow,
         Expires = DateTimeOffset.UtcNow.AddHours(1),

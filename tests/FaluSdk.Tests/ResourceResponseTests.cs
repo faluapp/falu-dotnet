@@ -111,7 +111,7 @@ public class ResourceResponseTests
         var response = new HttpResponseMessage(HttpStatusCode.OK);
 
         // Act
-        var rr = new ResourceResponse<object[]>(response, Array.Empty<object>(), null);
+        var rr = new ResourceResponse<object[]>(response, [], null);
 
         // Assert
         Assert.False(rr.HasMoreResults);
@@ -125,7 +125,7 @@ public class ResourceResponseTests
         response.Headers.Add("X-Continuation-Token", "123");
 
         // Act
-        var rr = new ResourceResponse<object[]>(response, Array.Empty<object>(), null);
+        var rr = new ResourceResponse<object[]>(response, [], null);
 
         // Assert
         Assert.Equal("123", rr.ContinuationToken);
@@ -196,12 +196,8 @@ public class ResourceResponseTests
             Detail = null,
             Errors = new Dictionary<string, string[]>
             {
-                ["[137].To"] = new string[] {
-                    "The To field is required."
-                },
-                ["[268].To"] = new string[] {
-                    "The To field is required."
-                },
+                ["[137].To"] = ["The To field is required."],
+                ["[268].To"] = ["The To field is required."],
             },
         };
         var rr = new ResourceResponse<object>(response, new { }, error);

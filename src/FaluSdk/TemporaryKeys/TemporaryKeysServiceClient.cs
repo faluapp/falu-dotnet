@@ -1,4 +1,5 @@
 ﻿using Falu.Core;
+using System.Net.Http.Json;
 using SC = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.TemporaryKeys;
@@ -57,7 +58,7 @@ public class TemporaryKeysServiceClient : BaseServiceClient<TemporaryKey>,
                                                                     RequestOptions? options = null,
                                                                     CancellationToken cancellationToken = default)
     {
-        var content = FaluJsonContent.Create(request, SC.Default.TemporaryKeyCreateRequest);
+        var content = JsonContent.Create(request, SC.Default.TemporaryKeyCreateRequest);
         return CreateResourceAsync(content, options, cancellationToken);
     }
 

@@ -10,10 +10,10 @@ public class WebhookUtilityTests
     private const string Signature0 = "a950948ee5a9ce80d6d0d250dba2723be4a62319d936b280992f804ee9b35566";
     private const string Signature1 = "684ed18f8c9ca820c9fd079b83ed1fc5ddbf70e4e512b2ca5a2761a72c402a21";
     private static readonly DateTimeOffset KnownNow = DateTimeOffset.FromUnixTimeSeconds(1658299746);
-    private static readonly string[] KnownSignatures = {
+    private static readonly string[] KnownSignatures = [
         $"t=1658299746,sha256={Signature0}",
         $"t=1658299746,sha256={Signature0},sha256={Signature1}",
-    };
+    ];
 
     // TODO: investigate why these tests fail on GitHub workflows but they work on WSL (Ubuntu 20.04) and on Docker (dotnet/runtime:7.0)
     private static bool IsGithubAction() => Environment.GetEnvironmentVariable("GITHUB_ACTION") != null;

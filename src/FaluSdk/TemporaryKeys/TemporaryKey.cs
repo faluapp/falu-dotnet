@@ -16,7 +16,7 @@ public class TemporaryKey : IHasId, IHasCreated, IHasWorkspace, IHasLive, IHasEt
     /// <summary>
     /// Unique identifiers of the objects that can be accessed using the key.
     /// </summary>
-    public List<string> Objects { get; set; } = new List<string>();
+    public List<string> Objects { get; set; } = [];
 
     /// <inheritdoc/>
     public DateTimeOffset Expires { get; set; }

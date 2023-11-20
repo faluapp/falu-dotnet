@@ -1,4 +1,5 @@
 ﻿using Falu.Core;
+using System.Net.Http.Json;
 using Tingle.Extensions.JsonPatch;
 using SC = Falu.Serialization.FaluSerializerContext;
 
@@ -60,7 +61,7 @@ public class MessageTemplatesServiceClient : BaseServiceClient<MessageTemplate>,
                                                                        RequestOptions? options = null,
                                                                        CancellationToken cancellationToken = default)
     {
-        var content = FaluJsonContent.Create(request, SC.Default.MessageTemplateCreateRequest);
+        var content = JsonContent.Create(request, SC.Default.MessageTemplateCreateRequest);
         return CreateResourceAsync(content, options, cancellationToken);
     }
 
@@ -77,7 +78,7 @@ public class MessageTemplatesServiceClient : BaseServiceClient<MessageTemplate>,
                                                                        RequestOptions? options = null,
                                                                        CancellationToken cancellationToken = default)
     {
-        var content = FaluJsonContent.Create(request, SC.Default.JsonPatchDocumentMessageTemplatePatchModel);
+        var content = JsonContent.Create(request, SC.Default.JsonPatchDocumentMessageTemplatePatchModel);
         return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 
@@ -107,7 +108,7 @@ public class MessageTemplatesServiceClient : BaseServiceClient<MessageTemplate>,
                                                                                            CancellationToken cancellationToken = default)
     {
         var uri = MakePath("/validate");
-        var content = FaluJsonContent.Create(request, SC.Default.MessageTemplateValidationRequest);
+        var content = JsonContent.Create(request, SC.Default.MessageTemplateValidationRequest);
         return RequestAsync(uri, HttpMethod.Post, SC.Default.MessageTemplateValidationResponse, content, options, cancellationToken);
     }
 }

@@ -16,7 +16,7 @@ public readonly struct MessageTemplateModel : IEquatable<MessageTemplateModel>
     /// <summary>
     /// An empty template model that does not require serialization
     /// </summary>
-    public static readonly MessageTemplateModel Empty = new(new());
+    public static readonly MessageTemplateModel Empty = new([]);
 
     private readonly JsonObject @object;
 
@@ -239,14 +239,14 @@ public readonly struct MessageTemplateModel : IEquatable<MessageTemplateModel>
 
     #region Type checking
 
-    private static readonly Type[] otherPrimitives = new[] {
+    private static readonly Type[] otherPrimitives = [
         typeof(string),
         typeof(decimal),
         typeof(DateTime),
         typeof(DateTimeOffset),
         typeof(TimeSpan),
         typeof(Guid),
-    };
+    ];
 
     internal static bool IsAllowedModelType(Type type)
     {

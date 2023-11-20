@@ -1,4 +1,5 @@
 ﻿using Falu.Core;
+using System.Net.Http.Json;
 using SC = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.MessageSuppressions;
@@ -58,7 +59,7 @@ public class MessageSuppressionsServiceClient : BaseServiceClient<MessageSuppres
                                                                           RequestOptions? options = null,
                                                                           CancellationToken cancellationToken = default)
     {
-        var content = FaluJsonContent.Create(request, SC.Default.MessageSuppressionCreateRequest);
+        var content = JsonContent.Create(request, SC.Default.MessageSuppressionCreateRequest);
         return CreateResourceAsync(content, options, cancellationToken);
     }
 

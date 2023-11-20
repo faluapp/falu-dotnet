@@ -1,4 +1,5 @@
 ﻿using Falu.Core;
+using System.Net.Http.Json;
 using Tingle.Extensions.JsonPatch;
 using SC = Falu.Serialization.FaluSerializerContext;
 
@@ -64,7 +65,7 @@ public class IdentityVerificationsServiceClient : BaseServiceClient<IdentityVeri
                                                                             RequestOptions? options = null,
                                                                             CancellationToken cancellationToken = default)
     {
-        var content = FaluJsonContent.Create(request, SC.Default.JsonPatchDocumentIdentityVerificationPatchModel);
+        var content = JsonContent.Create(request, SC.Default.JsonPatchDocumentIdentityVerificationPatchModel);
         return UpdateResourceAsync(id, content, options, cancellationToken);
     }
 
@@ -79,7 +80,7 @@ public class IdentityVerificationsServiceClient : BaseServiceClient<IdentityVeri
                                                                             RequestOptions? options = null,
                                                                             CancellationToken cancellationToken = default)
     {
-        var content = FaluJsonContent.Create(request, SC.Default.IdentityVerificationCreateRequest);
+        var content = JsonContent.Create(request, SC.Default.IdentityVerificationCreateRequest);
         return CreateResourceAsync(content, options, cancellationToken);
     }
 

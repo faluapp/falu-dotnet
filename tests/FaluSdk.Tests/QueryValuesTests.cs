@@ -42,8 +42,8 @@ public class QueryValuesTests
         // Assert
         var dictionary = query.ToDictionary();
         Assert.NotEmpty(dictionary);
-        Assert.Equal(new[] { "sort", "count", "ct", }, dictionary.Keys);
-        Assert.Equal(new[] { "descending", "12", "123", }, dictionary.Values.SelectMany(v => v));
+        Assert.Equal<string>(["sort", "count", "ct"], dictionary.Keys);
+        Assert.Equal(["descending", "12", "123"], dictionary.Values.SelectMany(v => v));
     }
 
     [Fact]
@@ -72,18 +72,18 @@ public class QueryValuesTests
         // Assert
         var dictionary = query.ToDictionary();
         Assert.NotEmpty(dictionary);
-        Assert.Equal(new[] {
+        Assert.Equal<string>([
             "created.lt",
             "created.lte",
             "created.gt",
             "created.gte",
-        }, dictionary.Keys);
-        Assert.Equal(new[] {
+        ], dictionary.Keys);
+        Assert.Equal([
             "2021-03-11T16:41:25.0000000+00:00",
             "2021-03-11T19:41:25.0000000+03:00",
             "2021-03-10T16:41:25.0000000+00:00",
             "2021-03-10T19:41:25.0000000+03:00",
-        }, dictionary.Values.SelectMany(v => v));
+        ], dictionary.Values.SelectMany(v => v));
     }
 
     [Fact]
@@ -98,13 +98,9 @@ public class QueryValuesTests
             ContinuationToken = "123",
             Updated = null,
             Approved = false,
-            Status = new List<string>
-            {
-                "pending",
-                "closed",
-            },
-            StatusReason = new List<string> { "invalid", },
-            DeclineReason = new List<string> { "insufficient_amount", },
+            Status = ["pending", "closed"],
+            StatusReason = ["invalid",],
+            DeclineReason = ["insufficient_amount",],
         };
 
         // Act
@@ -114,7 +110,7 @@ public class QueryValuesTests
         // Assert
         var dictionary = query.ToDictionary();
         Assert.NotEmpty(dictionary);
-        Assert.Equal(new[] {
+        Assert.Equal<string>([
             "sort",
             "count",
             "ct",
@@ -122,8 +118,8 @@ public class QueryValuesTests
             "approved",
             "status_reason",
             "decline_reason"
-        }, dictionary.Keys);
-        Assert.Equal(new[] {
+        ], dictionary.Keys);
+        Assert.Equal([
             "descending",
             "12",
             "123",
@@ -132,6 +128,6 @@ public class QueryValuesTests
             "false",
             "invalid",
             "insufficient_amount",
-        }, dictionary.Values.SelectMany(v => v));
+        ], dictionary.Values.SelectMany(v => v));
     }
 }

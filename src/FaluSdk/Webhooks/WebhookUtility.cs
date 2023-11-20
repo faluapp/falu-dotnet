@@ -55,7 +55,7 @@ public static class WebhookUtility
     {
         static KeyValuePair<string, string> ParseItem(string item)
         {
-            var parts = item.Trim().Split(new[] { '=' }, 2);
+            var parts = item.Trim().Split(['='], 2);
             if (parts.Length != 2) throw new FaluException("The signature header format is unexpected.");
             return new(parts[0], parts[1]);
         }

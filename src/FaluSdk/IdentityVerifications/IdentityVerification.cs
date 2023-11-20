@@ -55,7 +55,7 @@ public class IdentityVerification : IdentityVerificationPatchModel, IHasId, IHas
     /// <summary>
     /// Unique identifiers of the reports for this verification.
     /// </summary>
-    public List<string> Reports { get; set; } = new List<string>();
+    public List<string> Reports { get; set; } = [];
 
     /// <summary>
     /// If present, this property tells you the last error encountered when processing the identity verification.

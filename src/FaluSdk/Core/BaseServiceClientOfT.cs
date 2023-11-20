@@ -9,8 +9,8 @@ public abstract class BaseServiceClient<TResource> : BaseServiceClient
     /// <inheritdoc/>
     public BaseServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options)
     {
-        JsonTypeInfo = (JsonTypeInfo<TResource>)Serialization.FaluSerializerContext.Default.GetTypeInfo(typeof(TResource));
-        ListJsonTypeInfo = (JsonTypeInfo<List<TResource>>)Serialization.FaluSerializerContext.Default.GetTypeInfo(typeof(List<TResource>));
+        JsonTypeInfo = Serialization.FaluSerializerContext.Default.GetRequriedTypeInfo<TResource>();
+        ListJsonTypeInfo = Serialization.FaluSerializerContext.Default.GetTypeInfo<List<TResource>>();
     }
 
     ///
@@ -20,7 +20,7 @@ public abstract class BaseServiceClient<TResource> : BaseServiceClient
     protected virtual JsonTypeInfo<TResource> JsonTypeInfo { get; }
 
     ///
-    protected virtual JsonTypeInfo<List<TResource>> ListJsonTypeInfo { get; }
+    protected virtual JsonTypeInfo<List<TResource>>? ListJsonTypeInfo { get; }
 
 
     ///
@@ -47,6 +47,7 @@ public abstract class BaseServiceClient<TResource> : BaseServiceClient
                                                                                  RequestOptions? requestOptions = null,
                                                                                  CancellationToken cancellationToken = default)
     {
+        if (ListJsonTypeInfo is null) throw new InvalidOperationException("ListJsonTypeInfo is null.");
         return ListResourcesAsync(ListJsonTypeInfo, options, requestOptions, cancellationToken);
     }
 
@@ -158,6 +159,7 @@ public abstract class BaseServiceClient<TResource> : BaseServiceClient
                                                                         RequestOptions? requestOptions,
                                                                         CancellationToken cancellationToken = default)
     {
+        if (ListJsonTypeInfo is null) throw new InvalidOperationException("ListJsonTypeInfo is null.");
         return ListResourcesRecursivelyAsync(ListJsonTypeInfo, options, requestOptions, cancellationToken);
     }
 
@@ -215,7 +217,7 @@ public abstract class BaseServiceClient<TResource> : BaseServiceClient
         var path = MakePath(subPath);
         if (string.IsNullOrWhiteSpace(query)) return path;
 
-        if (!query.StartsWith("?")) query = $"?{query}";
+        if (!query.StartsWith('?')) query = $"?{query}";
         return $"{path}{query}";
     }
 

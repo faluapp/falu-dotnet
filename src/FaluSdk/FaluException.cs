@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Runtime.Serialization;
 
 namespace Falu;
 
@@ -15,9 +14,6 @@ public class FaluException : Exception
 
     /// 
     public FaluException(string message, Exception inner) : base(message, inner) { }
-
-    /// 
-    protected FaluException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 
     /// 
     public FaluException(HttpStatusCode statusCode, string message) : base(message)

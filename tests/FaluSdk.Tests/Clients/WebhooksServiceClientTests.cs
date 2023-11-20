@@ -12,7 +12,7 @@ public class WebhooksServiceClientTests : BaseServiceClientTests<WebhookEndpoint
     {
         Id = "we_123",
         Url = "https://localhost:1234",
-        Events = new List<string> { EventTypes.MessageFailed, EventTypes.TransferSucceeded },
+        Events = [EventTypes.MessageFailed, EventTypes.TransferSucceeded],
         Secret = "e0gNHBa90CfdKbtcWgksn52cvXoXMqCTaLdttJAsQVU=",
         Created = DateTimeOffset.UtcNow,
         Updated = DateTimeOffset.UtcNow,

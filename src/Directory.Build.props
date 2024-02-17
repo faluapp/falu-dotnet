@@ -23,10 +23,6 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <VersionPrefix Condition="'$(GITVERSION_NUGETVERSION)' != ''">$(GITVERSION_NUGETVERSION)</VersionPrefix>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="ConfigureAwaitChecker.Analyzer" Version="5.0.0.1" PrivateAssets="All"/>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />

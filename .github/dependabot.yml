@@ -15,9 +15,9 @@ updates:
     cloud-native:
       patterns: ["CloudNative*"]
     microsoft:
-      patterns: ["Microsoft.*"]
+      patterns: ["Microsoft*"]
     system:
-      patterns: ["System.*"]
+      patterns: ["System*"]
     xunit:
       patterns: ["Xunit*"]
   ignore:

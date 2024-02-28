@@ -62,7 +62,7 @@ public static partial class IServiceCollectionExtensions
     {
         /*
          * Binding options from an IConfiguration instance is not used to reduce dependencies and leave that to the caller.
-         * Should the implementor/user require this, they can add it using:
+         * Should the implementer/user require this, they can add it using:
          * services.AddFalu(options => Configuration.GetSection("Falu").Bind(options));
          */
 

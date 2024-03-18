@@ -50,7 +50,7 @@ jobs:
         dotnet-version: '8.x'
 
     - name: Restore
-      run: dotnet restore --configuration Release
+      run: dotnet restore
 
     - name: Build
       run: >

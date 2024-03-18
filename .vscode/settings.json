@@ -2,12 +2,13 @@
     "cSpell.words": [
         "Buygoods",
         "Falu",
+        "idempotency",
         "KAMAU",
         "Mpesa",
+        "nameof",
+        "nuget",
         "ONYANGO",
         "Paybill",
-        "idempotency",
-        "nameof",
-        "nuget"
+        "Xunit"
     ]
 }

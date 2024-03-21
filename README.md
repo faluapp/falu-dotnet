@@ -248,6 +248,10 @@ response.EnsureSuccess(); // might throw an exception (FaluException)
 
 For any requests, bug or comments, please [open an issue][issues] or [submit a pull request][pulls].
 
+### License
+
+The Library is licensed under the [MIT](http://www.opensource.org/licenses/mit-license.php "Read more about the MIT license form") license. Refer to the [LICENSE](./LICENSE) file for more information.
+
 [api-docs]: https://docs.falu.io/api?lang=dotnet
 [dotnet-core-cli-tools]: https://docs.microsoft.com/en-us/dotnet/core/tools/
 [idempotency-keys]: https://docs.falu.io/api/idempotent_requests?lang=dotnet
@@ -257,7 +261,3 @@ For any requests, bug or comments, please [open an issue][issues] or [submit a p
 [pulls]: https://github.com/faluapp/falu-dotnet/pulls
 [falu]: https://falu.io
 [workspace-settings]: https://dashboard.falu.io/settings
-
-### License
-
-The Library is licensed under the [MIT](http://www.opensource.org/licenses/mit-license.php "Read more about the MIT license form") license. Refer to the [LICENSE](./LICENSE) file for more information.

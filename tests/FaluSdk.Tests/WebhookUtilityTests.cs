@@ -15,22 +15,17 @@ public class WebhookUtilityTests
         $"t=1658299746,sha256={Signature0},sha256={Signature1}",
     ];
 
-    // TODO: investigate why these tests fail on GitHub workflows but they work on WSL (Ubuntu 20.04) and on Docker (dotnet/runtime:7.0)
-    private static bool IsGithubAction() => Environment.GetEnvironmentVariable("GITHUB_ACTION") != null;
-
-    [SkippableFact]
+    [Fact]
     public async Task ValidateSignature_Works()
     {
-        Skip.If(IsGithubAction());
         var now = KnownNow.AddSeconds(100);
         var json = await TestSamples.GetCloudEventAsStringAsync();
         WebhookUtility.ValidateSignature(json, KnownSignatures[0], Secret0, now: now);
     }
 
-    [SkippableFact]
+    [Fact]
     public async Task ValidateSignature_Works_With_RolledSecrets()
     {
-        Skip.If(IsGithubAction());
         var now = KnownNow.AddSeconds(100);
         var json = await TestSamples.GetCloudEventAsStringAsync();
 
@@ -38,10 +33,9 @@ public class WebhookUtilityTests
         WebhookUtility.ValidateSignature(json, KnownSignatures[1], Secret1, now: now);
     }
 
-    [SkippableFact]
+    [Fact]
     public async Task ValidateSignature_Rejects_OldTimestamp()
     {
-        Skip.If(IsGithubAction());
         var now = KnownNow.AddSeconds(400);
         var json = await TestSamples.GetCloudEventAsStringAsync();
         var exception = Assert.Throws<FaluException>(() => WebhookUtility.ValidateSignature(json, KnownSignatures[0], Secret0, now: now));

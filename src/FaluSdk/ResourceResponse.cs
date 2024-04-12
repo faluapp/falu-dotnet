@@ -91,7 +91,7 @@ public class ResourceResponse<TResource>(HttpResponseMessage response, TResource
         };
     }
 
-    private static void AddIf(IList<string> collection, string? value, string format, params string?[] args)
+    private static void AddIf(List<string> collection, string? value, string format, params string?[] args)
     {
         if (!string.IsNullOrWhiteSpace(value))
         {

@@ -62,7 +62,7 @@ public static class WebhookUtility
 
         return signature.Trim()
                         .Split(',')
-                        .Select(item => ParseItem(item))
+                        .Select(ParseItem)
                         .ToLookup(item => item.Key, item => item.Value);
     }
 

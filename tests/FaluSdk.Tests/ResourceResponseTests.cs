@@ -165,7 +165,7 @@ public class ResourceResponseTests
         var rr = new ResourceResponse<object>(response, new { }, null);
 
         // Assert
-        var ex = Assert.Throws<FaluException>(() => rr.EnsureSuccess());
+        var ex = Assert.Throws<FaluException>(rr.EnsureSuccess);
         Assert.Equal(HttpStatusCode.BadRequest, ex.StatusCode);
         Assert.Equal(response, ex.Response);
         Assert.Equal("req_000000000000000000000000", ex.RequestId);
@@ -203,7 +203,7 @@ public class ResourceResponseTests
         var rr = new ResourceResponse<object>(response, new { }, error);
 
         // Assert
-        var ex = Assert.Throws<FaluException>(() => rr.EnsureSuccess());
+        var ex = Assert.Throws<FaluException>(rr.EnsureSuccess);
         Assert.Equal(HttpStatusCode.BadRequest, ex.StatusCode);
         Assert.Equal(response, ex.Response);
         Assert.Equal("req_000000000000000000000000", ex.RequestId);
@@ -237,7 +237,7 @@ public class ResourceResponseTests
         var rr = new ResourceResponse<object>(response, new { }, error);
 
         // Assert
-        var ex = Assert.Throws<FaluException>(() => rr.EnsureSuccess());
+        var ex = Assert.Throws<FaluException>(rr.EnsureSuccess);
         Assert.Equal(HttpStatusCode.BadRequest, ex.StatusCode);
         Assert.Equal(response, ex.Response);
         Assert.Equal("req_000000000000000000000000", ex.RequestId);

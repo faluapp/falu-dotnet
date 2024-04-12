@@ -24,7 +24,7 @@ public class MoneyBalancesServiceClientTests : BaseServiceClientTests
 
 
     [Theory]
-    [MemberData(nameof(RequestOptionsData))]
+    [ClassData(typeof(RequestOptionsData))]
     public async Task GetAsync_Works(RequestOptions options)
     {
         var handler = new DynamicHttpMessageHandler((req, ct) =>
@@ -52,7 +52,7 @@ public class MoneyBalancesServiceClientTests : BaseServiceClientTests
     }
 
     [Theory]
-    [MemberData(nameof(RequestOptionsData))]
+    [ClassData(typeof(RequestOptionsData))]
     public async Task RefreshAsync_Works(RequestOptions options)
     {
         var handler = new DynamicHttpMessageHandler((req, ct) =>

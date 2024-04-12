@@ -7,8 +7,8 @@ public class WebhookUtilityTests
 {
     private const string Secret0 = "webhook_secret";
     private const string Secret1 = "webhook_secret_expired";
-    private const string Signature0 = "7fce1bc1e593e87728317a14218c0816e5ebca02cfbefc3326b8d11756b58369";
-    private const string Signature1 = "8310a32d5eb0581f7cb7d222b63c960e0dd0ead61b6f5f7b7adf890e8f699590";
+    private const string Signature0 = "a950948ee5a9ce80d6d0d250dba2723be4a62319d936b280992f804ee9b35566";
+    private const string Signature1 = "684ed18f8c9ca820c9fd079b83ed1fc5ddbf70e4e512b2ca5a2761a72c402a21";
     private static readonly DateTimeOffset KnownNow = DateTimeOffset.FromUnixTimeSeconds(1658299746);
     private static readonly string[] KnownSignatures = [
         $"t=1658299746,sha256={Signature0}",

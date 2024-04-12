@@ -20,7 +20,7 @@ public class MessageSuppressionsServiceClientTests : BaseServiceClientTests<Mess
     { }
 
     [Theory]
-    [MemberData(nameof(RequestOptionsData))]
+    [ClassData(typeof(RequestOptionsData))]
     public async Task GetAsync_Works(RequestOptions options)
     {
         var handler = GetAsync_Handler(options);
@@ -35,7 +35,7 @@ public class MessageSuppressionsServiceClientTests : BaseServiceClientTests<Mess
     }
 
     [Theory]
-    [MemberData(nameof(RequestOptionsWithHasContinuationTokenData))]
+    [ClassData(typeof(RequestOptionsWithHasContinuationTokenData))]
     public async Task ListAsync_Works(RequestOptions options, bool hasContinuationToken)
     {
         var handler = ListAsync_Handler(hasContinuationToken, options);
@@ -63,7 +63,7 @@ public class MessageSuppressionsServiceClientTests : BaseServiceClientTests<Mess
     }
 
     [Theory]
-    [MemberData(nameof(RequestOptionsData))]
+    [ClassData(typeof(RequestOptionsData))]
     public async Task ListRecursivelyAsync_Works(RequestOptions options)
     {
         var handler = ListAsync_Handler(options: options);
@@ -89,7 +89,7 @@ public class MessageSuppressionsServiceClientTests : BaseServiceClientTests<Mess
     }
 
     [Theory]
-    [MemberData(nameof(RequestOptionsData))]
+    [ClassData(typeof(RequestOptionsData))]
     public async Task CreateAsync_Works(RequestOptions options)
     {
         var handler = CreateAsync_Handler(options);
@@ -110,7 +110,7 @@ public class MessageSuppressionsServiceClientTests : BaseServiceClientTests<Mess
     }
 
     [Theory]
-    [MemberData(nameof(RequestOptionsData))]
+    [ClassData(typeof(RequestOptionsData))]
     public async Task DeleteAsync_Works(RequestOptions options)
     {
         var handler = DeleteAsync_Handler(options);

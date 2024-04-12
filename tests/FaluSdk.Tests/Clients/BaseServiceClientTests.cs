@@ -141,25 +141,29 @@ public class BaseServiceClientTests
     protected const string WorkspaceId = "wksp_602a8dd0a54847479a874de4";
     protected const string IdempotencyKey = "05bc69eb-218d-46f2-8812-5bede8592abf";
 
-    public static IEnumerable<object[]> RequestOptionsData =>
-        new List<object[]>
+    public class RequestOptionsData : TheoryData<RequestOptions>
+    {
+        public RequestOptionsData()
         {
-            new object[] { new RequestOptions { } },
-            new object[] { new RequestOptions { IdempotencyKey = IdempotencyKey } },
-            new object[] { new RequestOptions { Workspace = WorkspaceId } },
-            new object[] { new RequestOptions { Live = false } },
-            new object[] { new RequestOptions { Live = true } }
-        };
+            Add(new RequestOptions { });
+            Add(new RequestOptions { IdempotencyKey = IdempotencyKey });
+            Add(new RequestOptions { Workspace = WorkspaceId });
+            Add(new RequestOptions { Live = false });
+            Add(new RequestOptions { Live = true });
+        }
+    }
 
-    public static IEnumerable<object[]> RequestOptionsWithHasContinuationTokenData =>
-        new List<object[]>
+    public class RequestOptionsWithHasContinuationTokenData: TheoryData<RequestOptions, bool>
+    {
+        public RequestOptionsWithHasContinuationTokenData()
         {
-            new object[] { new RequestOptions { }, false },
-            new object[] { new RequestOptions { IdempotencyKey = IdempotencyKey }, false },
-            new object[] { new RequestOptions { Workspace = WorkspaceId }, false },
-            new object[] { new RequestOptions { Live = false }, true },
-            new object[] { new RequestOptions { Live = true }, true }
-        };
+            Add(new RequestOptions { }, false);
+            Add(new RequestOptions { IdempotencyKey = IdempotencyKey }, false);
+            Add(new RequestOptions { Workspace = WorkspaceId }, false);
+            Add(new RequestOptions { Live = false }, true);
+            Add(new RequestOptions { Live = true }, true);
+        }
+    }
 
     protected static void AssertRequestHeaders(HttpRequestMessage message, RequestOptions? options = null)
     {

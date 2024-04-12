@@ -24,7 +24,7 @@ public class EventsServiceClientTests : BaseServiceClientTests<WebhookEvent>
     { }
 
     [Theory]
-    [MemberData(nameof(RequestOptionsData))]
+    [ClassData(typeof(RequestOptionsData))]
     public async Task GetAsync_Works(RequestOptions options)
     {
         var handler = GetAsync_Handler(options);
@@ -40,7 +40,7 @@ public class EventsServiceClientTests : BaseServiceClientTests<WebhookEvent>
     }
 
     [Theory]
-    [MemberData(nameof(RequestOptionsWithHasContinuationTokenData))]
+    [ClassData(typeof(RequestOptionsWithHasContinuationTokenData))]
     public async Task ListAsync_Works(RequestOptions options, bool hasContinuationToken)
     {
         var handler = ListAsync_Handler(hasContinuationToken, options);
@@ -69,7 +69,7 @@ public class EventsServiceClientTests : BaseServiceClientTests<WebhookEvent>
     }
 
     [Theory]
-    [MemberData(nameof(RequestOptionsData))]
+    [ClassData(typeof(RequestOptionsData))]
     public async Task ListRecursivelyAsync_Works(RequestOptions options)
     {
         var handler = ListAsync_Handler(options: options);
@@ -95,7 +95,7 @@ public class EventsServiceClientTests : BaseServiceClientTests<WebhookEvent>
     }
 
     [Theory]
-    [MemberData(nameof(RequestOptionsData))]
+    [ClassData(typeof(RequestOptionsData))]
     public async Task GetAsync_Generic_Works(RequestOptions options)
     {
         var handler = GetAsync_Handler(options);
@@ -113,7 +113,7 @@ public class EventsServiceClientTests : BaseServiceClientTests<WebhookEvent>
     }
 
     [Theory]
-    [MemberData(nameof(RequestOptionsWithHasContinuationTokenData))]
+    [ClassData(typeof(RequestOptionsWithHasContinuationTokenData))]
     public async Task ListAsync_Generic_Works(RequestOptions options, bool hasContinuationToken)
     {
         var handler = ListAsync_Handler(hasContinuationToken, options);
@@ -144,7 +144,7 @@ public class EventsServiceClientTests : BaseServiceClientTests<WebhookEvent>
     }
 
     [Theory]
-    [MemberData(nameof(RequestOptionsData))]
+    [ClassData(typeof(RequestOptionsData))]
     public async Task ListRecursivelyAsync_Generic_Works(RequestOptions options)
     {
         var handler = ListAsync_Handler(options: options);

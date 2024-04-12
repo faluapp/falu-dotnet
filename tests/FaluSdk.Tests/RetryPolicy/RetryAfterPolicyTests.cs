@@ -25,7 +25,7 @@ public class RetryAfterPolicyTests
     }
 
     [Theory]
-    [MemberData(nameof(HttpResponseData.Data), MemberType = typeof(HttpResponseData))]
+    [ClassData(typeof(HttpResponseData))]
     public async Task RetryAfterPolicy_Works2(HttpResponseMessage message, bool shouldRetry)
     {
         var executions = 0;
@@ -63,15 +63,15 @@ public class RetryAfterPolicyTests
         Assert.Equal(retries + 1, executions);
     }
 
-    class HttpResponseData
+    class HttpResponseData : TheoryData<HttpResponseMessage, bool>
     {
-        public static IEnumerable<object[]> Data => new List<object[]>
+        public HttpResponseData()
         {
-            new object[] { PrepareTooManyRequestsResponseMessage(), true },
-            new object[] { new HttpResponseMessage(HttpStatusCode.BadRequest), false },
-            new object[] { new HttpResponseMessage(HttpStatusCode.OK), false},
-            new object[] { new HttpResponseMessage(HttpStatusCode.InternalServerError), false}
-        };
+            Add(PrepareTooManyRequestsResponseMessage(), true);
+            Add(new HttpResponseMessage(HttpStatusCode.BadRequest), false);
+            Add(new HttpResponseMessage(HttpStatusCode.OK), false);
+            Add(new HttpResponseMessage(HttpStatusCode.InternalServerError), false);
+        }
     }
 
     private static HttpResponseMessage PrepareTooManyRequestsResponseMessage()

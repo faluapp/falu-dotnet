@@ -8,7 +8,7 @@ namespace Falu.Tests.RetryPolicy;
 public class GeneralRetryPolicyTests
 {
     [Theory]
-    [MemberData(nameof(HttpResponseData.Data), MemberType = typeof(HttpResponseData))]
+    [ClassData(typeof(HttpResponseData))]
     public void ShouldRetry_Works(HttpResponseMessage message, bool shouldRetry)
     {
         var result = IServiceCollectionExtensions.ShouldRetry(message);
@@ -16,7 +16,7 @@ public class GeneralRetryPolicyTests
     }
 
     [Theory]
-    [MemberData(nameof(HttpResponseData.Data), MemberType = typeof(HttpResponseData))]
+    [ClassData(typeof(HttpResponseData))]
     public async Task GeneralRetryPolicy_Works(HttpResponseMessage message, bool shouldRetry)
     {
         var executions = 0;
@@ -34,7 +34,7 @@ public class GeneralRetryPolicyTests
     }
 
     [Theory]
-    [MemberData(nameof(HttpResponseData.Data), MemberType = typeof(HttpResponseData))]
+    [ClassData(typeof(HttpResponseData))]
     public async Task WrappedGeneralRetryPolicy_Works(HttpResponseMessage message, bool shouldRetry)
     {
         var executions = 0;
@@ -54,25 +54,25 @@ public class GeneralRetryPolicyTests
         Assert.Equal((shouldRetry ? delays.Length : 0) + 1, executions);
     }
 
-    class HttpResponseData
+    class HttpResponseData : TheoryData<HttpResponseMessage, bool>
     {
-        public static IEnumerable<object[]> Data => new List<object[]>
+        public HttpResponseData()
         {
-            new object[] { PrepareShouldRetryResponseMessage(true), true },
-            new object[] { PrepareShouldRetryResponseMessage(false), false },
-            new object[] { new HttpResponseMessage(HttpStatusCode.BadRequest), false },
-            new object[] { new HttpResponseMessage(HttpStatusCode.OK), false},
-            new object[] { new HttpResponseMessage(HttpStatusCode.InternalServerError), true },
-            new object[] { new HttpResponseMessage(HttpStatusCode.Conflict), true},
-            new object[] { new HttpResponseMessage(HttpStatusCode.RequestTimeout), true },
-            new object[] { new HttpResponseMessage(HttpStatusCode.GatewayTimeout), true },
-            new object[] { new HttpResponseMessage(HttpStatusCode.MethodNotAllowed), false },
-            new object[] { new HttpResponseMessage(HttpStatusCode.UnsupportedMediaType), false },
-            new object[] { new HttpResponseMessage(HttpStatusCode.Unauthorized), false },
-            new object[] { new HttpResponseMessage(HttpStatusCode.Forbidden), false },
-            new object[] { new HttpResponseMessage(HttpStatusCode.NoContent), false },
-            new object[] { new HttpResponseMessage(HttpStatusCode.NotFound), false }
-        };
+            Add(PrepareShouldRetryResponseMessage(true), true);
+            Add(PrepareShouldRetryResponseMessage(false), false);
+            Add(new HttpResponseMessage(HttpStatusCode.BadRequest), false);
+            Add(new HttpResponseMessage(HttpStatusCode.OK), false);
+            Add(new HttpResponseMessage(HttpStatusCode.InternalServerError), true);
+            Add(new HttpResponseMessage(HttpStatusCode.Conflict), true);
+            Add(new HttpResponseMessage(HttpStatusCode.RequestTimeout), true);
+            Add(new HttpResponseMessage(HttpStatusCode.GatewayTimeout), true);
+            Add(new HttpResponseMessage(HttpStatusCode.MethodNotAllowed), false);
+            Add(new HttpResponseMessage(HttpStatusCode.UnsupportedMediaType), false);
+            Add(new HttpResponseMessage(HttpStatusCode.Unauthorized), false);
+            Add(new HttpResponseMessage(HttpStatusCode.Forbidden), false);
+            Add(new HttpResponseMessage(HttpStatusCode.NoContent), false);
+            Add(new HttpResponseMessage(HttpStatusCode.NotFound), false);
+        }
     }
 
     private static HttpResponseMessage PrepareShouldRetryResponseMessage(bool shouldRetry)

@@ -6,15 +6,12 @@ using SC = Falu.Serialization.FaluSerializerContext;
 namespace Falu.TransferReversals;
 
 ///
-public class TransferReversalsServiceClient : BaseServiceClient<TransferReversal>,
-                                              ISupportsListing<TransferReversal, TransferReversalsListOptions>,
-                                              ISupportsRetrieving<TransferReversal>,
-                                              ISupportsCreation<TransferReversal, TransferReversalCreateRequest>,
-                                              ISupportsUpdating<TransferReversal, TransferReversalPatchModel>
+public class TransferReversalsServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<TransferReversal>(backChannel, options),
+                                                                                                 ISupportsListing<TransferReversal, TransferReversalsListOptions>,
+                                                                                                 ISupportsRetrieving<TransferReversal>,
+                                                                                                 ISupportsCreation<TransferReversal, TransferReversalCreateRequest>,
+                                                                                                 ISupportsUpdating<TransferReversal, TransferReversalPatchModel>
 {
-    ///
-    public TransferReversalsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
-
     /// <inheritdoc/>
     protected override string BasePath => "/v1/transfer_reversals";
 

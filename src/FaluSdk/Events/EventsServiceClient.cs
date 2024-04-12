@@ -4,13 +4,10 @@ using Sc = Falu.Serialization.FaluSerializerContext;
 namespace Falu.Events;
 
 ///
-public class EventsServiceClient : BaseServiceClient<WebhookEvent>,
-                                   ISupportsListing<WebhookEvent, EventsListOptions>,
-                                   ISupportsRetrieving<WebhookEvent>
+public class EventsServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<WebhookEvent>(backChannel, options),
+                                                                                      ISupportsListing<WebhookEvent, EventsListOptions>,
+                                                                                      ISupportsRetrieving<WebhookEvent>
 {
-    ///
-    public EventsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
-
     /// <inheritdoc/>
     protected override string BasePath => "/v1/events";
 

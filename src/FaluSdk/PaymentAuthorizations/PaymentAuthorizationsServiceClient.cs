@@ -6,14 +6,11 @@ using SC = Falu.Serialization.FaluSerializerContext;
 namespace Falu.PaymentAuthorizations;
 
 ///
-public class PaymentAuthorizationsServiceClient : BaseServiceClient<PaymentAuthorization>,
-                                                  ISupportsListing<PaymentAuthorization, PaymentAuthorizationsListOptions>,
-                                                  ISupportsRetrieving<PaymentAuthorization>,
-                                                  ISupportsUpdating<PaymentAuthorization, PaymentAuthorizationPatchModel>
+public class PaymentAuthorizationsServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<PaymentAuthorization>(backChannel, options),
+                                                                                                     ISupportsListing<PaymentAuthorization, PaymentAuthorizationsListOptions>,
+                                                                                                     ISupportsRetrieving<PaymentAuthorization>,
+                                                                                                     ISupportsUpdating<PaymentAuthorization, PaymentAuthorizationPatchModel>
 {
-    ///
-    public PaymentAuthorizationsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
-
     /// <inheritdoc/>
     protected override string BasePath => "/v1/payment_authorizations";
 

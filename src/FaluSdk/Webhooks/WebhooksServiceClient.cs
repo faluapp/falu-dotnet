@@ -6,15 +6,12 @@ using SC = Falu.Serialization.FaluSerializerContext;
 namespace Falu.Webhooks;
 
 ///
-public class WebhooksServiceClient : BaseServiceClient<WebhookEndpoint>,
-                                     ISupportsListing<WebhookEndpoint, WebhookEndpointsListOptions>,
-                                     ISupportsRetrieving<WebhookEndpoint>,
-                                     ISupportsCreation<WebhookEndpoint, WebhookEndpointCreateRequest>,
-                                     ISupportsUpdating<WebhookEndpoint, WebhookEndpointPatchModel>
+public class WebhooksServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<WebhookEndpoint>(backChannel, options),
+                                                                                        ISupportsListing<WebhookEndpoint, WebhookEndpointsListOptions>,
+                                                                                        ISupportsRetrieving<WebhookEndpoint>,
+                                                                                        ISupportsCreation<WebhookEndpoint, WebhookEndpointCreateRequest>,
+                                                                                        ISupportsUpdating<WebhookEndpoint, WebhookEndpointPatchModel>
 {
-    ///
-    public WebhooksServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
-
     /// <inheritdoc/>
     protected override string BasePath => "/v1/webhooks/endpoints";
 

@@ -5,13 +5,12 @@ using SC = Falu.Serialization.FaluSerializerContext;
 namespace Falu.MessageSuppressions;
 
 ///
-public class MessageSuppressionsServiceClient : BaseServiceClient<MessageSuppression>,
+///
+public class MessageSuppressionsServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<MessageSuppression>(backChannel, options),
                                                 ISupportsListing<MessageSuppression, MessageSuppressionsListOptions>,
                                                 ISupportsRetrieving<MessageSuppression>,
                                                 ISupportsCreation<MessageSuppression, MessageSuppressionCreateRequest>
 {
-    ///
-    public MessageSuppressionsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
 
     /// <inheritdoc/>
     protected override string BasePath => "/v1/message_suppressions";

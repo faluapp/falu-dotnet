@@ -6,17 +6,14 @@ using SC = Falu.Serialization.FaluSerializerContext;
 namespace Falu.MessageBatches;
 
 ///
-public class MessageBatchesServiceClient : BaseServiceClient<MessageBatch>,
-                                           ISupportsListing<MessageBatch, MessageBatchesListOptions>,
-                                           ISupportsRetrieving<MessageBatch>,
-                                           ISupportsCreation<MessageBatch, MessageBatchCreateRequest>,
-                                           ISupportsUpdating<MessageBatch, MessageBatchPatchModel>,
-                                           ISupportsCanceling<MessageBatch>,
-                                           ISupportsRedaction<MessageBatch>
+public class MessageBatchesServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<MessageBatch>(backChannel, options),
+                                                                                              ISupportsListing<MessageBatch, MessageBatchesListOptions>,
+                                                                                              ISupportsRetrieving<MessageBatch>,
+                                                                                              ISupportsCreation<MessageBatch, MessageBatchCreateRequest>,
+                                                                                              ISupportsUpdating<MessageBatch, MessageBatchPatchModel>,
+                                                                                              ISupportsCanceling<MessageBatch>,
+                                                                                              ISupportsRedaction<MessageBatch>
 {
-    ///
-    public MessageBatchesServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
-
     /// <inheritdoc/>
     protected override string BasePath => "/v1/message_batches";
 

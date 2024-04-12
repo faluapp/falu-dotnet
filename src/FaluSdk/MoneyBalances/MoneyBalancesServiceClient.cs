@@ -5,11 +5,8 @@ using SC = Falu.Serialization.FaluSerializerContext;
 namespace Falu.Payments;
 
 ///
-public class MoneyBalancesServiceClient : BaseServiceClient<MoneyBalances>
+public class MoneyBalancesServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<MoneyBalances>(backChannel, options)
 {
-    ///
-    public MoneyBalancesServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
-
     /// <inheritdoc/>
     protected override string BasePath => "/v1/money_balances";
 

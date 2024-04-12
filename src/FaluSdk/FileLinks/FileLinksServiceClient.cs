@@ -6,17 +6,12 @@ using SC = Falu.Serialization.FaluSerializerContext;
 namespace Falu.FileLinks;
 
 ///
-public class FileLinksServiceClient : BaseServiceClient<FileLink>,
-                                      ISupportsListing<FileLink, FileLinksListOptions>,
-                                      ISupportsRetrieving<FileLink>,
-                                      ISupportsCreation<FileLink, FileLinkCreateRequest>,
-                                      ISupportsUpdating<FileLink, FileLinkPatchModel>
+public class FileLinksServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<FileLink>(backChannel, options),
+                                                                                         ISupportsListing<FileLink, FileLinksListOptions>,
+                                                                                         ISupportsRetrieving<FileLink>,
+                                                                                         ISupportsCreation<FileLink, FileLinkCreateRequest>,
+                                                                                         ISupportsUpdating<FileLink, FileLinkPatchModel>
 {
-    ///
-    public FileLinksServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options)
-    {
-    }
-
     ///
     protected override string BasePath => "/v1/file_links";
 

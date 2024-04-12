@@ -3,13 +3,10 @@
 namespace Falu.IdentityVerificationReports;
 
 ///
-public class IdentityVerificationReportsServiceClient : BaseServiceClient<IdentityVerificationReport>,
-                                                        ISupportsListing<IdentityVerificationReport, IdentityVerificationReportsListOptions>,
-                                                        ISupportsRetrieving<IdentityVerificationReport>
+public class IdentityVerificationReportsServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<IdentityVerificationReport>(backChannel, options),
+                                                                                                           ISupportsListing<IdentityVerificationReport, IdentityVerificationReportsListOptions>,
+                                                                                                           ISupportsRetrieving<IdentityVerificationReport>
 {
-    ///
-    public IdentityVerificationReportsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
-
     /// <inheritdoc/>
     protected override string BasePath => "/v1/identity/verification_reports";
 

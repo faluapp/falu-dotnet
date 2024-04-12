@@ -135,12 +135,6 @@ public class FaluClient<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTyp
 /// <summary>
 /// Official client for Falu API
 /// </summary>
-public class FaluClient : FaluClient<FaluClientOptions>
-{
-    /// <summary>
-    /// Creates an instance of <see cref="FaluClient"/>
-    /// </summary>
-    /// <param name="backChannel"></param>
-    /// <param name="optionsAccessor"></param>
-    public FaluClient(HttpClient backChannel, IOptionsSnapshot<FaluClientOptions> optionsAccessor) : base(backChannel, optionsAccessor) { }
-}
+/// <param name="backChannel"></param>
+/// <param name="optionsAccessor"></param>
+public class FaluClient(HttpClient backChannel, IOptionsSnapshot<FaluClientOptions> optionsAccessor) : FaluClient<FaluClientOptions>(backChannel, optionsAccessor) { }

@@ -4,7 +4,10 @@ using System.Text.Json.Serialization.Metadata;
 namespace Falu.Core;
 
 ///
-public abstract class BaseServiceClient<TResource> : BaseServiceClient
+public abstract class BaseServiceClient<TResource>(HttpClient backChannel,
+                                                   FaluClientOptions options,
+                                                   JsonTypeInfo<TResource> jsonTypeInfo,
+                                                   JsonTypeInfo<List<TResource>>? listJsonTypeInfo = null) : BaseServiceClient(backChannel, options)
 {
     ///
     protected BaseServiceClient(HttpClient backChannel, FaluClientOptions options)
@@ -14,24 +17,13 @@ public abstract class BaseServiceClient<TResource> : BaseServiceClient
                Serialization.FaluSerializerContext.Default.GetTypeInfo<List<TResource>>()) { }
 
     ///
-    protected BaseServiceClient(HttpClient backChannel,
-                                FaluClientOptions options,
-                                JsonTypeInfo<TResource> jsonTypeInfo,
-                                JsonTypeInfo<List<TResource>>? listJsonTypeInfo = null) // this allows one to pass JsonTypeInfo<T> from a different JsonSerializerContext e.g. in the CLI
-        : base(backChannel, options)
-    {
-        JsonTypeInfo = jsonTypeInfo ?? throw new ArgumentNullException(nameof(jsonTypeInfo));
-        ListJsonTypeInfo = listJsonTypeInfo;
-    }
-
-    ///
     protected abstract string BasePath { get; }
 
     ///
-    protected virtual JsonTypeInfo<TResource> JsonTypeInfo { get; }
+    protected virtual JsonTypeInfo<TResource> JsonTypeInfo { get; } = jsonTypeInfo ?? throw new ArgumentNullException(nameof(jsonTypeInfo));
 
     ///
-    protected virtual JsonTypeInfo<List<TResource>>? ListJsonTypeInfo { get; }
+    protected virtual JsonTypeInfo<List<TResource>>? ListJsonTypeInfo { get; } = listJsonTypeInfo;
 
 
     ///

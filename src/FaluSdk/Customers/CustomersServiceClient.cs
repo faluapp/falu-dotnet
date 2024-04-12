@@ -6,15 +6,12 @@ using SC = Falu.Serialization.FaluSerializerContext;
 namespace Falu.Customers;
 
 ///
-public class CustomersServiceClient : BaseServiceClient<Customer>,
-                                      ISupportsListing<Customer, CustomersListOptions>,
-                                      ISupportsRetrieving<Customer>,
-                                      ISupportsCreation<Customer, CustomerCreateRequest>,
-                                      ISupportsUpdating<Customer, CustomerPatchModel>
+public class CustomersServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<Customer>(backChannel, options),
+                                                                                         ISupportsListing<Customer, CustomersListOptions>,
+                                                                                         ISupportsRetrieving<Customer>,
+                                                                                         ISupportsCreation<Customer, CustomerCreateRequest>,
+                                                                                         ISupportsUpdating<Customer, CustomerPatchModel>
 {
-    ///
-    public CustomersServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
-
     /// <inheritdoc/>
     protected override string BasePath => "/v1/customers";
 

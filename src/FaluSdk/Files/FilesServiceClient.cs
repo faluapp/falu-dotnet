@@ -3,16 +3,11 @@
 namespace Falu.Files;
 
 ///
-public class FilesServiceClient : BaseServiceClient<File>,
-                                  ISupportsListing<File, FilesListOptions>,
-                                  ISupportsRetrieving<File>,
-                                  ISupportsCreation<File, FileCreateRequest>
+public class FilesServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<File>(backChannel, options),
+                                                                                     ISupportsListing<File, FilesListOptions>,
+                                                                                     ISupportsRetrieving<File>,
+                                                                                     ISupportsCreation<File, FileCreateRequest>
 {
-    ///
-    public FilesServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options)
-    {
-    }
-
     ///
     protected override string BasePath => "/v1/files";
 

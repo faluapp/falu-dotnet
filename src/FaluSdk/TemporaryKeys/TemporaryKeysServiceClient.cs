@@ -5,13 +5,10 @@ using SC = Falu.Serialization.FaluSerializerContext;
 namespace Falu.TemporaryKeys;
 
 ///
-public class TemporaryKeysServiceClient : BaseServiceClient<TemporaryKey>,
-                                          ISupportsListing<TemporaryKey, TemporaryKeysListOptions>,
-                                          ISupportsRetrieving<TemporaryKey>
+public class TemporaryKeysServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<TemporaryKey>(backChannel, options),
+                                                                                             ISupportsListing<TemporaryKey, TemporaryKeysListOptions>,
+                                                                                             ISupportsRetrieving<TemporaryKey>
 {
-    ///
-    public TemporaryKeysServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
-
     /// <inheritdoc/>
     protected override string BasePath => "/v1/temporary_keys";
 

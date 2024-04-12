@@ -2,21 +2,14 @@
 
 internal class TestSamples
 {
-    private const string FolderNameSamples = "Samples";
-
-    private static Task<string> GetAsStringAsync(string fileName)
-        => EmbeddedResourceHelper.GetResourceAsStringAsync<TestSamples>(FolderNameSamples, fileName)!;
-
-    private static Stream GetAsStreamAsync(string fileName)
-        => EmbeddedResourceHelper.GetResourceAsStream<TestSamples>(FolderNameSamples, fileName)!;
-
     public static Task<string> GetCloudEventAsStringAsync() => GetAsStringAsync("cloud_event.json");
     public static Stream GetCloudEventAsStreamAsync() => GetAsStreamAsync("cloud_event.json");
-}
 
-internal static class EmbeddedResourceHelper
-{
-    public static Stream? GetResourceAsStream<T>(string resourceName) => typeof(T).Assembly.GetManifestResourceStream(resourceName);
+    private static Task<string> GetAsStringAsync(string fileName)
+        => GetResourceAsStringAsync<TestSamples>($"{typeof(TestSamples).Namespace}.Samples.{fileName}")!;
+
+    private static Stream GetAsStreamAsync(string fileName)
+        => GetResourceAsStream<TestSamples>($"{typeof(TestSamples).Namespace}.Samples.{fileName}")!;
 
     public static async Task<string?> GetResourceAsStringAsync<T>(string resourceName)
     {
@@ -24,14 +17,10 @@ internal static class EmbeddedResourceHelper
         if (st is null) return null;
         using (st)
         {
-            using var reader = new StreamReader(st);
+            using var reader = new StreamReader(st, detectEncodingFromByteOrderMarks: true);
             return await reader.ReadToEndAsync().ConfigureAwait(false);
         }
     }
 
-    public static Task<string?> GetResourceAsStringAsync<T>(string folder, string fileName)
-        => GetResourceAsStringAsync<T>(string.Join(".", typeof(T).Namespace, folder, fileName));
-
-    public static Stream? GetResourceAsStream<T>(string folder, string fileName)
-        => GetResourceAsStream<T>(string.Join(".", typeof(T).Namespace, folder, fileName));
+    public static Stream? GetResourceAsStream<T>(string resourceName) => typeof(T).Assembly.GetManifestResourceStream(resourceName);
 }

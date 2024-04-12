@@ -1,21 +1,11 @@
 ﻿namespace Falu.Tests;
 
-public class DynamicHttpMessageHandler : HttpMessageHandler
+public class DynamicHttpMessageHandler(Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> processFunc) : HttpMessageHandler
 {
-    private readonly Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> processFunc;
+    private readonly Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> processFunc = processFunc ?? throw new ArgumentNullException(nameof(processFunc));
 
     public DynamicHttpMessageHandler(Func<HttpRequestMessage, CancellationToken, HttpResponseMessage> processFunc)
-    {
-        this.processFunc = (req, ct) => Task.FromResult(processFunc(req, ct));
-    }
+        : this((req, ct) => Task.FromResult(processFunc(req, ct))) { }
 
-    public DynamicHttpMessageHandler(Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> processFunc)
-    {
-        this.processFunc = processFunc ?? throw new ArgumentNullException(nameof(processFunc));
-    }
-
-    protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-    {
-        return processFunc(request, cancellationToken);
-    }
+    protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken) => processFunc(request, cancellationToken);
 }

@@ -6,17 +6,14 @@ using SC = Falu.Serialization.FaluSerializerContext;
 namespace Falu.Messages;
 
 ///
-public class MessagesServiceClient : BaseServiceClient<Message>,
-                                     ISupportsListing<Message, MessagesListOptions>,
-                                     ISupportsRetrieving<Message>,
-                                     //ISupportsCreation<Message, MessageCreateRequest>,
-                                     ISupportsUpdating<Message, MessagePatchModel>,
-                                     ISupportsCanceling<Message>,
-                                     ISupportsRedaction<Message>
+public class MessagesServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<Message>(backChannel, options),
+                                                                                        ISupportsListing<Message, MessagesListOptions>,
+                                                                                        ISupportsRetrieving<Message>,
+                                                                                        //ISupportsCreation<Message, MessageCreateRequest>,
+                                                                                        ISupportsUpdating<Message, MessagePatchModel>,
+                                                                                        ISupportsCanceling<Message>,
+                                                                                        ISupportsRedaction<Message>
 {
-    ///
-    public MessagesServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
-
     /// <inheritdoc/>
     protected override string BasePath => "/v1/messages";
 

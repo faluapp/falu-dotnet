@@ -8,23 +8,16 @@ using SC = Falu.Serialization.FaluSerializerContext;
 namespace Falu.Core;
 
 ///
-public abstract class BaseServiceClient // This class exists because not all service clients may be based on a resource
+public abstract class BaseServiceClient(HttpClient backChannel, FaluClientOptions options) // This class exists because not all service clients may be based on a resource
 {
     ///
     protected internal static string DefaultJsonContentType { get; } = "application/json";
 
     ///
-    protected BaseServiceClient(HttpClient backChannel, FaluClientOptions options)
-    {
-        BackChannel = backChannel ?? throw new ArgumentNullException(nameof(backChannel));
-        Options = options ?? throw new ArgumentNullException(nameof(options));
-    }
+    protected HttpClient BackChannel { get; } = backChannel ?? throw new ArgumentNullException(nameof(backChannel));
 
     ///
-    protected HttpClient BackChannel { get; }
-
-    ///
-    protected FaluClientOptions Options { get; }
+    protected FaluClientOptions Options { get; } = options ?? throw new ArgumentNullException(nameof(options));
 
     #region Helpers
 

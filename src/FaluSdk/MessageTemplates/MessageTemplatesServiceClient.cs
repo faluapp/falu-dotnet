@@ -6,15 +6,12 @@ using SC = Falu.Serialization.FaluSerializerContext;
 namespace Falu.MessageTemplates;
 
 ///
-public class MessageTemplatesServiceClient : BaseServiceClient<MessageTemplate>,
-                                             ISupportsListing<MessageTemplate, MessageTemplatesListOptions>,
-                                             ISupportsRetrieving<MessageTemplate>,
-                                             ISupportsCreation<MessageTemplate, MessageTemplateCreateRequest>,
-                                             ISupportsUpdating<MessageTemplate, MessageTemplatePatchModel>
+public class MessageTemplatesServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<MessageTemplate>(backChannel, options),
+                                                                                                ISupportsListing<MessageTemplate, MessageTemplatesListOptions>,
+                                                                                                ISupportsRetrieving<MessageTemplate>,
+                                                                                                ISupportsCreation<MessageTemplate, MessageTemplateCreateRequest>,
+                                                                                                ISupportsUpdating<MessageTemplate, MessageTemplatePatchModel>
 {
-    ///
-    public MessageTemplatesServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
-
     /// <inheritdoc/>
     protected override string BasePath => "/v1/message_templates";
 

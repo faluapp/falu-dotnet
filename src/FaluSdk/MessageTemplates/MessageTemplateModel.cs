@@ -10,25 +10,16 @@ namespace Falu.MessageTemplates;
 /// <summary>
 /// Helper for creating models used to render message templates when sending messages.
 /// </summary>
+/// <param name="object">The <see cref="JsonObject"/> instance to be held.</param>
 [JsonConverter(typeof(Serialization.MessageTemplateModelJsonConverter))]
-public readonly struct MessageTemplateModel : IEquatable<MessageTemplateModel>
+public readonly struct MessageTemplateModel(JsonObject @object) : IEquatable<MessageTemplateModel>
 {
     /// <summary>
     /// An empty template model that does not require serialization
     /// </summary>
     public static readonly MessageTemplateModel Empty = new([]);
 
-    private readonly JsonObject @object;
-
-    /// <summary>Creates an instance of <see cref="MessageTemplateModel"/>.</summary>
-    /// <param name="object">The <see cref="JsonObject"/> instance to be held.</param>
-    /// <exception cref="ArgumentNullException">
-    /// <paramref name="object"/> is <see langword="null"/>.
-    /// </exception>
-    public MessageTemplateModel(JsonObject @object)
-    {
-        this.@object = @object ?? throw new ArgumentNullException(nameof(@object));
-    }
+    private readonly JsonObject @object = @object ?? throw new ArgumentNullException(nameof(@object));
 
     /// <summary>
     /// The <see cref="JsonObject"/> instance to be held.

@@ -15,50 +15,33 @@ namespace Falu;
 /// The instance of <see cref="HttpResponseMessage"/> referenced by <see cref="Response"/> is automatically disposed
 /// once an instance of <see cref="ResourceResponse{TResource}"/> is no longer in use.
 /// </remarks>
-public class ResourceResponse<TResource>
+/// <param name="response"></param>
+/// <param name="resource"></param>
+/// <param name="error"></param>
+public class ResourceResponse<TResource>(HttpResponseMessage response, TResource? resource = default, FaluError? error = default)
 {
-    /// <summary>
-    /// Create an instance of <see cref="ResourceResponse{TResource}"/>
-    /// </summary>
-    /// <param name="response"></param>
-    /// <param name="resource"></param>
-    /// <param name="error"></param>
-    public ResourceResponse(HttpResponseMessage response,
-                            TResource? resource = default,
-                            FaluError? error = default)
-    {
-        Response = response ?? throw new ArgumentNullException(nameof(response));
-        Resource = resource;
-        Error = error;
-
-        RequestId = GetHeader(response.Headers, HeadersNames.XRequestId);
-        TraceId = GetHeader(response.Headers, HeadersNames.XTraceId) ?? error?.TraceId;
-        ContinuationToken = GetHeader(response.Headers, HeadersNames.XContinuationToken);
-        CachedResponse = GetHeader<bool?>(response.Headers, HeadersNames.XCachedResponse);
-    }
-
     /// <summary>Gets the ID of the request, as returned by Falu.</summary>
-    public string? RequestId { get; }
+    public string? RequestId { get; } = GetHeader(response?.Headers, HeadersNames.XRequestId);
 
     /// <summary>
     /// Gets an identifier to correlate the request between the client and the server, as returned by Falu.
     /// </summary>
-    public string? TraceId { get; }
+    public string? TraceId { get; } = GetHeader(response?.Headers, HeadersNames.XTraceId) ?? error?.TraceId;
 
     /// <summary>Gets the token to use to fetch more data, as returned by Falu.</summary>
-    public string? ContinuationToken { get; }
+    public string? ContinuationToken { get; } = GetHeader(response?.Headers, HeadersNames.XContinuationToken);
 
     /// <summary>
     /// Gets value indicating if the response was returned from cache.
     /// This is true for repeat requests using the same idempotency key.
     /// When <see langword="null" />, the header was not present in the response.
     /// </summary>
-    public bool? CachedResponse { get; }
+    public bool? CachedResponse { get; } = GetHeader<bool?>(response?.Headers, HeadersNames.XCachedResponse);
 
     /// <summary>
     /// The original HTTP response
     /// </summary>
-    public HttpResponseMessage Response { get; }
+    public HttpResponseMessage Response { get; } = response ?? throw new ArgumentNullException(nameof(response));
 
     /// <summary>
     /// The response status code gotten from <see cref="Response"/>
@@ -73,12 +56,12 @@ public class ResourceResponse<TResource>
     /// <summary>
     /// The resource extracted from the response body
     /// </summary>
-    public TResource? Resource { get; }
+    public TResource? Resource { get; } = resource;
 
     /// <summary>
     /// The error extracted from the response body
     /// </summary>
-    public FaluError? Error { get; }
+    public FaluError? Error { get; } = error;
 
     /// <summary>
     /// Helper method to ensure the response was successful
@@ -123,17 +106,10 @@ public class ResourceResponse<TResource>
     /// </summary>
     public bool? HasMoreResults => typeof(IEnumerable).IsAssignableFrom(typeof(TResource)) ? ContinuationToken != null : null;
 
-    internal static string? GetHeader(HttpResponseHeaders headers, string name)
-    {
-        if (headers.TryGetValues(name, out var values))
-        {
-            return values.SingleOrDefault();
-        }
+    internal static string? GetHeader(HttpResponseHeaders? headers, string name)
+        => headers is null || !headers.TryGetValues(name, out var values) ? default : values.SingleOrDefault();
 
-        return default;
-    }
-
-    private static T? GetHeader<T>(HttpResponseHeaders headers, string name)
+    private static T? GetHeader<T>(HttpResponseHeaders? headers, string name)
     {
         var value = GetHeader(headers, name);
         if (string.IsNullOrWhiteSpace(value)) return default;

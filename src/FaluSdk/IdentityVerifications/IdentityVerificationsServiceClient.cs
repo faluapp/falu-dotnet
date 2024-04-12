@@ -6,17 +6,14 @@ using SC = Falu.Serialization.FaluSerializerContext;
 namespace Falu.IdentityVerifications;
 
 ///
-public class IdentityVerificationsServiceClient : BaseServiceClient<IdentityVerification>,
-                                                  ISupportsListing<IdentityVerification, IdentityVerificationsListOptions>,
-                                                  ISupportsRetrieving<IdentityVerification>,
-                                                  ISupportsCreation<IdentityVerification, IdentityVerificationCreateRequest>,
-                                                  ISupportsUpdating<IdentityVerification, IdentityVerificationPatchModel>,
-                                                  ISupportsCanceling<IdentityVerification>,
-                                                  ISupportsRedaction<IdentityVerification>
+public class IdentityVerificationsServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<IdentityVerification>(backChannel, options),
+                                                                                                     ISupportsListing<IdentityVerification, IdentityVerificationsListOptions>,
+                                                                                                     ISupportsRetrieving<IdentityVerification>,
+                                                                                                     ISupportsCreation<IdentityVerification, IdentityVerificationCreateRequest>,
+                                                                                                     ISupportsUpdating<IdentityVerification, IdentityVerificationPatchModel>,
+                                                                                                     ISupportsCanceling<IdentityVerification>,
+                                                                                                     ISupportsRedaction<IdentityVerification>
 {
-    ///
-    public IdentityVerificationsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
-
     /// <inheritdoc/>
     protected override string BasePath => "/v1/identity/verifications";
 

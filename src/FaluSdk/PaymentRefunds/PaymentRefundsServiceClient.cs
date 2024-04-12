@@ -6,15 +6,12 @@ using SC = Falu.Serialization.FaluSerializerContext;
 namespace Falu.PaymentRefunds;
 
 ///
-public class PaymentRefundsServiceClient : BaseServiceClient<PaymentRefund>,
-                                           ISupportsListing<PaymentRefund, PaymentRefundsListOptions>,
-                                           ISupportsRetrieving<PaymentRefund>,
-                                           ISupportsCreation<PaymentRefund, PaymentRefundCreateRequest>,
-                                           ISupportsUpdating<PaymentRefund, PaymentRefundPatchModel>
+public class PaymentRefundsServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<PaymentRefund>(backChannel, options),
+                                                                                              ISupportsListing<PaymentRefund, PaymentRefundsListOptions>,
+                                                                                              ISupportsRetrieving<PaymentRefund>,
+                                                                                              ISupportsCreation<PaymentRefund, PaymentRefundCreateRequest>,
+                                                                                              ISupportsUpdating<PaymentRefund, PaymentRefundPatchModel>
 {
-    ///
-    public PaymentRefundsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
-
     /// <inheritdoc/>
     protected override string BasePath => "/v1/payment_refunds";
 

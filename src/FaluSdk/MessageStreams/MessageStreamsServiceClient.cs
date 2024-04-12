@@ -6,15 +6,12 @@ using SC = Falu.Serialization.FaluSerializerContext;
 namespace Falu.MessageStreams;
 
 ///
-public class MessageStreamsServiceClient : BaseServiceClient<MessageStream>,
-                                           ISupportsListing<MessageStream, MessageStreamsListOptions>,
-                                           ISupportsRetrieving<MessageStream>,
-                                           ISupportsCreation<MessageStream, MessageStreamCreateRequest>,
-                                           ISupportsUpdating<MessageStream, MessageStreamPatchModel>
+public class MessageStreamsServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<MessageStream>(backChannel, options),
+                                                                                              ISupportsListing<MessageStream, MessageStreamsListOptions>,
+                                                                                              ISupportsRetrieving<MessageStream>,
+                                                                                              ISupportsCreation<MessageStream, MessageStreamCreateRequest>,
+                                                                                              ISupportsUpdating<MessageStream, MessageStreamPatchModel>
 {
-    ///
-    public MessageStreamsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
-
     /// <inheritdoc/>
     protected override string BasePath => "/v1/message_streams";
 

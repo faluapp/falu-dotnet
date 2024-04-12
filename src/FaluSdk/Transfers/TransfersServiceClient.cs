@@ -6,15 +6,12 @@ using SC = Falu.Serialization.FaluSerializerContext;
 namespace Falu.Transfers;
 
 ///
-public class TransfersServiceClient : BaseServiceClient<Transfer>,
-                                      ISupportsListing<Transfer, TransfersListOptions>,
-                                      ISupportsRetrieving<Transfer>,
-                                      ISupportsCreation<Transfer, TransferCreateRequest>,
-                                      ISupportsUpdating<Transfer, TransferPatchModel>
+public class TransfersServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<Transfer>(backChannel, options),
+                                                                                         ISupportsListing<Transfer, TransfersListOptions>,
+                                                                                         ISupportsRetrieving<Transfer>,
+                                                                                         ISupportsCreation<Transfer, TransferCreateRequest>,
+                                                                                         ISupportsUpdating<Transfer, TransferPatchModel>
 {
-    ///
-    public TransfersServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
-
     /// <inheritdoc/>
     protected override string BasePath => "/v1/transfers";
 

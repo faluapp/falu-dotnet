@@ -6,18 +6,11 @@ using System.Text.Encodings.Web;
 namespace Falu.Core;
 
 /// <summary>Helper for handling query values.</summary>
-public sealed class QueryValues : ICollection<KeyValuePair<string, StringValues>>
+public sealed class QueryValues(Dictionary<string, StringValues>? values = null) : ICollection<KeyValuePair<string, StringValues>>
 {
-    private readonly Dictionary<string, StringValues> values;
-
-    ///
-    public QueryValues(Dictionary<string, StringValues>? values = null)
-    {
-        // keys are case insensitive
-        this.values = values == null
+    private readonly Dictionary<string, StringValues> values = values == null
             ? new Dictionary<string, StringValues>(StringComparer.OrdinalIgnoreCase)
             : new Dictionary<string, StringValues>(values, StringComparer.OrdinalIgnoreCase);
-    }
 
     /// <summary>Gets or sets the value associated with the specified key.</summary>
     /// <param name="key">The key of the value to get or set.</param>

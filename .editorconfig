@@ -3,6 +3,17 @@
 # top-most EditorConfig file
 root = true
 
+[*]
+indent_style = space
+end_of_line = crlf
+insert_final_newline = true
+
+# Xml files
+[*.xml]
+indent_size = 2
+
 # CSharp formatting rules:
 [*.cs]
-csharp_style_namespace_declarations =file_scoped:warning
+indent_size = 4
+tab_width = 4
+csharp_style_namespace_declarations = file_scoped:warning

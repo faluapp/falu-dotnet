@@ -14,7 +14,8 @@ public abstract class BaseServiceClient<TResource>(HttpClient backChannel,
         : this(backChannel,
                options,
                Serialization.FaluSerializerContext.Default.GetRequriedTypeInfo<TResource>(),
-               Serialization.FaluSerializerContext.Default.GetTypeInfo<List<TResource>>()) { }
+               Serialization.FaluSerializerContext.Default.GetTypeInfo<List<TResource>>())
+    { }
 
     ///
     protected abstract string BasePath { get; }

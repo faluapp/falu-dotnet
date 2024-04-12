@@ -153,7 +153,7 @@ public class BaseServiceClientTests
         }
     }
 
-    public class RequestOptionsWithHasContinuationTokenData: TheoryData<RequestOptions, bool>
+    public class RequestOptionsWithHasContinuationTokenData : TheoryData<RequestOptions, bool>
     {
         public RequestOptionsWithHasContinuationTokenData()
         {

@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Polyfill " Version="4.0.0" PrivateAssets="All"/>
+    <PackageReference Include="Polyfill " Version="4.6.0" PrivateAssets="All"/>
   </ItemGroup>
 
   <ItemGroup>

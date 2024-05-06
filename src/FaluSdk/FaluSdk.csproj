@@ -16,7 +16,7 @@
   <ItemGroup>
     <PackageReference Include="CloudNative.CloudEvents" Version="2.7.1" />
     <PackageReference Include="System.Net.Http.Json" Version="8.0.0" />
-    <PackageReference Include="Tingle.Extensions.JsonPatch" Version="4.6.0" />
+    <PackageReference Include="Tingle.Extensions.JsonPatch" Version="4.8.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <!-- TODO: Replace the 2 packages below with Microsoft.Extensions.Http.Resilience after dropping support for netstandard2.1 -->
-    <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="8.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="8.0.6" />
     <PackageReference Include="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
   </ItemGroup>
 

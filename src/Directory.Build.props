@@ -8,6 +8,8 @@
     <Deterministic>true</Deterministic>
     <Company>Falu Technologies Limited</Company>
     <!--<IsPackable>true</IsPackable>-->
+    <IsAotCompatible>true</IsAotCompatible>
+    <WarningsAsErrors>$(WaringsAsErrors),IL2026,IL3050</WarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup>

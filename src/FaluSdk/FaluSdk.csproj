@@ -6,7 +6,6 @@
     <RootNamespace>Falu</RootNamespace>
     <PackageIcon>falu-logo.png</PackageIcon>
     <PackageId>Falu</PackageId>
-    <IsAotCompatible>true</IsAotCompatible>
   </PropertyGroup>
 
   <ItemGroup>

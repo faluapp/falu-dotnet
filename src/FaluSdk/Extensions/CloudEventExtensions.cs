@@ -9,9 +9,10 @@ namespace CloudNative.CloudEvents;
 /// <summary>
 /// Extensions for <see cref="CloudEvent"/> relating to <see cref="WebhookEvent"/> and <see cref="WebhookEvent{TObject}"/>
 /// </summary>
-public static class CloudEventExtensions
+public static partial class CloudEventExtensions
 {
-    private static readonly System.Text.RegularExpressions.Regex TypeFormat = new("^io.falu.(.*)$");
+    private const string TypeFormat = "^io.falu.(.*)$";
+    private static readonly System.Text.RegularExpressions.Regex typeFormat = GetTypeFormat();
 
     /// <summary>
     /// Convert a <see cref="CloudEvent"/> to a <see cref="WebhookEvent{TObject}"/> object.
@@ -40,7 +41,7 @@ public static class CloudEventExtensions
         var type = @event.Type;
         if (type is not null)
         {
-            var match = TypeFormat.Match(type);
+            var match = typeFormat.Match(type);
             type = match.Success
                 ? match.Groups[1].Value
                 : throw new InvalidOperationException($"The '{nameof(@event)}.{nameof(@event.Type)}' value must start with 'io.falu.'");
@@ -66,4 +67,11 @@ public static class CloudEventExtensions
             Live = @event.GetLiveMode() ?? false,
         };
     }
+
+#if NET7_0_OR_GREATER
+    [System.Text.RegularExpressions.GeneratedRegex(TypeFormat)]
+    private static partial System.Text.RegularExpressions.Regex GetTypeFormat();
+#else
+    private static System.Text.RegularExpressions.Regex GetTypeFormat() => new(TypeFormat);
+#endif
 }

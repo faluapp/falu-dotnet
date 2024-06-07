@@ -1,4 +1,4 @@
-<a href="https://www.falu.io">
+<a href="https://falu.io">
     <img src="falu-logo.png" alt="Falu Logo" title="Falu" width="120" height="120" align="right">
 </a>
 
@@ -252,9 +252,9 @@ For any requests, bug or comments, please [open an issue][issues] or [submit a p
 
 The Library is licensed under the [MIT](http://www.opensource.org/licenses/mit-license.php "Read more about the MIT license form") license. Refer to the [LICENSE](./LICENSE) file for more information.
 
-[api-docs]: https://docs.falu.io/api?lang=dotnet
+[api-docs]: https://falu.io/docs/api?lang=dotnet
 [dotnet-core-cli-tools]: https://docs.microsoft.com/en-us/dotnet/core/tools/
-[idempotency-keys]: https://docs.falu.io/api/idempotent_requests?lang=dotnet
+[idempotency-keys]: https://falu.io/docs/api/idempotent_requests?lang=dotnet
 [issues]: https://github.com/faluapp/falu-dotnet/issues/new
 [nuget-cli]: https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference
 [package-manager-console]: https://docs.microsoft.com/en-us/nuget/tools/package-manager-console

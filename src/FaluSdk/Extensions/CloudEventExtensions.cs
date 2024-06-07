@@ -24,7 +24,7 @@ public static partial class CloudEventExtensions
     /// <param name="event">The received <see cref="CloudEvent"/>.</param>
     /// <returns>The deserialized <see cref="WebhookEvent{TObject}"/>.</returns>
     /// <remarks>
-    /// This method doesn't verify <a href="https://docs.falu.io/webhooks/signatures">webhook signatures</a>.
+    /// This method doesn't verify <a href="https://falu.io/docs/webhooks/signatures">webhook signatures</a>.
     /// Use <see cref="WebhookUtility.ValidateSignature(byte[], string, string, TimeSpan?, DateTimeOffset?)"/> for validation.
     /// </remarks>
     public static WebhookEvent<T>? ToFaluWebhookEvent<T>(this CloudEvent @event)

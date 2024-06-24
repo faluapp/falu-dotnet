@@ -9,8 +9,8 @@ namespace Falu.PaymentRefunds;
 public class PaymentRefundsServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<PaymentRefund>(backChannel, options),
                                                                                               ISupportsListing<PaymentRefund, PaymentRefundsListOptions>,
                                                                                               ISupportsRetrieving<PaymentRefund>,
-                                                                                              ISupportsCreation<PaymentRefund, PaymentRefundCreateRequest>,
-                                                                                              ISupportsUpdating<PaymentRefund, PaymentRefundPatchModel>
+                                                                                              ISupportsCreation<PaymentRefund, PaymentRefundCreateOptions>,
+                                                                                              ISupportsUpdating<PaymentRefund, PaymentRefundUpdateOptions>
 {
     /// <inheritdoc/>
     protected override string BasePath => "/v1/payment_refunds";
@@ -50,32 +50,32 @@ public class PaymentRefundsServiceClient(HttpClient backChannel, FaluClientOptio
     /// <summary>
     /// Create payment refund.
     /// </summary>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<PaymentRefund>> CreateAsync(PaymentRefundCreateRequest request,
-                                                                     RequestOptions? options = null,
+    public virtual Task<ResourceResponse<PaymentRefund>> CreateAsync(PaymentRefundCreateOptions options,
+                                                                     RequestOptions? requestOptions = null,
                                                                      CancellationToken cancellationToken = default)
     {
-        var content = JsonContent.Create(request, SC.Default.PaymentRefundCreateRequest);
-        return CreateResourceAsync(content, options, cancellationToken);
+        var content = JsonContent.Create(options, SC.Default.PaymentRefundCreateOptions);
+        return CreateResourceAsync(content, requestOptions, cancellationToken);
     }
 
     /// <summary>
     /// Update a payment refund.
     /// </summary>
     /// <param name="id">Unique identifier for the payment refund.</param>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<PaymentRefund>> UpdateAsync(string id,
-                                                                     JsonPatchDocument<PaymentRefundPatchModel> request,
-                                                                     RequestOptions? options = null,
+                                                                     JsonPatchDocument<PaymentRefundUpdateOptions> options,
+                                                                     RequestOptions? requestOptions = null,
                                                                      CancellationToken cancellationToken = default)
     {
-        var content = JsonContent.Create(request, SC.Default.JsonPatchDocumentPaymentRefundPatchModel);
-        return UpdateResourceAsync(id, content, options, cancellationToken);
+        var content = JsonContent.Create(options, SC.Default.JsonPatchDocumentPaymentRefundUpdateOptions);
+        return UpdateResourceAsync(id, content, requestOptions, cancellationToken);
     }
 }

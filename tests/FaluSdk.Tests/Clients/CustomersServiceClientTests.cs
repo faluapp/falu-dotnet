@@ -97,7 +97,7 @@ public class CustomersServiceClientTests : BaseServiceClientTests<Customer>
 
         await TestAsync(handler, async (client) =>
         {
-            var model = new CustomerCreateRequest
+            var model = new CustomerCreateOptions
             {
                 Email = "user@example.com",
                 Phone = "+254722000000",
@@ -120,7 +120,7 @@ public class CustomersServiceClientTests : BaseServiceClientTests<Customer>
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<CustomerPatchModel>();
+            var document = new JsonPatchDocument<CustomerUpdateOptions>();
             document.Replace(x => x.Description, "new description");
 
             var response = await client.Customers.UpdateAsync(Data!.Id!, document, options);

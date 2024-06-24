@@ -169,7 +169,7 @@ public class PaymentAuthorizationsServiceClientTests : BaseServiceClientTests<Pa
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<PaymentAuthorizationPatchModel>();
+            var document = new JsonPatchDocument<PaymentAuthorizationUpdateOptions>();
             document.Replace(x => x.Metadata, new Dictionary<string, string> { ["reason"] = "loan-repayment" });
 
             var response = await client.PaymentAuthorizations.UpdateAsync(Data!.Id!, document, options);

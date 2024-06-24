@@ -96,7 +96,7 @@ public class MessageStreamsServiceClientTests : BaseServiceClientTests<MessageSt
 
         await TestAsync(handler, async (client) =>
         {
-            var model = new MessageStreamCreateRequest
+            var model = new MessageStreamCreateOptions
             {
                 Name = Data!.Name,
                 Type = Data!.Type,
@@ -131,7 +131,7 @@ public class MessageStreamsServiceClientTests : BaseServiceClientTests<MessageSt
 
         await TestAsync(handler, async (client) =>
         {
-            var model = new MessageStreamArchiveRequest { };
+            var model = new MessageStreamArchiveOptions { };
             var response = await client.MessageStreams.ArchiveAsync(Data!.Id!, model, options);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -161,7 +161,7 @@ public class MessageStreamsServiceClientTests : BaseServiceClientTests<MessageSt
 
         await TestAsync(handler, async (client) =>
         {
-            var model = new MessageStreamUnarchiveRequest { };
+            var model = new MessageStreamUnarchiveOptions { };
             var response = await client.MessageStreams.UnarchiveAsync(Data!.Id!, model, options);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -177,7 +177,7 @@ public class MessageStreamsServiceClientTests : BaseServiceClientTests<MessageSt
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<MessageStreamPatchModel>();
+            var document = new JsonPatchDocument<MessageStreamUpdateOptions>();
             document.Replace(x => x.Description, "new description");
 
             var response = await client.MessageStreams.UpdateAsync(Data!.Id!, document, options);

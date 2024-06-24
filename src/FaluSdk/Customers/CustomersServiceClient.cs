@@ -9,8 +9,8 @@ namespace Falu.Customers;
 public class CustomersServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<Customer>(backChannel, options),
                                                                                          ISupportsListing<Customer, CustomersListOptions>,
                                                                                          ISupportsRetrieving<Customer>,
-                                                                                         ISupportsCreation<Customer, CustomerCreateRequest>,
-                                                                                         ISupportsUpdating<Customer, CustomerPatchModel>
+                                                                                         ISupportsCreation<Customer, CustomerCreateOptions>,
+                                                                                         ISupportsUpdating<Customer, CustomerUpdateOptions>
 {
     /// <inheritdoc/>
     protected override string BasePath => "/v1/customers";
@@ -37,59 +37,59 @@ public class CustomersServiceClient(HttpClient backChannel, FaluClientOptions op
     /// Retrieve a customer.
     /// </summary>
     /// <param name="id">Unique identifier for the customer</param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<Customer>> GetAsync(string id,
-                                                             RequestOptions? options = null,
+                                                             RequestOptions? requestOptions = null,
                                                              CancellationToken cancellationToken = default)
     {
-        return GetResourceAsync(id, options, cancellationToken);
+        return GetResourceAsync(id, requestOptions, cancellationToken);
     }
 
     /// <summary>
     /// Create a customer.
     /// </summary>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<Customer>> CreateAsync(CustomerCreateRequest request,
-                                                                RequestOptions? options = null,
+    public virtual Task<ResourceResponse<Customer>> CreateAsync(CustomerCreateOptions options,
+                                                                RequestOptions? requestOptions = null,
                                                                 CancellationToken cancellationToken = default)
     {
-        var content = JsonContent.Create(request, SC.Default.CustomerCreateRequest);
-        return CreateResourceAsync(content, options, cancellationToken);
+        var content = JsonContent.Create(options, SC.Default.CustomerCreateOptions);
+        return CreateResourceAsync(content, requestOptions, cancellationToken);
     }
 
     /// <summary>
     /// Update a customer.
     /// </summary>
     /// <param name="id">Unique identifier for the customer</param>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<Customer>> UpdateAsync(string id,
-                                                                JsonPatchDocument<CustomerPatchModel> request,
-                                                                RequestOptions? options = null,
+                                                                JsonPatchDocument<CustomerUpdateOptions> options,
+                                                                RequestOptions? requestOptions = null,
                                                                 CancellationToken cancellationToken = default)
     {
-        var content = JsonContent.Create(request, SC.Default.JsonPatchDocumentCustomerPatchModel);
-        return UpdateResourceAsync(id, content, options, cancellationToken);
+        var content = JsonContent.Create(options, SC.Default.JsonPatchDocumentCustomerUpdateOptions);
+        return UpdateResourceAsync(id, content, requestOptions, cancellationToken);
     }
 
     /// <summary>
     /// Delete a customer.
     /// </summary>
     /// <param name="id">Unique identifier for the customer</param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<object>> DeleteAsync(string id,
-                                                              RequestOptions? options = null,
+                                                              RequestOptions? requestOptions = null,
                                                               CancellationToken cancellationToken = default)
     {
-        return DeleteResourceAsync(id, null, options, cancellationToken);
+        return DeleteResourceAsync(id, null, requestOptions, cancellationToken);
     }
 }

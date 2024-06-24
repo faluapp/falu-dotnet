@@ -96,7 +96,7 @@ public class TransferReversalsServiceClientTests : BaseServiceClientTests<Transf
 
         await TestAsync(handler, async (client) =>
         {
-            var model = new TransferReversalCreateRequest { Transfer = Data!.Transfer };
+            var model = new TransferReversalCreateOptions { Transfer = Data!.Transfer };
             var response = await client.TransferReversals.CreateAsync(model, options);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -112,7 +112,7 @@ public class TransferReversalsServiceClientTests : BaseServiceClientTests<Transf
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<TransferReversalPatchModel>();
+            var document = new JsonPatchDocument<TransferReversalUpdateOptions>();
             document.Replace(x => x.Description, "new description");
 
             var response = await client.TransferReversals.UpdateAsync(Data!.Id!, document, options);

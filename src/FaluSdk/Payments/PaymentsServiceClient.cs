@@ -9,8 +9,8 @@ namespace Falu.Payments;
 public class PaymentsServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<Payment>(backChannel, options),
                                                                                         ISupportsListing<Payment, PaymentsListOptions>,
                                                                                         ISupportsRetrieving<Payment>,
-                                                                                        ISupportsCreation<Payment, PaymentCreateRequest>,
-                                                                                        ISupportsUpdating<Payment, PaymentPatchModel>
+                                                                                        ISupportsCreation<Payment, PaymentCreateOptions>,
+                                                                                        ISupportsUpdating<Payment, PaymentUpdateOptions>
 {
     /// <inheritdoc/>
     protected override string BasePath => "/v1/payments";
@@ -37,45 +37,45 @@ public class PaymentsServiceClient(HttpClient backChannel, FaluClientOptions opt
     /// Retrieve a payment.
     /// </summary>
     /// <param name="id">Unique identifier for the payment</param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<Payment>> GetAsync(string id,
-                                                            RequestOptions? options = null,
+                                                            RequestOptions? requestOptions = null,
                                                             CancellationToken cancellationToken = default)
     {
-        return GetResourceAsync(id, options, cancellationToken);
+        return GetResourceAsync(id, requestOptions, cancellationToken);
     }
 
     /// <summary>
     /// Create a payment.
     /// </summary>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<Payment>> CreateAsync(PaymentCreateRequest request,
-                                                               RequestOptions? options = null,
+    public virtual Task<ResourceResponse<Payment>> CreateAsync(PaymentCreateOptions options,
+                                                               RequestOptions? requestOptions = null,
                                                                CancellationToken cancellationToken = default)
     {
-        var content = JsonContent.Create(request, SC.Default.PaymentCreateRequest);
-        return CreateResourceAsync(content, options, cancellationToken);
+        var content = JsonContent.Create(options, SC.Default.PaymentCreateOptions);
+        return CreateResourceAsync(content, requestOptions, cancellationToken);
     }
 
     /// <summary>
     /// Update a payment.
     /// </summary>
     /// <param name="id">Unique identifier for the payment</param>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<Payment>> UpdateAsync(string id,
-                                                               JsonPatchDocument<PaymentPatchModel> request,
-                                                               RequestOptions? options = null,
+                                                               JsonPatchDocument<PaymentUpdateOptions> options,
+                                                               RequestOptions? requestOptions = null,
                                                                CancellationToken cancellationToken = default)
     {
-        var content = JsonContent.Create(request, SC.Default.JsonPatchDocumentPaymentPatchModel);
-        return UpdateResourceAsync(id, content, options, cancellationToken);
+        var content = JsonContent.Create(options, SC.Default.JsonPatchDocumentPaymentUpdateOptions);
+        return UpdateResourceAsync(id, content, requestOptions, cancellationToken);
     }
 }

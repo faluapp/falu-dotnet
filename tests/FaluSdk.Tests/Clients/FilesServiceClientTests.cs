@@ -96,7 +96,7 @@ public class FilesServiceClientTests : BaseServiceClientTests<Files.File>
 
         await TestAsync(handler, async (client) =>
         {
-            var model = new FileCreateRequest
+            var model = new FileCreateOptions
             {
                 FileName = Data!.Filename,
                 Content = new MemoryStream(Guid.NewGuid().ToByteArray()),

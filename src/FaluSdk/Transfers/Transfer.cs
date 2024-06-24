@@ -5,7 +5,7 @@ namespace Falu.Transfers;
 /// <summary>
 /// Represents a transaction made by the business to customer or another business.
 /// </summary>
-public class Transfer : TransferPatchModel, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
+public class Transfer : TransferUpdateOptions, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
 {
     /// <inheritdoc/>
     public string? Id { get; set; }

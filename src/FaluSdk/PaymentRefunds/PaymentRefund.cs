@@ -5,7 +5,7 @@ namespace Falu.PaymentRefunds;
 /// <summary>
 /// Represents a reversal of a Payment.
 /// </summary>
-public class PaymentRefund : PaymentRefundPatchModel, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
+public class PaymentRefund : PaymentRefundUpdateOptions, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
 {
     /// <inheritdoc/>
     public string? Id { get; set; }

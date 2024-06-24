@@ -9,8 +9,8 @@ namespace Falu.MessageStreams;
 public class MessageStreamsServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<MessageStream>(backChannel, options),
                                                                                               ISupportsListing<MessageStream, MessageStreamsListOptions>,
                                                                                               ISupportsRetrieving<MessageStream>,
-                                                                                              ISupportsCreation<MessageStream, MessageStreamCreateRequest>,
-                                                                                              ISupportsUpdating<MessageStream, MessageStreamPatchModel>
+                                                                                              ISupportsCreation<MessageStream, MessageStreamCreateOptions>,
+                                                                                              ISupportsUpdating<MessageStream, MessageStreamUpdateOptions>
 {
     /// <inheritdoc/>
     protected override string BasePath => "/v1/message_streams";
@@ -50,47 +50,47 @@ public class MessageStreamsServiceClient(HttpClient backChannel, FaluClientOptio
     /// <summary>
     /// Create a message stream.
     /// </summary>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<MessageStream>> CreateAsync(MessageStreamCreateRequest request,
-                                                                     RequestOptions? options = null,
+    public virtual Task<ResourceResponse<MessageStream>> CreateAsync(MessageStreamCreateOptions options,
+                                                                     RequestOptions? requestOptions = null,
                                                                      CancellationToken cancellationToken = default)
     {
-        var content = JsonContent.Create(request, SC.Default.MessageStreamCreateRequest);
-        return CreateResourceAsync(content, options, cancellationToken);
+        var content = JsonContent.Create(options, SC.Default.MessageStreamCreateOptions);
+        return CreateResourceAsync(content, requestOptions, cancellationToken);
     }
 
     /// <summary>
     /// Update a message stream.
     /// </summary>
     /// <param name="id">Unique identifier for the message stream</param>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<MessageStream>> UpdateAsync(string id,
-                                                                     JsonPatchDocument<MessageStreamPatchModel> request,
-                                                                     RequestOptions? options = null,
+                                                                     JsonPatchDocument<MessageStreamUpdateOptions> options,
+                                                                     RequestOptions? requestOptions = null,
                                                                      CancellationToken cancellationToken = default)
     {
-        var content = JsonContent.Create(request, SC.Default.JsonPatchDocumentMessageStreamPatchModel);
-        return UpdateResourceAsync(id, content, options, cancellationToken);
+        var content = JsonContent.Create(options, SC.Default.JsonPatchDocumentMessageStreamUpdateOptions);
+        return UpdateResourceAsync(id, content, requestOptions, cancellationToken);
     }
 
     /// <summary>
     /// Delete a message stream.
     /// </summary>
     /// <param name="id">Unique identifier for the message stream</param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<object>> DeleteAsync(string id,
-                                                              RequestOptions? options = null,
+                                                              RequestOptions? requestOptions = null,
                                                               CancellationToken cancellationToken = default)
     {
-        return DeleteResourceAsync(id, null, options, cancellationToken);
+        return DeleteResourceAsync(id, null, requestOptions, cancellationToken);
     }
 
 
@@ -98,35 +98,35 @@ public class MessageStreamsServiceClient(HttpClient backChannel, FaluClientOptio
     /// Archive a message stream.
     /// </summary>
     /// <param name="id">Unique identifier for the message stream</param>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<MessageStream>> ArchiveAsync(string id,
-                                                                      MessageStreamArchiveRequest request,
-                                                                      RequestOptions? options = null,
+                                                                      MessageStreamArchiveOptions options,
+                                                                      RequestOptions? requestOptions = null,
                                                                       CancellationToken cancellationToken = default)
     {
         var uri = $"{MakeResourcePath(id)}/archive";
-        var content = JsonContent.Create(request, SC.Default.MessageStreamArchiveRequest);
-        return RequestAsync(uri, HttpMethod.Post, SC.Default.MessageStream, content, options, cancellationToken);
+        var content = JsonContent.Create(options, SC.Default.MessageStreamArchiveOptions);
+        return RequestAsync(uri, HttpMethod.Post, SC.Default.MessageStream, content, requestOptions, cancellationToken);
     }
 
     /// <summary>
     /// Unarchive a message stream.
     /// </summary>
     /// <param name="id">Unique identifier for the message stream</param>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<MessageStream>> UnarchiveAsync(string id,
-                                                                        MessageStreamUnarchiveRequest request,
-                                                                        RequestOptions? options = null,
+                                                                        MessageStreamUnarchiveOptions options,
+                                                                        RequestOptions? requestOptions = null,
                                                                         CancellationToken cancellationToken = default)
     {
         var uri = $"{MakeResourcePath(id)}/unarchive";
-        var content = JsonContent.Create(request, SC.Default.MessageStreamUnarchiveRequest);
-        return RequestAsync(uri, HttpMethod.Post, SC.Default.MessageStream, content, options, cancellationToken);
+        var content = JsonContent.Create(options, SC.Default.MessageStreamUnarchiveOptions);
+        return RequestAsync(uri, HttpMethod.Post, SC.Default.MessageStream, content, requestOptions, cancellationToken);
     }
 }

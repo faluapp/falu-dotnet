@@ -5,7 +5,7 @@ namespace Falu.Webhooks;
 /// <summary>
 /// Represents a webhook endpoint.
 /// </summary>
-public class WebhookEndpoint : WebhookEndpointPatchModel, IHasId, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
+public class WebhookEndpoint : WebhookEndpointUpdateOptions, IHasId, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
 {
     /// <inheritdoc/>
     public string? Id { get; set; }

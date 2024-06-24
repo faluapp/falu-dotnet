@@ -9,7 +9,7 @@ namespace Falu.MessageSuppressions;
 public class MessageSuppressionsServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<MessageSuppression>(backChannel, options),
                                                 ISupportsListing<MessageSuppression, MessageSuppressionsListOptions>,
                                                 ISupportsRetrieving<MessageSuppression>,
-                                                ISupportsCreation<MessageSuppression, MessageSuppressionCreateRequest>
+                                                ISupportsCreation<MessageSuppression, MessageSuppressionCreateOptions>
 {
 
     /// <inheritdoc/>
@@ -37,42 +37,42 @@ public class MessageSuppressionsServiceClient(HttpClient backChannel, FaluClient
     /// Retrieve a message suppression.
     /// </summary>
     /// <param name="id">Unique identifier for the message suppression</param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<MessageSuppression>> GetAsync(string id,
-                                                                       RequestOptions? options = null,
+                                                                       RequestOptions? requestOptions = null,
                                                                        CancellationToken cancellationToken = default)
     {
-        return GetResourceAsync(id, options, cancellationToken);
+        return GetResourceAsync(id, requestOptions, cancellationToken);
     }
 
     /// <summary>
     /// Create a message suppression.
     /// </summary>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<MessageSuppression>> CreateAsync(MessageSuppressionCreateRequest request,
-                                                                          RequestOptions? options = null,
+    public virtual Task<ResourceResponse<MessageSuppression>> CreateAsync(MessageSuppressionCreateOptions options,
+                                                                          RequestOptions? requestOptions = null,
                                                                           CancellationToken cancellationToken = default)
     {
-        var content = JsonContent.Create(request, SC.Default.MessageSuppressionCreateRequest);
-        return CreateResourceAsync(content, options, cancellationToken);
+        var content = JsonContent.Create(options, SC.Default.MessageSuppressionCreateOptions);
+        return CreateResourceAsync(content, requestOptions, cancellationToken);
     }
 
     /// <summary>
     /// Delete a message suppression.
     /// </summary>
     /// <param name="id">Unique identifier for the message suppression</param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<object>> DeleteAsync(string id,
-                                                              RequestOptions? options = null,
+                                                              RequestOptions? requestOptions = null,
                                                               CancellationToken cancellationToken = default)
     {
-        return DeleteResourceAsync(id, null, options, cancellationToken);
+        return DeleteResourceAsync(id, null, requestOptions, cancellationToken);
     }
 }

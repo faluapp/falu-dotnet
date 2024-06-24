@@ -5,7 +5,7 @@ namespace Falu.Payments;
 /// <summary>
 /// Represents a transaction done by a customer to the business.
 /// </summary>
-public class Payment : PaymentPatchModel, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
+public class Payment : PaymentUpdateOptions, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
 {
     /// <inheritdoc/>
     public string? Id { get; set; }

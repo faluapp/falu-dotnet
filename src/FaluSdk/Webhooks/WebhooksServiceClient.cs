@@ -9,8 +9,8 @@ namespace Falu.Webhooks;
 public class WebhooksServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<WebhookEndpoint>(backChannel, options),
                                                                                         ISupportsListing<WebhookEndpoint, WebhookEndpointsListOptions>,
                                                                                         ISupportsRetrieving<WebhookEndpoint>,
-                                                                                        ISupportsCreation<WebhookEndpoint, WebhookEndpointCreateRequest>,
-                                                                                        ISupportsUpdating<WebhookEndpoint, WebhookEndpointPatchModel>
+                                                                                        ISupportsCreation<WebhookEndpoint, WebhookEndpointCreateOptions>,
+                                                                                        ISupportsUpdating<WebhookEndpoint, WebhookEndpointUpdateOptions>
 {
     /// <inheritdoc/>
     protected override string BasePath => "/v1/webhooks/endpoints";
@@ -37,59 +37,59 @@ public class WebhooksServiceClient(HttpClient backChannel, FaluClientOptions opt
     /// Retrieve a webhook endpoint.
     /// </summary>
     /// <param name="id">Unique identifier for the webhook endpoint</param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<WebhookEndpoint>> GetAsync(string id,
-                                                                    RequestOptions? options = null,
+                                                                    RequestOptions? requestOptions = null,
                                                                     CancellationToken cancellationToken = default)
     {
-        return GetResourceAsync(id, options, cancellationToken);
+        return GetResourceAsync(id, requestOptions, cancellationToken);
     }
 
     /// <summary>
     /// Create a webhook endpoint.
     /// </summary>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<WebhookEndpoint>> CreateAsync(WebhookEndpointCreateRequest request,
-                                                                       RequestOptions? options = null,
+    public virtual Task<ResourceResponse<WebhookEndpoint>> CreateAsync(WebhookEndpointCreateOptions options,
+                                                                       RequestOptions? requestOptions = null,
                                                                        CancellationToken cancellationToken = default)
     {
-        var content = JsonContent.Create(request, SC.Default.WebhookEndpointCreateRequest);
-        return CreateResourceAsync(content, options, cancellationToken);
+        var content = JsonContent.Create(options, SC.Default.WebhookEndpointCreateOptions);
+        return CreateResourceAsync(content, requestOptions, cancellationToken);
     }
 
     /// <summary>
     /// Update a webhook endpoint.
     /// </summary>
     /// <param name="id">Unique identifier for the webhook endpoint</param>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<WebhookEndpoint>> UpdateAsync(string id,
-                                                                       JsonPatchDocument<WebhookEndpointPatchModel> request,
-                                                                       RequestOptions? options = null,
+                                                                       JsonPatchDocument<WebhookEndpointUpdateOptions> options,
+                                                                       RequestOptions? requestOptions = null,
                                                                        CancellationToken cancellationToken = default)
     {
-        var content = JsonContent.Create(request, SC.Default.JsonPatchDocumentWebhookEndpointPatchModel);
-        return UpdateResourceAsync(id, content, options, cancellationToken);
+        var content = JsonContent.Create(options, SC.Default.JsonPatchDocumentWebhookEndpointUpdateOptions);
+        return UpdateResourceAsync(id, content, requestOptions, cancellationToken);
     }
 
     /// <summary>
     /// Delete a webhook endpoint.
     /// </summary>
     /// <param name="id">Unique identifier for the webhook endpoint.</param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<object>> DeleteAsync(string id,
-                                                              RequestOptions? options = null,
+                                                              RequestOptions? requestOptions = null,
                                                               CancellationToken cancellationToken = default)
     {
-        return DeleteResourceAsync(id, null, options, cancellationToken);
+        return DeleteResourceAsync(id, null, requestOptions, cancellationToken);
     }
 }

@@ -101,7 +101,7 @@ public class PaymentRefundsServiceClientTests : BaseServiceClientTests<PaymentRe
 
         await TestAsync(handler, async (client) =>
         {
-            var model = new PaymentRefundCreateRequest
+            var model = new PaymentRefundCreateOptions
             {
                 Payment = Data!.Payment,
                 Reason = "customer_requested",
@@ -122,7 +122,7 @@ public class PaymentRefundsServiceClientTests : BaseServiceClientTests<PaymentRe
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<PaymentRefundPatchModel>();
+            var document = new JsonPatchDocument<PaymentRefundUpdateOptions>();
             document.Replace(x => x.Description, "new description");
 
             var response = await client.PaymentRefunds.UpdateAsync(Data!.Id!, document, options);

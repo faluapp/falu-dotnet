@@ -99,7 +99,7 @@ public class MessageTemplatesServiceClientTests : BaseServiceClientTests<Message
 
         await TestAsync(handler, async (client) =>
         {
-            var model = new MessageTemplateCreateRequest
+            var model = new MessageTemplateCreateOptions
             {
                 Alias = Data!.Alias,
                 Body = Data!.Body
@@ -120,7 +120,7 @@ public class MessageTemplatesServiceClientTests : BaseServiceClientTests<Message
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<MessageTemplatePatchModel>();
+            var document = new JsonPatchDocument<MessageTemplateUpdateOptions>();
             document.Replace(x => x.Description, "new description");
 
             var response = await client.MessageTemplates.UpdateAsync(Data!.Id!, document, options);
@@ -175,7 +175,7 @@ public class MessageTemplatesServiceClientTests : BaseServiceClientTests<Message
 
         await TestAsync(handler, async (client) =>
         {
-            var model = new MessageTemplateValidationRequest
+            var model = new MessageTemplateValidationOptions
             {
                 Model = MessageTemplateModel.Create(
                     new Dictionary<string, string> { ["name"] = "cake" },

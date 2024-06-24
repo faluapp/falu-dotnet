@@ -95,7 +95,7 @@ public class FileLinksServiceClientTests : BaseServiceClientTests<FileLink>
 
         await TestAsync(handler, async (client) =>
         {
-            var model = new FileLinkCreateRequest
+            var model = new FileLinkCreateOptions
             {
                 File = Data!.File
             };
@@ -116,7 +116,7 @@ public class FileLinksServiceClientTests : BaseServiceClientTests<FileLink>
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<FileLinkPatchModel>();
+            var document = new JsonPatchDocument<FileLinkUpdateOptions>();
             document.Replace(x => x.Expires, null);
 
             var response = await client.FileLinks.UpdateAsync(Data!.Id!, document, options);

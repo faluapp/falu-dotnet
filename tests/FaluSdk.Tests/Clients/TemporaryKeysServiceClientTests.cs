@@ -94,7 +94,7 @@ public class TemporaryKeysServiceClientTests : BaseServiceClientTests<TemporaryK
 
         await TestAsync(handler, async (client) =>
         {
-            var model = new TemporaryKeyCreateRequest
+            var model = new TemporaryKeyCreateOptions
             {
                 IdentityVerification = "idv_1234567890",
             };

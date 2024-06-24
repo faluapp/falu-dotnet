@@ -9,8 +9,8 @@ namespace Falu.Transfers;
 public class TransfersServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<Transfer>(backChannel, options),
                                                                                          ISupportsListing<Transfer, TransfersListOptions>,
                                                                                          ISupportsRetrieving<Transfer>,
-                                                                                         ISupportsCreation<Transfer, TransferCreateRequest>,
-                                                                                         ISupportsUpdating<Transfer, TransferPatchModel>
+                                                                                         ISupportsCreation<Transfer, TransferCreateOptions>,
+                                                                                         ISupportsUpdating<Transfer, TransferUpdateOptions>
 {
     /// <inheritdoc/>
     protected override string BasePath => "/v1/transfers";
@@ -37,45 +37,45 @@ public class TransfersServiceClient(HttpClient backChannel, FaluClientOptions op
     /// Retrieve a transfer.
     /// </summary>
     /// <param name="id">Unique identifier for the transfer</param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<Transfer>> GetAsync(string id,
-                                                             RequestOptions? options = null,
+                                                             RequestOptions? requestOptions = null,
                                                              CancellationToken cancellationToken = default)
     {
-        return GetResourceAsync(id, options, cancellationToken);
+        return GetResourceAsync(id, requestOptions, cancellationToken);
     }
 
     /// <summary>
     /// Create a transfer.
     /// </summary>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<Transfer>> CreateAsync(TransferCreateRequest request,
-                                                                RequestOptions? options = null,
+    public virtual Task<ResourceResponse<Transfer>> CreateAsync(TransferCreateOptions options,
+                                                                RequestOptions? requestOptions = null,
                                                                 CancellationToken cancellationToken = default)
     {
-        var content = JsonContent.Create(request, SC.Default.TransferCreateRequest);
-        return CreateResourceAsync(content, options, cancellationToken);
+        var content = JsonContent.Create(options, SC.Default.TransferCreateOptions);
+        return CreateResourceAsync(content, requestOptions, cancellationToken);
     }
 
     /// <summary>
     /// Update a transfer.
     /// </summary>
     /// <param name="id">Unique identifier for the transfer</param>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<Transfer>> UpdateAsync(string id,
-                                                                JsonPatchDocument<TransferPatchModel> request,
-                                                                RequestOptions? options = null,
+                                                                JsonPatchDocument<TransferUpdateOptions> options,
+                                                                RequestOptions? requestOptions = null,
                                                                 CancellationToken cancellationToken = default)
     {
-        var content = JsonContent.Create(request, SC.Default.JsonPatchDocumentTransferPatchModel);
-        return UpdateResourceAsync(id, content, options, cancellationToken);
+        var content = JsonContent.Create(options, SC.Default.JsonPatchDocumentTransferUpdateOptions);
+        return UpdateResourceAsync(id, content, requestOptions, cancellationToken);
     }
 }

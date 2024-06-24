@@ -9,8 +9,8 @@ namespace Falu.IdentityVerifications;
 public class IdentityVerificationsServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<IdentityVerification>(backChannel, options),
                                                                                                      ISupportsListing<IdentityVerification, IdentityVerificationsListOptions>,
                                                                                                      ISupportsRetrieving<IdentityVerification>,
-                                                                                                     ISupportsCreation<IdentityVerification, IdentityVerificationCreateRequest>,
-                                                                                                     ISupportsUpdating<IdentityVerification, IdentityVerificationPatchModel>,
+                                                                                                     ISupportsCreation<IdentityVerification, IdentityVerificationCreateOptions>,
+                                                                                                     ISupportsUpdating<IdentityVerification, IdentityVerificationUpdateOptions>,
                                                                                                      ISupportsCanceling<IdentityVerification>,
                                                                                                      ISupportsRedaction<IdentityVerification>
 {
@@ -39,69 +39,69 @@ public class IdentityVerificationsServiceClient(HttpClient backChannel, FaluClie
     /// Retrieve an identity verification.
     /// </summary>
     /// <param name="id">Unique identifier for the identity verification.</param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<IdentityVerification>> GetAsync(string id,
-                                                                         RequestOptions? options = null,
+                                                                         RequestOptions? requestOptions = null,
                                                                          CancellationToken cancellationToken = default)
     {
-        return GetResourceAsync(id, options, cancellationToken);
+        return GetResourceAsync(id, requestOptions, cancellationToken);
     }
 
     /// <summary>
     /// Update an identity verification.
     /// </summary>
     /// <param name="id">Unique identifier for the identity verification.</param>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<IdentityVerification>> UpdateAsync(string id,
-                                                                            JsonPatchDocument<IdentityVerificationPatchModel> request,
-                                                                            RequestOptions? options = null,
+                                                                            JsonPatchDocument<IdentityVerificationUpdateOptions> options,
+                                                                            RequestOptions? requestOptions = null,
                                                                             CancellationToken cancellationToken = default)
     {
-        var content = JsonContent.Create(request, SC.Default.JsonPatchDocumentIdentityVerificationPatchModel);
-        return UpdateResourceAsync(id, content, options, cancellationToken);
+        var content = JsonContent.Create(options, SC.Default.JsonPatchDocumentIdentityVerificationUpdateOptions);
+        return UpdateResourceAsync(id, content, requestOptions, cancellationToken);
     }
 
     /// <summary>
     /// Create an identity verification.
     /// </summary>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<IdentityVerification>> CreateAsync(IdentityVerificationCreateRequest request,
-                                                                            RequestOptions? options = null,
+    public virtual Task<ResourceResponse<IdentityVerification>> CreateAsync(IdentityVerificationCreateOptions options,
+                                                                            RequestOptions? requestOptions = null,
                                                                             CancellationToken cancellationToken = default)
     {
-        var content = JsonContent.Create(request, SC.Default.IdentityVerificationCreateRequest);
-        return CreateResourceAsync(content, options, cancellationToken);
+        var content = JsonContent.Create(options, SC.Default.IdentityVerificationCreateOptions);
+        return CreateResourceAsync(content, requestOptions, cancellationToken);
     }
 
     /// <summary>Cancel an identity verification preventing further updates.</summary>
     /// <param name="id">Unique identifier for the identity verification.</param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public Task<ResourceResponse<IdentityVerification>> CancelAsync(string id,
-                                                                    RequestOptions? options = null,
+                                                                    RequestOptions? requestOptions = null,
                                                                     CancellationToken cancellationToken = default)
     {
-        return CancelResourceAsync(id, null, options, cancellationToken);
+        return CancelResourceAsync(id, null, requestOptions, cancellationToken);
     }
 
     /// <summary>Redact an identity verification to remove all collected information from Falu.</summary>
     /// <param name="id">Unique identifier for the identity verification.</param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public Task<ResourceResponse<IdentityVerification>> RedactAsync(string id,
-                                                                    RequestOptions? options = null,
+                                                                    RequestOptions? requestOptions = null,
                                                                     CancellationToken cancellationToken = default)
     {
-        return RedactResourceAsync(id, null, options, cancellationToken);
+        return RedactResourceAsync(id, null, requestOptions, cancellationToken);
     }
 }

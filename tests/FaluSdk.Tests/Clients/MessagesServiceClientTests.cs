@@ -98,7 +98,7 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
 
         await TestAsync(handler, async (client) =>
         {
-            var model = new MessageCreateRequest
+            var model = new MessageCreateOptions
             {
                 To = Data!.To!,
                 Body = Data!.Body
@@ -118,10 +118,10 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
 
         await TestAsync(handler, async (client) =>
         {
-            var model = new MessageCreateRequest
+            var model = new MessageCreateOptions
             {
                 To = Data!.To!,
-                Template = new MessageCreateRequestTemplate
+                Template = new MessageCreateOptionsTemplate
                 {
                     Alias = "cars_list",
                     Model = MessageTemplates.MessageTemplateModel.Create(
@@ -144,7 +144,7 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<MessagePatchModel>();
+            var document = new JsonPatchDocument<MessageUpdateOptions>();
             document.Replace(x => x.Metadata, new Dictionary<string, string> { ["purpose"] = "loan-repayment" });
 
             var response = await client.Messages.UpdateAsync(Data!.Id!, document, options);

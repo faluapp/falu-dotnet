@@ -9,8 +9,8 @@ namespace Falu.FileLinks;
 public class FileLinksServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<FileLink>(backChannel, options),
                                                                                          ISupportsListing<FileLink, FileLinksListOptions>,
                                                                                          ISupportsRetrieving<FileLink>,
-                                                                                         ISupportsCreation<FileLink, FileLinkCreateRequest>,
-                                                                                         ISupportsUpdating<FileLink, FileLinkPatchModel>
+                                                                                         ISupportsCreation<FileLink, FileLinkCreateOptions>,
+                                                                                         ISupportsUpdating<FileLink, FileLinkUpdateOptions>
 {
     ///
     protected override string BasePath => "/v1/file_links";
@@ -35,41 +35,41 @@ public class FileLinksServiceClient(HttpClient backChannel, FaluClientOptions op
 
     /// <summary>Retrieve a file link.</summary>
     /// <param name="id">Unique identifier for the file link.</param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<FileLink>> GetAsync(string id,
-                                                             RequestOptions? options = null,
+                                                             RequestOptions? requestOptions = null,
                                                              CancellationToken cancellationToken = default)
     {
-        return GetResourceAsync(id, options, cancellationToken);
+        return GetResourceAsync(id, requestOptions, cancellationToken);
     }
 
     /// <summary>Create a file link.</summary>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<FileLink>> CreateAsync(FileLinkCreateRequest request,
-                                                                RequestOptions? options = null,
+    public virtual Task<ResourceResponse<FileLink>> CreateAsync(FileLinkCreateOptions options,
+                                                                RequestOptions? requestOptions = null,
                                                                 CancellationToken cancellationToken = default)
     {
-        var content = JsonContent.Create(request, SC.Default.FileLinkCreateRequest);
-        return CreateResourceAsync(content, options, cancellationToken);
+        var content = JsonContent.Create(options, SC.Default.FileLinkCreateOptions);
+        return CreateResourceAsync(content, requestOptions, cancellationToken);
     }
 
     /// <summary>Update a file link.</summary>
     /// <param name="id">Unique identifier for the file.</param>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<FileLink>> UpdateAsync(string id,
-                                                                JsonPatchDocument<FileLinkPatchModel> request,
-                                                                RequestOptions? options = null,
+                                                                JsonPatchDocument<FileLinkUpdateOptions> options,
+                                                                RequestOptions? requestOptions = null,
                                                                 CancellationToken cancellationToken = default)
     {
-        var content = JsonContent.Create(request, SC.Default.JsonPatchDocumentFileLinkPatchModel);
-        return UpdateResourceAsync(id, content, options, cancellationToken);
+        var content = JsonContent.Create(options, SC.Default.JsonPatchDocumentFileLinkUpdateOptions);
+        return UpdateResourceAsync(id, content, requestOptions, cancellationToken);
     }
 }

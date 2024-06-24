@@ -3,7 +3,7 @@
 namespace Falu.FileLinks;
 
 /// <summary>A file link.</summary>
-public class FileLink : FileLinkPatchModel, IHasId, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
+public class FileLink : FileLinkUpdateOptions, IHasId, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
 {
     /// <inheritdoc/>
     public string? Id { get; set; }

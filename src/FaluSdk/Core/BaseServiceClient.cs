@@ -25,7 +25,7 @@ public abstract class BaseServiceClient(HttpClient backChannel, FaluClientOption
     protected virtual async Task<ResourceResponse<object>> RequestAsync(string uri,
                                                                         HttpMethod method,
                                                                         HttpContent? content = null,
-                                                                        RequestOptions? options = null,
+                                                                        RequestOptions? requestOptions = null,
                                                                         CancellationToken cancellationToken = default)
     {
         var request = new HttpRequestMessage(method, uri);
@@ -34,7 +34,7 @@ public abstract class BaseServiceClient(HttpClient backChannel, FaluClientOption
             request.Content = content;
         }
 
-        var response = await RequestCoreAsync(request, options, cancellationToken).ConfigureAwait(false);
+        var response = await RequestCoreAsync(request, requestOptions, cancellationToken).ConfigureAwait(false);
         var error = default(FaluError);
 
         // if the response was a success then deserialize the body as TResource otherwise TError
@@ -51,7 +51,7 @@ public abstract class BaseServiceClient(HttpClient backChannel, FaluClientOption
                                                                                       HttpMethod method,
                                                                                       JsonTypeInfo<TResource> jsonTypeInfo,
                                                                                       HttpContent? content = null,
-                                                                                      RequestOptions? options = null,
+                                                                                      RequestOptions? requestOptions = null,
                                                                                       CancellationToken cancellationToken = default)
     {
         var request = new HttpRequestMessage(method, uri);
@@ -60,7 +60,7 @@ public abstract class BaseServiceClient(HttpClient backChannel, FaluClientOption
             request.Content = content;
         }
 
-        return await RequestCoreAsync(request, jsonTypeInfo, options, cancellationToken).ConfigureAwait(false);
+        return await RequestCoreAsync(request, jsonTypeInfo, requestOptions, cancellationToken).ConfigureAwait(false);
     }
 
     ///
@@ -69,7 +69,7 @@ public abstract class BaseServiceClient(HttpClient backChannel, FaluClientOption
     protected virtual async Task<ResourceResponse<TResource>> RequestAsync<TResource>(string uri,
                                                                                       HttpMethod method,
                                                                                       HttpContent? content = null,
-                                                                                      RequestOptions? options = null,
+                                                                                      RequestOptions? requestOptions = null,
                                                                                       JsonSerializerOptions? serializerOptions = null,
                                                                                       CancellationToken cancellationToken = default)
     {
@@ -79,16 +79,16 @@ public abstract class BaseServiceClient(HttpClient backChannel, FaluClientOption
             request.Content = content;
         }
 
-        return await RequestCoreAsync<TResource>(request, options, serializerOptions, cancellationToken).ConfigureAwait(false);
+        return await RequestCoreAsync<TResource>(request, requestOptions, serializerOptions, cancellationToken).ConfigureAwait(false);
     }
 
     ///
     protected virtual async Task<ResourceResponse<TResource>> RequestCoreAsync<TResource>(HttpRequestMessage request,
                                                                                           JsonTypeInfo<TResource> jsonTypeInfo,
-                                                                                          RequestOptions? options = null,
+                                                                                          RequestOptions? requestOptions = null,
                                                                                           CancellationToken cancellationToken = default)
     {
-        var response = await RequestCoreAsync(request, options, cancellationToken).ConfigureAwait(false);
+        var response = await RequestCoreAsync(request, requestOptions, cancellationToken).ConfigureAwait(false);
 
         // if the response was a success then deserialize the body as TResource otherwise TError
         var resource = response.IsSuccessStatusCode
@@ -105,11 +105,11 @@ public abstract class BaseServiceClient(HttpClient backChannel, FaluClientOption
     [RequiresUnreferencedCode(MessageStrings.SerializationUnreferencedCodeMessage)]
     [RequiresDynamicCode(MessageStrings.SerializationRequiresDynamicCodeMessage)]
     protected virtual async Task<ResourceResponse<TResource>> RequestCoreAsync<TResource>(HttpRequestMessage request,
-                                                                                          RequestOptions? options = null,
+                                                                                          RequestOptions? requestOptions = null,
                                                                                           JsonSerializerOptions? serializerOptions = null,
                                                                                           CancellationToken cancellationToken = default)
     {
-        var response = await RequestCoreAsync(request, options, cancellationToken).ConfigureAwait(false);
+        var response = await RequestCoreAsync(request, requestOptions, cancellationToken).ConfigureAwait(false);
 
         // if the response was a success then deserialize the body as TResource otherwise TError
         var resource = response.IsSuccessStatusCode
@@ -124,7 +124,7 @@ public abstract class BaseServiceClient(HttpClient backChannel, FaluClientOption
 
     ///
     protected virtual async Task<HttpResponseMessage> RequestCoreAsync(HttpRequestMessage request,
-                                                                       RequestOptions? options = null,
+                                                                       RequestOptions? requestOptions = null,
                                                                        CancellationToken cancellationToken = default)
     {
         // ensure request is not null
@@ -134,11 +134,11 @@ public abstract class BaseServiceClient(HttpClient backChannel, FaluClientOption
         request.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(DefaultJsonContentType)); // ensure we only get JSON content back
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Options.ApiKey);
 
-        options ??= new RequestOptions(); // allows for code below to run
+        requestOptions ??= new RequestOptions(); // allows for code below to run
 
-        if (!string.IsNullOrWhiteSpace(options.IdempotencyKey))
+        if (!string.IsNullOrWhiteSpace(requestOptions.IdempotencyKey))
         {
-            request.Headers.Add(HeadersNames.XIdempotencyKey, options.IdempotencyKey);
+            request.Headers.Add(HeadersNames.XIdempotencyKey, requestOptions.IdempotencyKey);
         }
         else if (request.Method == HttpMethod.Patch || request.Method == HttpMethod.Post) // add IdempotencyKey to allow to automatic retries
         {
@@ -146,15 +146,15 @@ public abstract class BaseServiceClient(HttpClient backChannel, FaluClientOption
         }
 
         // only for user bearer token
-        if (!string.IsNullOrWhiteSpace(options.Workspace))
+        if (!string.IsNullOrWhiteSpace(requestOptions.Workspace))
         {
-            request.Headers.Add(HeadersNames.XWorkspaceId, options.Workspace);
+            request.Headers.Add(HeadersNames.XWorkspaceId, requestOptions.Workspace);
         }
 
         // only for user bearer token
-        if (options.Live is not null)
+        if (requestOptions.Live is not null)
         {
-            request.Headers.Add(HeadersNames.XLiveMode, options.Live.Value.ToString().ToLowerInvariant());
+            request.Headers.Add(HeadersNames.XLiveMode, requestOptions.Live.Value.ToString().ToLowerInvariant());
         }
 
         // execute the request

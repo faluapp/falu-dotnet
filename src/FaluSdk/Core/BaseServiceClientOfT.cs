@@ -29,11 +29,11 @@ public abstract class BaseServiceClient<TResource>(HttpClient backChannel,
 
     ///
     protected virtual Task<ResourceResponse<TResource>> GetResourceAsync(string id,
-                                                                         RequestOptions? options = null,
+                                                                         RequestOptions? requestOptions = null,
                                                                          CancellationToken cancellationToken = default)
     {
         var uri = MakeResourcePath(id);
-        return RequestResourceAsync(uri, HttpMethod.Get, null, options, cancellationToken);
+        return RequestResourceAsync(uri, HttpMethod.Get, null, requestOptions, cancellationToken);
     }
 
     ///
@@ -57,56 +57,56 @@ public abstract class BaseServiceClient<TResource>(HttpClient backChannel,
 
     ///
     protected virtual Task<ResourceResponse<TResource>> CreateResourceAsync(HttpContent content,
-                                                                            RequestOptions? options = null,
+                                                                            RequestOptions? requestOptions = null,
                                                                             CancellationToken cancellationToken = default)
     {
         if (content is null) throw new ArgumentNullException(nameof(content));
 
         var uri = MakePath();
-        return RequestResourceAsync(uri, HttpMethod.Post, content, options, cancellationToken);
+        return RequestResourceAsync(uri, HttpMethod.Post, content, requestOptions, cancellationToken);
     }
 
     ///
     protected virtual Task<ResourceResponse<TResource>> UpdateResourceAsync(string id,
                                                                             HttpContent content,
-                                                                            RequestOptions? options = null,
+                                                                            RequestOptions? requestOptions = null,
                                                                             CancellationToken cancellationToken = default)
     {
         if (content is null) throw new ArgumentNullException(nameof(content));
 
         var uri = MakeResourcePath(id);
-        return RequestResourceAsync(uri, HttpMethod.Patch, content, options, cancellationToken);
+        return RequestResourceAsync(uri, HttpMethod.Patch, content, requestOptions, cancellationToken);
     }
 
 
     ///
     protected virtual Task<ResourceResponse<TResource>> CancelResourceAsync(string id,
                                                                             HttpContent? content = null,
-                                                                            RequestOptions? options = null,
+                                                                            RequestOptions? requestOptions = null,
                                                                             CancellationToken cancellationToken = default)
     {
         var uri = $"{MakeResourcePath(id)}/cancel";
-        return RequestResourceAsync(uri, HttpMethod.Post, content, options, cancellationToken);
+        return RequestResourceAsync(uri, HttpMethod.Post, content, requestOptions, cancellationToken);
     }
 
     ///
     protected virtual Task<ResourceResponse<TResource>> RedactResourceAsync(string id,
                                                                             HttpContent? content = null,
-                                                                            RequestOptions? options = null,
+                                                                            RequestOptions? requestOptions = null,
                                                                             CancellationToken cancellationToken = default)
     {
         var uri = $"{MakeResourcePath(id)}/redact";
-        return RequestResourceAsync(uri, HttpMethod.Post, content, options, cancellationToken);
+        return RequestResourceAsync(uri, HttpMethod.Post, content, requestOptions, cancellationToken);
     }
 
     ///
     protected virtual Task<ResourceResponse<object>> DeleteResourceAsync(string id,
                                                                          HttpContent? content = null,
-                                                                         RequestOptions? options = null,
+                                                                         RequestOptions? requestOptions = null,
                                                                          CancellationToken cancellationToken = default)
     {
         var uri = MakeResourcePath(id);
-        return RequestAsync(uri, HttpMethod.Delete, content, options, cancellationToken);
+        return RequestAsync(uri, HttpMethod.Delete, content, requestOptions, cancellationToken);
     }
 
     #region List Recursively
@@ -173,10 +173,10 @@ public abstract class BaseServiceClient<TResource>(HttpClient backChannel,
     protected virtual Task<ResourceResponse<TResource>> RequestResourceAsync(string uri,
                                                                              HttpMethod method,
                                                                              HttpContent? content = null,
-                                                                             RequestOptions? options = null,
+                                                                             RequestOptions? requestOptions = null,
                                                                              CancellationToken cancellationToken = default)
     {
-        return RequestAsync(uri, method, JsonTypeInfo, content, options, cancellationToken);
+        return RequestAsync(uri, method, JsonTypeInfo, content, requestOptions, cancellationToken);
     }
 
     #region Helpers

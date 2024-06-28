@@ -1,15 +1,22 @@
 ﻿using Falu.Core;
+using Falu.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Falu.MessageBatches;
 
 /// <summary>
 /// A model representing details that can be changed about a message batch.
 /// </summary>
-public class MessageBatchUpdateOptions : IHasDescription, IHasMetadata
+public class MessageBatchUpdateOptions : IHasOptionalDescription, IHasOptionalMetadata
 {
-    /// <inheritdoc/>
-    public string? Description { get; set; }
+    private Optional<string?>? description;
+    private Optional<Dictionary<string, string>?>? metadata;
 
     /// <inheritdoc/>
-    public Dictionary<string, string>? Metadata { get; set; }
+    [JsonConverter(typeof(OptionalConverter<string?>))]
+    public Optional<string?>? Description { get => description; set => description = new(value); }
+
+    /// <inheritdoc/>
+    [JsonConverter(typeof(OptionalConverter<Dictionary<string, string>?>))]
+    public Optional<Dictionary<string, string>?>? Metadata { get => metadata; set => metadata = new(value); }
 }

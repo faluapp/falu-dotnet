@@ -3,7 +3,6 @@ using Falu.MessageBatches;
 using System.Net;
 using System.Net.Mime;
 using System.Text;
-using Tingle.Extensions.JsonPatch;
 using Xunit;
 
 namespace Falu.Tests.Clients;
@@ -120,10 +119,11 @@ public class MessageBatchesServiceClientTests : BaseServiceClientTests<MessageBa
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<MessageBatchUpdateOptions>();
-            document.Replace(x => x.Metadata, new Dictionary<string, string> { ["purpose"] = "loan-repayment" });
-
-            var response = await client.MessageBatches.UpdateAsync(Data!.Id!, document, requestOptions);
+            var options = new MessageBatchUpdateOptions
+            {
+                Metadata = new Dictionary<string, string> { ["purpose"] = "loan-repayment" }
+            };
+            var response = await client.MessageBatches.UpdateAsync(Data!.Id!, options, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);

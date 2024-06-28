@@ -1,7 +1,6 @@
 ﻿using Falu.Core;
 using Falu.Payments;
 using System.Net;
-using Tingle.Extensions.JsonPatch;
 using Xunit;
 
 namespace Falu.Tests.Clients;
@@ -122,10 +121,11 @@ public class PaymentsServiceClientTests : BaseServiceClientTests<Payment>
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<PaymentUpdateOptions>();
-            document.Replace(x => x.Description, "new description");
-
-            var response = await client.Payments.UpdateAsync(Data!.Id!, document, requestOptions);
+            var options = new PaymentUpdateOptions
+            {
+                Description = "new description"
+            };
+            var response = await client.Payments.UpdateAsync(Data!.Id!, options, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);

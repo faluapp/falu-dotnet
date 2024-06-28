@@ -1,7 +1,6 @@
 ﻿using Falu.Core;
 using Falu.TransferReversals;
 using System.Net;
-using Tingle.Extensions.JsonPatch;
 using Xunit;
 
 namespace Falu.Tests.Clients;
@@ -112,10 +111,11 @@ public class TransferReversalsServiceClientTests : BaseServiceClientTests<Transf
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<TransferReversalUpdateOptions>();
-            document.Replace(x => x.Description, "new description");
-
-            var response = await client.TransferReversals.UpdateAsync(Data!.Id!, document, requestOptions);
+            var options = new TransferReversalUpdateOptions
+            {
+                Description = "new description"
+            };
+            var response = await client.TransferReversals.UpdateAsync(Data!.Id!, options, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);

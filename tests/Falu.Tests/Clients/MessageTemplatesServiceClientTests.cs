@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Mime;
 using System.Text;
 using System.Text.Json;
-using Tingle.Extensions.JsonPatch;
 using Xunit;
 
 namespace Falu.Tests.Clients;
@@ -120,10 +119,11 @@ public class MessageTemplatesServiceClientTests : BaseServiceClientTests<Message
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<MessageTemplateUpdateOptions>();
-            document.Replace(x => x.Description, "new description");
-
-            var response = await client.MessageTemplates.UpdateAsync(Data!.Id!, document, requestOptions);
+            var options = new MessageTemplateUpdateOptions
+            {
+                Description = "new description"
+            };
+            var response = await client.MessageTemplates.UpdateAsync(Data!.Id!, options, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);

@@ -1,7 +1,6 @@
 ﻿using Falu.Core;
 using Falu.Webhooks;
 using System.Net;
-using Tingle.Extensions.JsonPatch;
 using Xunit;
 
 namespace Falu.Tests.Clients;
@@ -118,10 +117,11 @@ public class WebhooksServiceClientTests : BaseServiceClientTests<WebhookEndpoint
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<WebhookEndpointUpdateOptions>();
-            document.Replace(x => x.Description, "new description");
-
-            var response = await client.Webhooks.UpdateAsync(Data!.Id!, document, requestOptions);
+            var options = new WebhookEndpointUpdateOptions
+            {
+                Description = "new description"
+            };
+            var response = await client.Webhooks.UpdateAsync(Data!.Id!, options, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);

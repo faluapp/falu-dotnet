@@ -3,7 +3,6 @@ using Falu.IdentityVerifications;
 using System.Net;
 using System.Net.Mime;
 using System.Text;
-using Tingle.Extensions.JsonPatch;
 using Xunit;
 
 namespace Falu.Tests.Clients;
@@ -111,10 +110,11 @@ public class IdentityVerificationsServiceClientTests : BaseServiceClientTests<Id
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<IdentityVerificationUpdateOptions>();
-            document.Replace(x => x.Description, "new description");
-
-            var response = await client.IdentityVerifications.UpdateAsync(Data!.Id!, document, requestOptions);
+            var options = new IdentityVerificationUpdateOptions
+            {
+                Description = "new description"
+            };
+            var response = await client.IdentityVerifications.UpdateAsync(Data!.Id!, options, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);

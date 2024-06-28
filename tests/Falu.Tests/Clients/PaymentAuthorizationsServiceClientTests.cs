@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Mime;
 using System.Text;
 using System.Text.Json;
-using Tingle.Extensions.JsonPatch;
 using Xunit;
 
 namespace Falu.Tests.Clients;
@@ -169,10 +168,11 @@ public class PaymentAuthorizationsServiceClientTests : BaseServiceClientTests<Pa
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<PaymentAuthorizationUpdateOptions>();
-            document.Replace(x => x.Metadata, new Dictionary<string, string> { ["reason"] = "loan-repayment" });
-
-            var response = await client.PaymentAuthorizations.UpdateAsync(Data!.Id!, document, requestOptions);
+            var options = new PaymentAuthorizationUpdateOptions
+            {
+                Metadata = new Dictionary<string, string> { ["reason"] = "loan-repayment" }
+            };
+            var response = await client.PaymentAuthorizations.UpdateAsync(Data!.Id!, options, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);

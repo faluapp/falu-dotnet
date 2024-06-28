@@ -1,7 +1,6 @@
 ﻿using Falu.Core;
 using Falu.FileLinks;
 using System.Net;
-using Tingle.Extensions.JsonPatch;
 using Xunit;
 
 namespace Falu.Tests.Clients;
@@ -116,14 +115,14 @@ public class FileLinksServiceClientTests : BaseServiceClientTests<FileLink>
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<FileLinkUpdateOptions>();
-            document.Replace(x => x.Expires, null);
-
-            var response = await client.FileLinks.UpdateAsync(Data!.Id!, document, requestOptions);
+            var options = new FileLinkUpdateOptions
+            {
+                Expires = null
+            };
+            var response = await client.FileLinks.UpdateAsync(Data!.Id!, options, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
         });
     }
-
 }

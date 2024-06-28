@@ -1,7 +1,6 @@
 ﻿using Falu.Core;
 using Falu.Transfers;
 using System.Net;
-using Tingle.Extensions.JsonPatch;
 using Xunit;
 
 namespace Falu.Tests.Clients;
@@ -125,10 +124,11 @@ public class TransfersServiceClientTests : BaseServiceClientTests<Transfer>
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<TransferUpdateOptions>();
-            document.Replace(x => x.Description, "new description");
-
-            var response = await client.Transfers.UpdateAsync(Data!.Id!, document, requestOptions);
+            var options = new TransferUpdateOptions
+            {
+                Description = "new description"
+            };
+            var response = await client.Transfers.UpdateAsync(Data!.Id!, options, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);

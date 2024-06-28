@@ -1,7 +1,6 @@
 ﻿using Falu.Core;
 using Falu.PaymentRefunds;
 using System.Net;
-using Tingle.Extensions.JsonPatch;
 using Xunit;
 
 namespace Falu.Tests.Clients;
@@ -122,10 +121,11 @@ public class PaymentRefundsServiceClientTests : BaseServiceClientTests<PaymentRe
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<PaymentRefundUpdateOptions>();
-            document.Replace(x => x.Description, "new description");
-
-            var response = await client.PaymentRefunds.UpdateAsync(Data!.Id!, document, requestOptions);
+            var options = new PaymentRefundUpdateOptions
+            {
+                Description = "new description"
+            };
+            var response = await client.PaymentRefunds.UpdateAsync(Data!.Id!, options, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);

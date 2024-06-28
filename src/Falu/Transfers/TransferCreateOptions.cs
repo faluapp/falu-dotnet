@@ -5,7 +5,7 @@ namespace Falu.Transfers;
 /// <summary>
 /// Information for creating a transfer.
 /// </summary>
-public class TransferCreateOptions : TransferUpdateOptions, IHasCurrency
+public class TransferCreateOptions : IHasCurrency, IHasDescription, IHasMetadata
 {
     /// <inheritdoc/>
     public string? Currency { get; set; }
@@ -29,4 +29,10 @@ public class TransferCreateOptions : TransferUpdateOptions, IHasCurrency
     /// Identifier of the Customer this Transfer belongs to, if one exists.
     /// </summary>
     public string? Customer { get; set; }
+
+    /// <inheritdoc/>
+    public string? Description { get; set; }
+
+    /// <inheritdoc/>
+    public Dictionary<string, string>? Metadata { get; set; }
 }

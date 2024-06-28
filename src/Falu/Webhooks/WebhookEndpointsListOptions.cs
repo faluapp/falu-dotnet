@@ -5,7 +5,7 @@ namespace Falu.Webhooks;
 /// <summary>Options for filtering and pagination of webhook endpoints.</summary>
 public record WebhookEndpointsListOptions : BasicListOptions
 {
-    /// <summary>Filter options for <see cref="WebhookEndpointUpdateOptions.Status"/> property.</summary>
+    /// <summary>Filter options for <see cref="WebhookEndpoint.Status"/> property.</summary>
     public List<string>? Status { get; set; }
 
     /// <inheritdoc/>

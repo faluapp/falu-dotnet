@@ -5,7 +5,7 @@ namespace Falu.Core;
 
 ///
 public interface ISupportsUpdating<TResource, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] TResourcePatchModel>
-    where TResource : IHasId, TResourcePatchModel
+    where TResource : IHasId
     where TResourcePatchModel : class
 {
     /// <summary>

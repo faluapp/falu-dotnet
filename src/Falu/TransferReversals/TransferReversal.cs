@@ -5,7 +5,7 @@ namespace Falu.TransferReversals;
 /// <summary>
 /// Represents a reversal of a Transfer.
 /// </summary>
-public class TransferReversal : TransferReversalUpdateOptions, IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
+public class TransferReversal : IHasId, IHasCurrency, IHasCreated, IHasUpdated, IHasDescription, IHasMetadata, IHasWorkspace, IHasLive, IHasEtag
 {
     /// <inheritdoc/>
     public string? Id { get; set; }
@@ -61,6 +61,12 @@ public class TransferReversal : TransferReversalUpdateOptions, IHasId, IHasCurre
     /// Present when in failed state.
     /// </summary>
     public ObjectError? Error { get; set; }
+
+    /// <inheritdoc/>
+    public string? Description { get; set; }
+
+    /// <inheritdoc/>
+    public Dictionary<string, string>? Metadata { get; set; }
 
     /// <inheritdoc/>
     public string? Workspace { get; set; }

@@ -1,9 +1,11 @@
-﻿namespace Falu.MessageStreams;
+﻿using Falu.Core;
+
+namespace Falu.MessageStreams;
 
 /// <summary>
 /// Information for creating a message stream.
 /// </summary>
-public class MessageStreamCreateOptions : MessageStreamUpdateOptions
+public class MessageStreamCreateOptions : IHasDescription, IHasMetadata
 {
     /// <summary>
     /// A string used for easier identification.
@@ -22,4 +24,10 @@ public class MessageStreamCreateOptions : MessageStreamUpdateOptions
     /// Provider to be used.
     /// </summary>
     public string? Provider { get; set; }
+
+    /// <inheritdoc/>
+    public string? Description { get; set; }
+
+    /// <inheritdoc/>
+    public Dictionary<string, string>? Metadata { get; set; }
 }

@@ -6,7 +6,7 @@ namespace Falu.MessageStreams;
 /// Represents a stream used for sending messages.
 /// This is a way to separate messages sent to ensure high delivery rates.
 /// </summary>
-public class MessageStream : MessageStreamUpdateOptions, IHasId, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
+public class MessageStream : IHasId, IHasCreated, IHasUpdated, IHasDescription, IHasMetadata, IHasWorkspace, IHasLive, IHasEtag
 {
     /// <inheritdoc/>
     public string? Id { get; set; }
@@ -37,6 +37,12 @@ public class MessageStream : MessageStreamUpdateOptions, IHasId, IHasCreated, IH
     /// Indicates if the stream is one created by default.
     /// </summary>
     public bool Default { get; set; }
+
+    /// <inheritdoc/>
+    public string? Description { get; set; }
+
+    /// <inheritdoc/>
+    public Dictionary<string, string>? Metadata { get; set; }
 
     /// <inheritdoc/>
     public string? Workspace { get; set; }

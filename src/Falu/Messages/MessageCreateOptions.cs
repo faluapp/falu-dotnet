@@ -1,9 +1,11 @@
-﻿namespace Falu.Messages;
+﻿using Falu.Core;
+
+namespace Falu.Messages;
 
 /// <summary>
 /// Information for creating and sending message.
 /// </summary>
-public class MessageCreateOptions : MessageUpdateOptions
+public class MessageCreateOptions : IHasMetadata
 {
     /// <summary>
     /// Destination phone number in <see href="https://en.wikipedia.org/wiki/E.164">E.164 format</see>.
@@ -45,4 +47,7 @@ public class MessageCreateOptions : MessageUpdateOptions
     /// Identifier of the Customer this Message belongs to, if one exists.
     /// </summary>
     public string? Customer { get; set; }
+
+    /// <inheritdoc/>
+    public Dictionary<string, string>? Metadata { get; set; }
 }

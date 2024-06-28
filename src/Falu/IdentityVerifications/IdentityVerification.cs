@@ -3,7 +3,7 @@
 namespace Falu.IdentityVerifications;
 
 /// <summary>An identity verification record.</summary>
-public class IdentityVerification : IdentityVerificationUpdateOptions, IHasId, IHasCreated, IHasUpdated, IHasRedaction, IHasWorkspace, IHasLive, IHasEtag
+public class IdentityVerification : IHasId, IHasCreated, IHasUpdated, IHasDescription, IHasMetadata, IHasRedaction, IHasWorkspace, IHasLive, IHasEtag
 {
     /// <inheritdoc/>
     public string? Id { get; set; }
@@ -69,6 +69,12 @@ public class IdentityVerification : IdentityVerificationUpdateOptions, IHasId, I
 
     /// <inheritdoc/>
     public DataRedaction? Redaction { get; set; }
+
+    /// <inheritdoc/>
+    public virtual string? Description { get; set; }
+
+    /// <inheritdoc/>
+    public Dictionary<string, string>? Metadata { get; set; }
 
     /// <inheritdoc/>
     public string? Workspace { get; set; }

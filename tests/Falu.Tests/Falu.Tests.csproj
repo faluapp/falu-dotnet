@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\FaluSdk\FaluSdk.csproj" />
+    <ProjectReference Include="..\..\src\Falu\Falu.csproj" />
   </ItemGroup>
 
 </Project>

@@ -7,13 +7,14 @@ namespace Falu.Core;
 ///
 public partial class TestingUpdateOptions
 {
-    ///
-    [JsonPropertyName("default")]
-    [JsonConverter(typeof(OptionalConverter<bool>))]
-    public Optional<bool>? Default { get; set; }
+    private Optional<bool?>? @default;
+    private Optional<string?>? status;
 
     ///
-    [JsonPropertyName("status")]
-    [JsonConverter(typeof(OptionalConverter<string>))]
-    public Optional<string>? Status { get; set; }
+    [JsonConverter(typeof(OptionalConverter<bool?>))]
+    public Optional<bool?>? Default { get => @default; set => @default = new(value); }
+
+    ///
+    [JsonConverter(typeof(OptionalConverter<string?>))]
+    public Optional<string?>? Status { get => status; set => status = new(value); }
 }

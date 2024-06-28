@@ -8,9 +8,25 @@
 /// indicating whether or not that value is meaningful.
 /// </summary>
 /// <typeparam name="T">The type of the value.</typeparam>
-public readonly struct Optional<T>(T? value)
+public sealed class Optional<T>
 {
-    private readonly bool hasValue = true;
+    private readonly bool hasValue;
+    private readonly T? value;
+
+    internal Optional(T? value)
+    {
+        hasValue = true;
+        this.value = value;
+    }
+
+    internal Optional(Optional<T>? other)
+    {
+        hasValue = true;
+        if (other is not null)
+        {
+            value = other.value;
+        }
+    }
 
     /// <summary>
     /// Returns <see langword="true"/> if the <see cref="Value"/> will return a meaningful value.

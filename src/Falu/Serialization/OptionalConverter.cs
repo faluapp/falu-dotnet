@@ -9,7 +9,7 @@ namespace Falu.Serialization;
 public sealed class OptionalConverter<T> : JsonConverter<Optional<T>>
 {
     /// <inheritdoc/>
-    public override Optional<T> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override Optional<T>? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         if (reader.TokenType == JsonTokenType.Null) return default;
 
@@ -18,10 +18,16 @@ public sealed class OptionalConverter<T> : JsonConverter<Optional<T>>
     }
 
     /// <inheritdoc/>
-    public override void Write(Utf8JsonWriter writer, Optional<T> value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, Optional<T>? value, JsonSerializerOptions options)
     {
+        if (value is null || !value.HasValue)
+        {
+            writer.WriteNullValue();
+            return;
+        }
+
         var inner = value.Value;
-        if (!value.HasValue || inner is null)
+        if (inner is null)
         {
             writer.WriteNullValue();
             return;

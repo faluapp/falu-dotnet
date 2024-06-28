@@ -96,14 +96,14 @@ public class TransfersServiceClientTests : BaseServiceClientTests<Transfer>
 
         await TestAsync(handler, async (client) =>
         {
-            var model = new TransferCreateRequest
+            var model = new TransferCreateOptions
             {
                 Amount = Data!.Amount,
                 Description = Data!.Description,
                 Purpose = Data!.Purpose,
-                Mpesa = new TransferCreateRequestMpesa
+                Mpesa = new TransferCreateOptionsMpesa
                 {
-                    Customer = new TransferCreateRequestMpesaToCustomer
+                    Customer = new TransferCreateOptionsMpesaToCustomer
                     {
                         Phone = "+254722000000",
                     }
@@ -125,7 +125,7 @@ public class TransfersServiceClientTests : BaseServiceClientTests<Transfer>
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<TransferPatchModel>();
+            var document = new JsonPatchDocument<TransferUpdateOptions>();
             document.Replace(x => x.Description, "new description");
 
             var response = await client.Transfers.UpdateAsync(Data!.Id!, document, options);

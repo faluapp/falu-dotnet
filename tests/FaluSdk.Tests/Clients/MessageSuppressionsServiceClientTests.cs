@@ -96,7 +96,7 @@ public class MessageSuppressionsServiceClientTests : BaseServiceClientTests<Mess
 
         await TestAsync(handler, async (client) =>
         {
-            var model = new MessageSuppressionCreateRequest
+            var model = new MessageSuppressionCreateOptions
             {
                 Stream = "mstr_123",
                 To = "+254722000000",

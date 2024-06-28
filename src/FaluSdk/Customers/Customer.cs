@@ -3,7 +3,7 @@
 namespace Falu.Customers;
 
 ///
-public class Customer : CustomerPatchModel, IHasId, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
+public class Customer : CustomerUpdateOptions, IHasId, IHasCreated, IHasUpdated, IHasWorkspace, IHasLive, IHasEtag
 {
     /// <inheritdoc/>
     public string? Id { get; set; }

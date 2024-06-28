@@ -10,7 +10,7 @@ public class MessagesServiceClient(HttpClient backChannel, FaluClientOptions opt
                                                                                         ISupportsListing<Message, MessagesListOptions>,
                                                                                         ISupportsRetrieving<Message>,
                                                                                         //ISupportsCreation<Message, MessageCreateRequest>,
-                                                                                        ISupportsUpdating<Message, MessagePatchModel>,
+                                                                                        ISupportsUpdating<Message, MessageUpdateOptions>,
                                                                                         ISupportsCanceling<Message>,
                                                                                         ISupportsRedaction<Message>
 {
@@ -39,65 +39,65 @@ public class MessagesServiceClient(HttpClient backChannel, FaluClientOptions opt
     /// Retrieve a message.
     /// </summary>
     /// <param name="id">Unique identifier for the message.</param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<Message>> GetAsync(string id,
-                                                            RequestOptions? options = null,
+                                                            RequestOptions? requestOptions = null,
                                                             CancellationToken cancellationToken = default)
     {
-        return GetResourceAsync(id, options, cancellationToken);
+        return GetResourceAsync(id, requestOptions, cancellationToken);
     }
 
     /// <summary>Create a message.</summary>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<Message>> CreateAsync(MessageCreateRequest request,
-                                                               RequestOptions? options = null,
+    public virtual Task<ResourceResponse<Message>> CreateAsync(MessageCreateOptions options,
+                                                               RequestOptions? requestOptions = null,
                                                                CancellationToken cancellationToken = default)
     {
-        var content = JsonContent.Create(request, SC.Default.MessageCreateRequest);
-        return CreateResourceAsync(content, options, cancellationToken);
+        var content = JsonContent.Create(options, SC.Default.MessageCreateOptions);
+        return CreateResourceAsync(content, requestOptions, cancellationToken);
     }
 
     /// <summary>Update a message.</summary>
     /// <param name="id">Unique identifier for the message.</param>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<Message>> UpdateAsync(string id,
-                                                               JsonPatchDocument<MessagePatchModel> request,
-                                                               RequestOptions? options = null,
+                                                               JsonPatchDocument<MessageUpdateOptions> options,
+                                                               RequestOptions? requestOptions = null,
                                                                CancellationToken cancellationToken = default)
     {
-        var content = JsonContent.Create(request, SC.Default.JsonPatchDocumentMessagePatchModel);
-        return UpdateResourceAsync(id, content, options, cancellationToken);
+        var content = JsonContent.Create(options, SC.Default.JsonPatchDocumentMessageUpdateOptions);
+        return UpdateResourceAsync(id, content, requestOptions, cancellationToken);
     }
 
     /// <summary>Cancel a message preventing further updates.</summary>
     /// <param name="id">Unique identifier for the message.</param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public Task<ResourceResponse<Message>> CancelAsync(string id,
-                                                       RequestOptions? options = null,
+                                                       RequestOptions? requestOptions = null,
                                                        CancellationToken cancellationToken = default)
     {
-        return CancelResourceAsync(id, null, options, cancellationToken);
+        return CancelResourceAsync(id, null, requestOptions, cancellationToken);
     }
 
     /// <summary>Redact a message to remove all collected information from Falu.</summary>
     /// <param name="id">Unique identifier for the message.</param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public Task<ResourceResponse<Message>> RedactAsync(string id,
-                                                       RequestOptions? options = null,
+                                                       RequestOptions? requestOptions = null,
                                                        CancellationToken cancellationToken = default)
     {
-        return RedactResourceAsync(id, null, options, cancellationToken);
+        return RedactResourceAsync(id, null, requestOptions, cancellationToken);
     }
 }

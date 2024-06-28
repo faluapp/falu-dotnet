@@ -6,7 +6,7 @@ namespace Falu.Customers;
 public record CustomersListOptions : BasicListOptions
 {
     /// <summary>
-    /// Filter options for <see cref="CustomerPatchModel.Email"/> property.
+    /// Filter options for <see cref="CustomerUpdateOptions.Email"/> property.
     /// </summary>
     public string? Email { get; set; }
 

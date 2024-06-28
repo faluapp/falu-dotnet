@@ -95,7 +95,7 @@ public class IdentityVerificationsServiceClientTests : BaseServiceClientTests<Id
 
         await TestAsync(handler, async (client) =>
         {
-            var model = new IdentityVerificationCreateRequest { };
+            var model = new IdentityVerificationCreateOptions { };
             var response = await client.IdentityVerifications.CreateAsync(model, options);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -111,7 +111,7 @@ public class IdentityVerificationsServiceClientTests : BaseServiceClientTests<Id
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<IdentityVerificationPatchModel>();
+            var document = new JsonPatchDocument<IdentityVerificationUpdateOptions>();
             document.Replace(x => x.Description, "new description");
 
             var response = await client.IdentityVerifications.UpdateAsync(Data!.Id!, document, options);

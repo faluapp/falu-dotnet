@@ -95,11 +95,11 @@ public class PaymentsServiceClientTests : BaseServiceClientTests<Payment>
 
         await TestAsync(handler, async (client) =>
         {
-            var model = new PaymentCreateRequest
+            var model = new PaymentCreateOptions
             {
                 Currency = Data!.Currency,
                 Amount = Data!.Amount,
-                Mpesa = new PaymentCreateRequestMpesa
+                Mpesa = new PaymentCreateOptionsMpesa
                 {
                     Phone = "+254722000000",
                     Paybill = true,
@@ -122,7 +122,7 @@ public class PaymentsServiceClientTests : BaseServiceClientTests<Payment>
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<PaymentPatchModel>();
+            var document = new JsonPatchDocument<PaymentUpdateOptions>();
             document.Replace(x => x.Description, "new description");
 
             var response = await client.Payments.UpdateAsync(Data!.Id!, document, options);

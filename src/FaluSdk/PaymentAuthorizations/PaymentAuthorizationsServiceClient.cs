@@ -9,7 +9,7 @@ namespace Falu.PaymentAuthorizations;
 public class PaymentAuthorizationsServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<PaymentAuthorization>(backChannel, options),
                                                                                                      ISupportsListing<PaymentAuthorization, PaymentAuthorizationsListOptions>,
                                                                                                      ISupportsRetrieving<PaymentAuthorization>,
-                                                                                                     ISupportsUpdating<PaymentAuthorization, PaymentAuthorizationPatchModel>
+                                                                                                     ISupportsUpdating<PaymentAuthorization, PaymentAuthorizationUpdateOptions>
 {
     /// <inheritdoc/>
     protected override string BasePath => "/v1/payment_authorizations";
@@ -34,62 +34,62 @@ public class PaymentAuthorizationsServiceClient(HttpClient backChannel, FaluClie
 
     /// <summary>Retrieve a payment authorization.</summary>
     /// <param name="id">Unique identifier for the payment authorization</param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<PaymentAuthorization>> GetAsync(string id,
-                                                                         RequestOptions? options = null,
+                                                                         RequestOptions? requestOptions = null,
                                                                          CancellationToken cancellationToken = default)
     {
-        return GetResourceAsync(id, options, cancellationToken);
+        return GetResourceAsync(id, requestOptions, cancellationToken);
     }
 
     /// <summary>Update a payment authorization.</summary>
     /// <param name="id">Unique identifier for the payment authorization</param>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<PaymentAuthorization>> UpdateAsync(string id,
-                                                                            JsonPatchDocument<PaymentAuthorizationPatchModel> request,
-                                                                            RequestOptions? options = null,
+                                                                            JsonPatchDocument<PaymentAuthorizationUpdateOptions> options,
+                                                                            RequestOptions? requestOptions = null,
                                                                             CancellationToken cancellationToken = default)
     {
-        var content = JsonContent.Create(request, SC.Default.JsonPatchDocumentPaymentAuthorizationPatchModel);
-        return UpdateResourceAsync(id, content, options, cancellationToken);
+        var content = JsonContent.Create(options, SC.Default.JsonPatchDocumentPaymentAuthorizationUpdateOptions);
+        return UpdateResourceAsync(id, content, requestOptions, cancellationToken);
     }
 
     /// <summary>Approve a payment authorization.</summary>
     /// <param name="id">Unique identifier for the payment authorization.</param>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<PaymentAuthorization>> ApproveAsync(string id,
-                                                                             PaymentAuthorizationApproveOptions? request = null,
-                                                                             RequestOptions? options = null,
+                                                                             PaymentAuthorizationApproveOptions? options = null,
+                                                                             RequestOptions? requestOptions = null,
                                                                              CancellationToken cancellationToken = default)
     {
         var uri = $"{MakeResourcePath(id)}/approve";
-        request ??= new PaymentAuthorizationApproveOptions();
-        var content = JsonContent.Create(request, SC.Default.PaymentAuthorizationApproveOptions);
-        return RequestAsync(uri, HttpMethod.Post, SC.Default.PaymentAuthorization, content, options, cancellationToken);
+        options ??= new PaymentAuthorizationApproveOptions();
+        var content = JsonContent.Create(options, SC.Default.PaymentAuthorizationApproveOptions);
+        return RequestAsync(uri, HttpMethod.Post, SC.Default.PaymentAuthorization, content, requestOptions, cancellationToken);
     }
 
     /// <summary>Decline a payment authorization.</summary>
     /// <param name="id">Unique identifier for the payment authorization.</param>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<PaymentAuthorization>> DeclineAsync(string id,
-                                                                             PaymentAuthorizationDeclineOptions? request = null,
-                                                                             RequestOptions? options = null,
+                                                                             PaymentAuthorizationDeclineOptions? options = null,
+                                                                             RequestOptions? requestOptions = null,
                                                                              CancellationToken cancellationToken = default)
     {
         var uri = $"{MakeResourcePath(id)}/decline";
-        request ??= new PaymentAuthorizationDeclineOptions();
-        var content = JsonContent.Create(request, SC.Default.PaymentAuthorizationDeclineOptions);
-        return RequestAsync(uri, HttpMethod.Post, SC.Default.PaymentAuthorization, content, options, cancellationToken);
+        options ??= new PaymentAuthorizationDeclineOptions();
+        var content = JsonContent.Create(options, SC.Default.PaymentAuthorizationDeclineOptions);
+        return RequestAsync(uri, HttpMethod.Post, SC.Default.PaymentAuthorization, content, requestOptions, cancellationToken);
     }
 }

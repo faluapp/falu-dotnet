@@ -94,11 +94,11 @@ public class MessageBatchesServiceClientTests : BaseServiceClientTests<MessageBa
 
         await TestAsync(handler, async (client) =>
         {
-            var model = new MessageBatchCreateRequest
+            var model = new MessageBatchCreateOptions
             {
                 Messages =
                 [
-                    new MessageBatchCreateRequestMessage
+                    new MessageBatchCreateOptionsMessage
                     {
                         Tos = ["+254722000000"],
                         Body = "This is a test",
@@ -120,7 +120,7 @@ public class MessageBatchesServiceClientTests : BaseServiceClientTests<MessageBa
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<MessageBatchPatchModel>();
+            var document = new JsonPatchDocument<MessageBatchUpdateOptions>();
             document.Replace(x => x.Metadata, new Dictionary<string, string> { ["purpose"] = "loan-repayment" });
 
             var response = await client.MessageBatches.UpdateAsync(Data!.Id!, document, options);

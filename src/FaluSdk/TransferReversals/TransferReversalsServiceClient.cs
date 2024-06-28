@@ -9,8 +9,8 @@ namespace Falu.TransferReversals;
 public class TransferReversalsServiceClient(HttpClient backChannel, FaluClientOptions options) : BaseServiceClient<TransferReversal>(backChannel, options),
                                                                                                  ISupportsListing<TransferReversal, TransferReversalsListOptions>,
                                                                                                  ISupportsRetrieving<TransferReversal>,
-                                                                                                 ISupportsCreation<TransferReversal, TransferReversalCreateRequest>,
-                                                                                                 ISupportsUpdating<TransferReversal, TransferReversalPatchModel>
+                                                                                                 ISupportsCreation<TransferReversal, TransferReversalCreateOptions>,
+                                                                                                 ISupportsUpdating<TransferReversal, TransferReversalUpdateOptions>
 {
     /// <inheritdoc/>
     protected override string BasePath => "/v1/transfer_reversals";
@@ -37,45 +37,45 @@ public class TransferReversalsServiceClient(HttpClient backChannel, FaluClientOp
     /// Retrieve a transfer reversal.
     /// </summary>
     /// <param name="id">Unique identifier for the transfer reversal</param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<TransferReversal>> GetAsync(string id,
-                                                                     RequestOptions? options = null,
+                                                                     RequestOptions? requestOptions = null,
                                                                      CancellationToken cancellationToken = default)
     {
-        return GetResourceAsync(id, options, cancellationToken);
+        return GetResourceAsync(id, requestOptions, cancellationToken);
     }
 
     /// <summary>
     /// Create transfer reversal.
     /// </summary>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<TransferReversal>> CreateAsync(TransferReversalCreateRequest request,
-                                                                        RequestOptions? options = null,
+    public virtual Task<ResourceResponse<TransferReversal>> CreateAsync(TransferReversalCreateOptions options,
+                                                                        RequestOptions? requestOptions = null,
                                                                         CancellationToken cancellationToken = default)
     {
-        var content = JsonContent.Create(request, SC.Default.TransferReversalCreateRequest);
-        return CreateResourceAsync(content, options, cancellationToken);
+        var content = JsonContent.Create(options, SC.Default.TransferReversalCreateOptions);
+        return CreateResourceAsync(content, requestOptions, cancellationToken);
     }
 
     /// <summary>
     /// Update a transfer reversal.
     /// </summary>
     /// <param name="id">Unique identifier for the transfer reversal</param>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<TransferReversal>> UpdateAsync(string id,
-                                                                        JsonPatchDocument<TransferReversalPatchModel> request,
-                                                                        RequestOptions? options = null,
+                                                                        JsonPatchDocument<TransferReversalUpdateOptions> options,
+                                                                        RequestOptions? requestOptions = null,
                                                                         CancellationToken cancellationToken = default)
     {
-        var content = JsonContent.Create(request, SC.Default.JsonPatchDocumentTransferReversalPatchModel);
-        return UpdateResourceAsync(id, content, options, cancellationToken);
+        var content = JsonContent.Create(options, SC.Default.JsonPatchDocumentTransferReversalUpdateOptions);
+        return UpdateResourceAsync(id, content, requestOptions, cancellationToken);
     }
 }

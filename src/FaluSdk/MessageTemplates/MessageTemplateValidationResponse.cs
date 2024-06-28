@@ -15,7 +15,7 @@ public class MessageTemplateValidationResponse
     /// <summary>
     /// A JSON object structure that will provide information
     /// for all keys found in the template content submitted.
-    /// If a <see cref="MessageTemplateValidationRequest.Model"/> was submitted, it will be merged
+    /// If a <see cref="MessageTemplateValidationOptions.Model"/> was submitted, it will be merged
     /// and returned with this model.
     /// </summary>
     public MessageTemplateModel? Model { get; set; }

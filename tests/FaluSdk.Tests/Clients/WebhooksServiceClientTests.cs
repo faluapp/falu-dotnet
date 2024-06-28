@@ -96,7 +96,7 @@ public class WebhooksServiceClientTests : BaseServiceClientTests<WebhookEndpoint
 
         await TestAsync(handler, async (client) =>
         {
-            var model = new WebhookEndpointCreateRequest
+            var model = new WebhookEndpointCreateOptions
             {
                 Events = Data!.Events,
                 Status = Data!.Status,
@@ -118,7 +118,7 @@ public class WebhooksServiceClientTests : BaseServiceClientTests<WebhookEndpoint
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<WebhookEndpointPatchModel>();
+            var document = new JsonPatchDocument<WebhookEndpointUpdateOptions>();
             document.Replace(x => x.Description, "new description");
 
             var response = await client.Webhooks.UpdateAsync(Data!.Id!, document, options);

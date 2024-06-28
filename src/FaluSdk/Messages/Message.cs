@@ -5,7 +5,7 @@ namespace Falu.Messages;
 /// <summary>
 /// A message record.
 /// </summary>
-public class Message : MessagePatchModel, IHasId, IHasCreated, IHasUpdated, IHasRedaction, IHasWorkspace, IHasLive, IHasEtag
+public class Message : MessageUpdateOptions, IHasId, IHasCreated, IHasUpdated, IHasRedaction, IHasWorkspace, IHasLive, IHasEtag
 {
     /// <inheritdoc/>
     public string? Id { get; set; }

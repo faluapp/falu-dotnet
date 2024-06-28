@@ -34,42 +34,42 @@ public class TemporaryKeysServiceClient(HttpClient backChannel, FaluClientOption
     /// Retrieve a temporary key.
     /// </summary>
     /// <param name="id">Unique identifier for the temporary key</param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<TemporaryKey>> GetAsync(string id,
-                                                                 RequestOptions? options = null,
+                                                                 RequestOptions? requestOptions = null,
                                                                  CancellationToken cancellationToken = default)
     {
-        return GetResourceAsync(id, options, cancellationToken);
+        return GetResourceAsync(id, requestOptions, cancellationToken);
     }
 
     /// <summary>
     /// Create a temporary key.
     /// </summary>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public virtual Task<ResourceResponse<TemporaryKey>> CreateAsync(TemporaryKeyCreateRequest request,
-                                                                    RequestOptions? options = null,
+    public virtual Task<ResourceResponse<TemporaryKey>> CreateAsync(TemporaryKeyCreateOptions options,
+                                                                    RequestOptions? requestOptions = null,
                                                                     CancellationToken cancellationToken = default)
     {
-        var content = JsonContent.Create(request, SC.Default.TemporaryKeyCreateRequest);
-        return CreateResourceAsync(content, options, cancellationToken);
+        var content = JsonContent.Create(options, SC.Default.TemporaryKeyCreateOptions);
+        return CreateResourceAsync(content, requestOptions, cancellationToken);
     }
 
     /// <summary>
     /// Delete a temporary key.
     /// </summary>
     /// <param name="id">Unique identifier for the temporary key</param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<object>> DeleteAsync(string id,
-                                                              RequestOptions? options = null,
+                                                              RequestOptions? requestOptions = null,
                                                               CancellationToken cancellationToken = default)
     {
-        return DeleteResourceAsync(id, null, options, cancellationToken);
+        return DeleteResourceAsync(id, null, requestOptions, cancellationToken);
     }
 }

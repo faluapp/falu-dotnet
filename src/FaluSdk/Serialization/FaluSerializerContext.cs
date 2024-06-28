@@ -120,6 +120,7 @@ namespace Falu.Serialization;
 [JsonSerializable(typeof(Events.CloudEventDataPayload<Transfers.Transfer>))]
 [JsonSerializable(typeof(Events.CloudEventDataPayload<TransferReversals.TransferReversal>))]
 [JsonSerializable(typeof(Events.CloudEventDataPayload<TemporaryKeys.TemporaryKey>))]
+[JsonSerializable(typeof(Core.TestingUpdateOptions))] // TODO: remove when migration to JSON MergePatch is complete
 
 [JsonSourceGenerationOptions(
     AllowTrailingCommas = true,

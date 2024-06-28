@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="FaluSdk.Tests" />
+    <InternalsVisibleTo Include="Falu.Tests" />
   </ItemGroup>
 
   <ItemGroup>

@@ -24,7 +24,7 @@ public class EventsServiceClient(HttpClient backChannel, FaluClientOptions optio
         where T : class
     {
         var uri = MakePathWithQuery(null, options);
-        var jsonTypeInfo = Sc.Default.GetRequriedTypeInfo<List<WebhookEvent<T>>>();
+        var jsonTypeInfo = Sc.Default.GetRequiredTypeInfo<List<WebhookEvent<T>>>();
         return RequestAsync(uri, HttpMethod.Get, jsonTypeInfo, null, requestOptions, cancellationToken);
     }
 
@@ -52,7 +52,7 @@ public class EventsServiceClient(HttpClient backChannel, FaluClientOptions optio
                                                                              RequestOptions? requestOptions = null,
                                                                              CancellationToken cancellationToken = default)
     {
-        var jsonTypeInfo = Sc.Default.GetRequriedTypeInfo<List<WebhookEvent<T>>>();
+        var jsonTypeInfo = Sc.Default.GetRequiredTypeInfo<List<WebhookEvent<T>>>();
         return ListResourcesRecursivelyAsync(jsonTypeInfo, options, requestOptions, cancellationToken);
     }
 
@@ -69,7 +69,7 @@ public class EventsServiceClient(HttpClient backChannel, FaluClientOptions optio
         where T : class
     {
         var uri = MakeResourcePath(id);
-        var jsonTypeInfo = Sc.Default.GetRequriedTypeInfo<WebhookEvent<T>>();
+        var jsonTypeInfo = Sc.Default.GetRequiredTypeInfo<WebhookEvent<T>>();
         return RequestAsync(uri, HttpMethod.Get, jsonTypeInfo, null, options, cancellationToken);
     }
 

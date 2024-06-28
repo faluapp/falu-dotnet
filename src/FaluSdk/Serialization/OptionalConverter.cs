@@ -13,7 +13,7 @@ public sealed class OptionalConverter<T> : JsonConverter<Optional<T>>
     {
         if (reader.TokenType == JsonTokenType.Null) return default;
 
-        var value = JsonSerializer.Deserialize(ref reader, SC.Default.GetRequriedTypeInfo<T>());
+        var value = JsonSerializer.Deserialize(ref reader, SC.Default.GetRequiredTypeInfo<T>());
         return new Optional<T>(value);
     }
 
@@ -27,6 +27,6 @@ public sealed class OptionalConverter<T> : JsonConverter<Optional<T>>
             return;
         }
 
-        JsonSerializer.Serialize(writer, inner, SC.Default.GetRequriedTypeInfo<T>());
+        JsonSerializer.Serialize(writer, inner, SC.Default.GetRequiredTypeInfo<T>());
     }
 }

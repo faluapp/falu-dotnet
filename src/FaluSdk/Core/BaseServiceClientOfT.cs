@@ -13,7 +13,7 @@ public abstract class BaseServiceClient<TResource>(HttpClient backChannel,
     protected BaseServiceClient(HttpClient backChannel, FaluClientOptions options)
         : this(backChannel,
                options,
-               Serialization.FaluSerializerContext.Default.GetRequriedTypeInfo<TResource>(),
+               Serialization.FaluSerializerContext.Default.GetRequiredTypeInfo<TResource>(),
                Serialization.FaluSerializerContext.Default.GetTypeInfo<List<TResource>>())
     { }
 

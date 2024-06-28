@@ -138,7 +138,7 @@ namespace Falu.Serialization;
 public partial class FaluSerializerContext : JsonSerializerContext // This is exposed publicly to allow chaining via TypeInfoResolver in various external scenarios
 {
     internal JsonTypeInfo<T>? GetTypeInfo<T>() => (JsonTypeInfo<T>?)GetTypeInfo(typeof(T));
-    internal JsonTypeInfo<T> GetRequriedTypeInfo<T>()
+    internal JsonTypeInfo<T> GetRequiredTypeInfo<T>()
     {
         var ti = GetTypeInfo<T>();
         if (ti is null)

@@ -5,7 +5,7 @@ namespace Falu.MessageBatches;
 /// <summary>
 /// Represents a batch of messages
 /// </summary>
-public class MessageBatch : MessageBatchUpdateOptions, IHasId, IHasCreated, IHasUpdated, IHasRedaction, IHasWorkspace, IHasLive, IHasEtag
+public class MessageBatch : IHasId, IHasCreated, IHasUpdated, IHasRedaction, IHasDescription, IHasMetadata, IHasWorkspace, IHasLive, IHasEtag
 {
     /// <inheritdoc/>
     public string? Id { get; set; }
@@ -38,6 +38,12 @@ public class MessageBatch : MessageBatchUpdateOptions, IHasId, IHasCreated, IHas
 
     /// <inheritdoc/>
     public DataRedaction? Redaction { get; set; }
+
+    /// <inheritdoc/>
+    public string? Description { get; set; }
+
+    /// <inheritdoc/>
+    public Dictionary<string, string>? Metadata { get; set; }
 
     /// <inheritdoc/>
     public string? Workspace { get; set; }

@@ -21,13 +21,13 @@ public class FilesServiceClientTests : BaseServiceClientTests<Files.File>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task GetAsync_Works(RequestOptions options)
+    public async Task GetAsync_Works(RequestOptions requestOptions)
     {
-        var handler = GetAsync_Handler(options);
+        var handler = GetAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.Files.GetAsync(Data!.Id!, options);
+            var response = await client.Files.GetAsync(Data!.Id!, requestOptions);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
             Assert.Equal(Data!.Id!, response!.Resource!.Id!);
@@ -36,9 +36,9 @@ public class FilesServiceClientTests : BaseServiceClientTests<Files.File>
 
     [Theory]
     [ClassData(typeof(RequestOptionsWithHasContinuationTokenData))]
-    public async Task ListAsync_Works(RequestOptions options, bool hasContinuationToken)
+    public async Task ListAsync_Works(RequestOptions requestOptions, bool hasContinuationToken)
     {
-        var handler = ListAsync_Handler(hasContinuationToken, options);
+        var handler = ListAsync_Handler(hasContinuationToken, requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -47,7 +47,7 @@ public class FilesServiceClientTests : BaseServiceClientTests<Files.File>
                 Count = 1
             };
 
-            var response = await client.Files.ListAsync(opt, options);
+            var response = await client.Files.ListAsync(opt, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -64,9 +64,9 @@ public class FilesServiceClientTests : BaseServiceClientTests<Files.File>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task ListRecursivelyAsync_Works(RequestOptions options)
+    public async Task ListRecursivelyAsync_Works(RequestOptions requestOptions)
     {
-        var handler = ListAsync_Handler(options: options);
+        var handler = ListAsync_Handler(requestOptions: requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -77,7 +77,7 @@ public class FilesServiceClientTests : BaseServiceClientTests<Files.File>
 
             var results = new List<Files.File>();
 
-            await foreach (var item in client.Files.ListRecursivelyAsync(opt, options))
+            await foreach (var item in client.Files.ListRecursivelyAsync(opt, requestOptions))
             {
                 results.Add(item);
             }
@@ -90,9 +90,9 @@ public class FilesServiceClientTests : BaseServiceClientTests<Files.File>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task CreateAsync_Works(RequestOptions options)
+    public async Task CreateAsync_Works(RequestOptions requestOptions)
     {
-        var handler = CreateAsync_Handler(options);
+        var handler = CreateAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -103,7 +103,7 @@ public class FilesServiceClientTests : BaseServiceClientTests<Files.File>
                 Purpose = Data!.Purpose
             };
 
-            var response = await client.Files.CreateAsync(model, options);
+            var response = await client.Files.CreateAsync(model, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);

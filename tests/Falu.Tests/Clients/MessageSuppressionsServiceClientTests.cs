@@ -21,13 +21,13 @@ public class MessageSuppressionsServiceClientTests : BaseServiceClientTests<Mess
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task GetAsync_Works(RequestOptions options)
+    public async Task GetAsync_Works(RequestOptions requestOptions)
     {
-        var handler = GetAsync_Handler(options);
+        var handler = GetAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.MessageSuppressions.GetAsync(Data!.Id!, options);
+            var response = await client.MessageSuppressions.GetAsync(Data!.Id!, requestOptions);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
             Assert.Equal(Data!.Id, response.Resource!.Id);
@@ -36,9 +36,9 @@ public class MessageSuppressionsServiceClientTests : BaseServiceClientTests<Mess
 
     [Theory]
     [ClassData(typeof(RequestOptionsWithHasContinuationTokenData))]
-    public async Task ListAsync_Works(RequestOptions options, bool hasContinuationToken)
+    public async Task ListAsync_Works(RequestOptions requestOptions, bool hasContinuationToken)
     {
-        var handler = ListAsync_Handler(hasContinuationToken, options);
+        var handler = ListAsync_Handler(hasContinuationToken, requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -47,7 +47,7 @@ public class MessageSuppressionsServiceClientTests : BaseServiceClientTests<Mess
                 Count = 1
             };
 
-            var response = await client.MessageSuppressions.ListAsync(opt, options);
+            var response = await client.MessageSuppressions.ListAsync(opt, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -64,9 +64,9 @@ public class MessageSuppressionsServiceClientTests : BaseServiceClientTests<Mess
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task ListRecursivelyAsync_Works(RequestOptions options)
+    public async Task ListRecursivelyAsync_Works(RequestOptions requestOptions)
     {
-        var handler = ListAsync_Handler(options: options);
+        var handler = ListAsync_Handler(requestOptions: requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -77,7 +77,7 @@ public class MessageSuppressionsServiceClientTests : BaseServiceClientTests<Mess
 
             var results = new List<MessageSuppression>();
 
-            await foreach (var item in client.MessageSuppressions.ListRecursivelyAsync(opt, options))
+            await foreach (var item in client.MessageSuppressions.ListRecursivelyAsync(opt, requestOptions))
             {
                 results.Add(item);
             }
@@ -90,9 +90,9 @@ public class MessageSuppressionsServiceClientTests : BaseServiceClientTests<Mess
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task CreateAsync_Works(RequestOptions options)
+    public async Task CreateAsync_Works(RequestOptions requestOptions)
     {
-        var handler = CreateAsync_Handler(options);
+        var handler = CreateAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -102,7 +102,7 @@ public class MessageSuppressionsServiceClientTests : BaseServiceClientTests<Mess
                 To = "+254722000000",
             };
 
-            var response = await client.MessageSuppressions.CreateAsync(model, options);
+            var response = await client.MessageSuppressions.CreateAsync(model, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -111,13 +111,13 @@ public class MessageSuppressionsServiceClientTests : BaseServiceClientTests<Mess
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task DeleteAsync_Works(RequestOptions options)
+    public async Task DeleteAsync_Works(RequestOptions requestOptions)
     {
-        var handler = DeleteAsync_Handler(options);
+        var handler = DeleteAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.MessageSuppressions.DeleteAsync(Data!.Id!, options);
+            var response = await client.MessageSuppressions.DeleteAsync(Data!.Id!, requestOptions);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         });
     }

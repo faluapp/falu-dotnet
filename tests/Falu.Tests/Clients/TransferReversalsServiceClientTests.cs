@@ -21,13 +21,13 @@ public class TransferReversalsServiceClientTests : BaseServiceClientTests<Transf
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task GetAsync_Works(RequestOptions options)
+    public async Task GetAsync_Works(RequestOptions requestOptions)
     {
-        var handler = GetAsync_Handler(options);
+        var handler = GetAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.TransferReversals.GetAsync(Data!.Id!, options);
+            var response = await client.TransferReversals.GetAsync(Data!.Id!, requestOptions);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
             Assert.Equal(Data!.Id, response.Resource!.Id);
@@ -36,9 +36,9 @@ public class TransferReversalsServiceClientTests : BaseServiceClientTests<Transf
 
     [Theory]
     [ClassData(typeof(RequestOptionsWithHasContinuationTokenData))]
-    public async Task ListAsync_Works(RequestOptions options, bool hasContinuationToken)
+    public async Task ListAsync_Works(RequestOptions requestOptions, bool hasContinuationToken)
     {
-        var handler = ListAsync_Handler(hasContinuationToken, options);
+        var handler = ListAsync_Handler(hasContinuationToken, requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -47,7 +47,7 @@ public class TransferReversalsServiceClientTests : BaseServiceClientTests<Transf
                 Count = 1
             };
 
-            var response = await client.TransferReversals.ListAsync(opt, options);
+            var response = await client.TransferReversals.ListAsync(opt, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -64,9 +64,9 @@ public class TransferReversalsServiceClientTests : BaseServiceClientTests<Transf
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task ListRecursivelyAsync_Works(RequestOptions options)
+    public async Task ListRecursivelyAsync_Works(RequestOptions requestOptions)
     {
-        var handler = ListAsync_Handler(options: options);
+        var handler = ListAsync_Handler(requestOptions: requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -77,7 +77,7 @@ public class TransferReversalsServiceClientTests : BaseServiceClientTests<Transf
 
             var results = new List<TransferReversal>();
 
-            await foreach (var item in client.TransferReversals.ListRecursivelyAsync(opt, options))
+            await foreach (var item in client.TransferReversals.ListRecursivelyAsync(opt, requestOptions))
             {
                 results.Add(item);
             }
@@ -90,14 +90,14 @@ public class TransferReversalsServiceClientTests : BaseServiceClientTests<Transf
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task CreateAsync_Works(RequestOptions options)
+    public async Task CreateAsync_Works(RequestOptions requestOptions)
     {
-        var handler = CreateAsync_Handler(options);
+        var handler = CreateAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
             var model = new TransferReversalCreateOptions { Transfer = Data!.Transfer };
-            var response = await client.TransferReversals.CreateAsync(model, options);
+            var response = await client.TransferReversals.CreateAsync(model, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -106,16 +106,16 @@ public class TransferReversalsServiceClientTests : BaseServiceClientTests<Transf
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task UpdateAsync_Works(RequestOptions options)
+    public async Task UpdateAsync_Works(RequestOptions requestOptions)
     {
-        var handler = UpdateAsync_Handler(options);
+        var handler = UpdateAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
             var document = new JsonPatchDocument<TransferReversalUpdateOptions>();
             document.Replace(x => x.Description, "new description");
 
-            var response = await client.TransferReversals.UpdateAsync(Data!.Id!, document, options);
+            var response = await client.TransferReversals.UpdateAsync(Data!.Id!, document, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);

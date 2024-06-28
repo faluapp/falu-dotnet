@@ -19,13 +19,13 @@ public class TemporaryKeysServiceClientTests : BaseServiceClientTests<TemporaryK
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task GetAsync_Works(RequestOptions options)
+    public async Task GetAsync_Works(RequestOptions requestOptions)
     {
-        var handler = GetAsync_Handler(options);
+        var handler = GetAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.TemporaryKeys.GetAsync(Data!.Id!, options);
+            var response = await client.TemporaryKeys.GetAsync(Data!.Id!, requestOptions);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
             Assert.Equal(Data!.Id, response.Resource!.Id);
@@ -34,9 +34,9 @@ public class TemporaryKeysServiceClientTests : BaseServiceClientTests<TemporaryK
 
     [Theory]
     [ClassData(typeof(RequestOptionsWithHasContinuationTokenData))]
-    public async Task ListAsync_Works(RequestOptions options, bool hasContinuationToken)
+    public async Task ListAsync_Works(RequestOptions requestOptions, bool hasContinuationToken)
     {
-        var handler = ListAsync_Handler(hasContinuationToken, options);
+        var handler = ListAsync_Handler(hasContinuationToken, requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -45,7 +45,7 @@ public class TemporaryKeysServiceClientTests : BaseServiceClientTests<TemporaryK
                 Count = 1
             };
 
-            var response = await client.TemporaryKeys.ListAsync(opt, options);
+            var response = await client.TemporaryKeys.ListAsync(opt, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -62,9 +62,9 @@ public class TemporaryKeysServiceClientTests : BaseServiceClientTests<TemporaryK
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task ListRecursivelyAsync_Works(RequestOptions options)
+    public async Task ListRecursivelyAsync_Works(RequestOptions requestOptions)
     {
-        var handler = ListAsync_Handler(options: options);
+        var handler = ListAsync_Handler(requestOptions: requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -75,7 +75,7 @@ public class TemporaryKeysServiceClientTests : BaseServiceClientTests<TemporaryK
 
             var results = new List<TemporaryKey>();
 
-            await foreach (var item in client.TemporaryKeys.ListRecursivelyAsync(opt, options))
+            await foreach (var item in client.TemporaryKeys.ListRecursivelyAsync(opt, requestOptions))
             {
                 results.Add(item);
             }
@@ -88,9 +88,9 @@ public class TemporaryKeysServiceClientTests : BaseServiceClientTests<TemporaryK
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task CreateAsync_Works(RequestOptions options)
+    public async Task CreateAsync_Works(RequestOptions requestOptions)
     {
-        var handler = CreateAsync_Handler(options);
+        var handler = CreateAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -99,7 +99,7 @@ public class TemporaryKeysServiceClientTests : BaseServiceClientTests<TemporaryK
                 IdentityVerification = "idv_1234567890",
             };
 
-            var response = await client.TemporaryKeys.CreateAsync(model, options);
+            var response = await client.TemporaryKeys.CreateAsync(model, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -108,13 +108,13 @@ public class TemporaryKeysServiceClientTests : BaseServiceClientTests<TemporaryK
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task DeleteAsync_Works(RequestOptions options)
+    public async Task DeleteAsync_Works(RequestOptions requestOptions)
     {
-        var handler = DeleteAsync_Handler(options);
+        var handler = DeleteAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.TemporaryKeys.DeleteAsync(Data!.Id!, options);
+            var response = await client.TemporaryKeys.DeleteAsync(Data!.Id!, requestOptions);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         });
     }

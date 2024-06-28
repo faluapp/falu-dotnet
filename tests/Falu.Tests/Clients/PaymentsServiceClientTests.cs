@@ -20,13 +20,13 @@ public class PaymentsServiceClientTests : BaseServiceClientTests<Payment>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task GetAsync_Works(RequestOptions options)
+    public async Task GetAsync_Works(RequestOptions requestOptions)
     {
-        var handler = GetAsync_Handler(options);
+        var handler = GetAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.Payments.GetAsync(Data!.Id!, options);
+            var response = await client.Payments.GetAsync(Data!.Id!, requestOptions);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
             Assert.Equal(Data!.Id, response.Resource!.Id);
@@ -35,9 +35,9 @@ public class PaymentsServiceClientTests : BaseServiceClientTests<Payment>
 
     [Theory]
     [ClassData(typeof(RequestOptionsWithHasContinuationTokenData))]
-    public async Task ListAsync_Works(RequestOptions options, bool hasContinuationToken)
+    public async Task ListAsync_Works(RequestOptions requestOptions, bool hasContinuationToken)
     {
-        var handler = ListAsync_Handler(hasContinuationToken, options);
+        var handler = ListAsync_Handler(hasContinuationToken, requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -46,7 +46,7 @@ public class PaymentsServiceClientTests : BaseServiceClientTests<Payment>
                 Count = 1
             };
 
-            var response = await client.Payments.ListAsync(opt, options);
+            var response = await client.Payments.ListAsync(opt, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -63,9 +63,9 @@ public class PaymentsServiceClientTests : BaseServiceClientTests<Payment>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task ListRecursivelyAsync_Works(RequestOptions options)
+    public async Task ListRecursivelyAsync_Works(RequestOptions requestOptions)
     {
-        var handler = ListAsync_Handler(options: options);
+        var handler = ListAsync_Handler(requestOptions: requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -76,7 +76,7 @@ public class PaymentsServiceClientTests : BaseServiceClientTests<Payment>
 
             var results = new List<Payment>();
 
-            await foreach (var item in client.Payments.ListRecursivelyAsync(opt, options))
+            await foreach (var item in client.Payments.ListRecursivelyAsync(opt, requestOptions))
             {
                 results.Add(item);
             }
@@ -89,9 +89,9 @@ public class PaymentsServiceClientTests : BaseServiceClientTests<Payment>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task CreateAsync_Works(RequestOptions options)
+    public async Task CreateAsync_Works(RequestOptions requestOptions)
     {
-        var handler = CreateAsync_Handler(options);
+        var handler = CreateAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -107,7 +107,7 @@ public class PaymentsServiceClientTests : BaseServiceClientTests<Payment>
                 }
             };
 
-            var response = await client.Payments.CreateAsync(model, options);
+            var response = await client.Payments.CreateAsync(model, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -116,16 +116,16 @@ public class PaymentsServiceClientTests : BaseServiceClientTests<Payment>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task UpdateAsync_Works(RequestOptions options)
+    public async Task UpdateAsync_Works(RequestOptions requestOptions)
     {
-        var handler = UpdateAsync_Handler(options);
+        var handler = UpdateAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
             var document = new JsonPatchDocument<PaymentUpdateOptions>();
             document.Replace(x => x.Description, "new description");
 
-            var response = await client.Payments.UpdateAsync(Data!.Id!, document, options);
+            var response = await client.Payments.UpdateAsync(Data!.Id!, document, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);

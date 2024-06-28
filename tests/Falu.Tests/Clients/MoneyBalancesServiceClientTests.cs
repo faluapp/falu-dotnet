@@ -25,14 +25,14 @@ public class MoneyBalancesServiceClientTests : BaseServiceClientTests
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task GetAsync_Works(RequestOptions options)
+    public async Task GetAsync_Works(RequestOptions requestOptions)
     {
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Get, req.Method);
             Assert.Equal($"{BasePath}", req.RequestUri!.AbsolutePath);
 
-            AssertRequestHeaders(req, options);
+            AssertRequestHeaders(req, requestOptions);
 
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -45,7 +45,7 @@ public class MoneyBalancesServiceClientTests : BaseServiceClientTests
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.MoneyBalances.GetAsync(options);
+            var response = await client.MoneyBalances.GetAsync(requestOptions);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
         });
@@ -53,14 +53,14 @@ public class MoneyBalancesServiceClientTests : BaseServiceClientTests
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task RefreshAsync_Works(RequestOptions options)
+    public async Task RefreshAsync_Works(RequestOptions requestOptions)
     {
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Post, req.Method);
             Assert.Equal($"{BasePath}/refresh", req.RequestUri!.AbsolutePath);
 
-            AssertRequestHeaders(req, options);
+            AssertRequestHeaders(req, requestOptions);
 
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -74,7 +74,7 @@ public class MoneyBalancesServiceClientTests : BaseServiceClientTests
         await TestAsync(handler, async (client) =>
         {
             var model = new MoneyBalancesRefreshOptions { };
-            var response = await client.MoneyBalances.RefreshAsync(model, options);
+            var response = await client.MoneyBalances.RefreshAsync(model, requestOptions);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
         });

@@ -25,13 +25,13 @@ public class EventsServiceClientTests : BaseServiceClientTests<WebhookEvent>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task GetAsync_Works(RequestOptions options)
+    public async Task GetAsync_Works(RequestOptions requestOptions)
     {
-        var handler = GetAsync_Handler(options);
+        var handler = GetAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.Events.GetAsync(Data!.Id!, options);
+            var response = await client.Events.GetAsync(Data!.Id!, requestOptions);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
             Assert.Equal(Data!.Id, response.Resource!.Id);
@@ -41,9 +41,9 @@ public class EventsServiceClientTests : BaseServiceClientTests<WebhookEvent>
 
     [Theory]
     [ClassData(typeof(RequestOptionsWithHasContinuationTokenData))]
-    public async Task ListAsync_Works(RequestOptions options, bool hasContinuationToken)
+    public async Task ListAsync_Works(RequestOptions requestOptions, bool hasContinuationToken)
     {
-        var handler = ListAsync_Handler(hasContinuationToken, options);
+        var handler = ListAsync_Handler(hasContinuationToken, requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -52,7 +52,7 @@ public class EventsServiceClientTests : BaseServiceClientTests<WebhookEvent>
                 Count = 1
             };
 
-            var response = await client.Events.ListAsync(opt, options);
+            var response = await client.Events.ListAsync(opt, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -70,9 +70,9 @@ public class EventsServiceClientTests : BaseServiceClientTests<WebhookEvent>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task ListRecursivelyAsync_Works(RequestOptions options)
+    public async Task ListRecursivelyAsync_Works(RequestOptions requestOptions)
     {
-        var handler = ListAsync_Handler(options: options);
+        var handler = ListAsync_Handler(requestOptions: requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -83,7 +83,7 @@ public class EventsServiceClientTests : BaseServiceClientTests<WebhookEvent>
 
             var results = new List<WebhookEvent>();
 
-            await foreach (var item in client.Events.ListRecursivelyAsync(opt, options))
+            await foreach (var item in client.Events.ListRecursivelyAsync(opt, requestOptions))
             {
                 results.Add(item);
             }
@@ -96,13 +96,13 @@ public class EventsServiceClientTests : BaseServiceClientTests<WebhookEvent>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task GetAsync_Generic_Works(RequestOptions options)
+    public async Task GetAsync_Generic_Works(RequestOptions requestOptions)
     {
-        var handler = GetAsync_Handler(options);
+        var handler = GetAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.Events.GetAsync<MessageTemplates.MessageTemplate>(Data!.Id!, options);
+            var response = await client.Events.GetAsync<MessageTemplates.MessageTemplate>(Data!.Id!, requestOptions);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
             Assert.Equal(Data!.Id, response.Resource!.Id);
@@ -114,9 +114,9 @@ public class EventsServiceClientTests : BaseServiceClientTests<WebhookEvent>
 
     [Theory]
     [ClassData(typeof(RequestOptionsWithHasContinuationTokenData))]
-    public async Task ListAsync_Generic_Works(RequestOptions options, bool hasContinuationToken)
+    public async Task ListAsync_Generic_Works(RequestOptions requestOptions, bool hasContinuationToken)
     {
-        var handler = ListAsync_Handler(hasContinuationToken, options);
+        var handler = ListAsync_Handler(hasContinuationToken, requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -125,7 +125,7 @@ public class EventsServiceClientTests : BaseServiceClientTests<WebhookEvent>
                 Count = 1
             };
 
-            var response = await client.Events.ListAsync<MessageTemplates.MessageTemplate>(opt, options);
+            var response = await client.Events.ListAsync<MessageTemplates.MessageTemplate>(opt, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -145,9 +145,9 @@ public class EventsServiceClientTests : BaseServiceClientTests<WebhookEvent>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task ListRecursivelyAsync_Generic_Works(RequestOptions options)
+    public async Task ListRecursivelyAsync_Generic_Works(RequestOptions requestOptions)
     {
-        var handler = ListAsync_Handler(options: options);
+        var handler = ListAsync_Handler(requestOptions: requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -158,7 +158,7 @@ public class EventsServiceClientTests : BaseServiceClientTests<WebhookEvent>
 
             var results = new List<WebhookEvent<MessageTemplates.MessageTemplate>>();
 
-            await foreach (var item in client.Events.ListRecursivelyAsync<MessageTemplates.MessageTemplate>(opt, options))
+            await foreach (var item in client.Events.ListRecursivelyAsync<MessageTemplates.MessageTemplate>(opt, requestOptions))
             {
                 results.Add(item);
             }

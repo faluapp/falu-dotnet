@@ -22,14 +22,14 @@ public class BaseServiceClientTests<TResource> : BaseServiceClientTests where TR
         Data.Workspace ??= WorkspaceId;
     }
 
-    protected DynamicHttpMessageHandler GetAsync_Handler(RequestOptions? options = null)
+    protected DynamicHttpMessageHandler GetAsync_Handler(RequestOptions? requestOptions = null)
     {
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Get, req.Method);
             Assert.Equal($"{BasePath}/{Data.Id!}", req.RequestUri!.AbsolutePath);
 
-            AssertRequestHeaders(req, options);
+            AssertRequestHeaders(req, requestOptions);
 
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -44,14 +44,14 @@ public class BaseServiceClientTests<TResource> : BaseServiceClientTests where TR
     }
 
     protected DynamicHttpMessageHandler ListAsync_Handler(bool? hasContinuationToken = null,
-                                                          RequestOptions? options = null)
+                                                          RequestOptions? requestOptions = null)
     {
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Get, req.Method);
             Assert.Equal($"{BasePath}", req.RequestUri!.AbsolutePath);
 
-            AssertRequestHeaders(req, options);
+            AssertRequestHeaders(req, requestOptions);
 
             var content = new List<TResource> { Data };
             var response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -74,14 +74,14 @@ public class BaseServiceClientTests<TResource> : BaseServiceClientTests where TR
         return handler;
     }
 
-    protected DynamicHttpMessageHandler CreateAsync_Handler(RequestOptions? options = null)
+    protected DynamicHttpMessageHandler CreateAsync_Handler(RequestOptions? requestOptions = null)
     {
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Post, req.Method);
             Assert.Equal($"{BasePath}", req.RequestUri!.AbsolutePath);
 
-            AssertRequestHeaders(req, options);
+            AssertRequestHeaders(req, requestOptions);
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -97,14 +97,14 @@ public class BaseServiceClientTests<TResource> : BaseServiceClientTests where TR
         return handler;
     }
 
-    protected DynamicHttpMessageHandler UpdateAsync_Handler(RequestOptions? options = null)
+    protected DynamicHttpMessageHandler UpdateAsync_Handler(RequestOptions? requestOptions = null)
     {
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Patch, req.Method);
             Assert.Equal($"{BasePath}/{Data.Id!}", req.RequestUri!.AbsolutePath);
 
-            AssertRequestHeaders(req, options);
+            AssertRequestHeaders(req, requestOptions);
 
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -118,14 +118,14 @@ public class BaseServiceClientTests<TResource> : BaseServiceClientTests where TR
         return handler;
     }
 
-    protected DynamicHttpMessageHandler DeleteAsync_Handler(RequestOptions? options = null)
+    protected DynamicHttpMessageHandler DeleteAsync_Handler(RequestOptions? requestOptions = null)
     {
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Delete, req.Method);
             Assert.Equal($"{BasePath}/{Data.Id!}", req.RequestUri!.AbsolutePath);
 
-            AssertRequestHeaders(req, options);
+            AssertRequestHeaders(req, requestOptions);
 
             return new HttpResponseMessage(HttpStatusCode.OK);
         });
@@ -165,7 +165,7 @@ public class BaseServiceClientTests
         }
     }
 
-    protected static void AssertRequestHeaders(HttpRequestMessage message, RequestOptions? options = null)
+    protected static void AssertRequestHeaders(HttpRequestMessage message, RequestOptions? requestOptions = null)
     {
         var headers = message.Headers;
         Assert.NotNull(headers.Authorization);
@@ -176,21 +176,21 @@ public class BaseServiceClientTests
             Assert.True(headers.TryGetValues(HeadersNames.XIdempotencyKey, out _));
         }
 
-        var idempotency_key = options?.IdempotencyKey;
+        var idempotency_key = requestOptions?.IdempotencyKey;
         if (!string.IsNullOrWhiteSpace(idempotency_key))
         {
             Assert.True(headers.TryGetValues(HeadersNames.XIdempotencyKey, out IEnumerable<string>? values));
             Assert.Equal(idempotency_key!, values!.First());
         }
 
-        var workspace = options?.Workspace;
+        var workspace = requestOptions?.Workspace;
         if (!string.IsNullOrWhiteSpace(workspace))
         {
             Assert.True(headers.TryGetValues(HeadersNames.XWorkspaceId, out IEnumerable<string>? values));
             Assert.Equal(workspace!, values!.First());
         }
 
-        var live = options?.Live;
+        var live = requestOptions?.Live;
         if (live.HasValue)
         {
             Assert.True(headers.TryGetValues(HeadersNames.XLiveMode, out IEnumerable<string>? values));

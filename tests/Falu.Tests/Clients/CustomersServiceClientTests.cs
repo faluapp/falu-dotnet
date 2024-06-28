@@ -22,13 +22,13 @@ public class CustomersServiceClientTests : BaseServiceClientTests<Customer>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task GetAsync_Works(RequestOptions options)
+    public async Task GetAsync_Works(RequestOptions requestOptions)
     {
-        var handler = GetAsync_Handler(options);
+        var handler = GetAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.Customers.GetAsync(Data!.Id!, options);
+            var response = await client.Customers.GetAsync(Data!.Id!, requestOptions);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
             Assert.Equal(Data!.Id, response.Resource!.Id);
@@ -37,9 +37,9 @@ public class CustomersServiceClientTests : BaseServiceClientTests<Customer>
 
     [Theory]
     [ClassData(typeof(RequestOptionsWithHasContinuationTokenData))]
-    public async Task ListAsync_Works(RequestOptions options, bool hasContinuationToken)
+    public async Task ListAsync_Works(RequestOptions requestOptions, bool hasContinuationToken)
     {
-        var handler = ListAsync_Handler(hasContinuationToken, options);
+        var handler = ListAsync_Handler(hasContinuationToken, requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -48,7 +48,7 @@ public class CustomersServiceClientTests : BaseServiceClientTests<Customer>
                 Count = 1
             };
 
-            var response = await client.Customers.ListAsync(opt, options);
+            var response = await client.Customers.ListAsync(opt, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -65,9 +65,9 @@ public class CustomersServiceClientTests : BaseServiceClientTests<Customer>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task ListRecursivelyAsync_Works(RequestOptions options)
+    public async Task ListRecursivelyAsync_Works(RequestOptions requestOptions)
     {
-        var handler = ListAsync_Handler(options: options);
+        var handler = ListAsync_Handler(requestOptions: requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -78,7 +78,7 @@ public class CustomersServiceClientTests : BaseServiceClientTests<Customer>
 
             var results = new List<Customer>();
 
-            await foreach (var item in client.Customers.ListRecursivelyAsync(opt, options))
+            await foreach (var item in client.Customers.ListRecursivelyAsync(opt, requestOptions))
             {
                 results.Add(item);
             }
@@ -91,9 +91,9 @@ public class CustomersServiceClientTests : BaseServiceClientTests<Customer>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task CreateAsync_Works(RequestOptions options)
+    public async Task CreateAsync_Works(RequestOptions requestOptions)
     {
-        var handler = CreateAsync_Handler(options);
+        var handler = CreateAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -105,7 +105,7 @@ public class CustomersServiceClientTests : BaseServiceClientTests<Customer>
                 Description = "A wonderful customer",
             };
 
-            var response = await client.Customers.CreateAsync(model, options);
+            var response = await client.Customers.CreateAsync(model, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -114,16 +114,16 @@ public class CustomersServiceClientTests : BaseServiceClientTests<Customer>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task UpdateAsync_Works(RequestOptions options)
+    public async Task UpdateAsync_Works(RequestOptions requestOptions)
     {
-        var handler = UpdateAsync_Handler(options);
+        var handler = UpdateAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
             var document = new JsonPatchDocument<CustomerUpdateOptions>();
             document.Replace(x => x.Description, "new description");
 
-            var response = await client.Customers.UpdateAsync(Data!.Id!, document, options);
+            var response = await client.Customers.UpdateAsync(Data!.Id!, document, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -132,13 +132,13 @@ public class CustomersServiceClientTests : BaseServiceClientTests<Customer>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task DeleteAsync_Works(RequestOptions options)
+    public async Task DeleteAsync_Works(RequestOptions requestOptions)
     {
-        var handler = DeleteAsync_Handler(options);
+        var handler = DeleteAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.Customers.DeleteAsync(Data!.Id!, options);
+            var response = await client.Customers.DeleteAsync(Data!.Id!, requestOptions);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         });
     }

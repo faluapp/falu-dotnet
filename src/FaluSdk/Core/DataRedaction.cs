@@ -8,7 +8,7 @@ public class DataRedaction
     /// <summary>
     /// Indicates whether the object and its related objects have been redacted or not.
     /// </summary>
-    public DataRedactionStatus Status { get; set; }
+    public string? Status { get; set; }
 
     /// <summary>
     /// Time at which the redaction was requested.
@@ -21,21 +21,4 @@ public class DataRedaction
     /// This is not present or <c>null</c> if the redaction is still enqueued or in progress.
     /// </summary>
     public DateTimeOffset? Completed { get; set; }
-}
-
-/// <summary>
-/// Represents the status of a redaction.
-/// </summary>
-public enum DataRedactionStatus
-{
-    /// <summary>
-    /// The object and its related objects have been redacted.
-    /// </summary>
-    Redacted,
-
-    /// <summary>
-    /// The object has been redacted, and its related objects are in the process of being redacted.
-    /// This process may take up to a week.
-    /// </summary>
-    Processing,
 }

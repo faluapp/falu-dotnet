@@ -1,16 +1,16 @@
 ﻿namespace Falu.Core;
 
 ///
-public interface ISupportsCreation<TResource, TResourceCreateRequest> where TResource : IHasId
+public interface ISupportsCreation<TResource, TResourceCreateOptions> where TResource : IHasId
 {
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="request"></param>
-    /// <param name="options">Options to use for the request.</param>
+    /// <param name="options"></param>
+    /// <param name="requestOptions">Options to use for the request.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<ResourceResponse<TResource>> CreateAsync(TResourceCreateRequest request,
-                                                  RequestOptions? options = null,
+    Task<ResourceResponse<TResource>> CreateAsync(TResourceCreateOptions options,
+                                                  RequestOptions? requestOptions = null,
                                                   CancellationToken cancellationToken = default);
 }

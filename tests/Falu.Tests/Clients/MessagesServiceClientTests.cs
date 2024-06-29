@@ -4,7 +4,6 @@ using Falu.Serialization;
 using System.Net;
 using System.Net.Mime;
 using System.Text;
-using Tingle.Extensions.JsonPatch;
 using Xunit;
 
 namespace Falu.Tests.Clients;
@@ -23,13 +22,13 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task GetAsync_Works(RequestOptions options)
+    public async Task GetAsync_Works(RequestOptions requestOptions)
     {
-        var handler = GetAsync_Handler(options);
+        var handler = GetAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.Messages.GetAsync(Data!.Id!, options);
+            var response = await client.Messages.GetAsync(Data!.Id!, requestOptions);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
             Assert.Equal(Data!.Id!, response.Resource!.Id!);
@@ -38,9 +37,9 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
 
     [Theory]
     [ClassData(typeof(RequestOptionsWithHasContinuationTokenData))]
-    public async Task ListAsync_Works(RequestOptions options, bool hasContinuationToken)
+    public async Task ListAsync_Works(RequestOptions requestOptions, bool hasContinuationToken)
     {
-        var handler = ListAsync_Handler(hasContinuationToken, options);
+        var handler = ListAsync_Handler(hasContinuationToken, requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -49,7 +48,7 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
                 Count = 1
             };
 
-            var response = await client.Messages.ListAsync(opt, options);
+            var response = await client.Messages.ListAsync(opt, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -66,9 +65,9 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task ListRecursivelyAsync_Works(RequestOptions options)
+    public async Task ListRecursivelyAsync_Works(RequestOptions requestOptions)
     {
-        var handler = ListAsync_Handler(options: options);
+        var handler = ListAsync_Handler(requestOptions: requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -79,7 +78,7 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
 
             var results = new List<Message>();
 
-            await foreach (var item in client.Messages.ListRecursivelyAsync(opt, options))
+            await foreach (var item in client.Messages.ListRecursivelyAsync(opt, requestOptions))
             {
                 results.Add(item);
             }
@@ -92,9 +91,9 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task CreateAsync_Works(RequestOptions options)
+    public async Task CreateAsync_Works(RequestOptions requestOptions)
     {
-        var handler = CreateAsync_Handler(options);
+        var handler = CreateAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -103,7 +102,7 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
                 To = Data!.To!,
                 Body = Data!.Body
             };
-            var response = await client.Messages.CreateAsync(model, options);
+            var response = await client.Messages.CreateAsync(model, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -112,9 +111,9 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task CreateAsync_WithTemplate_Works(RequestOptions options)
+    public async Task CreateAsync_WithTemplate_Works(RequestOptions requestOptions)
     {
-        var handler = CreateAsync_Handler(options);
+        var handler = CreateAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -129,7 +128,7 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
                         FaluSerializerContext.Default.IDictionaryStringStringArray),
                 },
             };
-            var response = await client.Messages.CreateAsync(model, options);
+            var response = await client.Messages.CreateAsync(model, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -138,16 +137,17 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task UpdateAsync_Works(RequestOptions options)
+    public async Task UpdateAsync_Works(RequestOptions requestOptions)
     {
-        var handler = UpdateAsync_Handler(options);
+        var handler = UpdateAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<MessageUpdateOptions>();
-            document.Replace(x => x.Metadata, new Dictionary<string, string> { ["purpose"] = "loan-repayment" });
-
-            var response = await client.Messages.UpdateAsync(Data!.Id!, document, options);
+            var options = new MessageUpdateOptions
+            {
+                Metadata = new Dictionary<string, string> { ["purpose"] = "loan-repayment" }
+            };
+            var response = await client.Messages.UpdateAsync(Data!.Id!, options, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -156,14 +156,14 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task CancelAsync_Works(RequestOptions options)
+    public async Task CancelAsync_Works(RequestOptions requestOptions)
     {
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Post, req.Method);
             Assert.Equal($"{BasePath}/{Data!.Id}/cancel", req.RequestUri!.AbsolutePath);
 
-            AssertRequestHeaders(req, options);
+            AssertRequestHeaders(req, requestOptions);
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -175,7 +175,7 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.Messages.CancelAsync(Data!.Id!, options);
+            var response = await client.Messages.CancelAsync(Data!.Id!, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -184,14 +184,14 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task RedactAsync_Works(RequestOptions options)
+    public async Task RedactAsync_Works(RequestOptions requestOptions)
     {
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Post, req.Method);
             Assert.Equal($"{BasePath}/{Data!.Id}/redact", req.RequestUri!.AbsolutePath);
 
-            AssertRequestHeaders(req, options);
+            AssertRequestHeaders(req, requestOptions);
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -203,7 +203,7 @@ public class MessagesServiceClientTests : BaseServiceClientTests<Message>
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.Messages.RedactAsync(Data!.Id!, options);
+            var response = await client.Messages.RedactAsync(Data!.Id!, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);

@@ -6,7 +6,7 @@
 public class FaluClientOptions
 {
     /// <summary>The ApiVersion that the SDK conforms to.</summary>
-    internal const string ApiVersion = "2022-09-01";
+    internal const string ApiVersion = "2024-06-01";
 
     /// <summary>
     /// The API Key for authenticating requests to Falu servers.

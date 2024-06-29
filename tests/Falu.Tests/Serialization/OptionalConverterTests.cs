@@ -1,4 +1,4 @@
-﻿using Falu.Core;
+﻿using Falu.MessageTemplates;
 using System.Text.Json;
 using Xunit;
 using SC = Falu.Serialization.FaluSerializerContext;
@@ -12,106 +12,113 @@ public class OptionalConverterTests
     {
         // no properties are set/written
         var json = "{}";
-        var value = JsonSerializer.Deserialize(json, SC.Default.TestingUpdateOptions)!;
-        Assert.Null(value.Default);
-        Assert.Null(value.Status);
+        var value = JsonSerializer.Deserialize(json, SC.Default.MessageTemplateUpdateOptions)!;
+        Assert.Null(value.Alias);
+        Assert.Null(value.Description);
+        Assert.Null(value.Body);
+        Assert.Null(value.Translations);
+        Assert.Null(value.Metadata);
 
-        // only one property is set/written
-        json = "{\"default\":true}";
-        value = JsonSerializer.Deserialize(json, SC.Default.TestingUpdateOptions)!;
-        Assert.NotNull(value.Default);
-        Assert.True(value.Default.HasValue);
-        Assert.True(value.Default.Value);
-        Assert.Null(value.Status);
+        // only 1 property is set
+        json = "{\"alias\":\"alias\"}";
+        value = JsonSerializer.Deserialize(json, SC.Default.MessageTemplateUpdateOptions)!;
+        Assert.NotNull(value.Alias);
+        Assert.True(value.Alias.HasValue);
+        Assert.Equal("alias", value.Alias.Value);
+        Assert.Null(value.Description);
+        Assert.Null(value.Body);
+        Assert.Null(value.Translations);
+        Assert.Null(value.Metadata);
 
         // another property is set/written
-        json = "{\"status\":\"another\"}";
-        value = JsonSerializer.Deserialize(json, SC.Default.TestingUpdateOptions)!;
-        Assert.Null(value.Default);
-        Assert.NotNull(value.Status);
-        Assert.True(value.Status.HasValue);
-        Assert.Equal("another", value.Status.Value);
+        json = "{\"metadata\":{\"name\":\"falu\"}}";
+        value = JsonSerializer.Deserialize(json, SC.Default.MessageTemplateUpdateOptions)!;
+        Assert.Null(value.Alias);
+        Assert.Null(value.Description);
+        Assert.Null(value.Body);
+        Assert.Null(value.Translations);
+        Assert.NotNull(value.Metadata);
+        Assert.True(value.Metadata.HasValue);
 
-        // both properties are set/written
-        json = "{\"default\":false,\"status\":\"created\"}";
-        value = JsonSerializer.Deserialize(json, SC.Default.TestingUpdateOptions)!;
-        Assert.NotNull(value.Default);
-        Assert.True(value.Default.HasValue);
-        Assert.False(value.Default.Value);
-        Assert.NotNull(value.Status);
-        Assert.True(value.Status.HasValue);
-        Assert.Equal("created", value.Status.Value);
+        // set multiple properties
+        json = "{\"alias\":\"alias\",\"metadata\":{\"name\":\"falu\"}}";
+        value = JsonSerializer.Deserialize(json, SC.Default.MessageTemplateUpdateOptions)!;
+        Assert.NotNull(value.Alias);
+        Assert.True(value.Alias.HasValue);
+        Assert.Equal("alias", value.Alias.Value);
+        Assert.Null(value.Description);
+        Assert.Null(value.Body);
+        Assert.Null(value.Translations);
+        Assert.NotNull(value.Metadata);
+        Assert.True(value.Metadata.HasValue);
 
-        // only one property is set to null
-        json = "{\"default\":null}";
-        value = JsonSerializer.Deserialize(json, SC.Default.TestingUpdateOptions)!;
-        Assert.NotNull(value.Default);
-        Assert.True(value.Default.HasValue);
-        Assert.Null(value.Default.Value);
-        Assert.Null(value.Status);
-
-        // another property is set to null
-        json = "{\"status\":null}";
-        value = JsonSerializer.Deserialize(json, SC.Default.TestingUpdateOptions)!;
-        Assert.Null(value.Default);
-        Assert.NotNull(value.Status);
-        Assert.True(value.Status.HasValue);
-        Assert.Null(value.Status.Value);
-
-        // both properties are set to null
-        json = "{\"default\":null,\"status\":null}";
-        value = JsonSerializer.Deserialize(json, SC.Default.TestingUpdateOptions)!;
-        Assert.NotNull(value.Default);
-        Assert.True(value.Default.HasValue);
-        Assert.Null(value.Default.Value);
-        Assert.NotNull(value.Status);
-        Assert.True(value.Status.HasValue);
-        Assert.Null(value.Status.Value);
+        // set a property to null and 2 as not null
+        json = "{\"alias\":\"alias\",\"description\":null,\"metadata\":{\"name\":\"falu\"}}";
+        value = JsonSerializer.Deserialize(json, SC.Default.MessageTemplateUpdateOptions)!;
+        Assert.NotNull(value.Alias);
+        Assert.True(value.Alias.HasValue);
+        Assert.Equal("alias", value.Alias.Value);
+        Assert.NotNull(value.Description);
+        Assert.True(value.Description.HasValue);
+        Assert.Null(value.Description.Value);
+        Assert.Null(value.Body);
+        Assert.Null(value.Translations);
+        Assert.NotNull(value.Metadata);
+        Assert.True(value.Metadata.HasValue);
     }
 
     [Fact]
     public void Write_Works()
     {
         // no properties are set/written
-        var value = new TestingUpdateOptions { };
+        var value = new MessageTemplateUpdateOptions { };
         var expected = "{}";
-        var actual = JsonSerializer.Serialize(value, SC.Default.TestingUpdateOptions);
+        var actual = JsonSerializer.Serialize(value, SC.Default.MessageTemplateUpdateOptions);
         Assert.Equal(expected, actual);
 
-        // only one property is set/written
-        value = new TestingUpdateOptions { Default = true, };
-        expected = "{\"default\":true}";
-        actual = JsonSerializer.Serialize(value, SC.Default.TestingUpdateOptions);
+        // only one property is set
+        value = new MessageTemplateUpdateOptions { Alias = "alias" };
+        expected = "{\"alias\":\"alias\"}";
+        actual = JsonSerializer.Serialize(value, SC.Default.MessageTemplateUpdateOptions);
         Assert.Equal(expected, actual);
 
         // another property is set/written
-        value = new TestingUpdateOptions { Status = "another", };
-        expected = "{\"status\":\"another\"}";
-        actual = JsonSerializer.Serialize(value, SC.Default.TestingUpdateOptions);
+        value = new MessageTemplateUpdateOptions
+        {
+            Metadata = new Dictionary<string, string>
+            {
+                ["name"] = "falu"
+            }
+        };
+        expected = "{\"metadata\":{\"name\":\"falu\"}}";
+        actual = JsonSerializer.Serialize(value, SC.Default.MessageTemplateUpdateOptions);
         Assert.Equal(expected, actual);
 
-        // both properties are set/written
-        value = new TestingUpdateOptions { Default = false, Status = "created", };
-        expected = "{\"default\":false,\"status\":\"created\"}";
-        actual = JsonSerializer.Serialize(value, SC.Default.TestingUpdateOptions);
+        // set multiple properties
+        value = new MessageTemplateUpdateOptions
+        {
+            Alias = "alias",
+            Metadata = new Dictionary<string, string>
+            {
+                ["name"] = "falu"
+            }
+        };
+        expected = "{\"alias\":\"alias\",\"metadata\":{\"name\":\"falu\"}}";
+        actual = JsonSerializer.Serialize(value, SC.Default.MessageTemplateUpdateOptions);
         Assert.Equal(expected, actual);
 
-        // only one property is set to null
-        value = new TestingUpdateOptions { Default = null, };
-        expected = "{\"default\":null}";
-        actual = JsonSerializer.Serialize(value, SC.Default.TestingUpdateOptions);
-        Assert.Equal(expected, actual);
-
-        // another property is set to null
-        value = new TestingUpdateOptions { Status = null, };
-        expected = "{\"status\":null}";
-        actual = JsonSerializer.Serialize(value, SC.Default.TestingUpdateOptions);
-        Assert.Equal(expected, actual);
-
-        // both properties are set to null
-        value = new TestingUpdateOptions { Default = null, Status = null, };
-        expected = "{\"default\":null,\"status\":null}";
-        actual = JsonSerializer.Serialize(value, SC.Default.TestingUpdateOptions);
+        // set multiple properties and have one set to null
+        value = new MessageTemplateUpdateOptions
+        {
+            Alias = "alias",
+            Description = null,
+            Metadata = new Dictionary<string, string>
+            {
+                ["name"] = "falu"
+            }
+        };
+        expected = "{\"alias\":\"alias\",\"description\":null,\"metadata\":{\"name\":\"falu\"}}";
+        actual = JsonSerializer.Serialize(value, SC.Default.MessageTemplateUpdateOptions);
         Assert.Equal(expected, actual);
     }
 }

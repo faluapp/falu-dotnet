@@ -1,31 +1,44 @@
 ﻿using Falu.Core;
+using Falu.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Falu.Webhooks;
 
 /// <summary>
 /// A model representing details that can be changed about a Webhook endpoint
 /// </summary>
-public class WebhookEndpointUpdateOptions : IHasDescription, IHasMetadata
+public class WebhookEndpointUpdateOptions : IHasOptionalDescription, IHasOptionalMetadata
 {
+    private Optional<string?>? url;
+    private Optional<string?>? status;
+    private Optional<string?>? description;
+    private Optional<List<string>?>? events;
+    private Optional<Dictionary<string, string>?>? metadata;
+
     /// <summary>
     /// The list of events to enable for this endpoint.
     /// Possible values are available in <see cref="EventTypes"/>.
     /// </summary>
-    public List<string>? Events { get; set; }
+    [JsonConverter(typeof(OptionalConverter<List<string>?>))]
+    public Optional<List<string>?>? Events { get => events; set => events = new(value); }
 
     /// <inheritdoc/>
-    public string? Description { get; set; }
+    [JsonConverter(typeof(OptionalConverter<string?>))]
+    public Optional<string?>? Description { get => description; set => description = new(value); }
 
     /// <summary>
     /// The status of the webhook.
     /// </summary>
-    public string? Status { get; set; }
+    [JsonConverter(typeof(OptionalConverter<string?>))]
+    public Optional<string?>? Status { get => status; set => status = new(value); }
 
     /// <summary>
     /// The URL of the webhook endpoint
     /// </summary>
-    public string? Url { get; set; }
+    [JsonConverter(typeof(OptionalConverter<string?>))]
+    public Optional<string?>? Url { get => url; set => url = new(value); }
 
     /// <inheritdoc/>
-    public Dictionary<string, string>? Metadata { get; set; }
+    [JsonConverter(typeof(OptionalConverter<Dictionary<string, string>?>))]
+    public Optional<Dictionary<string, string>?>? Metadata { get => metadata; set => metadata = new(value); }
 }

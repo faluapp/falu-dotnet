@@ -1,6 +1,5 @@
 ﻿using Falu.Core;
 using System.Net.Http.Json;
-using Tingle.Extensions.JsonPatch;
 using SC = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.MessageStreams;
@@ -71,11 +70,11 @@ public class MessageStreamsServiceClient(HttpClient backChannel, FaluClientOptio
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<MessageStream>> UpdateAsync(string id,
-                                                                     JsonPatchDocument<MessageStreamUpdateOptions> options,
+                                                                     MessageStreamUpdateOptions options,
                                                                      RequestOptions? requestOptions = null,
                                                                      CancellationToken cancellationToken = default)
     {
-        var content = JsonContent.Create(options, SC.Default.JsonPatchDocumentMessageStreamUpdateOptions);
+        var content = JsonContent.Create(options, SC.Default.MessageStreamUpdateOptions);
         return UpdateResourceAsync(id, content, requestOptions, cancellationToken);
     }
 

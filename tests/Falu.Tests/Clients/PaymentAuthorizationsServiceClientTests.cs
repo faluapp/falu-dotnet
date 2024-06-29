@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Mime;
 using System.Text;
 using System.Text.Json;
-using Tingle.Extensions.JsonPatch;
 using Xunit;
 
 namespace Falu.Tests.Clients;
@@ -30,13 +29,13 @@ public class PaymentAuthorizationsServiceClientTests : BaseServiceClientTests<Pa
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task GetAsync_Works(RequestOptions options)
+    public async Task GetAsync_Works(RequestOptions requestOptions)
     {
-        var handler = GetAsync_Handler(options);
+        var handler = GetAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.PaymentAuthorizations.GetAsync(Data!.Id!, options);
+            var response = await client.PaymentAuthorizations.GetAsync(Data!.Id!, requestOptions);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
             Assert.Equal(Data!.Id, response.Resource!.Id);
@@ -45,9 +44,9 @@ public class PaymentAuthorizationsServiceClientTests : BaseServiceClientTests<Pa
 
     [Theory]
     [ClassData(typeof(RequestOptionsWithHasContinuationTokenData))]
-    public async Task ListAsync_Works(RequestOptions options, bool hasContinuationToken)
+    public async Task ListAsync_Works(RequestOptions requestOptions, bool hasContinuationToken)
     {
-        var handler = ListAsync_Handler(hasContinuationToken, options);
+        var handler = ListAsync_Handler(hasContinuationToken, requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -56,7 +55,7 @@ public class PaymentAuthorizationsServiceClientTests : BaseServiceClientTests<Pa
                 Count = 1
             };
 
-            var response = await client.PaymentAuthorizations.ListAsync(opt, options);
+            var response = await client.PaymentAuthorizations.ListAsync(opt, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -73,9 +72,9 @@ public class PaymentAuthorizationsServiceClientTests : BaseServiceClientTests<Pa
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task ListRecursivelyAsync_Works(RequestOptions options)
+    public async Task ListRecursivelyAsync_Works(RequestOptions requestOptions)
     {
-        var handler = ListAsync_Handler(options: options);
+        var handler = ListAsync_Handler(requestOptions: requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -86,7 +85,7 @@ public class PaymentAuthorizationsServiceClientTests : BaseServiceClientTests<Pa
 
             var results = new List<PaymentAuthorization>();
 
-            await foreach (var item in client.PaymentAuthorizations.ListRecursivelyAsync(opt, options))
+            await foreach (var item in client.PaymentAuthorizations.ListRecursivelyAsync(opt, requestOptions))
             {
                 results.Add(item);
             }
@@ -99,14 +98,14 @@ public class PaymentAuthorizationsServiceClientTests : BaseServiceClientTests<Pa
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task ApproveAsync_Works(RequestOptions options)
+    public async Task ApproveAsync_Works(RequestOptions requestOptions)
     {
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Post, req.Method);
             Assert.Equal($"{BasePath}/{Data!.Id}/approve", req.RequestUri!.AbsolutePath);
 
-            AssertRequestHeaders(req, options);
+            AssertRequestHeaders(req, requestOptions);
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -122,7 +121,7 @@ public class PaymentAuthorizationsServiceClientTests : BaseServiceClientTests<Pa
         await TestAsync(handler, async (client) =>
         {
             var model = new PaymentAuthorizationApproveOptions { };
-            var response = await client.PaymentAuthorizations.ApproveAsync(Data!.Id!, model, options);
+            var response = await client.PaymentAuthorizations.ApproveAsync(Data!.Id!, model, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -131,14 +130,14 @@ public class PaymentAuthorizationsServiceClientTests : BaseServiceClientTests<Pa
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task DeclineAsync_Works(RequestOptions options)
+    public async Task DeclineAsync_Works(RequestOptions requestOptions)
     {
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Post, req.Method);
             Assert.Equal($"{BasePath}/{Data!.Id}/decline", req.RequestUri!.AbsolutePath);
 
-            AssertRequestHeaders(req, options);
+            AssertRequestHeaders(req, requestOptions);
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -154,7 +153,7 @@ public class PaymentAuthorizationsServiceClientTests : BaseServiceClientTests<Pa
         await TestAsync(handler, async (client) =>
         {
             var model = new PaymentAuthorizationDeclineOptions { };
-            var response = await client.PaymentAuthorizations.DeclineAsync(Data!.Id!, model, options);
+            var response = await client.PaymentAuthorizations.DeclineAsync(Data!.Id!, model, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -163,16 +162,17 @@ public class PaymentAuthorizationsServiceClientTests : BaseServiceClientTests<Pa
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task UpdateAsync_Works(RequestOptions options)
+    public async Task UpdateAsync_Works(RequestOptions requestOptions)
     {
-        var handler = UpdateAsync_Handler(options);
+        var handler = UpdateAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<PaymentAuthorizationUpdateOptions>();
-            document.Replace(x => x.Metadata, new Dictionary<string, string> { ["reason"] = "loan-repayment" });
-
-            var response = await client.PaymentAuthorizations.UpdateAsync(Data!.Id!, document, options);
+            var options = new PaymentAuthorizationUpdateOptions
+            {
+                Metadata = new Dictionary<string, string> { ["reason"] = "loan-repayment" }
+            };
+            var response = await client.PaymentAuthorizations.UpdateAsync(Data!.Id!, options, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);

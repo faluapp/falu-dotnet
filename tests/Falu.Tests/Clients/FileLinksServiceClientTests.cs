@@ -1,7 +1,6 @@
 ﻿using Falu.Core;
 using Falu.FileLinks;
 using System.Net;
-using Tingle.Extensions.JsonPatch;
 using Xunit;
 
 namespace Falu.Tests.Clients;
@@ -20,13 +19,13 @@ public class FileLinksServiceClientTests : BaseServiceClientTests<FileLink>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task GetAsync_Works(RequestOptions options)
+    public async Task GetAsync_Works(RequestOptions requestOptions)
     {
-        var handler = GetAsync_Handler(options);
+        var handler = GetAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
-            var response = await client.FileLinks.GetAsync(Data!.Id!, options);
+            var response = await client.FileLinks.GetAsync(Data!.Id!, requestOptions);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
             Assert.Equal(Data!.Id, response.Resource!.Id);
@@ -35,9 +34,9 @@ public class FileLinksServiceClientTests : BaseServiceClientTests<FileLink>
 
     [Theory]
     [ClassData(typeof(RequestOptionsWithHasContinuationTokenData))]
-    public async Task ListAsync_Works(RequestOptions options, bool hasContinuationToken)
+    public async Task ListAsync_Works(RequestOptions requestOptions, bool hasContinuationToken)
     {
-        var handler = ListAsync_Handler(hasContinuationToken, options);
+        var handler = ListAsync_Handler(hasContinuationToken, requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -46,7 +45,7 @@ public class FileLinksServiceClientTests : BaseServiceClientTests<FileLink>
                 Count = 1
             };
 
-            var response = await client.FileLinks.ListAsync(opt, options);
+            var response = await client.FileLinks.ListAsync(opt, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -63,9 +62,9 @@ public class FileLinksServiceClientTests : BaseServiceClientTests<FileLink>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task ListRecursivelyAsync_Works(RequestOptions options)
+    public async Task ListRecursivelyAsync_Works(RequestOptions requestOptions)
     {
-        var handler = ListAsync_Handler(options: options);
+        var handler = ListAsync_Handler(requestOptions: requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -76,7 +75,7 @@ public class FileLinksServiceClientTests : BaseServiceClientTests<FileLink>
 
             var results = new List<FileLink>();
 
-            await foreach (var item in client.FileLinks.ListRecursivelyAsync(opt, options))
+            await foreach (var item in client.FileLinks.ListRecursivelyAsync(opt, requestOptions))
             {
                 results.Add(item);
             }
@@ -89,9 +88,9 @@ public class FileLinksServiceClientTests : BaseServiceClientTests<FileLink>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task CreateAsync_Works(RequestOptions options)
+    public async Task CreateAsync_Works(RequestOptions requestOptions)
     {
-        var handler = CreateAsync_Handler(options);
+        var handler = CreateAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
@@ -100,7 +99,7 @@ public class FileLinksServiceClientTests : BaseServiceClientTests<FileLink>
                 File = Data!.File
             };
 
-            var response = await client.FileLinks.CreateAsync(model, options);
+            var response = await client.FileLinks.CreateAsync(model, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
@@ -110,20 +109,20 @@ public class FileLinksServiceClientTests : BaseServiceClientTests<FileLink>
 
     [Theory]
     [ClassData(typeof(RequestOptionsData))]
-    public async Task UpdateAsync_Works(RequestOptions options)
+    public async Task UpdateAsync_Works(RequestOptions requestOptions)
     {
-        var handler = UpdateAsync_Handler(options);
+        var handler = UpdateAsync_Handler(requestOptions);
 
         await TestAsync(handler, async (client) =>
         {
-            var document = new JsonPatchDocument<FileLinkUpdateOptions>();
-            document.Replace(x => x.Expires, null);
-
-            var response = await client.FileLinks.UpdateAsync(Data!.Id!, document, options);
+            var options = new FileLinkUpdateOptions
+            {
+                Expires = null
+            };
+            var response = await client.FileLinks.UpdateAsync(Data!.Id!, options, requestOptions);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.Resource);
         });
     }
-
 }

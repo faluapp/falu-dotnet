@@ -1,6 +1,5 @@
 ﻿using Falu.Core;
 using System.Net.Http.Json;
-using Tingle.Extensions.JsonPatch;
 using SC = Falu.Serialization.FaluSerializerContext;
 
 namespace Falu.TransferReversals;
@@ -71,11 +70,11 @@ public class TransferReversalsServiceClient(HttpClient backChannel, FaluClientOp
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public virtual Task<ResourceResponse<TransferReversal>> UpdateAsync(string id,
-                                                                        JsonPatchDocument<TransferReversalUpdateOptions> options,
+                                                                        TransferReversalUpdateOptions options,
                                                                         RequestOptions? requestOptions = null,
                                                                         CancellationToken cancellationToken = default)
     {
-        var content = JsonContent.Create(options, SC.Default.JsonPatchDocumentTransferReversalUpdateOptions);
+        var content = JsonContent.Create(options, SC.Default.TransferReversalUpdateOptions);
         return UpdateResourceAsync(id, content, requestOptions, cancellationToken);
     }
 }

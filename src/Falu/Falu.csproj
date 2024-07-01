@@ -6,6 +6,16 @@
     <PackageIcon>falu-logo.png</PackageIcon>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <!--
+      The project is named Falu but produces and assembly named FaluSdk and not Falu because it is used
+      in the CLI which produces an assembly/executable also named Falu hence causes collisions and build failure.
+      Instead of renaming the whole project, we set the AssemblyName and PackageId to what we want.
+    -->
+    <AssemblyName>FaluSdk</AssemblyName>
+    <PackageId>Falu</PackageId>
+  </PropertyGroup>
+
   <ItemGroup>
     <InternalsVisibleTo Include="Falu.Tests" />
   </ItemGroup>

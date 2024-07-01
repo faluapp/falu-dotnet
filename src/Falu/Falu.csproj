@@ -4,7 +4,6 @@
     <TargetFrameworks>netstandard2.1;net7.0;net8.0</TargetFrameworks>
     <Description>The official client library for Falu. (https://falu.io)</Description>
     <PackageIcon>falu-logo.png</PackageIcon>
-    <PackageId>Falu</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

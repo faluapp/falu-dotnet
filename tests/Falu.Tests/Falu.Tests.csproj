@@ -4,7 +4,6 @@
     <TargetFramework>net8.0</TargetFramework>
     <IsTestProject>true</IsTestProject>
     <IsPackable>false</IsPackable>
-    <RootNamespace>Falu.Tests</RootNamespace>
     <!-- The trim analyzer ensures we test using trim friendly methods that resemble actual usage -->
     <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
   </PropertyGroup>

@@ -37,7 +37,7 @@ public class IdentityVerificationReportTaxId : AbstractIdentityVerificationRepor
 }
 
 ///
-public class IdentityVerificationTaxIdObligation 
+public class IdentityVerificationTaxIdObligation
 {
     /// <summary>The Name.</summary>
     /// <example>Value Added Tax (VAT)</example>
@@ -55,7 +55,7 @@ public class IdentityVerificationTaxIdObligation
 }
 
 ///
-public class IdentityVerificationTaxIdObligationPeriod 
+public class IdentityVerificationTaxIdObligationPeriod
 {
     /// <summary>The starting date of the effective period.</summary>
     /// <example>2019-08-24T14:15:22Z</example>

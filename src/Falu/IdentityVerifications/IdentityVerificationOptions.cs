@@ -75,7 +75,7 @@ public class IdentityVerificationOptionsForVideo
 }
 
 ///
-public class IdentityVerificationOptionsForTaxId 
+public class IdentityVerificationOptionsForTaxId
 {
     /// <summary>
     /// The allowed identity tax id types.

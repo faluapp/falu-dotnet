@@ -1,4 +1,5 @@
 ﻿using Falu.Core;
+using Falu.IdentityVerificationReports;
 
 namespace Falu.IdentityVerifications;
 
@@ -51,4 +52,24 @@ public class IdentityVerificationOutputs
     /// The user's sex 
     /// </summary>
     public string? Sex { get; set; }
+
+    /// <summary>
+    /// The verified tax id
+    /// </summary>
+    public string? TaxId { get; set; }
+
+    /// <summary>
+    /// The tax id type
+    /// </summary>
+    public string? TaxIdType { get; set; }
+
+    /// <summary>
+    /// Status of the tax id.
+    /// </summary>
+    public string? TaxIdStatus { get; set; }
+
+    /// <summary>
+    /// The verified registered tax obligations
+    /// </summary>
+    public List<IdentityVerificationTaxIdObligation>? TaxIdObligations { get; set; }
 }

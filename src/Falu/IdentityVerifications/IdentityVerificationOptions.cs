@@ -28,6 +28,11 @@ public class IdentityVerificationOptions
     /// Options for the video check.
     /// </summary>
     public IdentityVerificationOptionsForVideo? Video { get; set; }
+
+    /// <summary>
+    /// Options for tax id check
+    /// </summary>
+    public IdentityVerificationOptionsForTaxId? TaxId { get; set; }
 }
 
 ///
@@ -67,4 +72,14 @@ public class IdentityVerificationOptionsForVideo
     /// When not provided, the server generates a random one.
     /// </summary>
     public int? Recital { get; set; }
+}
+
+///
+public class IdentityVerificationOptionsForTaxId
+{
+    /// <summary>
+    /// The allowed identity tax id types.
+    /// If a user provides an identity tax id type which isn't one of the allowed types, it will be rejected.
+    /// </summary>
+    public List<string>? Allowed { get; set; }
 }

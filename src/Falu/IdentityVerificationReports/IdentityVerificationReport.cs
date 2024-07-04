@@ -50,6 +50,16 @@ public class IdentityVerificationReport : IHasId, IHasCreated, IHasUpdated, IHas
     /// </summary>
     public IdentityVerificationReportIPAddress? IPAddress { get; set; }
 
+    /// <summary>
+    /// Result from the device check.
+    /// </summary>
+    public IdentityVerificationReportDevice? Device { get; set; }
+
+    /// <summary>
+    /// Result from tax id check
+    /// </summary>
+    public IdentityVerificationReportTaxId? TaxId { get; set; }
+
     /// <inheritdoc/>
     public string? Workspace { get; set; }
 

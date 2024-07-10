@@ -103,6 +103,7 @@ public class PaymentAuthorizationsServiceClientTests : BaseServiceClientTests<Pa
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Post, req.Method);
+            Assert.Equal(ApiHost, req.RequestUri!.Host);
             Assert.Equal($"{BasePath}/{Data!.Id}/approve", req.RequestUri!.AbsolutePath);
 
             AssertRequestHeaders(req, requestOptions);
@@ -135,6 +136,7 @@ public class PaymentAuthorizationsServiceClientTests : BaseServiceClientTests<Pa
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Post, req.Method);
+            Assert.Equal(ApiHost, req.RequestUri!.Host);
             Assert.Equal($"{BasePath}/{Data!.Id}/decline", req.RequestUri!.AbsolutePath);
 
             AssertRequestHeaders(req, requestOptions);

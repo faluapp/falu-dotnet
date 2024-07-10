@@ -128,6 +128,7 @@ public class IdentityVerificationsServiceClientTests : BaseServiceClientTests<Id
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Post, req.Method);
+            Assert.Equal(ApiHost, req.RequestUri!.Host);
             Assert.Equal($"{BasePath}/{Data!.Id}/cancel", req.RequestUri!.AbsolutePath);
 
             AssertRequestHeaders(req, requestOptions);
@@ -156,6 +157,7 @@ public class IdentityVerificationsServiceClientTests : BaseServiceClientTests<Id
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Post, req.Method);
+            Assert.Equal(ApiHost, req.RequestUri!.Host);
             Assert.Equal($"{BasePath}/{Data!.Id}/redact", req.RequestUri!.AbsolutePath);
 
             AssertRequestHeaders(req, requestOptions);

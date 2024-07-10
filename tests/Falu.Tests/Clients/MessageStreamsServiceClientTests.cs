@@ -115,6 +115,7 @@ public class MessageStreamsServiceClientTests : BaseServiceClientTests<MessageSt
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Post, req.Method);
+            Assert.Equal(ApiHost, req.RequestUri!.Host);
             Assert.Equal($"{BasePath}/{Data!.Id}/archive", req.RequestUri!.AbsolutePath);
 
             AssertRequestHeaders(req, requestOptions);
@@ -145,6 +146,7 @@ public class MessageStreamsServiceClientTests : BaseServiceClientTests<MessageSt
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Post, req.Method);
+            Assert.Equal(ApiHost, req.RequestUri!.Host);
             Assert.Equal($"{BasePath}/{Data!.Id!}/unarchive", req.RequestUri!.AbsolutePath);
 
             AssertRequestHeaders(req, requestOptions);

@@ -1,13 +1,11 @@
 ﻿using Falu;
 using Falu.Core;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
 using Polly.Retry;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
-using System.Net.Http;
 using System.Net.Http.Headers;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -72,6 +70,9 @@ public static partial class IServiceCollectionExtensions
         {
             services.Configure(configure);
         }
+
+        // register post configuration for validation purposes
+        services.ConfigureOptions<FaluClientConfigureOptions<TClientOptions>>();
 
         // get the version from the assembly
         var productVersion = typeof(TClient).Assembly.GetName().Version!.ToString(3);

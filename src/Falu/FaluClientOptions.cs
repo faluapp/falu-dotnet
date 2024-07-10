@@ -20,6 +20,11 @@ public class FaluClientOptions
     public int Retries { get; set; } = 2;
 
     /// <summary>
+    /// Host to use when uploading files
+    /// </summary>
+    public string FilesHost { get; set; } = "files.falu.io";
+
+    /// <summary>
     /// Information about the application.
     /// It is recommended for use only with third party services for identification purposes.
     /// </summary>

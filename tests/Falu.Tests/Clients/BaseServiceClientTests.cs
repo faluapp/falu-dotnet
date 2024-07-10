@@ -27,6 +27,7 @@ public class BaseServiceClientTests<TResource> : BaseServiceClientTests where TR
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Get, req.Method);
+            Assert.Equal(ApiHost, req.RequestUri!.Host);
             Assert.Equal($"{BasePath}/{Data.Id!}", req.RequestUri!.AbsolutePath);
 
             AssertRequestHeaders(req, requestOptions);
@@ -49,6 +50,7 @@ public class BaseServiceClientTests<TResource> : BaseServiceClientTests where TR
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Get, req.Method);
+            Assert.Equal(ApiHost, req.RequestUri!.Host);
             Assert.Equal($"{BasePath}", req.RequestUri!.AbsolutePath);
 
             AssertRequestHeaders(req, requestOptions);
@@ -74,11 +76,12 @@ public class BaseServiceClientTests<TResource> : BaseServiceClientTests where TR
         return handler;
     }
 
-    protected DynamicHttpMessageHandler CreateAsync_Handler(RequestOptions? requestOptions = null)
+    protected DynamicHttpMessageHandler CreateAsync_Handler(RequestOptions? requestOptions = null, string? host = ApiHost)
     {
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Post, req.Method);
+            Assert.Equal(host, req.RequestUri!.Host);
             Assert.Equal($"{BasePath}", req.RequestUri!.AbsolutePath);
 
             AssertRequestHeaders(req, requestOptions);
@@ -102,6 +105,7 @@ public class BaseServiceClientTests<TResource> : BaseServiceClientTests where TR
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Patch, req.Method);
+            Assert.Equal(ApiHost, req.RequestUri!.Host);
             Assert.Equal($"{BasePath}/{Data.Id!}", req.RequestUri!.AbsolutePath);
 
             AssertRequestHeaders(req, requestOptions);
@@ -123,6 +127,7 @@ public class BaseServiceClientTests<TResource> : BaseServiceClientTests where TR
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Delete, req.Method);
+            Assert.Equal(ApiHost, req.RequestUri!.Host);
             Assert.Equal($"{BasePath}/{Data.Id!}", req.RequestUri!.AbsolutePath);
 
             AssertRequestHeaders(req, requestOptions);
@@ -138,6 +143,7 @@ public class BaseServiceClientTests
 {
     private const string TestKey = "test";
 
+    protected const string ApiHost = "api.falu.io";
     protected const string WorkspaceId = "wksp_602a8dd0a54847479a874de4";
     protected const string IdempotencyKey = "05bc69eb-218d-46f2-8812-5bede8592abf";
 

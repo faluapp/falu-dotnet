@@ -1,11 +1,13 @@
 ﻿using Falu;
 using Falu.Core;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
 using Polly.Retry;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
+using System.Net.Http;
 using System.Net.Http.Headers;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -77,6 +79,9 @@ public static partial class IServiceCollectionExtensions
         // get the version from the assembly
         var productVersion = typeof(TClient).Assembly.GetName().Version!.ToString(3);
 
+        // register a custom delegating handler to upload files using files.falu.io host 
+        services.AddTransient<FilesUploadHandler>();
+
         // setup client
         var builder = services.AddHttpClient<TClient>()
                               .ConfigureHttpClient((provider, client) =>
@@ -86,7 +91,8 @@ public static partial class IServiceCollectionExtensions
 
                                   // populate the User-Agent value for the SDK/library
                                   client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("falu-dotnet", productVersion));
-                              });
+                              })
+                              .AddHttpMessageHandler<FilesUploadHandler>();
 
         // setup retries
         builder.AddPolicyHandler((sp, request) =>

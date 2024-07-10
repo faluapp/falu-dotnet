@@ -137,6 +137,7 @@ public class MessageBatchesServiceClientTests : BaseServiceClientTests<MessageBa
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Get, req.Method);
+            Assert.Equal(ApiHost, req.RequestUri!.Host);
             Assert.Equal($"{BasePath}/{Data!.Id}/status", req.RequestUri!.AbsolutePath);
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -163,6 +164,7 @@ public class MessageBatchesServiceClientTests : BaseServiceClientTests<MessageBa
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Post, req.Method);
+            Assert.Equal(ApiHost, req.RequestUri!.Host);
             Assert.Equal($"{BasePath}/{Data!.Id}/cancel", req.RequestUri!.AbsolutePath);
 
             AssertRequestHeaders(req, requestOptions);
@@ -191,6 +193,7 @@ public class MessageBatchesServiceClientTests : BaseServiceClientTests<MessageBa
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Post, req.Method);
+            Assert.Equal(ApiHost, req.RequestUri!.Host);
             Assert.Equal($"{BasePath}/{Data!.Id}/redact", req.RequestUri!.AbsolutePath);
 
             AssertRequestHeaders(req, requestOptions);

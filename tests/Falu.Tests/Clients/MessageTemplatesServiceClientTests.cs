@@ -150,6 +150,7 @@ public class MessageTemplatesServiceClientTests : BaseServiceClientTests<Message
         var handler = new DynamicHttpMessageHandler((req, ct) =>
         {
             Assert.Equal(HttpMethod.Post, req.Method);
+            Assert.Equal(ApiHost, req.RequestUri!.Host);
             Assert.Equal($"{BasePath}/validate", req.RequestUri!.AbsolutePath);
 
             AssertRequestHeaders(req, requestOptions);

@@ -92,7 +92,7 @@ public class FilesServiceClientTests : BaseServiceClientTests<Files.File>
     [ClassData(typeof(RequestOptionsData))]
     public async Task CreateAsync_Works(RequestOptions requestOptions)
     {
-        var handler = CreateAsync_Handler(requestOptions);
+        var handler = CreateAsync_Handler(requestOptions, "files.falu.io");
 
         await TestAsync(handler, async (client) =>
         {

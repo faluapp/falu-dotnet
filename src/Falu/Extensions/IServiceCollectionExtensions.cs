@@ -73,14 +73,8 @@ public static partial class IServiceCollectionExtensions
             services.Configure(configure);
         }
 
-        // register post configuration for validation purposes
-        services.ConfigureOptions<FaluClientConfigureOptions<TClientOptions>>();
-
         // get the version from the assembly
         var productVersion = typeof(TClient).Assembly.GetName().Version!.ToString(3);
-
-        // register a custom delegating handler to upload files using files.falu.io host 
-        services.AddTransient<FilesUploadHandler>();
 
         // setup client
         var builder = services.AddHttpClient<TClient>()
@@ -91,8 +85,7 @@ public static partial class IServiceCollectionExtensions
 
                                   // populate the User-Agent value for the SDK/library
                                   client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("falu-dotnet", productVersion));
-                              })
-                              .AddHttpMessageHandler<FilesUploadHandler>();
+                              });
 
         // setup retries
         builder.AddPolicyHandler((sp, request) =>

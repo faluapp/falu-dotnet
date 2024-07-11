@@ -134,15 +134,6 @@ public static class EventTypes
 
     #endregion
 
-    #region Money Balances
-
-    /// <summary>
-    /// Occurs whenever a money balances are updated.
-    /// </summary>
-    public const string MoneyBalancesUpdated = "money_balances.updated";
-
-    #endregion
-
     #region Payments
 
     /// <summary>

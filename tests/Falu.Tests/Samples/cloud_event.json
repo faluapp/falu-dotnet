@@ -3,7 +3,7 @@
   "id": "evt_602",
   "time": "2022-07-20T06:49:06Z",
   "source": "https://dashboard.falu.io/wksp_602/events/evt_602",
-  "type": "io.falu.money_balances.updated",
+  "type": "io.falu.file.created",
   "datacontenttype": "application/json",
   "workspace": "wksp_602",
   "live": false,
@@ -13,10 +13,13 @@
       "idempotency_key": "idempotency-key-123"
     },
     "object": {
-      "mpesa": {
-        "123456": 1030890,
-        "654321": 300500
-      },
+      "id": "file_602a8dd0a54847479a874de4",
+      "created": "2024-07-11T10:32:57.0506501+00:00",
+      "updated": "2024-07-11T10:32:57.0506501+00:00",
+      "filename": "idv-1-face.jpeg",
+      "type": "image/jpeg",
+      "size": 26000,
+      "purpose": "customer.selfie",
       "workspace": "wksp_602",
       "live": false,
       "etag": "AAAAAAAAAAA="

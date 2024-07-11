@@ -79,7 +79,7 @@ public class FilesServiceClient(HttpClient backChannel, FaluClientOptions option
             content.Add(new StringContent(options.Expires!.Value.ToString("O")), "expires");
         }
 
-        var uri = new UriBuilder(BackChannel.BaseAddress!) { Host =  Options.FilesHost, Path = MakePath() }.ToString();
+        var uri = new UriBuilder(BackChannel.BaseAddress!) { Host = Options.FilesHost, Path = MakePath() }.ToString();
         return RequestResourceAsync(uri, HttpMethod.Post, content, requestOptions, cancellationToken);
     }
 }

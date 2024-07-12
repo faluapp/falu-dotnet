@@ -2,7 +2,6 @@
 using CloudNative.CloudEvents.Extensions;
 using CloudNative.CloudEvents.SystemTextJson;
 using Falu.Payments;
-using Falu.Webhooks;
 using System.Net.Mime;
 using Xunit;
 
@@ -23,7 +22,7 @@ public class CloudEventExtensionsTests
         Assert.Equal("wksp_602", cloudEvent.GetWorkspace());
         Assert.Equal(false, cloudEvent.GetLiveMode());
         Assert.Equal("application/json", cloudEvent.DataContentType);
-        Assert.Equal($"io.falu.{EventTypes.MoneyBalancesUpdated}", cloudEvent.Type);
+        Assert.Equal("io.falu.money_balances.updated", cloudEvent.Type);
         Assert.Equal(new Uri("https://dashboard.falu.io/wksp_602/events/evt_602"), cloudEvent.Source);
         Assert.Equal("evt_602", cloudEvent.Id);
 

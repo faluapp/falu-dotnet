@@ -2,5 +2,5 @@
 # To get the default configuration comment out all the contents of this file and run 'gitversion /showconfig'
 mode: ContinuousDeployment
 branches:
-  master:
-    regex: (^master$|^origin\/master$|^main$|^origin\/main$)
+  pull-request:
+    label: pr

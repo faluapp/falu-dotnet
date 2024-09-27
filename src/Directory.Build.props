@@ -9,6 +9,7 @@
     <Company>Falu Technologies Limited</Company>
     <!--<IsPackable>true</IsPackable>-->
     <IsAotCompatible>true</IsAotCompatible>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
   </PropertyGroup>
 
   <PropertyGroup>
